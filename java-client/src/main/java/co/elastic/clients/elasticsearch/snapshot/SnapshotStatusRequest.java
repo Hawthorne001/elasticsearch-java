@@ -59,7 +59,29 @@ import javax.annotation.Nullable;
 // typedef: snapshot.status.Request
 
 /**
- * Returns information about the status of a snapshot.
+ * Get the snapshot status. Get a detailed description of the current state for
+ * each shard participating in the snapshot.
+ * <p>
+ * Note that this API should be used only to obtain detailed shard-level
+ * information for ongoing snapshots. If this detail is not needed or you want
+ * to obtain information about one or more existing snapshots, use the get
+ * snapshot API.
+ * <p>
+ * If you omit the <code>&lt;snapshot&gt;</code> request path parameter, the
+ * request retrieves information only for currently running snapshots. This
+ * usage is preferred. If needed, you can specify
+ * <code>&lt;repository&gt;</code> and <code>&lt;snapshot&gt;</code> to retrieve
+ * information for specific snapshots, even if they're not currently running.
+ * <p>
+ * WARNING: Using the API to return the status of any snapshots other than
+ * currently running snapshots can be expensive. The API requires a read from
+ * the repository for each shard in each snapshot. For example, if you have 100
+ * snapshots with 1,000 shards each, an API request that includes all snapshots
+ * will require 100,000 reads (100 snapshots x 1,000 shards).
+ * <p>
+ * Depending on the latency of your storage, such requests can take an extremely
+ * long time to return results. These requests can also tax machine resources
+ * and, when using cloud storage, incur high processing costs.
  * 
  * @see <a href="../doc-files/api-spec.html#snapshot.status.Request">API
  *      specification</a>
@@ -93,8 +115,10 @@ public class SnapshotStatusRequest extends RequestBase {
 	}
 
 	/**
-	 * Whether to ignore unavailable snapshots, defaults to false which means a
-	 * SnapshotMissingException is thrown
+	 * If <code>false</code>, the request returns an error for any snapshots that
+	 * are unavailable. If <code>true</code>, the request ignores snapshots that are
+	 * unavailable, such as those that are corrupted or temporarily cannot be
+	 * returned.
 	 * <p>
 	 * API name: {@code ignore_unavailable}
 	 */
@@ -104,7 +128,9 @@ public class SnapshotStatusRequest extends RequestBase {
 	}
 
 	/**
-	 * Explicit operation timeout for connection to master node
+	 * The period to wait for the master node. If the master node is not available
+	 * before the timeout expires, the request fails and returns an error. To
+	 * indicate that the request should never timeout, set it to <code>-1</code>.
 	 * <p>
 	 * API name: {@code master_timeout}
 	 */
@@ -114,7 +140,8 @@ public class SnapshotStatusRequest extends RequestBase {
 	}
 
 	/**
-	 * A repository name
+	 * The snapshot repository name used to limit the request. It supports wildcards
+	 * (<code>*</code>) if <code>&lt;snapshot&gt;</code> isn't specified.
 	 * <p>
 	 * API name: {@code repository}
 	 */
@@ -124,7 +151,8 @@ public class SnapshotStatusRequest extends RequestBase {
 	}
 
 	/**
-	 * A comma-separated list of snapshot names
+	 * A comma-separated list of snapshots to retrieve status for. The default is
+	 * currently running snapshots. Wildcards (<code>*</code>) are not supported.
 	 * <p>
 	 * API name: {@code snapshot}
 	 */
@@ -154,8 +182,10 @@ public class SnapshotStatusRequest extends RequestBase {
 		private List<String> snapshot;
 
 		/**
-		 * Whether to ignore unavailable snapshots, defaults to false which means a
-		 * SnapshotMissingException is thrown
+		 * If <code>false</code>, the request returns an error for any snapshots that
+		 * are unavailable. If <code>true</code>, the request ignores snapshots that are
+		 * unavailable, such as those that are corrupted or temporarily cannot be
+		 * returned.
 		 * <p>
 		 * API name: {@code ignore_unavailable}
 		 */
@@ -165,7 +195,9 @@ public class SnapshotStatusRequest extends RequestBase {
 		}
 
 		/**
-		 * Explicit operation timeout for connection to master node
+		 * The period to wait for the master node. If the master node is not available
+		 * before the timeout expires, the request fails and returns an error. To
+		 * indicate that the request should never timeout, set it to <code>-1</code>.
 		 * <p>
 		 * API name: {@code master_timeout}
 		 */
@@ -175,7 +207,9 @@ public class SnapshotStatusRequest extends RequestBase {
 		}
 
 		/**
-		 * Explicit operation timeout for connection to master node
+		 * The period to wait for the master node. If the master node is not available
+		 * before the timeout expires, the request fails and returns an error. To
+		 * indicate that the request should never timeout, set it to <code>-1</code>.
 		 * <p>
 		 * API name: {@code master_timeout}
 		 */
@@ -184,7 +218,8 @@ public class SnapshotStatusRequest extends RequestBase {
 		}
 
 		/**
-		 * A repository name
+		 * The snapshot repository name used to limit the request. It supports wildcards
+		 * (<code>*</code>) if <code>&lt;snapshot&gt;</code> isn't specified.
 		 * <p>
 		 * API name: {@code repository}
 		 */
@@ -194,7 +229,8 @@ public class SnapshotStatusRequest extends RequestBase {
 		}
 
 		/**
-		 * A comma-separated list of snapshot names
+		 * A comma-separated list of snapshots to retrieve status for. The default is
+		 * currently running snapshots. Wildcards (<code>*</code>) are not supported.
 		 * <p>
 		 * API name: {@code snapshot}
 		 * <p>
@@ -206,7 +242,8 @@ public class SnapshotStatusRequest extends RequestBase {
 		}
 
 		/**
-		 * A comma-separated list of snapshot names
+		 * A comma-separated list of snapshots to retrieve status for. The default is
+		 * currently running snapshots. Wildcards (<code>*</code>) are not supported.
 		 * <p>
 		 * API name: {@code snapshot}
 		 * <p>

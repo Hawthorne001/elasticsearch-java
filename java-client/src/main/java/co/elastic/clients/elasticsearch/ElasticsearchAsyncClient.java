@@ -26,6 +26,7 @@ import co.elastic.clients.elasticsearch.autoscaling.ElasticsearchAutoscalingAsyn
 import co.elastic.clients.elasticsearch.cat.ElasticsearchCatAsyncClient;
 import co.elastic.clients.elasticsearch.ccr.ElasticsearchCcrAsyncClient;
 import co.elastic.clients.elasticsearch.cluster.ElasticsearchClusterAsyncClient;
+import co.elastic.clients.elasticsearch.connector.ElasticsearchConnectorAsyncClient;
 import co.elastic.clients.elasticsearch.core.BulkRequest;
 import co.elastic.clients.elasticsearch.core.BulkResponse;
 import co.elastic.clients.elasticsearch.core.ClearScrollRequest;
@@ -127,12 +128,13 @@ import co.elastic.clients.elasticsearch.migration.ElasticsearchMigrationAsyncCli
 import co.elastic.clients.elasticsearch.ml.ElasticsearchMlAsyncClient;
 import co.elastic.clients.elasticsearch.monitoring.ElasticsearchMonitoringAsyncClient;
 import co.elastic.clients.elasticsearch.nodes.ElasticsearchNodesAsyncClient;
-import co.elastic.clients.elasticsearch.query_ruleset.ElasticsearchQueryRulesetAsyncClient;
+import co.elastic.clients.elasticsearch.query_rules.ElasticsearchQueryRulesAsyncClient;
 import co.elastic.clients.elasticsearch.rollup.ElasticsearchRollupAsyncClient;
 import co.elastic.clients.elasticsearch.search_application.ElasticsearchSearchApplicationAsyncClient;
 import co.elastic.clients.elasticsearch.searchable_snapshots.ElasticsearchSearchableSnapshotsAsyncClient;
 import co.elastic.clients.elasticsearch.security.ElasticsearchSecurityAsyncClient;
 import co.elastic.clients.elasticsearch.shutdown.ElasticsearchShutdownAsyncClient;
+import co.elastic.clients.elasticsearch.simulate.ElasticsearchSimulateAsyncClient;
 import co.elastic.clients.elasticsearch.slm.ElasticsearchSlmAsyncClient;
 import co.elastic.clients.elasticsearch.snapshot.ElasticsearchSnapshotAsyncClient;
 import co.elastic.clients.elasticsearch.sql.ElasticsearchSqlAsyncClient;
@@ -212,6 +214,10 @@ public class ElasticsearchAsyncClient extends ApiClient<ElasticsearchTransport, 
 		return new ElasticsearchClusterAsyncClient(this.transport, this.transportOptions);
 	}
 
+	public ElasticsearchConnectorAsyncClient connector() {
+		return new ElasticsearchConnectorAsyncClient(this.transport, this.transportOptions);
+	}
+
 	public ElasticsearchDanglingIndicesAsyncClient danglingIndices() {
 		return new ElasticsearchDanglingIndicesAsyncClient(this.transport, this.transportOptions);
 	}
@@ -280,8 +286,8 @@ public class ElasticsearchAsyncClient extends ApiClient<ElasticsearchTransport, 
 		return new ElasticsearchNodesAsyncClient(this.transport, this.transportOptions);
 	}
 
-	public ElasticsearchQueryRulesetAsyncClient queryRuleset() {
-		return new ElasticsearchQueryRulesetAsyncClient(this.transport, this.transportOptions);
+	public ElasticsearchQueryRulesAsyncClient queryRules() {
+		return new ElasticsearchQueryRulesAsyncClient(this.transport, this.transportOptions);
 	}
 
 	public ElasticsearchRollupAsyncClient rollup() {
@@ -302,6 +308,10 @@ public class ElasticsearchAsyncClient extends ApiClient<ElasticsearchTransport, 
 
 	public ElasticsearchShutdownAsyncClient shutdown() {
 		return new ElasticsearchShutdownAsyncClient(this.transport, this.transportOptions);
+	}
+
+	public ElasticsearchSimulateAsyncClient simulate() {
+		return new ElasticsearchSimulateAsyncClient(this.transport, this.transportOptions);
 	}
 
 	public ElasticsearchSlmAsyncClient slm() {
@@ -347,11 +357,12 @@ public class ElasticsearchAsyncClient extends ApiClient<ElasticsearchTransport, 
 	// ----- Endpoint: bulk
 
 	/**
-	 * Allows to perform multiple index/update/delete operations in a single
-	 * request.
+	 * Bulk index or delete documents. Performs multiple indexing or delete
+	 * operations in a single API call. This reduces overhead and can greatly
+	 * increase indexing speed.
 	 * 
 	 * @see <a href=
-	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/8.15/docs-bulk.html">Documentation
+	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/9.0/docs-bulk.html">Documentation
 	 *      on elastic.co</a>
 	 */
 
@@ -363,14 +374,15 @@ public class ElasticsearchAsyncClient extends ApiClient<ElasticsearchTransport, 
 	}
 
 	/**
-	 * Allows to perform multiple index/update/delete operations in a single
-	 * request.
+	 * Bulk index or delete documents. Performs multiple indexing or delete
+	 * operations in a single API call. This reduces overhead and can greatly
+	 * increase indexing speed.
 	 * 
 	 * @param fn
 	 *            a function that initializes a builder to create the
 	 *            {@link BulkRequest}
 	 * @see <a href=
-	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/8.15/docs-bulk.html">Documentation
+	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/9.0/docs-bulk.html">Documentation
 	 *      on elastic.co</a>
 	 */
 
@@ -379,11 +391,12 @@ public class ElasticsearchAsyncClient extends ApiClient<ElasticsearchTransport, 
 	}
 
 	/**
-	 * Allows to perform multiple index/update/delete operations in a single
-	 * request.
+	 * Bulk index or delete documents. Performs multiple indexing or delete
+	 * operations in a single API call. This reduces overhead and can greatly
+	 * increase indexing speed.
 	 * 
 	 * @see <a href=
-	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/8.15/docs-bulk.html">Documentation
+	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/9.0/docs-bulk.html">Documentation
 	 *      on elastic.co</a>
 	 */
 
@@ -395,10 +408,12 @@ public class ElasticsearchAsyncClient extends ApiClient<ElasticsearchTransport, 
 	// ----- Endpoint: clear_scroll
 
 	/**
-	 * Explicitly clears the search context for a scroll.
+	 * Clear a scrolling search.
+	 * <p>
+	 * Clear the search context and results for a scrolling search.
 	 * 
 	 * @see <a href=
-	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/8.15/clear-scroll-api.html">Documentation
+	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/9.0/clear-scroll-api.html">Documentation
 	 *      on elastic.co</a>
 	 */
 
@@ -410,13 +425,15 @@ public class ElasticsearchAsyncClient extends ApiClient<ElasticsearchTransport, 
 	}
 
 	/**
-	 * Explicitly clears the search context for a scroll.
+	 * Clear a scrolling search.
+	 * <p>
+	 * Clear the search context and results for a scrolling search.
 	 * 
 	 * @param fn
 	 *            a function that initializes a builder to create the
 	 *            {@link ClearScrollRequest}
 	 * @see <a href=
-	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/8.15/clear-scroll-api.html">Documentation
+	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/9.0/clear-scroll-api.html">Documentation
 	 *      on elastic.co</a>
 	 */
 
@@ -426,10 +443,12 @@ public class ElasticsearchAsyncClient extends ApiClient<ElasticsearchTransport, 
 	}
 
 	/**
-	 * Explicitly clears the search context for a scroll.
+	 * Clear a scrolling search.
+	 * <p>
+	 * Clear the search context and results for a scrolling search.
 	 * 
 	 * @see <a href=
-	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/8.15/clear-scroll-api.html">Documentation
+	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/9.0/clear-scroll-api.html">Documentation
 	 *      on elastic.co</a>
 	 */
 
@@ -441,10 +460,17 @@ public class ElasticsearchAsyncClient extends ApiClient<ElasticsearchTransport, 
 	// ----- Endpoint: close_point_in_time
 
 	/**
-	 * Close a point in time
+	 * Close a point in time.
+	 * <p>
+	 * A point in time must be opened explicitly before being used in search
+	 * requests. The <code>keep_alive</code> parameter tells Elasticsearch how long
+	 * it should persist. A point in time is automatically closed when the
+	 * <code>keep_alive</code> period has elapsed. However, keeping points in time
+	 * has a cost; close them as soon as they are no longer required for search
+	 * requests.
 	 * 
 	 * @see <a href=
-	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/8.15/point-in-time-api.html">Documentation
+	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/9.0/point-in-time-api.html">Documentation
 	 *      on elastic.co</a>
 	 */
 
@@ -456,13 +482,20 @@ public class ElasticsearchAsyncClient extends ApiClient<ElasticsearchTransport, 
 	}
 
 	/**
-	 * Close a point in time
+	 * Close a point in time.
+	 * <p>
+	 * A point in time must be opened explicitly before being used in search
+	 * requests. The <code>keep_alive</code> parameter tells Elasticsearch how long
+	 * it should persist. A point in time is automatically closed when the
+	 * <code>keep_alive</code> period has elapsed. However, keeping points in time
+	 * has a cost; close them as soon as they are no longer required for search
+	 * requests.
 	 * 
 	 * @param fn
 	 *            a function that initializes a builder to create the
 	 *            {@link ClosePointInTimeRequest}
 	 * @see <a href=
-	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/8.15/point-in-time-api.html">Documentation
+	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/9.0/point-in-time-api.html">Documentation
 	 *      on elastic.co</a>
 	 */
 
@@ -474,7 +507,7 @@ public class ElasticsearchAsyncClient extends ApiClient<ElasticsearchTransport, 
 	// ----- Endpoint: count
 
 	/**
-	 * Returns number of documents matching a query.
+	 * Count search results. Get the number of documents matching a query.
 	 * 
 	 * @see <a href=
 	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/master/search-count.html">Documentation
@@ -489,7 +522,7 @@ public class ElasticsearchAsyncClient extends ApiClient<ElasticsearchTransport, 
 	}
 
 	/**
-	 * Returns number of documents matching a query.
+	 * Count search results. Get the number of documents matching a query.
 	 * 
 	 * @param fn
 	 *            a function that initializes a builder to create the
@@ -505,7 +538,7 @@ public class ElasticsearchAsyncClient extends ApiClient<ElasticsearchTransport, 
 	}
 
 	/**
-	 * Returns number of documents matching a query.
+	 * Count search results. Get the number of documents matching a query.
 	 * 
 	 * @see <a href=
 	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/master/search-count.html">Documentation
@@ -520,10 +553,9 @@ public class ElasticsearchAsyncClient extends ApiClient<ElasticsearchTransport, 
 	// ----- Endpoint: create
 
 	/**
-	 * Creates a new document in the index.
-	 * <p>
-	 * Returns a 409 response when a document with a same ID already exists in the
-	 * index.
+	 * Index a document. Adds a JSON document to the specified data stream or index
+	 * and makes it searchable. If the target is an index and the document already
+	 * exists, the request updates the document and increments its version.
 	 * 
 	 * @see <a href=
 	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-index_.html">Documentation
@@ -538,10 +570,9 @@ public class ElasticsearchAsyncClient extends ApiClient<ElasticsearchTransport, 
 	}
 
 	/**
-	 * Creates a new document in the index.
-	 * <p>
-	 * Returns a 409 response when a document with a same ID already exists in the
-	 * index.
+	 * Index a document. Adds a JSON document to the specified data stream or index
+	 * and makes it searchable. If the target is an index and the document already
+	 * exists, the request updates the document and increments its version.
 	 * 
 	 * @param fn
 	 *            a function that initializes a builder to create the
@@ -559,7 +590,7 @@ public class ElasticsearchAsyncClient extends ApiClient<ElasticsearchTransport, 
 	// ----- Endpoint: delete
 
 	/**
-	 * Removes a document from the index.
+	 * Delete a document. Removes a JSON document from the specified index.
 	 * 
 	 * @see <a href=
 	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-delete.html">Documentation
@@ -574,7 +605,7 @@ public class ElasticsearchAsyncClient extends ApiClient<ElasticsearchTransport, 
 	}
 
 	/**
-	 * Removes a document from the index.
+	 * Delete a document. Removes a JSON document from the specified index.
 	 * 
 	 * @param fn
 	 *            a function that initializes a builder to create the
@@ -592,7 +623,7 @@ public class ElasticsearchAsyncClient extends ApiClient<ElasticsearchTransport, 
 	// ----- Endpoint: delete_by_query
 
 	/**
-	 * Deletes documents matching the provided query.
+	 * Delete documents. Deletes documents that match the specified query.
 	 * 
 	 * @see <a href=
 	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-delete-by-query.html">Documentation
@@ -607,7 +638,7 @@ public class ElasticsearchAsyncClient extends ApiClient<ElasticsearchTransport, 
 	}
 
 	/**
-	 * Deletes documents matching the provided query.
+	 * Delete documents. Deletes documents that match the specified query.
 	 * 
 	 * @param fn
 	 *            a function that initializes a builder to create the
@@ -625,8 +656,12 @@ public class ElasticsearchAsyncClient extends ApiClient<ElasticsearchTransport, 
 	// ----- Endpoint: delete_by_query_rethrottle
 
 	/**
-	 * Changes the number of requests per second for a particular Delete By Query
-	 * operation.
+	 * Throttle a delete by query operation.
+	 * <p>
+	 * Change the number of requests per second for a particular delete by query
+	 * operation. Rethrottling that speeds up the query takes effect immediately but
+	 * rethrotting that slows down the query takes effect after completing the
+	 * current batch to prevent scroll timeouts.
 	 * 
 	 * @see <a href=
 	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-delete-by-query.html">Documentation
@@ -642,8 +677,12 @@ public class ElasticsearchAsyncClient extends ApiClient<ElasticsearchTransport, 
 	}
 
 	/**
-	 * Changes the number of requests per second for a particular Delete By Query
-	 * operation.
+	 * Throttle a delete by query operation.
+	 * <p>
+	 * Change the number of requests per second for a particular delete by query
+	 * operation. Rethrottling that speeds up the query takes effect immediately but
+	 * rethrotting that slows down the query takes effect after completing the
+	 * current batch to prevent scroll timeouts.
 	 * 
 	 * @param fn
 	 *            a function that initializes a builder to create the
@@ -661,7 +700,8 @@ public class ElasticsearchAsyncClient extends ApiClient<ElasticsearchTransport, 
 	// ----- Endpoint: delete_script
 
 	/**
-	 * Deletes a script.
+	 * Delete a script or search template. Deletes a stored script or search
+	 * template.
 	 * 
 	 * @see <a href=
 	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-scripting.html">Documentation
@@ -676,7 +716,8 @@ public class ElasticsearchAsyncClient extends ApiClient<ElasticsearchTransport, 
 	}
 
 	/**
-	 * Deletes a script.
+	 * Delete a script or search template. Deletes a stored script or search
+	 * template.
 	 * 
 	 * @param fn
 	 *            a function that initializes a builder to create the
@@ -694,7 +735,7 @@ public class ElasticsearchAsyncClient extends ApiClient<ElasticsearchTransport, 
 	// ----- Endpoint: exists
 
 	/**
-	 * Returns information about whether a document exists in an index.
+	 * Check a document. Checks if a specified document exists.
 	 * 
 	 * @see <a href=
 	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-get.html">Documentation
@@ -709,7 +750,7 @@ public class ElasticsearchAsyncClient extends ApiClient<ElasticsearchTransport, 
 	}
 
 	/**
-	 * Returns information about whether a document exists in an index.
+	 * Check a document. Checks if a specified document exists.
 	 * 
 	 * @param fn
 	 *            a function that initializes a builder to create the
@@ -727,7 +768,8 @@ public class ElasticsearchAsyncClient extends ApiClient<ElasticsearchTransport, 
 	// ----- Endpoint: exists_source
 
 	/**
-	 * Returns information about whether a document source exists in an index.
+	 * Check for a document source. Checks if a document's <code>_source</code> is
+	 * stored.
 	 * 
 	 * @see <a href=
 	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-get.html">Documentation
@@ -742,7 +784,8 @@ public class ElasticsearchAsyncClient extends ApiClient<ElasticsearchTransport, 
 	}
 
 	/**
-	 * Returns information about whether a document source exists in an index.
+	 * Check for a document source. Checks if a document's <code>_source</code> is
+	 * stored.
 	 * 
 	 * @param fn
 	 *            a function that initializes a builder to create the
@@ -760,7 +803,8 @@ public class ElasticsearchAsyncClient extends ApiClient<ElasticsearchTransport, 
 	// ----- Endpoint: explain
 
 	/**
-	 * Returns information about why a specific matches (or doesn't match) a query.
+	 * Explain a document match result. Returns information about why a specific
+	 * document matches, or doesn’t match, a query.
 	 * 
 	 * @see <a href=
 	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/master/search-explain.html">Documentation
@@ -772,13 +816,14 @@ public class ElasticsearchAsyncClient extends ApiClient<ElasticsearchTransport, 
 		@SuppressWarnings("unchecked")
 		JsonEndpoint<ExplainRequest, ExplainResponse<TDocument>, ErrorResponse> endpoint = (JsonEndpoint<ExplainRequest, ExplainResponse<TDocument>, ErrorResponse>) ExplainRequest._ENDPOINT;
 		endpoint = new EndpointWithResponseMapperAttr<>(endpoint,
-				"co.elastic.clients:Deserializer:_global.explain.TDocument", getDeserializer(tDocumentClass));
+				"co.elastic.clients:Deserializer:_global.explain.Response.TDocument", getDeserializer(tDocumentClass));
 
 		return this.transport.performRequestAsync(request, endpoint, this.transportOptions);
 	}
 
 	/**
-	 * Returns information about why a specific matches (or doesn't match) a query.
+	 * Explain a document match result. Returns information about why a specific
+	 * document matches, or doesn’t match, a query.
 	 * 
 	 * @param fn
 	 *            a function that initializes a builder to create the
@@ -794,7 +839,8 @@ public class ElasticsearchAsyncClient extends ApiClient<ElasticsearchTransport, 
 	}
 
 	/**
-	 * Returns information about why a specific matches (or doesn't match) a query.
+	 * Explain a document match result. Returns information about why a specific
+	 * document matches, or doesn’t match, a query.
 	 * 
 	 * @see <a href=
 	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/master/search-explain.html">Documentation
@@ -806,13 +852,14 @@ public class ElasticsearchAsyncClient extends ApiClient<ElasticsearchTransport, 
 		@SuppressWarnings("unchecked")
 		JsonEndpoint<ExplainRequest, ExplainResponse<TDocument>, ErrorResponse> endpoint = (JsonEndpoint<ExplainRequest, ExplainResponse<TDocument>, ErrorResponse>) ExplainRequest._ENDPOINT;
 		endpoint = new EndpointWithResponseMapperAttr<>(endpoint,
-				"co.elastic.clients:Deserializer:_global.explain.TDocument", getDeserializer(tDocumentType));
+				"co.elastic.clients:Deserializer:_global.explain.Response.TDocument", getDeserializer(tDocumentType));
 
 		return this.transport.performRequestAsync(request, endpoint, this.transportOptions);
 	}
 
 	/**
-	 * Returns information about why a specific matches (or doesn't match) a query.
+	 * Explain a document match result. Returns information about why a specific
+	 * document matches, or doesn’t match, a query.
 	 * 
 	 * @param fn
 	 *            a function that initializes a builder to create the
@@ -830,8 +877,14 @@ public class ElasticsearchAsyncClient extends ApiClient<ElasticsearchTransport, 
 	// ----- Endpoint: field_caps
 
 	/**
-	 * Returns the information about the capabilities of fields among multiple
-	 * indices.
+	 * Get the field capabilities.
+	 * <p>
+	 * Get information about the capabilities of fields among multiple indices.
+	 * <p>
+	 * For data streams, the API returns field capabilities among the stream’s
+	 * backing indices. It returns runtime fields like any other field. For example,
+	 * a runtime field with a type of keyword is returned the same as any other
+	 * field that belongs to the <code>keyword</code> family.
 	 * 
 	 * @see <a href=
 	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/master/search-field-caps.html">Documentation
@@ -846,8 +899,14 @@ public class ElasticsearchAsyncClient extends ApiClient<ElasticsearchTransport, 
 	}
 
 	/**
-	 * Returns the information about the capabilities of fields among multiple
-	 * indices.
+	 * Get the field capabilities.
+	 * <p>
+	 * Get information about the capabilities of fields among multiple indices.
+	 * <p>
+	 * For data streams, the API returns field capabilities among the stream’s
+	 * backing indices. It returns runtime fields like any other field. For example,
+	 * a runtime field with a type of keyword is returned the same as any other
+	 * field that belongs to the <code>keyword</code> family.
 	 * 
 	 * @param fn
 	 *            a function that initializes a builder to create the
@@ -863,8 +922,14 @@ public class ElasticsearchAsyncClient extends ApiClient<ElasticsearchTransport, 
 	}
 
 	/**
-	 * Returns the information about the capabilities of fields among multiple
-	 * indices.
+	 * Get the field capabilities.
+	 * <p>
+	 * Get information about the capabilities of fields among multiple indices.
+	 * <p>
+	 * For data streams, the API returns field capabilities among the stream’s
+	 * backing indices. It returns runtime fields like any other field. For example,
+	 * a runtime field with a type of keyword is returned the same as any other
+	 * field that belongs to the <code>keyword</code> family.
 	 * 
 	 * @see <a href=
 	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/master/search-field-caps.html">Documentation
@@ -879,7 +944,8 @@ public class ElasticsearchAsyncClient extends ApiClient<ElasticsearchTransport, 
 	// ----- Endpoint: get
 
 	/**
-	 * Returns a document.
+	 * Get a document by its ID. Retrieves the document with the specified ID from
+	 * an index.
 	 * 
 	 * @see <a href=
 	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-get.html">Documentation
@@ -891,13 +957,14 @@ public class ElasticsearchAsyncClient extends ApiClient<ElasticsearchTransport, 
 		@SuppressWarnings("unchecked")
 		JsonEndpoint<GetRequest, GetResponse<TDocument>, ErrorResponse> endpoint = (JsonEndpoint<GetRequest, GetResponse<TDocument>, ErrorResponse>) GetRequest._ENDPOINT;
 		endpoint = new EndpointWithResponseMapperAttr<>(endpoint,
-				"co.elastic.clients:Deserializer:_global.get.TDocument", getDeserializer(tDocumentClass));
+				"co.elastic.clients:Deserializer:_global.get.Response.TDocument", getDeserializer(tDocumentClass));
 
 		return this.transport.performRequestAsync(request, endpoint, this.transportOptions);
 	}
 
 	/**
-	 * Returns a document.
+	 * Get a document by its ID. Retrieves the document with the specified ID from
+	 * an index.
 	 * 
 	 * @param fn
 	 *            a function that initializes a builder to create the
@@ -913,7 +980,8 @@ public class ElasticsearchAsyncClient extends ApiClient<ElasticsearchTransport, 
 	}
 
 	/**
-	 * Returns a document.
+	 * Get a document by its ID. Retrieves the document with the specified ID from
+	 * an index.
 	 * 
 	 * @see <a href=
 	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-get.html">Documentation
@@ -924,13 +992,14 @@ public class ElasticsearchAsyncClient extends ApiClient<ElasticsearchTransport, 
 		@SuppressWarnings("unchecked")
 		JsonEndpoint<GetRequest, GetResponse<TDocument>, ErrorResponse> endpoint = (JsonEndpoint<GetRequest, GetResponse<TDocument>, ErrorResponse>) GetRequest._ENDPOINT;
 		endpoint = new EndpointWithResponseMapperAttr<>(endpoint,
-				"co.elastic.clients:Deserializer:_global.get.TDocument", getDeserializer(tDocumentType));
+				"co.elastic.clients:Deserializer:_global.get.Response.TDocument", getDeserializer(tDocumentType));
 
 		return this.transport.performRequestAsync(request, endpoint, this.transportOptions);
 	}
 
 	/**
-	 * Returns a document.
+	 * Get a document by its ID. Retrieves the document with the specified ID from
+	 * an index.
 	 * 
 	 * @param fn
 	 *            a function that initializes a builder to create the
@@ -948,7 +1017,8 @@ public class ElasticsearchAsyncClient extends ApiClient<ElasticsearchTransport, 
 	// ----- Endpoint: get_script
 
 	/**
-	 * Returns a script.
+	 * Get a script or search template. Retrieves a stored script or search
+	 * template.
 	 * 
 	 * @see <a href=
 	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-scripting.html">Documentation
@@ -963,7 +1033,8 @@ public class ElasticsearchAsyncClient extends ApiClient<ElasticsearchTransport, 
 	}
 
 	/**
-	 * Returns a script.
+	 * Get a script or search template. Retrieves a stored script or search
+	 * template.
 	 * 
 	 * @param fn
 	 *            a function that initializes a builder to create the
@@ -981,7 +1052,9 @@ public class ElasticsearchAsyncClient extends ApiClient<ElasticsearchTransport, 
 	// ----- Endpoint: get_script_context
 
 	/**
-	 * Returns all script contexts.
+	 * Get script contexts.
+	 * <p>
+	 * Get a list of supported script contexts and their methods.
 	 * 
 	 * @see <a href=
 	 *      "https://www.elastic.co/guide/en/elasticsearch/painless/master/painless-contexts.html">Documentation
@@ -995,7 +1068,9 @@ public class ElasticsearchAsyncClient extends ApiClient<ElasticsearchTransport, 
 	// ----- Endpoint: get_script_languages
 
 	/**
-	 * Returns available script types, languages and contexts
+	 * Get script languages.
+	 * <p>
+	 * Get a list of available script types, languages, and contexts.
 	 * 
 	 * @see <a href=
 	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-scripting.html">Documentation
@@ -1009,7 +1084,7 @@ public class ElasticsearchAsyncClient extends ApiClient<ElasticsearchTransport, 
 	// ----- Endpoint: get_source
 
 	/**
-	 * Returns the source of a document.
+	 * Get a document's source. Returns the source of a document.
 	 * 
 	 * @see <a href=
 	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-get.html">Documentation
@@ -1021,13 +1096,14 @@ public class ElasticsearchAsyncClient extends ApiClient<ElasticsearchTransport, 
 		@SuppressWarnings("unchecked")
 		JsonEndpoint<GetSourceRequest, GetSourceResponse<TDocument>, ErrorResponse> endpoint = (JsonEndpoint<GetSourceRequest, GetSourceResponse<TDocument>, ErrorResponse>) GetSourceRequest._ENDPOINT;
 		endpoint = new EndpointWithResponseMapperAttr<>(endpoint,
-				"co.elastic.clients:Deserializer:_global.get_source.TDocument", getDeserializer(tDocumentClass));
+				"co.elastic.clients:Deserializer:_global.get_source.Response.TDocument",
+				getDeserializer(tDocumentClass));
 
 		return this.transport.performRequestAsync(request, endpoint, this.transportOptions);
 	}
 
 	/**
-	 * Returns the source of a document.
+	 * Get a document's source. Returns the source of a document.
 	 * 
 	 * @param fn
 	 *            a function that initializes a builder to create the
@@ -1043,7 +1119,7 @@ public class ElasticsearchAsyncClient extends ApiClient<ElasticsearchTransport, 
 	}
 
 	/**
-	 * Returns the source of a document.
+	 * Get a document's source. Returns the source of a document.
 	 * 
 	 * @see <a href=
 	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-get.html">Documentation
@@ -1055,13 +1131,14 @@ public class ElasticsearchAsyncClient extends ApiClient<ElasticsearchTransport, 
 		@SuppressWarnings("unchecked")
 		JsonEndpoint<GetSourceRequest, GetSourceResponse<TDocument>, ErrorResponse> endpoint = (JsonEndpoint<GetSourceRequest, GetSourceResponse<TDocument>, ErrorResponse>) GetSourceRequest._ENDPOINT;
 		endpoint = new EndpointWithResponseMapperAttr<>(endpoint,
-				"co.elastic.clients:Deserializer:_global.get_source.TDocument", getDeserializer(tDocumentType));
+				"co.elastic.clients:Deserializer:_global.get_source.Response.TDocument",
+				getDeserializer(tDocumentType));
 
 		return this.transport.performRequestAsync(request, endpoint, this.transportOptions);
 	}
 
 	/**
-	 * Returns the source of a document.
+	 * Get a document's source. Returns the source of a document.
 	 * 
 	 * @param fn
 	 *            a function that initializes a builder to create the
@@ -1079,7 +1156,34 @@ public class ElasticsearchAsyncClient extends ApiClient<ElasticsearchTransport, 
 	// ----- Endpoint: health_report
 
 	/**
-	 * Returns the health of the cluster.
+	 * Get the cluster health. Get a report with the health status of an
+	 * Elasticsearch cluster. The report contains a list of indicators that compose
+	 * Elasticsearch functionality.
+	 * <p>
+	 * Each indicator has a health status of: green, unknown, yellow or red. The
+	 * indicator will provide an explanation and metadata describing the reason for
+	 * its current health status.
+	 * <p>
+	 * The cluster’s status is controlled by the worst indicator status.
+	 * <p>
+	 * In the event that an indicator’s status is non-green, a list of impacts may
+	 * be present in the indicator result which detail the functionalities that are
+	 * negatively affected by the health issue. Each impact carries with it a
+	 * severity level, an area of the system that is affected, and a simple
+	 * description of the impact on the system.
+	 * <p>
+	 * Some health indicators can determine the root cause of a health problem and
+	 * prescribe a set of steps that can be performed in order to improve the health
+	 * of the system. The root cause and remediation steps are encapsulated in a
+	 * diagnosis. A diagnosis contains a cause detailing a root cause analysis, an
+	 * action containing a brief description of the steps to take to fix the
+	 * problem, the list of affected resources (if applicable), and a detailed
+	 * step-by-step troubleshooting guide to fix the diagnosed problem.
+	 * <p>
+	 * NOTE: The health indicators perform root cause analysis of non-green health
+	 * statuses. This can be computationally expensive when called frequently. When
+	 * setting up automated polling of the API for health status, set verbose to
+	 * false to disable the more expensive analysis logic.
 	 * 
 	 * @see <a href=
 	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/current/health-api.html">Documentation
@@ -1094,7 +1198,34 @@ public class ElasticsearchAsyncClient extends ApiClient<ElasticsearchTransport, 
 	}
 
 	/**
-	 * Returns the health of the cluster.
+	 * Get the cluster health. Get a report with the health status of an
+	 * Elasticsearch cluster. The report contains a list of indicators that compose
+	 * Elasticsearch functionality.
+	 * <p>
+	 * Each indicator has a health status of: green, unknown, yellow or red. The
+	 * indicator will provide an explanation and metadata describing the reason for
+	 * its current health status.
+	 * <p>
+	 * The cluster’s status is controlled by the worst indicator status.
+	 * <p>
+	 * In the event that an indicator’s status is non-green, a list of impacts may
+	 * be present in the indicator result which detail the functionalities that are
+	 * negatively affected by the health issue. Each impact carries with it a
+	 * severity level, an area of the system that is affected, and a simple
+	 * description of the impact on the system.
+	 * <p>
+	 * Some health indicators can determine the root cause of a health problem and
+	 * prescribe a set of steps that can be performed in order to improve the health
+	 * of the system. The root cause and remediation steps are encapsulated in a
+	 * diagnosis. A diagnosis contains a cause detailing a root cause analysis, an
+	 * action containing a brief description of the steps to take to fix the
+	 * problem, the list of affected resources (if applicable), and a detailed
+	 * step-by-step troubleshooting guide to fix the diagnosed problem.
+	 * <p>
+	 * NOTE: The health indicators perform root cause analysis of non-green health
+	 * statuses. This can be computationally expensive when called frequently. When
+	 * setting up automated polling of the API for health status, set verbose to
+	 * false to disable the more expensive analysis logic.
 	 * 
 	 * @param fn
 	 *            a function that initializes a builder to create the
@@ -1110,7 +1241,34 @@ public class ElasticsearchAsyncClient extends ApiClient<ElasticsearchTransport, 
 	}
 
 	/**
-	 * Returns the health of the cluster.
+	 * Get the cluster health. Get a report with the health status of an
+	 * Elasticsearch cluster. The report contains a list of indicators that compose
+	 * Elasticsearch functionality.
+	 * <p>
+	 * Each indicator has a health status of: green, unknown, yellow or red. The
+	 * indicator will provide an explanation and metadata describing the reason for
+	 * its current health status.
+	 * <p>
+	 * The cluster’s status is controlled by the worst indicator status.
+	 * <p>
+	 * In the event that an indicator’s status is non-green, a list of impacts may
+	 * be present in the indicator result which detail the functionalities that are
+	 * negatively affected by the health issue. Each impact carries with it a
+	 * severity level, an area of the system that is affected, and a simple
+	 * description of the impact on the system.
+	 * <p>
+	 * Some health indicators can determine the root cause of a health problem and
+	 * prescribe a set of steps that can be performed in order to improve the health
+	 * of the system. The root cause and remediation steps are encapsulated in a
+	 * diagnosis. A diagnosis contains a cause detailing a root cause analysis, an
+	 * action containing a brief description of the steps to take to fix the
+	 * problem, the list of affected resources (if applicable), and a detailed
+	 * step-by-step troubleshooting guide to fix the diagnosed problem.
+	 * <p>
+	 * NOTE: The health indicators perform root cause analysis of non-green health
+	 * statuses. This can be computationally expensive when called frequently. When
+	 * setting up automated polling of the API for health status, set verbose to
+	 * false to disable the more expensive analysis logic.
 	 * 
 	 * @see <a href=
 	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/current/health-api.html">Documentation
@@ -1125,7 +1283,9 @@ public class ElasticsearchAsyncClient extends ApiClient<ElasticsearchTransport, 
 	// ----- Endpoint: index
 
 	/**
-	 * Creates or updates a document in an index.
+	 * Index a document. Adds a JSON document to the specified data stream or index
+	 * and makes it searchable. If the target is an index and the document already
+	 * exists, the request updates the document and increments its version.
 	 * 
 	 * @see <a href=
 	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-index_.html">Documentation
@@ -1140,7 +1300,9 @@ public class ElasticsearchAsyncClient extends ApiClient<ElasticsearchTransport, 
 	}
 
 	/**
-	 * Creates or updates a document in an index.
+	 * Index a document. Adds a JSON document to the specified data stream or index
+	 * and makes it searchable. If the target is an index and the document already
+	 * exists, the request updates the document and increments its version.
 	 * 
 	 * @param fn
 	 *            a function that initializes a builder to create the
@@ -1158,10 +1320,10 @@ public class ElasticsearchAsyncClient extends ApiClient<ElasticsearchTransport, 
 	// ----- Endpoint: info
 
 	/**
-	 * Returns basic information about the cluster.
+	 * Get cluster info. Get basic build, version, and cluster information.
 	 * 
 	 * @see <a href=
-	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/current/index.html">Documentation
+	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/9.0/rest-api-root.html">Documentation
 	 *      on elastic.co</a>
 	 */
 	public CompletableFuture<InfoResponse> info() {
@@ -1171,7 +1333,22 @@ public class ElasticsearchAsyncClient extends ApiClient<ElasticsearchTransport, 
 	// ----- Endpoint: knn_search
 
 	/**
-	 * Performs a kNN search.
+	 * Run a knn search.
+	 * <p>
+	 * NOTE: The kNN search API has been replaced by the <code>knn</code> option in
+	 * the search API.
+	 * <p>
+	 * Perform a k-nearest neighbor (kNN) search on a dense_vector field and return
+	 * the matching documents. Given a query vector, the API finds the k closest
+	 * vectors and returns those documents as search hits.
+	 * <p>
+	 * Elasticsearch uses the HNSW algorithm to support efficient kNN search. Like
+	 * most kNN algorithms, HNSW is an approximate method that sacrifices result
+	 * accuracy for improved search speed. This means the results returned are not
+	 * always the true k closest neighbors.
+	 * <p>
+	 * The kNN search API supports restricting the search using a filter. The search
+	 * will return the top k documents that also match the filter query.
 	 * 
 	 * @see <a href=
 	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/master/search-search.html">Documentation
@@ -1183,13 +1360,29 @@ public class ElasticsearchAsyncClient extends ApiClient<ElasticsearchTransport, 
 		@SuppressWarnings("unchecked")
 		JsonEndpoint<KnnSearchRequest, KnnSearchResponse<TDocument>, ErrorResponse> endpoint = (JsonEndpoint<KnnSearchRequest, KnnSearchResponse<TDocument>, ErrorResponse>) KnnSearchRequest._ENDPOINT;
 		endpoint = new EndpointWithResponseMapperAttr<>(endpoint,
-				"co.elastic.clients:Deserializer:_global.knn_search.TDocument", getDeserializer(tDocumentClass));
+				"co.elastic.clients:Deserializer:_global.knn_search.Response.TDocument",
+				getDeserializer(tDocumentClass));
 
 		return this.transport.performRequestAsync(request, endpoint, this.transportOptions);
 	}
 
 	/**
-	 * Performs a kNN search.
+	 * Run a knn search.
+	 * <p>
+	 * NOTE: The kNN search API has been replaced by the <code>knn</code> option in
+	 * the search API.
+	 * <p>
+	 * Perform a k-nearest neighbor (kNN) search on a dense_vector field and return
+	 * the matching documents. Given a query vector, the API finds the k closest
+	 * vectors and returns those documents as search hits.
+	 * <p>
+	 * Elasticsearch uses the HNSW algorithm to support efficient kNN search. Like
+	 * most kNN algorithms, HNSW is an approximate method that sacrifices result
+	 * accuracy for improved search speed. This means the results returned are not
+	 * always the true k closest neighbors.
+	 * <p>
+	 * The kNN search API supports restricting the search using a filter. The search
+	 * will return the top k documents that also match the filter query.
 	 * 
 	 * @param fn
 	 *            a function that initializes a builder to create the
@@ -1205,7 +1398,22 @@ public class ElasticsearchAsyncClient extends ApiClient<ElasticsearchTransport, 
 	}
 
 	/**
-	 * Performs a kNN search.
+	 * Run a knn search.
+	 * <p>
+	 * NOTE: The kNN search API has been replaced by the <code>knn</code> option in
+	 * the search API.
+	 * <p>
+	 * Perform a k-nearest neighbor (kNN) search on a dense_vector field and return
+	 * the matching documents. Given a query vector, the API finds the k closest
+	 * vectors and returns those documents as search hits.
+	 * <p>
+	 * Elasticsearch uses the HNSW algorithm to support efficient kNN search. Like
+	 * most kNN algorithms, HNSW is an approximate method that sacrifices result
+	 * accuracy for improved search speed. This means the results returned are not
+	 * always the true k closest neighbors.
+	 * <p>
+	 * The kNN search API supports restricting the search using a filter. The search
+	 * will return the top k documents that also match the filter query.
 	 * 
 	 * @see <a href=
 	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/master/search-search.html">Documentation
@@ -1217,13 +1425,29 @@ public class ElasticsearchAsyncClient extends ApiClient<ElasticsearchTransport, 
 		@SuppressWarnings("unchecked")
 		JsonEndpoint<KnnSearchRequest, KnnSearchResponse<TDocument>, ErrorResponse> endpoint = (JsonEndpoint<KnnSearchRequest, KnnSearchResponse<TDocument>, ErrorResponse>) KnnSearchRequest._ENDPOINT;
 		endpoint = new EndpointWithResponseMapperAttr<>(endpoint,
-				"co.elastic.clients:Deserializer:_global.knn_search.TDocument", getDeserializer(tDocumentType));
+				"co.elastic.clients:Deserializer:_global.knn_search.Response.TDocument",
+				getDeserializer(tDocumentType));
 
 		return this.transport.performRequestAsync(request, endpoint, this.transportOptions);
 	}
 
 	/**
-	 * Performs a kNN search.
+	 * Run a knn search.
+	 * <p>
+	 * NOTE: The kNN search API has been replaced by the <code>knn</code> option in
+	 * the search API.
+	 * <p>
+	 * Perform a k-nearest neighbor (kNN) search on a dense_vector field and return
+	 * the matching documents. Given a query vector, the API finds the k closest
+	 * vectors and returns those documents as search hits.
+	 * <p>
+	 * Elasticsearch uses the HNSW algorithm to support efficient kNN search. Like
+	 * most kNN algorithms, HNSW is an approximate method that sacrifices result
+	 * accuracy for improved search speed. This means the results returned are not
+	 * always the true k closest neighbors.
+	 * <p>
+	 * The kNN search API supports restricting the search using a filter. The search
+	 * will return the top k documents that also match the filter query.
 	 * 
 	 * @param fn
 	 *            a function that initializes a builder to create the
@@ -1241,7 +1465,12 @@ public class ElasticsearchAsyncClient extends ApiClient<ElasticsearchTransport, 
 	// ----- Endpoint: mget
 
 	/**
-	 * Allows to get multiple documents in one request.
+	 * Get multiple documents.
+	 * <p>
+	 * Get multiple JSON documents by ID from one or more indices. If you specify an
+	 * index in the request URI, you only need to specify the document IDs in the
+	 * request body. To ensure fast responses, this multi get (mget) API responds
+	 * with partial results if one or more shards fail.
 	 * 
 	 * @see <a href=
 	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-multi-get.html">Documentation
@@ -1253,13 +1482,18 @@ public class ElasticsearchAsyncClient extends ApiClient<ElasticsearchTransport, 
 		@SuppressWarnings("unchecked")
 		JsonEndpoint<MgetRequest, MgetResponse<TDocument>, ErrorResponse> endpoint = (JsonEndpoint<MgetRequest, MgetResponse<TDocument>, ErrorResponse>) MgetRequest._ENDPOINT;
 		endpoint = new EndpointWithResponseMapperAttr<>(endpoint,
-				"co.elastic.clients:Deserializer:_global.mget.TDocument", getDeserializer(tDocumentClass));
+				"co.elastic.clients:Deserializer:_global.mget.Response.TDocument", getDeserializer(tDocumentClass));
 
 		return this.transport.performRequestAsync(request, endpoint, this.transportOptions);
 	}
 
 	/**
-	 * Allows to get multiple documents in one request.
+	 * Get multiple documents.
+	 * <p>
+	 * Get multiple JSON documents by ID from one or more indices. If you specify an
+	 * index in the request URI, you only need to specify the document IDs in the
+	 * request body. To ensure fast responses, this multi get (mget) API responds
+	 * with partial results if one or more shards fail.
 	 * 
 	 * @param fn
 	 *            a function that initializes a builder to create the
@@ -1275,7 +1509,12 @@ public class ElasticsearchAsyncClient extends ApiClient<ElasticsearchTransport, 
 	}
 
 	/**
-	 * Allows to get multiple documents in one request.
+	 * Get multiple documents.
+	 * <p>
+	 * Get multiple JSON documents by ID from one or more indices. If you specify an
+	 * index in the request URI, you only need to specify the document IDs in the
+	 * request body. To ensure fast responses, this multi get (mget) API responds
+	 * with partial results if one or more shards fail.
 	 * 
 	 * @see <a href=
 	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-multi-get.html">Documentation
@@ -1286,13 +1525,18 @@ public class ElasticsearchAsyncClient extends ApiClient<ElasticsearchTransport, 
 		@SuppressWarnings("unchecked")
 		JsonEndpoint<MgetRequest, MgetResponse<TDocument>, ErrorResponse> endpoint = (JsonEndpoint<MgetRequest, MgetResponse<TDocument>, ErrorResponse>) MgetRequest._ENDPOINT;
 		endpoint = new EndpointWithResponseMapperAttr<>(endpoint,
-				"co.elastic.clients:Deserializer:_global.mget.TDocument", getDeserializer(tDocumentType));
+				"co.elastic.clients:Deserializer:_global.mget.Response.TDocument", getDeserializer(tDocumentType));
 
 		return this.transport.performRequestAsync(request, endpoint, this.transportOptions);
 	}
 
 	/**
-	 * Allows to get multiple documents in one request.
+	 * Get multiple documents.
+	 * <p>
+	 * Get multiple JSON documents by ID from one or more indices. If you specify an
+	 * index in the request URI, you only need to specify the document IDs in the
+	 * request body. To ensure fast responses, this multi get (mget) API responds
+	 * with partial results if one or more shards fail.
 	 * 
 	 * @param fn
 	 *            a function that initializes a builder to create the
@@ -1310,7 +1554,27 @@ public class ElasticsearchAsyncClient extends ApiClient<ElasticsearchTransport, 
 	// ----- Endpoint: msearch
 
 	/**
-	 * Allows to execute several search operations in one request.
+	 * Run multiple searches.
+	 * <p>
+	 * The format of the request is similar to the bulk API format and makes use of
+	 * the newline delimited JSON (NDJSON) format. The structure is as follows:
+	 * 
+	 * <pre>
+	 * <code>header\n
+	 * body\n
+	 * header\n
+	 * body\n
+	 * </code>
+	 * </pre>
+	 * <p>
+	 * This structure is specifically optimized to reduce parsing if a specific
+	 * search ends up redirected to another node.
+	 * <p>
+	 * IMPORTANT: The final line of data must end with a newline character
+	 * <code>\n</code>. Each newline character may be preceded by a carriage return
+	 * <code>\r</code>. When sending requests to this endpoint the
+	 * <code>Content-Type</code> header should be set to
+	 * <code>application/x-ndjson</code>.
 	 * 
 	 * @see <a href=
 	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/master/search-multi-search.html">Documentation
@@ -1322,13 +1586,33 @@ public class ElasticsearchAsyncClient extends ApiClient<ElasticsearchTransport, 
 		@SuppressWarnings("unchecked")
 		JsonEndpoint<MsearchRequest, MsearchResponse<TDocument>, ErrorResponse> endpoint = (JsonEndpoint<MsearchRequest, MsearchResponse<TDocument>, ErrorResponse>) MsearchRequest._ENDPOINT;
 		endpoint = new EndpointWithResponseMapperAttr<>(endpoint,
-				"co.elastic.clients:Deserializer:_global.msearch.TDocument", getDeserializer(tDocumentClass));
+				"co.elastic.clients:Deserializer:_global.msearch.Response.TDocument", getDeserializer(tDocumentClass));
 
 		return this.transport.performRequestAsync(request, endpoint, this.transportOptions);
 	}
 
 	/**
-	 * Allows to execute several search operations in one request.
+	 * Run multiple searches.
+	 * <p>
+	 * The format of the request is similar to the bulk API format and makes use of
+	 * the newline delimited JSON (NDJSON) format. The structure is as follows:
+	 * 
+	 * <pre>
+	 * <code>header\n
+	 * body\n
+	 * header\n
+	 * body\n
+	 * </code>
+	 * </pre>
+	 * <p>
+	 * This structure is specifically optimized to reduce parsing if a specific
+	 * search ends up redirected to another node.
+	 * <p>
+	 * IMPORTANT: The final line of data must end with a newline character
+	 * <code>\n</code>. Each newline character may be preceded by a carriage return
+	 * <code>\r</code>. When sending requests to this endpoint the
+	 * <code>Content-Type</code> header should be set to
+	 * <code>application/x-ndjson</code>.
 	 * 
 	 * @param fn
 	 *            a function that initializes a builder to create the
@@ -1344,7 +1628,27 @@ public class ElasticsearchAsyncClient extends ApiClient<ElasticsearchTransport, 
 	}
 
 	/**
-	 * Allows to execute several search operations in one request.
+	 * Run multiple searches.
+	 * <p>
+	 * The format of the request is similar to the bulk API format and makes use of
+	 * the newline delimited JSON (NDJSON) format. The structure is as follows:
+	 * 
+	 * <pre>
+	 * <code>header\n
+	 * body\n
+	 * header\n
+	 * body\n
+	 * </code>
+	 * </pre>
+	 * <p>
+	 * This structure is specifically optimized to reduce parsing if a specific
+	 * search ends up redirected to another node.
+	 * <p>
+	 * IMPORTANT: The final line of data must end with a newline character
+	 * <code>\n</code>. Each newline character may be preceded by a carriage return
+	 * <code>\r</code>. When sending requests to this endpoint the
+	 * <code>Content-Type</code> header should be set to
+	 * <code>application/x-ndjson</code>.
 	 * 
 	 * @see <a href=
 	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/master/search-multi-search.html">Documentation
@@ -1356,13 +1660,33 @@ public class ElasticsearchAsyncClient extends ApiClient<ElasticsearchTransport, 
 		@SuppressWarnings("unchecked")
 		JsonEndpoint<MsearchRequest, MsearchResponse<TDocument>, ErrorResponse> endpoint = (JsonEndpoint<MsearchRequest, MsearchResponse<TDocument>, ErrorResponse>) MsearchRequest._ENDPOINT;
 		endpoint = new EndpointWithResponseMapperAttr<>(endpoint,
-				"co.elastic.clients:Deserializer:_global.msearch.TDocument", getDeserializer(tDocumentType));
+				"co.elastic.clients:Deserializer:_global.msearch.Response.TDocument", getDeserializer(tDocumentType));
 
 		return this.transport.performRequestAsync(request, endpoint, this.transportOptions);
 	}
 
 	/**
-	 * Allows to execute several search operations in one request.
+	 * Run multiple searches.
+	 * <p>
+	 * The format of the request is similar to the bulk API format and makes use of
+	 * the newline delimited JSON (NDJSON) format. The structure is as follows:
+	 * 
+	 * <pre>
+	 * <code>header\n
+	 * body\n
+	 * header\n
+	 * body\n
+	 * </code>
+	 * </pre>
+	 * <p>
+	 * This structure is specifically optimized to reduce parsing if a specific
+	 * search ends up redirected to another node.
+	 * <p>
+	 * IMPORTANT: The final line of data must end with a newline character
+	 * <code>\n</code>. Each newline character may be preceded by a carriage return
+	 * <code>\r</code>. When sending requests to this endpoint the
+	 * <code>Content-Type</code> header should be set to
+	 * <code>application/x-ndjson</code>.
 	 * 
 	 * @param fn
 	 *            a function that initializes a builder to create the
@@ -1380,7 +1704,7 @@ public class ElasticsearchAsyncClient extends ApiClient<ElasticsearchTransport, 
 	// ----- Endpoint: msearch_template
 
 	/**
-	 * Allows to execute several search template operations in one request.
+	 * Run multiple templated searches.
 	 * 
 	 * @see <a href=
 	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/current/search-multi-search.html">Documentation
@@ -1392,13 +1716,14 @@ public class ElasticsearchAsyncClient extends ApiClient<ElasticsearchTransport, 
 		@SuppressWarnings("unchecked")
 		JsonEndpoint<MsearchTemplateRequest, MsearchTemplateResponse<TDocument>, ErrorResponse> endpoint = (JsonEndpoint<MsearchTemplateRequest, MsearchTemplateResponse<TDocument>, ErrorResponse>) MsearchTemplateRequest._ENDPOINT;
 		endpoint = new EndpointWithResponseMapperAttr<>(endpoint,
-				"co.elastic.clients:Deserializer:_global.msearch_template.TDocument", getDeserializer(tDocumentClass));
+				"co.elastic.clients:Deserializer:_global.msearch_template.Response.TDocument",
+				getDeserializer(tDocumentClass));
 
 		return this.transport.performRequestAsync(request, endpoint, this.transportOptions);
 	}
 
 	/**
-	 * Allows to execute several search template operations in one request.
+	 * Run multiple templated searches.
 	 * 
 	 * @param fn
 	 *            a function that initializes a builder to create the
@@ -1415,7 +1740,7 @@ public class ElasticsearchAsyncClient extends ApiClient<ElasticsearchTransport, 
 	}
 
 	/**
-	 * Allows to execute several search template operations in one request.
+	 * Run multiple templated searches.
 	 * 
 	 * @see <a href=
 	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/current/search-multi-search.html">Documentation
@@ -1427,13 +1752,14 @@ public class ElasticsearchAsyncClient extends ApiClient<ElasticsearchTransport, 
 		@SuppressWarnings("unchecked")
 		JsonEndpoint<MsearchTemplateRequest, MsearchTemplateResponse<TDocument>, ErrorResponse> endpoint = (JsonEndpoint<MsearchTemplateRequest, MsearchTemplateResponse<TDocument>, ErrorResponse>) MsearchTemplateRequest._ENDPOINT;
 		endpoint = new EndpointWithResponseMapperAttr<>(endpoint,
-				"co.elastic.clients:Deserializer:_global.msearch_template.TDocument", getDeserializer(tDocumentType));
+				"co.elastic.clients:Deserializer:_global.msearch_template.Response.TDocument",
+				getDeserializer(tDocumentType));
 
 		return this.transport.performRequestAsync(request, endpoint, this.transportOptions);
 	}
 
 	/**
-	 * Allows to execute several search template operations in one request.
+	 * Run multiple templated searches.
 	 * 
 	 * @param fn
 	 *            a function that initializes a builder to create the
@@ -1451,7 +1777,13 @@ public class ElasticsearchAsyncClient extends ApiClient<ElasticsearchTransport, 
 	// ----- Endpoint: mtermvectors
 
 	/**
-	 * Returns multiple termvectors in one request.
+	 * Get multiple term vectors.
+	 * <p>
+	 * You can specify existing documents by index and ID or provide artificial
+	 * documents in the body of the request. You can specify the index in the
+	 * request body or request URI. The response contains a <code>docs</code> array
+	 * with all the fetched termvectors. Each element has the structure provided by
+	 * the termvectors API.
 	 * 
 	 * @see <a href=
 	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-multi-termvectors.html">Documentation
@@ -1466,7 +1798,13 @@ public class ElasticsearchAsyncClient extends ApiClient<ElasticsearchTransport, 
 	}
 
 	/**
-	 * Returns multiple termvectors in one request.
+	 * Get multiple term vectors.
+	 * <p>
+	 * You can specify existing documents by index and ID or provide artificial
+	 * documents in the body of the request. You can specify the index in the
+	 * request body or request URI. The response contains a <code>docs</code> array
+	 * with all the fetched termvectors. Each element has the structure provided by
+	 * the termvectors API.
 	 * 
 	 * @param fn
 	 *            a function that initializes a builder to create the
@@ -1482,7 +1820,13 @@ public class ElasticsearchAsyncClient extends ApiClient<ElasticsearchTransport, 
 	}
 
 	/**
-	 * Returns multiple termvectors in one request.
+	 * Get multiple term vectors.
+	 * <p>
+	 * You can specify existing documents by index and ID or provide artificial
+	 * documents in the body of the request. You can specify the index in the
+	 * request body or request URI. The response contains a <code>docs</code> array
+	 * with all the fetched termvectors. Each element has the structure provided by
+	 * the termvectors API.
 	 * 
 	 * @see <a href=
 	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-multi-termvectors.html">Documentation
@@ -1497,10 +1841,23 @@ public class ElasticsearchAsyncClient extends ApiClient<ElasticsearchTransport, 
 	// ----- Endpoint: open_point_in_time
 
 	/**
-	 * Open a point in time that can be used in subsequent searches
+	 * Open a point in time.
+	 * <p>
+	 * A search request by default runs against the most recent visible data of the
+	 * target indices, which is called point in time. Elasticsearch pit (point in
+	 * time) is a lightweight view into the state of the data as it existed when
+	 * initiated. In some cases, it’s preferred to perform multiple search requests
+	 * using the same point in time. For example, if refreshes happen between
+	 * <code>search_after</code> requests, then the results of those requests might
+	 * not be consistent as changes happening between searches are only visible to
+	 * the more recent point in time.
+	 * <p>
+	 * A point in time must be opened explicitly before being used in search
+	 * requests. The <code>keep_alive</code> parameter tells Elasticsearch how long
+	 * it should persist.
 	 * 
 	 * @see <a href=
-	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/8.15/point-in-time-api.html">Documentation
+	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/9.0/point-in-time-api.html">Documentation
 	 *      on elastic.co</a>
 	 */
 
@@ -1512,13 +1869,26 @@ public class ElasticsearchAsyncClient extends ApiClient<ElasticsearchTransport, 
 	}
 
 	/**
-	 * Open a point in time that can be used in subsequent searches
+	 * Open a point in time.
+	 * <p>
+	 * A search request by default runs against the most recent visible data of the
+	 * target indices, which is called point in time. Elasticsearch pit (point in
+	 * time) is a lightweight view into the state of the data as it existed when
+	 * initiated. In some cases, it’s preferred to perform multiple search requests
+	 * using the same point in time. For example, if refreshes happen between
+	 * <code>search_after</code> requests, then the results of those requests might
+	 * not be consistent as changes happening between searches are only visible to
+	 * the more recent point in time.
+	 * <p>
+	 * A point in time must be opened explicitly before being used in search
+	 * requests. The <code>keep_alive</code> parameter tells Elasticsearch how long
+	 * it should persist.
 	 * 
 	 * @param fn
 	 *            a function that initializes a builder to create the
 	 *            {@link OpenPointInTimeRequest}
 	 * @see <a href=
-	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/8.15/point-in-time-api.html">Documentation
+	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/9.0/point-in-time-api.html">Documentation
 	 *      on elastic.co</a>
 	 */
 
@@ -1530,7 +1900,7 @@ public class ElasticsearchAsyncClient extends ApiClient<ElasticsearchTransport, 
 	// ----- Endpoint: ping
 
 	/**
-	 * Returns whether the cluster is running.
+	 * Ping the cluster. Get information about whether the cluster is running.
 	 * 
 	 * @see <a href=
 	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/current/index.html">Documentation
@@ -1543,7 +1913,8 @@ public class ElasticsearchAsyncClient extends ApiClient<ElasticsearchTransport, 
 	// ----- Endpoint: put_script
 
 	/**
-	 * Creates or updates a script.
+	 * Create or update a script or search template. Creates or updates a stored
+	 * script or search template.
 	 * 
 	 * @see <a href=
 	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-scripting.html">Documentation
@@ -1558,7 +1929,8 @@ public class ElasticsearchAsyncClient extends ApiClient<ElasticsearchTransport, 
 	}
 
 	/**
-	 * Creates or updates a script.
+	 * Create or update a script or search template. Creates or updates a stored
+	 * script or search template.
 	 * 
 	 * @param fn
 	 *            a function that initializes a builder to create the
@@ -1576,8 +1948,10 @@ public class ElasticsearchAsyncClient extends ApiClient<ElasticsearchTransport, 
 	// ----- Endpoint: rank_eval
 
 	/**
-	 * Allows to evaluate the quality of ranked search results over a set of typical
-	 * search queries
+	 * Evaluate ranked search results.
+	 * <p>
+	 * Evaluate the quality of ranked search results over a set of typical search
+	 * queries.
 	 * 
 	 * @see <a href=
 	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/master/search-rank-eval.html">Documentation
@@ -1592,8 +1966,10 @@ public class ElasticsearchAsyncClient extends ApiClient<ElasticsearchTransport, 
 	}
 
 	/**
-	 * Allows to evaluate the quality of ranked search results over a set of typical
-	 * search queries
+	 * Evaluate ranked search results.
+	 * <p>
+	 * Evaluate the quality of ranked search results over a set of typical search
+	 * queries.
 	 * 
 	 * @param fn
 	 *            a function that initializes a builder to create the
@@ -1611,9 +1987,10 @@ public class ElasticsearchAsyncClient extends ApiClient<ElasticsearchTransport, 
 	// ----- Endpoint: reindex
 
 	/**
-	 * Allows to copy documents from one index to another, optionally filtering the
-	 * source documents by a query, changing the destination index settings, or
-	 * fetching the documents from a remote cluster.
+	 * Reindex documents. Copies documents from a source to a destination. The
+	 * source can be any existing index, alias, or data stream. The destination must
+	 * differ from the source. For example, you cannot reindex a data stream into
+	 * itself.
 	 * 
 	 * @see <a href=
 	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-reindex.html">Documentation
@@ -1628,9 +2005,10 @@ public class ElasticsearchAsyncClient extends ApiClient<ElasticsearchTransport, 
 	}
 
 	/**
-	 * Allows to copy documents from one index to another, optionally filtering the
-	 * source documents by a query, changing the destination index settings, or
-	 * fetching the documents from a remote cluster.
+	 * Reindex documents. Copies documents from a source to a destination. The
+	 * source can be any existing index, alias, or data stream. The destination must
+	 * differ from the source. For example, you cannot reindex a data stream into
+	 * itself.
 	 * 
 	 * @param fn
 	 *            a function that initializes a builder to create the
@@ -1648,7 +2026,9 @@ public class ElasticsearchAsyncClient extends ApiClient<ElasticsearchTransport, 
 	// ----- Endpoint: reindex_rethrottle
 
 	/**
-	 * Changes the number of requests per second for a particular Reindex operation.
+	 * Throttle a reindex operation.
+	 * <p>
+	 * Change the number of requests per second for a particular reindex operation.
 	 * 
 	 * @see <a href=
 	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-reindex.html">Documentation
@@ -1663,7 +2043,9 @@ public class ElasticsearchAsyncClient extends ApiClient<ElasticsearchTransport, 
 	}
 
 	/**
-	 * Changes the number of requests per second for a particular Reindex operation.
+	 * Throttle a reindex operation.
+	 * <p>
+	 * Change the number of requests per second for a particular reindex operation.
 	 * 
 	 * @param fn
 	 *            a function that initializes a builder to create the
@@ -1681,7 +2063,9 @@ public class ElasticsearchAsyncClient extends ApiClient<ElasticsearchTransport, 
 	// ----- Endpoint: render_search_template
 
 	/**
-	 * Allows to use the Mustache language to pre-render a search definition.
+	 * Render a search template.
+	 * <p>
+	 * Render a search template as a search request body.
 	 * 
 	 * @see <a href=
 	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/current/render-search-template-api.html">Documentation
@@ -1696,7 +2080,9 @@ public class ElasticsearchAsyncClient extends ApiClient<ElasticsearchTransport, 
 	}
 
 	/**
-	 * Allows to use the Mustache language to pre-render a search definition.
+	 * Render a search template.
+	 * <p>
+	 * Render a search template as a search request body.
 	 * 
 	 * @param fn
 	 *            a function that initializes a builder to create the
@@ -1712,7 +2098,9 @@ public class ElasticsearchAsyncClient extends ApiClient<ElasticsearchTransport, 
 	}
 
 	/**
-	 * Allows to use the Mustache language to pre-render a search definition.
+	 * Render a search template.
+	 * <p>
+	 * Render a search template as a search request body.
 	 * 
 	 * @see <a href=
 	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/current/render-search-template-api.html">Documentation
@@ -1727,7 +2115,7 @@ public class ElasticsearchAsyncClient extends ApiClient<ElasticsearchTransport, 
 	// ----- Endpoint: scripts_painless_execute
 
 	/**
-	 * Allows an arbitrary script to be executed and a result to be returned
+	 * Run a script. Runs a script and returns a result.
 	 * 
 	 * @see <a href=
 	 *      "https://www.elastic.co/guide/en/elasticsearch/painless/master/painless-execute-api.html">Documentation
@@ -1739,14 +2127,14 @@ public class ElasticsearchAsyncClient extends ApiClient<ElasticsearchTransport, 
 		@SuppressWarnings("unchecked")
 		JsonEndpoint<ScriptsPainlessExecuteRequest, ScriptsPainlessExecuteResponse<TResult>, ErrorResponse> endpoint = (JsonEndpoint<ScriptsPainlessExecuteRequest, ScriptsPainlessExecuteResponse<TResult>, ErrorResponse>) ScriptsPainlessExecuteRequest._ENDPOINT;
 		endpoint = new EndpointWithResponseMapperAttr<>(endpoint,
-				"co.elastic.clients:Deserializer:_global.scripts_painless_execute.TResult",
+				"co.elastic.clients:Deserializer:_global.scripts_painless_execute.Response.TResult",
 				getDeserializer(tResultClass));
 
 		return this.transport.performRequestAsync(request, endpoint, this.transportOptions);
 	}
 
 	/**
-	 * Allows an arbitrary script to be executed and a result to be returned
+	 * Run a script. Runs a script and returns a result.
 	 * 
 	 * @param fn
 	 *            a function that initializes a builder to create the
@@ -1763,7 +2151,7 @@ public class ElasticsearchAsyncClient extends ApiClient<ElasticsearchTransport, 
 	}
 
 	/**
-	 * Allows an arbitrary script to be executed and a result to be returned
+	 * Run a script. Runs a script and returns a result.
 	 * 
 	 * @see <a href=
 	 *      "https://www.elastic.co/guide/en/elasticsearch/painless/master/painless-execute-api.html">Documentation
@@ -1775,14 +2163,14 @@ public class ElasticsearchAsyncClient extends ApiClient<ElasticsearchTransport, 
 		@SuppressWarnings("unchecked")
 		JsonEndpoint<ScriptsPainlessExecuteRequest, ScriptsPainlessExecuteResponse<TResult>, ErrorResponse> endpoint = (JsonEndpoint<ScriptsPainlessExecuteRequest, ScriptsPainlessExecuteResponse<TResult>, ErrorResponse>) ScriptsPainlessExecuteRequest._ENDPOINT;
 		endpoint = new EndpointWithResponseMapperAttr<>(endpoint,
-				"co.elastic.clients:Deserializer:_global.scripts_painless_execute.TResult",
+				"co.elastic.clients:Deserializer:_global.scripts_painless_execute.Response.TResult",
 				getDeserializer(tResultType));
 
 		return this.transport.performRequestAsync(request, endpoint, this.transportOptions);
 	}
 
 	/**
-	 * Allows an arbitrary script to be executed and a result to be returned
+	 * Run a script. Runs a script and returns a result.
 	 * 
 	 * @param fn
 	 *            a function that initializes a builder to create the
@@ -1801,7 +2189,29 @@ public class ElasticsearchAsyncClient extends ApiClient<ElasticsearchTransport, 
 	// ----- Endpoint: scroll
 
 	/**
-	 * Allows to retrieve a large numbers of results from a single search request.
+	 * Run a scrolling search.
+	 * <p>
+	 * IMPORTANT: The scroll API is no longer recommend for deep pagination. If you
+	 * need to preserve the index state while paging through more than 10,000 hits,
+	 * use the <code>search_after</code> parameter with a point in time (PIT).
+	 * <p>
+	 * The scroll API gets large sets of results from a single scrolling search
+	 * request. To get the necessary scroll ID, submit a search API request that
+	 * includes an argument for the <code>scroll</code> query parameter. The
+	 * <code>scroll</code> parameter indicates how long Elasticsearch should retain
+	 * the search context for the request. The search response returns a scroll ID
+	 * in the <code>_scroll_id</code> response body parameter. You can then use the
+	 * scroll ID with the scroll API to retrieve the next batch of results for the
+	 * request. If the Elasticsearch security features are enabled, the access to
+	 * the results of a specific scroll ID is restricted to the user or API key that
+	 * submitted the search.
+	 * <p>
+	 * You can also use the scroll API to specify a new scroll parameter that
+	 * extends or shortens the retention period for the search context.
+	 * <p>
+	 * IMPORTANT: Results from a scrolling search reflect the state of the index at
+	 * the time of the initial search request. Subsequent indexing or document
+	 * changes only affect later search and scroll requests.
 	 * 
 	 * @see <a href=
 	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/master/search-request-body.html#request-body-search-scroll">Documentation
@@ -1813,13 +2223,35 @@ public class ElasticsearchAsyncClient extends ApiClient<ElasticsearchTransport, 
 		@SuppressWarnings("unchecked")
 		JsonEndpoint<ScrollRequest, ScrollResponse<TDocument>, ErrorResponse> endpoint = (JsonEndpoint<ScrollRequest, ScrollResponse<TDocument>, ErrorResponse>) ScrollRequest._ENDPOINT;
 		endpoint = new EndpointWithResponseMapperAttr<>(endpoint,
-				"co.elastic.clients:Deserializer:_global.scroll.TDocument", getDeserializer(tDocumentClass));
+				"co.elastic.clients:Deserializer:_global.scroll.Response.TDocument", getDeserializer(tDocumentClass));
 
 		return this.transport.performRequestAsync(request, endpoint, this.transportOptions);
 	}
 
 	/**
-	 * Allows to retrieve a large numbers of results from a single search request.
+	 * Run a scrolling search.
+	 * <p>
+	 * IMPORTANT: The scroll API is no longer recommend for deep pagination. If you
+	 * need to preserve the index state while paging through more than 10,000 hits,
+	 * use the <code>search_after</code> parameter with a point in time (PIT).
+	 * <p>
+	 * The scroll API gets large sets of results from a single scrolling search
+	 * request. To get the necessary scroll ID, submit a search API request that
+	 * includes an argument for the <code>scroll</code> query parameter. The
+	 * <code>scroll</code> parameter indicates how long Elasticsearch should retain
+	 * the search context for the request. The search response returns a scroll ID
+	 * in the <code>_scroll_id</code> response body parameter. You can then use the
+	 * scroll ID with the scroll API to retrieve the next batch of results for the
+	 * request. If the Elasticsearch security features are enabled, the access to
+	 * the results of a specific scroll ID is restricted to the user or API key that
+	 * submitted the search.
+	 * <p>
+	 * You can also use the scroll API to specify a new scroll parameter that
+	 * extends or shortens the retention period for the search context.
+	 * <p>
+	 * IMPORTANT: Results from a scrolling search reflect the state of the index at
+	 * the time of the initial search request. Subsequent indexing or document
+	 * changes only affect later search and scroll requests.
 	 * 
 	 * @param fn
 	 *            a function that initializes a builder to create the
@@ -1835,7 +2267,29 @@ public class ElasticsearchAsyncClient extends ApiClient<ElasticsearchTransport, 
 	}
 
 	/**
-	 * Allows to retrieve a large numbers of results from a single search request.
+	 * Run a scrolling search.
+	 * <p>
+	 * IMPORTANT: The scroll API is no longer recommend for deep pagination. If you
+	 * need to preserve the index state while paging through more than 10,000 hits,
+	 * use the <code>search_after</code> parameter with a point in time (PIT).
+	 * <p>
+	 * The scroll API gets large sets of results from a single scrolling search
+	 * request. To get the necessary scroll ID, submit a search API request that
+	 * includes an argument for the <code>scroll</code> query parameter. The
+	 * <code>scroll</code> parameter indicates how long Elasticsearch should retain
+	 * the search context for the request. The search response returns a scroll ID
+	 * in the <code>_scroll_id</code> response body parameter. You can then use the
+	 * scroll ID with the scroll API to retrieve the next batch of results for the
+	 * request. If the Elasticsearch security features are enabled, the access to
+	 * the results of a specific scroll ID is restricted to the user or API key that
+	 * submitted the search.
+	 * <p>
+	 * You can also use the scroll API to specify a new scroll parameter that
+	 * extends or shortens the retention period for the search context.
+	 * <p>
+	 * IMPORTANT: Results from a scrolling search reflect the state of the index at
+	 * the time of the initial search request. Subsequent indexing or document
+	 * changes only affect later search and scroll requests.
 	 * 
 	 * @see <a href=
 	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/master/search-request-body.html#request-body-search-scroll">Documentation
@@ -1846,13 +2300,35 @@ public class ElasticsearchAsyncClient extends ApiClient<ElasticsearchTransport, 
 		@SuppressWarnings("unchecked")
 		JsonEndpoint<ScrollRequest, ScrollResponse<TDocument>, ErrorResponse> endpoint = (JsonEndpoint<ScrollRequest, ScrollResponse<TDocument>, ErrorResponse>) ScrollRequest._ENDPOINT;
 		endpoint = new EndpointWithResponseMapperAttr<>(endpoint,
-				"co.elastic.clients:Deserializer:_global.scroll.TDocument", getDeserializer(tDocumentType));
+				"co.elastic.clients:Deserializer:_global.scroll.Response.TDocument", getDeserializer(tDocumentType));
 
 		return this.transport.performRequestAsync(request, endpoint, this.transportOptions);
 	}
 
 	/**
-	 * Allows to retrieve a large numbers of results from a single search request.
+	 * Run a scrolling search.
+	 * <p>
+	 * IMPORTANT: The scroll API is no longer recommend for deep pagination. If you
+	 * need to preserve the index state while paging through more than 10,000 hits,
+	 * use the <code>search_after</code> parameter with a point in time (PIT).
+	 * <p>
+	 * The scroll API gets large sets of results from a single scrolling search
+	 * request. To get the necessary scroll ID, submit a search API request that
+	 * includes an argument for the <code>scroll</code> query parameter. The
+	 * <code>scroll</code> parameter indicates how long Elasticsearch should retain
+	 * the search context for the request. The search response returns a scroll ID
+	 * in the <code>_scroll_id</code> response body parameter. You can then use the
+	 * scroll ID with the scroll API to retrieve the next batch of results for the
+	 * request. If the Elasticsearch security features are enabled, the access to
+	 * the results of a specific scroll ID is restricted to the user or API key that
+	 * submitted the search.
+	 * <p>
+	 * You can also use the scroll API to specify a new scroll parameter that
+	 * extends or shortens the retention period for the search context.
+	 * <p>
+	 * IMPORTANT: Results from a scrolling search reflect the state of the index at
+	 * the time of the initial search request. Subsequent indexing or document
+	 * changes only affect later search and scroll requests.
 	 * 
 	 * @param fn
 	 *            a function that initializes a builder to create the
@@ -1870,7 +2346,11 @@ public class ElasticsearchAsyncClient extends ApiClient<ElasticsearchTransport, 
 	// ----- Endpoint: search
 
 	/**
-	 * Returns results matching a query.
+	 * Run a search.
+	 * <p>
+	 * Get search hits that match the query defined in the request. You can provide
+	 * search queries using the <code>q</code> query string parameter or the request
+	 * body. If both are specified, only the query parameter is used.
 	 * 
 	 * @see <a href=
 	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/master/search-search.html">Documentation
@@ -1882,13 +2362,17 @@ public class ElasticsearchAsyncClient extends ApiClient<ElasticsearchTransport, 
 		@SuppressWarnings("unchecked")
 		JsonEndpoint<SearchRequest, SearchResponse<TDocument>, ErrorResponse> endpoint = (JsonEndpoint<SearchRequest, SearchResponse<TDocument>, ErrorResponse>) SearchRequest._ENDPOINT;
 		endpoint = new EndpointWithResponseMapperAttr<>(endpoint,
-				"co.elastic.clients:Deserializer:_global.search.TDocument", getDeserializer(tDocumentClass));
+				"co.elastic.clients:Deserializer:_global.search.Response.TDocument", getDeserializer(tDocumentClass));
 
 		return this.transport.performRequestAsync(request, endpoint, this.transportOptions);
 	}
 
 	/**
-	 * Returns results matching a query.
+	 * Run a search.
+	 * <p>
+	 * Get search hits that match the query defined in the request. You can provide
+	 * search queries using the <code>q</code> query string parameter or the request
+	 * body. If both are specified, only the query parameter is used.
 	 * 
 	 * @param fn
 	 *            a function that initializes a builder to create the
@@ -1904,7 +2388,11 @@ public class ElasticsearchAsyncClient extends ApiClient<ElasticsearchTransport, 
 	}
 
 	/**
-	 * Returns results matching a query.
+	 * Run a search.
+	 * <p>
+	 * Get search hits that match the query defined in the request. You can provide
+	 * search queries using the <code>q</code> query string parameter or the request
+	 * body. If both are specified, only the query parameter is used.
 	 * 
 	 * @see <a href=
 	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/master/search-search.html">Documentation
@@ -1915,13 +2403,17 @@ public class ElasticsearchAsyncClient extends ApiClient<ElasticsearchTransport, 
 		@SuppressWarnings("unchecked")
 		JsonEndpoint<SearchRequest, SearchResponse<TDocument>, ErrorResponse> endpoint = (JsonEndpoint<SearchRequest, SearchResponse<TDocument>, ErrorResponse>) SearchRequest._ENDPOINT;
 		endpoint = new EndpointWithResponseMapperAttr<>(endpoint,
-				"co.elastic.clients:Deserializer:_global.search.TDocument", getDeserializer(tDocumentType));
+				"co.elastic.clients:Deserializer:_global.search.Response.TDocument", getDeserializer(tDocumentType));
 
 		return this.transport.performRequestAsync(request, endpoint, this.transportOptions);
 	}
 
 	/**
-	 * Returns results matching a query.
+	 * Run a search.
+	 * <p>
+	 * Get search hits that match the query defined in the request. You can provide
+	 * search queries using the <code>q</code> query string parameter or the request
+	 * body. If both are specified, only the query parameter is used.
 	 * 
 	 * @param fn
 	 *            a function that initializes a builder to create the
@@ -1939,8 +2431,9 @@ public class ElasticsearchAsyncClient extends ApiClient<ElasticsearchTransport, 
 	// ----- Endpoint: search_mvt
 
 	/**
-	 * Searches a vector tile for geospatial values. Returns results as a binary
-	 * Mapbox vector tile.
+	 * Search a vector tile.
+	 * <p>
+	 * Search a vector tile for geospatial values.
 	 * 
 	 * @see <a href=
 	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/master/search-vector-tile-api.html">Documentation
@@ -1955,8 +2448,9 @@ public class ElasticsearchAsyncClient extends ApiClient<ElasticsearchTransport, 
 	}
 
 	/**
-	 * Searches a vector tile for geospatial values. Returns results as a binary
-	 * Mapbox vector tile.
+	 * Search a vector tile.
+	 * <p>
+	 * Search a vector tile for geospatial values.
 	 * 
 	 * @param fn
 	 *            a function that initializes a builder to create the
@@ -1974,8 +2468,12 @@ public class ElasticsearchAsyncClient extends ApiClient<ElasticsearchTransport, 
 	// ----- Endpoint: search_shards
 
 	/**
-	 * Returns information about the indices and shards that a search request would
-	 * be executed against.
+	 * Get the search shards.
+	 * <p>
+	 * Get the indices and shards that a search request would be run against. This
+	 * information can be useful for working out issues or planning optimizations
+	 * with routing and shard preferences. When filtered aliases are used, the
+	 * filter is returned as part of the indices section.
 	 * 
 	 * @see <a href=
 	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/master/search-shards.html">Documentation
@@ -1990,8 +2488,12 @@ public class ElasticsearchAsyncClient extends ApiClient<ElasticsearchTransport, 
 	}
 
 	/**
-	 * Returns information about the indices and shards that a search request would
-	 * be executed against.
+	 * Get the search shards.
+	 * <p>
+	 * Get the indices and shards that a search request would be run against. This
+	 * information can be useful for working out issues or planning optimizations
+	 * with routing and shard preferences. When filtered aliases are used, the
+	 * filter is returned as part of the indices section.
 	 * 
 	 * @param fn
 	 *            a function that initializes a builder to create the
@@ -2007,8 +2509,12 @@ public class ElasticsearchAsyncClient extends ApiClient<ElasticsearchTransport, 
 	}
 
 	/**
-	 * Returns information about the indices and shards that a search request would
-	 * be executed against.
+	 * Get the search shards.
+	 * <p>
+	 * Get the indices and shards that a search request would be run against. This
+	 * information can be useful for working out issues or planning optimizations
+	 * with routing and shard preferences. When filtered aliases are used, the
+	 * filter is returned as part of the indices section.
 	 * 
 	 * @see <a href=
 	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/master/search-shards.html">Documentation
@@ -2023,7 +2529,7 @@ public class ElasticsearchAsyncClient extends ApiClient<ElasticsearchTransport, 
 	// ----- Endpoint: search_template
 
 	/**
-	 * Allows to use the Mustache language to pre-render a search definition.
+	 * Run a search with a search template.
 	 * 
 	 * @see <a href=
 	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/current/search-template.html">Documentation
@@ -2035,13 +2541,14 @@ public class ElasticsearchAsyncClient extends ApiClient<ElasticsearchTransport, 
 		@SuppressWarnings("unchecked")
 		JsonEndpoint<SearchTemplateRequest, SearchTemplateResponse<TDocument>, ErrorResponse> endpoint = (JsonEndpoint<SearchTemplateRequest, SearchTemplateResponse<TDocument>, ErrorResponse>) SearchTemplateRequest._ENDPOINT;
 		endpoint = new EndpointWithResponseMapperAttr<>(endpoint,
-				"co.elastic.clients:Deserializer:_global.search_template.TDocument", getDeserializer(tDocumentClass));
+				"co.elastic.clients:Deserializer:_global.search_template.Response.TDocument",
+				getDeserializer(tDocumentClass));
 
 		return this.transport.performRequestAsync(request, endpoint, this.transportOptions);
 	}
 
 	/**
-	 * Allows to use the Mustache language to pre-render a search definition.
+	 * Run a search with a search template.
 	 * 
 	 * @param fn
 	 *            a function that initializes a builder to create the
@@ -2058,7 +2565,7 @@ public class ElasticsearchAsyncClient extends ApiClient<ElasticsearchTransport, 
 	}
 
 	/**
-	 * Allows to use the Mustache language to pre-render a search definition.
+	 * Run a search with a search template.
 	 * 
 	 * @see <a href=
 	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/current/search-template.html">Documentation
@@ -2070,13 +2577,14 @@ public class ElasticsearchAsyncClient extends ApiClient<ElasticsearchTransport, 
 		@SuppressWarnings("unchecked")
 		JsonEndpoint<SearchTemplateRequest, SearchTemplateResponse<TDocument>, ErrorResponse> endpoint = (JsonEndpoint<SearchTemplateRequest, SearchTemplateResponse<TDocument>, ErrorResponse>) SearchTemplateRequest._ENDPOINT;
 		endpoint = new EndpointWithResponseMapperAttr<>(endpoint,
-				"co.elastic.clients:Deserializer:_global.search_template.TDocument", getDeserializer(tDocumentType));
+				"co.elastic.clients:Deserializer:_global.search_template.Response.TDocument",
+				getDeserializer(tDocumentType));
 
 		return this.transport.performRequestAsync(request, endpoint, this.transportOptions);
 	}
 
 	/**
-	 * Allows to use the Mustache language to pre-render a search definition.
+	 * Run a search with a search template.
 	 * 
 	 * @param fn
 	 *            a function that initializes a builder to create the
@@ -2094,9 +2602,20 @@ public class ElasticsearchAsyncClient extends ApiClient<ElasticsearchTransport, 
 	// ----- Endpoint: terms_enum
 
 	/**
-	 * The terms enum API can be used to discover terms in the index that begin with
-	 * the provided string. It is designed for low-latency look-ups used in
-	 * auto-complete scenarios.
+	 * Get terms in an index.
+	 * <p>
+	 * Discover terms that match a partial string in an index. This &quot;terms
+	 * enum&quot; API is designed for low-latency look-ups used in auto-complete
+	 * scenarios.
+	 * <p>
+	 * If the <code>complete</code> property in the response is false, the returned
+	 * terms set may be incomplete and should be treated as approximate. This can
+	 * occur due to a few reasons, such as a request timeout or a node error.
+	 * <p>
+	 * NOTE: The terms enum API may return terms from deleted documents. Deleted
+	 * documents are initially only marked as deleted. It is not until their
+	 * segments are merged that documents are actually deleted. Until that happens,
+	 * the terms enum API will return terms from these documents.
 	 * 
 	 * @see <a href=
 	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/current/search-terms-enum.html">Documentation
@@ -2111,9 +2630,20 @@ public class ElasticsearchAsyncClient extends ApiClient<ElasticsearchTransport, 
 	}
 
 	/**
-	 * The terms enum API can be used to discover terms in the index that begin with
-	 * the provided string. It is designed for low-latency look-ups used in
-	 * auto-complete scenarios.
+	 * Get terms in an index.
+	 * <p>
+	 * Discover terms that match a partial string in an index. This &quot;terms
+	 * enum&quot; API is designed for low-latency look-ups used in auto-complete
+	 * scenarios.
+	 * <p>
+	 * If the <code>complete</code> property in the response is false, the returned
+	 * terms set may be incomplete and should be treated as approximate. This can
+	 * occur due to a few reasons, such as a request timeout or a node error.
+	 * <p>
+	 * NOTE: The terms enum API may return terms from deleted documents. Deleted
+	 * documents are initially only marked as deleted. It is not until their
+	 * segments are merged that documents are actually deleted. Until that happens,
+	 * the terms enum API will return terms from these documents.
 	 * 
 	 * @param fn
 	 *            a function that initializes a builder to create the
@@ -2131,7 +2661,9 @@ public class ElasticsearchAsyncClient extends ApiClient<ElasticsearchTransport, 
 	// ----- Endpoint: termvectors
 
 	/**
-	 * Returns information and statistics about terms in the fields of a particular
+	 * Get term vector information.
+	 * <p>
+	 * Get information and statistics about terms in the fields of a particular
 	 * document.
 	 * 
 	 * @see <a href=
@@ -2147,7 +2679,9 @@ public class ElasticsearchAsyncClient extends ApiClient<ElasticsearchTransport, 
 	}
 
 	/**
-	 * Returns information and statistics about terms in the fields of a particular
+	 * Get term vector information.
+	 * <p>
+	 * Get information and statistics about terms in the fields of a particular
 	 * document.
 	 * 
 	 * @param fn
@@ -2166,7 +2700,8 @@ public class ElasticsearchAsyncClient extends ApiClient<ElasticsearchTransport, 
 	// ----- Endpoint: update
 
 	/**
-	 * Updates a document with a script or partial document.
+	 * Update a document. Updates a document by running a script or passing a
+	 * partial document.
 	 * 
 	 * @see <a href=
 	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-update.html">Documentation
@@ -2178,13 +2713,14 @@ public class ElasticsearchAsyncClient extends ApiClient<ElasticsearchTransport, 
 		@SuppressWarnings("unchecked")
 		JsonEndpoint<UpdateRequest<?, ?>, UpdateResponse<TDocument>, ErrorResponse> endpoint = (JsonEndpoint<UpdateRequest<?, ?>, UpdateResponse<TDocument>, ErrorResponse>) UpdateRequest._ENDPOINT;
 		endpoint = new EndpointWithResponseMapperAttr<>(endpoint,
-				"co.elastic.clients:Deserializer:_global.update.TDocument", getDeserializer(tDocumentClass));
+				"co.elastic.clients:Deserializer:_global.update.Response.TDocument", getDeserializer(tDocumentClass));
 
 		return this.transport.performRequestAsync(request, endpoint, this.transportOptions);
 	}
 
 	/**
-	 * Updates a document with a script or partial document.
+	 * Update a document. Updates a document by running a script or passing a
+	 * partial document.
 	 * 
 	 * @param fn
 	 *            a function that initializes a builder to create the
@@ -2201,7 +2737,8 @@ public class ElasticsearchAsyncClient extends ApiClient<ElasticsearchTransport, 
 	}
 
 	/**
-	 * Updates a document with a script or partial document.
+	 * Update a document. Updates a document by running a script or passing a
+	 * partial document.
 	 * 
 	 * @see <a href=
 	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-update.html">Documentation
@@ -2213,13 +2750,14 @@ public class ElasticsearchAsyncClient extends ApiClient<ElasticsearchTransport, 
 		@SuppressWarnings("unchecked")
 		JsonEndpoint<UpdateRequest<?, ?>, UpdateResponse<TDocument>, ErrorResponse> endpoint = (JsonEndpoint<UpdateRequest<?, ?>, UpdateResponse<TDocument>, ErrorResponse>) UpdateRequest._ENDPOINT;
 		endpoint = new EndpointWithResponseMapperAttr<>(endpoint,
-				"co.elastic.clients:Deserializer:_global.update.TDocument", getDeserializer(tDocumentType));
+				"co.elastic.clients:Deserializer:_global.update.Response.TDocument", getDeserializer(tDocumentType));
 
 		return this.transport.performRequestAsync(request, endpoint, this.transportOptions);
 	}
 
 	/**
-	 * Updates a document with a script or partial document.
+	 * Update a document. Updates a document by running a script or passing a
+	 * partial document.
 	 * 
 	 * @param fn
 	 *            a function that initializes a builder to create the
@@ -2238,9 +2776,10 @@ public class ElasticsearchAsyncClient extends ApiClient<ElasticsearchTransport, 
 	// ----- Endpoint: update_by_query
 
 	/**
-	 * Updates documents that match the specified query. If no query is specified,
-	 * performs an update on every document in the index without changing the
-	 * source, for example to pick up a mapping change.
+	 * Update documents. Updates documents that match the specified query. If no
+	 * query is specified, performs an update on every document in the data stream
+	 * or index without modifying the source, which is useful for picking up mapping
+	 * changes.
 	 * 
 	 * @see <a href=
 	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/master/docs-update-by-query.html">Documentation
@@ -2255,9 +2794,10 @@ public class ElasticsearchAsyncClient extends ApiClient<ElasticsearchTransport, 
 	}
 
 	/**
-	 * Updates documents that match the specified query. If no query is specified,
-	 * performs an update on every document in the index without changing the
-	 * source, for example to pick up a mapping change.
+	 * Update documents. Updates documents that match the specified query. If no
+	 * query is specified, performs an update on every document in the data stream
+	 * or index without modifying the source, which is useful for picking up mapping
+	 * changes.
 	 * 
 	 * @param fn
 	 *            a function that initializes a builder to create the
@@ -2275,8 +2815,12 @@ public class ElasticsearchAsyncClient extends ApiClient<ElasticsearchTransport, 
 	// ----- Endpoint: update_by_query_rethrottle
 
 	/**
-	 * Changes the number of requests per second for a particular Update By Query
-	 * operation.
+	 * Throttle an update by query operation.
+	 * <p>
+	 * Change the number of requests per second for a particular update by query
+	 * operation. Rethrottling that speeds up the query takes effect immediately but
+	 * rethrotting that slows down the query takes effect after completing the
+	 * current batch to prevent scroll timeouts.
 	 * 
 	 * @see <a href=
 	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-update-by-query.html">Documentation
@@ -2292,8 +2836,12 @@ public class ElasticsearchAsyncClient extends ApiClient<ElasticsearchTransport, 
 	}
 
 	/**
-	 * Changes the number of requests per second for a particular Update By Query
-	 * operation.
+	 * Throttle an update by query operation.
+	 * <p>
+	 * Change the number of requests per second for a particular update by query
+	 * operation. Rethrottling that speeds up the query takes effect immediately but
+	 * rethrotting that slows down the query takes effect after completing the
+	 * current batch to prevent scroll timeouts.
 	 * 
 	 * @param fn
 	 *            a function that initializes a builder to create the

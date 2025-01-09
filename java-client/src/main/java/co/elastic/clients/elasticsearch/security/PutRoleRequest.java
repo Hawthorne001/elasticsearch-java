@@ -60,9 +60,12 @@ import javax.annotation.Nullable;
 // typedef: security.put_role.Request
 
 /**
- * The role management APIs are generally the preferred way to manage roles,
- * rather than using file-based role management. The create or update roles API
- * cannot update roles that are defined in roles files.
+ * Create or update roles.
+ * <p>
+ * The role management APIs are generally the preferred way to manage roles in
+ * the native realm, rather than using file-based role management. The create or
+ * update roles API cannot update roles that are defined in roles files.
+ * File-based role management is not available in Elastic Serverless.
  * 
  * @see <a href="../doc-files/api-spec.html#security.put_role.Request">API
  *      specification</a>
@@ -72,6 +75,9 @@ public class PutRoleRequest extends RequestBase implements JsonpSerializable {
 	private final List<ApplicationPrivileges> applications;
 
 	private final List<String> cluster;
+
+	@Nullable
+	private final String description;
 
 	private final Map<String, JsonData> global;
 
@@ -84,6 +90,10 @@ public class PutRoleRequest extends RequestBase implements JsonpSerializable {
 	@Nullable
 	private final Refresh refresh;
 
+	private final List<RemoteClusterPrivileges> remoteCluster;
+
+	private final List<RemoteIndicesPrivileges> remoteIndices;
+
 	private final List<String> runAs;
 
 	private final Map<String, JsonData> transientMetadata;
@@ -94,11 +104,14 @@ public class PutRoleRequest extends RequestBase implements JsonpSerializable {
 
 		this.applications = ApiTypeHelper.unmodifiable(builder.applications);
 		this.cluster = ApiTypeHelper.unmodifiable(builder.cluster);
+		this.description = builder.description;
 		this.global = ApiTypeHelper.unmodifiable(builder.global);
 		this.indices = ApiTypeHelper.unmodifiable(builder.indices);
 		this.metadata = ApiTypeHelper.unmodifiable(builder.metadata);
 		this.name = ApiTypeHelper.requireNonNull(builder.name, this, "name");
 		this.refresh = builder.refresh;
+		this.remoteCluster = ApiTypeHelper.unmodifiable(builder.remoteCluster);
+		this.remoteIndices = ApiTypeHelper.unmodifiable(builder.remoteIndices);
 		this.runAs = ApiTypeHelper.unmodifiable(builder.runAs);
 		this.transientMetadata = ApiTypeHelper.unmodifiable(builder.transientMetadata);
 
@@ -125,6 +138,16 @@ public class PutRoleRequest extends RequestBase implements JsonpSerializable {
 	 */
 	public final List<String> cluster() {
 		return this.cluster;
+	}
+
+	/**
+	 * Optional description of the role descriptor
+	 * <p>
+	 * API name: {@code description}
+	 */
+	@Nullable
+	public final String description() {
+		return this.description;
 	}
 
 	/**
@@ -158,7 +181,11 @@ public class PutRoleRequest extends RequestBase implements JsonpSerializable {
 	}
 
 	/**
-	 * Required - The name of the role.
+	 * Required - The name of the role that is being created or updated. On
+	 * Elasticsearch Serverless, the role name must begin with a letter or digit and
+	 * can only contain letters, digits and the characters '_', '-', and '.'. Each
+	 * role must have a unique name, as this will serve as the identifier for that
+	 * role.
 	 * <p>
 	 * API name: {@code name}
 	 */
@@ -180,7 +207,28 @@ public class PutRoleRequest extends RequestBase implements JsonpSerializable {
 	}
 
 	/**
-	 * A list of users that the owners of this role can impersonate.
+	 * A list of remote cluster permissions entries.
+	 * <p>
+	 * API name: {@code remote_cluster}
+	 */
+	public final List<RemoteClusterPrivileges> remoteCluster() {
+		return this.remoteCluster;
+	}
+
+	/**
+	 * A list of remote indices permissions entries.
+	 * <p>
+	 * API name: {@code remote_indices}
+	 */
+	public final List<RemoteIndicesPrivileges> remoteIndices() {
+		return this.remoteIndices;
+	}
+
+	/**
+	 * A list of users that the owners of this role can impersonate. <em>Note</em>:
+	 * in Serverless, the run-as feature is disabled. For API compatibility, you can
+	 * still specify an empty <code>run_as</code> field, but a non-empty list will
+	 * be rejected.
 	 * <p>
 	 * API name: {@code run_as}
 	 */
@@ -233,6 +281,11 @@ public class PutRoleRequest extends RequestBase implements JsonpSerializable {
 			generator.writeEnd();
 
 		}
+		if (this.description != null) {
+			generator.writeKey("description");
+			generator.write(this.description);
+
+		}
 		if (ApiTypeHelper.isDefined(this.global)) {
 			generator.writeKey("global");
 			generator.writeStartObject();
@@ -260,6 +313,26 @@ public class PutRoleRequest extends RequestBase implements JsonpSerializable {
 			for (Map.Entry<String, JsonData> item0 : this.metadata.entrySet()) {
 				generator.writeKey(item0.getKey());
 				item0.getValue().serialize(generator, mapper);
+
+			}
+			generator.writeEnd();
+
+		}
+		if (ApiTypeHelper.isDefined(this.remoteCluster)) {
+			generator.writeKey("remote_cluster");
+			generator.writeStartArray();
+			for (RemoteClusterPrivileges item0 : this.remoteCluster) {
+				item0.serialize(generator, mapper);
+
+			}
+			generator.writeEnd();
+
+		}
+		if (ApiTypeHelper.isDefined(this.remoteIndices)) {
+			generator.writeKey("remote_indices");
+			generator.writeStartArray();
+			for (RemoteIndicesPrivileges item0 : this.remoteIndices) {
+				item0.serialize(generator, mapper);
 
 			}
 			generator.writeEnd();
@@ -303,6 +376,9 @@ public class PutRoleRequest extends RequestBase implements JsonpSerializable {
 		private List<String> cluster;
 
 		@Nullable
+		private String description;
+
+		@Nullable
 		private Map<String, JsonData> global;
 
 		@Nullable
@@ -315,6 +391,12 @@ public class PutRoleRequest extends RequestBase implements JsonpSerializable {
 
 		@Nullable
 		private Refresh refresh;
+
+		@Nullable
+		private List<RemoteClusterPrivileges> remoteCluster;
+
+		@Nullable
+		private List<RemoteIndicesPrivileges> remoteIndices;
 
 		@Nullable
 		private List<String> runAs;
@@ -381,6 +463,16 @@ public class PutRoleRequest extends RequestBase implements JsonpSerializable {
 		 */
 		public final Builder cluster(String value, String... values) {
 			this.cluster = _listAdd(this.cluster, value, values);
+			return this;
+		}
+
+		/**
+		 * Optional description of the role descriptor
+		 * <p>
+		 * API name: {@code description}
+		 */
+		public final Builder description(@Nullable String value) {
+			this.description = value;
 			return this;
 		}
 
@@ -474,7 +566,11 @@ public class PutRoleRequest extends RequestBase implements JsonpSerializable {
 		}
 
 		/**
-		 * Required - The name of the role.
+		 * Required - The name of the role that is being created or updated. On
+		 * Elasticsearch Serverless, the role name must begin with a letter or digit and
+		 * can only contain letters, digits and the characters '_', '-', and '.'. Each
+		 * role must have a unique name, as this will serve as the identifier for that
+		 * role.
 		 * <p>
 		 * API name: {@code name}
 		 */
@@ -497,7 +593,82 @@ public class PutRoleRequest extends RequestBase implements JsonpSerializable {
 		}
 
 		/**
-		 * A list of users that the owners of this role can impersonate.
+		 * A list of remote cluster permissions entries.
+		 * <p>
+		 * API name: {@code remote_cluster}
+		 * <p>
+		 * Adds all elements of <code>list</code> to <code>remoteCluster</code>.
+		 */
+		public final Builder remoteCluster(List<RemoteClusterPrivileges> list) {
+			this.remoteCluster = _listAddAll(this.remoteCluster, list);
+			return this;
+		}
+
+		/**
+		 * A list of remote cluster permissions entries.
+		 * <p>
+		 * API name: {@code remote_cluster}
+		 * <p>
+		 * Adds one or more values to <code>remoteCluster</code>.
+		 */
+		public final Builder remoteCluster(RemoteClusterPrivileges value, RemoteClusterPrivileges... values) {
+			this.remoteCluster = _listAdd(this.remoteCluster, value, values);
+			return this;
+		}
+
+		/**
+		 * A list of remote cluster permissions entries.
+		 * <p>
+		 * API name: {@code remote_cluster}
+		 * <p>
+		 * Adds a value to <code>remoteCluster</code> using a builder lambda.
+		 */
+		public final Builder remoteCluster(
+				Function<RemoteClusterPrivileges.Builder, ObjectBuilder<RemoteClusterPrivileges>> fn) {
+			return remoteCluster(fn.apply(new RemoteClusterPrivileges.Builder()).build());
+		}
+
+		/**
+		 * A list of remote indices permissions entries.
+		 * <p>
+		 * API name: {@code remote_indices}
+		 * <p>
+		 * Adds all elements of <code>list</code> to <code>remoteIndices</code>.
+		 */
+		public final Builder remoteIndices(List<RemoteIndicesPrivileges> list) {
+			this.remoteIndices = _listAddAll(this.remoteIndices, list);
+			return this;
+		}
+
+		/**
+		 * A list of remote indices permissions entries.
+		 * <p>
+		 * API name: {@code remote_indices}
+		 * <p>
+		 * Adds one or more values to <code>remoteIndices</code>.
+		 */
+		public final Builder remoteIndices(RemoteIndicesPrivileges value, RemoteIndicesPrivileges... values) {
+			this.remoteIndices = _listAdd(this.remoteIndices, value, values);
+			return this;
+		}
+
+		/**
+		 * A list of remote indices permissions entries.
+		 * <p>
+		 * API name: {@code remote_indices}
+		 * <p>
+		 * Adds a value to <code>remoteIndices</code> using a builder lambda.
+		 */
+		public final Builder remoteIndices(
+				Function<RemoteIndicesPrivileges.Builder, ObjectBuilder<RemoteIndicesPrivileges>> fn) {
+			return remoteIndices(fn.apply(new RemoteIndicesPrivileges.Builder()).build());
+		}
+
+		/**
+		 * A list of users that the owners of this role can impersonate. <em>Note</em>:
+		 * in Serverless, the run-as feature is disabled. For API compatibility, you can
+		 * still specify an empty <code>run_as</code> field, but a non-empty list will
+		 * be rejected.
 		 * <p>
 		 * API name: {@code run_as}
 		 * <p>
@@ -509,7 +680,10 @@ public class PutRoleRequest extends RequestBase implements JsonpSerializable {
 		}
 
 		/**
-		 * A list of users that the owners of this role can impersonate.
+		 * A list of users that the owners of this role can impersonate. <em>Note</em>:
+		 * in Serverless, the run-as feature is disabled. For API compatibility, you can
+		 * still specify an empty <code>run_as</code> field, but a non-empty list will
+		 * be rejected.
 		 * <p>
 		 * API name: {@code run_as}
 		 * <p>
@@ -586,9 +760,14 @@ public class PutRoleRequest extends RequestBase implements JsonpSerializable {
 				"applications");
 		op.add(Builder::cluster, JsonpDeserializer.arrayDeserializer(JsonpDeserializer.stringDeserializer()),
 				"cluster");
+		op.add(Builder::description, JsonpDeserializer.stringDeserializer(), "description");
 		op.add(Builder::global, JsonpDeserializer.stringMapDeserializer(JsonData._DESERIALIZER), "global");
 		op.add(Builder::indices, JsonpDeserializer.arrayDeserializer(IndicesPrivileges._DESERIALIZER), "indices");
 		op.add(Builder::metadata, JsonpDeserializer.stringMapDeserializer(JsonData._DESERIALIZER), "metadata");
+		op.add(Builder::remoteCluster, JsonpDeserializer.arrayDeserializer(RemoteClusterPrivileges._DESERIALIZER),
+				"remote_cluster");
+		op.add(Builder::remoteIndices, JsonpDeserializer.arrayDeserializer(RemoteIndicesPrivileges._DESERIALIZER),
+				"remote_indices");
 		op.add(Builder::runAs, JsonpDeserializer.arrayDeserializer(JsonpDeserializer.stringDeserializer()), "run_as");
 		op.add(Builder::transientMetadata, JsonpDeserializer.stringMapDeserializer(JsonData._DESERIALIZER),
 				"transient_metadata");

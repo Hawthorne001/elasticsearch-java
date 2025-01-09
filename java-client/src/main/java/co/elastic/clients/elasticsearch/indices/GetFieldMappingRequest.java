@@ -59,8 +59,12 @@ import javax.annotation.Nullable;
 // typedef: indices.get_field_mapping.Request
 
 /**
- * Retrieves mapping definitions for one or more fields. For data streams, the
- * API retrieves field mappings for the stream’s backing indices.
+ * Get mapping definitions. Retrieves mapping definitions for one or more
+ * fields. For data streams, the API retrieves field mappings for the stream’s
+ * backing indices.
+ * <p>
+ * This API is useful if you don't need a complete mapping or if an index
+ * mapping contains a large number of fields.
  * 
  * @see <a href=
  *      "../doc-files/api-spec.html#indices.get_field_mapping.Request">API
@@ -133,7 +137,7 @@ public class GetFieldMappingRequest extends RequestBase {
 
 	/**
 	 * Required - Comma-separated list or wildcard expression of fields used to
-	 * limit returned information.
+	 * limit returned information. Supports wildcards (<code>*</code>).
 	 * <p>
 	 * API name: {@code fields}
 	 */
@@ -262,7 +266,7 @@ public class GetFieldMappingRequest extends RequestBase {
 
 		/**
 		 * Required - Comma-separated list or wildcard expression of fields used to
-		 * limit returned information.
+		 * limit returned information. Supports wildcards (<code>*</code>).
 		 * <p>
 		 * API name: {@code fields}
 		 * <p>
@@ -275,7 +279,7 @@ public class GetFieldMappingRequest extends RequestBase {
 
 		/**
 		 * Required - Comma-separated list or wildcard expression of fields used to
-		 * limit returned information.
+		 * limit returned information. Supports wildcards (<code>*</code>).
 		 * <p>
 		 * API name: {@code fields}
 		 * <p>

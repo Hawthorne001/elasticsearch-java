@@ -60,6 +60,8 @@ import javax.annotation.Nullable;
 // typedef: security.update_api_key.Request
 
 /**
+ * Update an API key.
+ * <p>
  * Updates attributes of an existing API key. Users can only update API keys
  * that they created or that were granted to them. Use this API to update API
  * keys created by the create API Key or grant API Key APIs. If you need to

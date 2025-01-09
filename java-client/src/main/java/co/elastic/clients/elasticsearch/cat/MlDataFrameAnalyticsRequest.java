@@ -21,7 +21,7 @@ package co.elastic.clients.elasticsearch.cat;
 
 import co.elastic.clients.elasticsearch._types.Bytes;
 import co.elastic.clients.elasticsearch._types.ErrorResponse;
-import co.elastic.clients.elasticsearch._types.Time;
+import co.elastic.clients.elasticsearch._types.TimeUnit;
 import co.elastic.clients.json.JsonpDeserializable;
 import co.elastic.clients.json.JsonpDeserializer;
 import co.elastic.clients.json.ObjectBuilderDeserializer;
@@ -59,12 +59,12 @@ import javax.annotation.Nullable;
 // typedef: cat.ml_data_frame_analytics.Request
 
 /**
- * Returns configuration and usage information about data frame analytics jobs.
+ * Get data frame analytics jobs. Returns configuration and usage information
+ * about data frame analytics jobs.
  * <p>
- * IMPORTANT: cat APIs are only intended for human consumption using the Kibana
- * console or command line. They are not intended for use by applications. For
- * application consumption, use the get data frame analytics jobs statistics
- * API.
+ * CAT APIs are only intended for human consumption using the Kibana console or
+ * command line. They are not intended for use by applications. For application
+ * consumption, use the get data frame analytics jobs statistics API.
  * 
  * @see <a href=
  *      "../doc-files/api-spec.html#cat.ml_data_frame_analytics.Request">API
@@ -86,7 +86,7 @@ public class MlDataFrameAnalyticsRequest extends CatRequestBase {
 	private final List<CatDfaColumn> s;
 
 	@Nullable
-	private final Time time;
+	private final TimeUnit time;
 
 	// ---------------------------------------------------------------------------------------------
 
@@ -161,7 +161,7 @@ public class MlDataFrameAnalyticsRequest extends CatRequestBase {
 	 * API name: {@code time}
 	 */
 	@Nullable
-	public final Time time() {
+	public final TimeUnit time() {
 		return this.time;
 	}
 
@@ -190,7 +190,7 @@ public class MlDataFrameAnalyticsRequest extends CatRequestBase {
 		private List<CatDfaColumn> s;
 
 		@Nullable
-		private Time time;
+		private TimeUnit time;
 
 		/**
 		 * Whether to ignore if a wildcard expression matches no configs. (This includes
@@ -278,18 +278,9 @@ public class MlDataFrameAnalyticsRequest extends CatRequestBase {
 		 * <p>
 		 * API name: {@code time}
 		 */
-		public final Builder time(@Nullable Time value) {
+		public final Builder time(@Nullable TimeUnit value) {
 			this.time = value;
 			return this;
-		}
-
-		/**
-		 * Unit used to display time values.
-		 * <p>
-		 * API name: {@code time}
-		 */
-		public final Builder time(Function<Time.Builder, ObjectBuilder<Time>> fn) {
-			return this.time(fn.apply(new Time.Builder()).build());
 		}
 
 		@Override
@@ -387,7 +378,7 @@ public class MlDataFrameAnalyticsRequest extends CatRequestBase {
 					params.put("h", request.h.stream().map(v -> v.jsonValue()).collect(Collectors.joining(",")));
 				}
 				if (request.time != null) {
-					params.put("time", request.time._toJsonString());
+					params.put("time", request.time.jsonValue());
 				}
 				if (request.allowNoMatch != null) {
 					params.put("allow_no_match", String.valueOf(request.allowNoMatch));

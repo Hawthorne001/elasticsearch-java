@@ -31,7 +31,7 @@ import co.elastic.clients.util.ApiTypeHelper;
 import co.elastic.clients.util.ObjectBuilder;
 import jakarta.json.stream.JsonGenerator;
 import java.lang.Float;
-import java.lang.Long;
+import java.lang.Integer;
 import java.lang.String;
 import java.util.List;
 import java.util.Objects;
@@ -70,7 +70,10 @@ public class KnnQuery extends QueryBase implements QueryVariant {
 	private final QueryVectorBuilder queryVectorBuilder;
 
 	@Nullable
-	private final Long numCandidates;
+	private final Integer numCandidates;
+
+	@Nullable
+	private final Integer k;
 
 	private final List<Query> filter;
 
@@ -86,6 +89,7 @@ public class KnnQuery extends QueryBase implements QueryVariant {
 		this.queryVector = ApiTypeHelper.unmodifiable(builder.queryVector);
 		this.queryVectorBuilder = builder.queryVectorBuilder;
 		this.numCandidates = builder.numCandidates;
+		this.k = builder.k;
 		this.filter = ApiTypeHelper.unmodifiable(builder.filter);
 		this.similarity = builder.similarity;
 
@@ -138,8 +142,18 @@ public class KnnQuery extends QueryBase implements QueryVariant {
 	 * API name: {@code num_candidates}
 	 */
 	@Nullable
-	public final Long numCandidates() {
+	public final Integer numCandidates() {
 		return this.numCandidates;
+	}
+
+	/**
+	 * The final number of nearest neighbors to return as top hits
+	 * <p>
+	 * API name: {@code k}
+	 */
+	@Nullable
+	public final Integer k() {
+		return this.k;
 	}
 
 	/**
@@ -187,6 +201,11 @@ public class KnnQuery extends QueryBase implements QueryVariant {
 			generator.write(this.numCandidates);
 
 		}
+		if (this.k != null) {
+			generator.writeKey("k");
+			generator.write(this.k);
+
+		}
 		if (ApiTypeHelper.isDefined(this.filter)) {
 			generator.writeKey("filter");
 			generator.writeStartArray();
@@ -221,7 +240,10 @@ public class KnnQuery extends QueryBase implements QueryVariant {
 		private QueryVectorBuilder queryVectorBuilder;
 
 		@Nullable
-		private Long numCandidates;
+		private Integer numCandidates;
+
+		@Nullable
+		private Integer k;
 
 		@Nullable
 		private List<Query> filter;
@@ -290,8 +312,18 @@ public class KnnQuery extends QueryBase implements QueryVariant {
 		 * <p>
 		 * API name: {@code num_candidates}
 		 */
-		public final Builder numCandidates(@Nullable Long value) {
+		public final Builder numCandidates(@Nullable Integer value) {
 			this.numCandidates = value;
+			return this;
+		}
+
+		/**
+		 * The final number of nearest neighbors to return as top hits
+		 * <p>
+		 * API name: {@code k}
+		 */
+		public final Builder k(@Nullable Integer value) {
+			this.k = value;
 			return this;
 		}
 
@@ -372,7 +404,8 @@ public class KnnQuery extends QueryBase implements QueryVariant {
 		op.add(Builder::queryVector, JsonpDeserializer.arrayDeserializer(JsonpDeserializer.floatDeserializer()),
 				"query_vector");
 		op.add(Builder::queryVectorBuilder, QueryVectorBuilder._DESERIALIZER, "query_vector_builder");
-		op.add(Builder::numCandidates, JsonpDeserializer.longDeserializer(), "num_candidates");
+		op.add(Builder::numCandidates, JsonpDeserializer.integerDeserializer(), "num_candidates");
+		op.add(Builder::k, JsonpDeserializer.integerDeserializer(), "k");
 		op.add(Builder::filter, JsonpDeserializer.arrayDeserializer(Query._DESERIALIZER), "filter");
 		op.add(Builder::similarity, JsonpDeserializer.floatDeserializer(), "similarity");
 

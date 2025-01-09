@@ -68,10 +68,22 @@ public class ElasticsearchTasksAsyncClient extends ApiClient<ElasticsearchTransp
 	// ----- Endpoint: tasks.cancel
 
 	/**
-	 * Cancels a task, if it can be cancelled through an API.
+	 * Cancel a task. A task may continue to run for some time after it has been
+	 * cancelled because it may not be able to safely stop its current activity
+	 * straight away. It is also possible that Elasticsearch must complete its work
+	 * on other tasks before it can process the cancellation. The get task
+	 * information API will continue to list these cancelled tasks until they
+	 * complete. The cancelled flag in the response indicates that the cancellation
+	 * command has been processed and the task will stop as soon as possible.
+	 * <p>
+	 * To troubleshoot why a cancelled task does not complete promptly, use the get
+	 * task information API with the <code>?detailed</code> parameter to identify
+	 * the other tasks the system is running. You can also use the node hot threads
+	 * API to obtain detailed information about the work the system is doing instead
+	 * of completing the cancelled task.
 	 * 
 	 * @see <a href=
-	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/8.15/tasks.html">Documentation
+	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/9.0/tasks.html">Documentation
 	 *      on elastic.co</a>
 	 */
 
@@ -83,13 +95,25 @@ public class ElasticsearchTasksAsyncClient extends ApiClient<ElasticsearchTransp
 	}
 
 	/**
-	 * Cancels a task, if it can be cancelled through an API.
+	 * Cancel a task. A task may continue to run for some time after it has been
+	 * cancelled because it may not be able to safely stop its current activity
+	 * straight away. It is also possible that Elasticsearch must complete its work
+	 * on other tasks before it can process the cancellation. The get task
+	 * information API will continue to list these cancelled tasks until they
+	 * complete. The cancelled flag in the response indicates that the cancellation
+	 * command has been processed and the task will stop as soon as possible.
+	 * <p>
+	 * To troubleshoot why a cancelled task does not complete promptly, use the get
+	 * task information API with the <code>?detailed</code> parameter to identify
+	 * the other tasks the system is running. You can also use the node hot threads
+	 * API to obtain detailed information about the work the system is doing instead
+	 * of completing the cancelled task.
 	 * 
 	 * @param fn
 	 *            a function that initializes a builder to create the
 	 *            {@link CancelRequest}
 	 * @see <a href=
-	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/8.15/tasks.html">Documentation
+	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/9.0/tasks.html">Documentation
 	 *      on elastic.co</a>
 	 */
 
@@ -99,10 +123,22 @@ public class ElasticsearchTasksAsyncClient extends ApiClient<ElasticsearchTransp
 	}
 
 	/**
-	 * Cancels a task, if it can be cancelled through an API.
+	 * Cancel a task. A task may continue to run for some time after it has been
+	 * cancelled because it may not be able to safely stop its current activity
+	 * straight away. It is also possible that Elasticsearch must complete its work
+	 * on other tasks before it can process the cancellation. The get task
+	 * information API will continue to list these cancelled tasks until they
+	 * complete. The cancelled flag in the response indicates that the cancellation
+	 * command has been processed and the task will stop as soon as possible.
+	 * <p>
+	 * To troubleshoot why a cancelled task does not complete promptly, use the get
+	 * task information API with the <code>?detailed</code> parameter to identify
+	 * the other tasks the system is running. You can also use the node hot threads
+	 * API to obtain detailed information about the work the system is doing instead
+	 * of completing the cancelled task.
 	 * 
 	 * @see <a href=
-	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/8.15/tasks.html">Documentation
+	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/9.0/tasks.html">Documentation
 	 *      on elastic.co</a>
 	 */
 
@@ -114,10 +150,11 @@ public class ElasticsearchTasksAsyncClient extends ApiClient<ElasticsearchTransp
 	// ----- Endpoint: tasks.get
 
 	/**
-	 * Returns information about a task.
+	 * Get task information. Get information about a task currently running in the
+	 * cluster.
 	 * 
 	 * @see <a href=
-	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/8.15/tasks.html">Documentation
+	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/9.0/tasks.html">Documentation
 	 *      on elastic.co</a>
 	 */
 
@@ -129,13 +166,14 @@ public class ElasticsearchTasksAsyncClient extends ApiClient<ElasticsearchTransp
 	}
 
 	/**
-	 * Returns information about a task.
+	 * Get task information. Get information about a task currently running in the
+	 * cluster.
 	 * 
 	 * @param fn
 	 *            a function that initializes a builder to create the
 	 *            {@link GetTasksRequest}
 	 * @see <a href=
-	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/8.15/tasks.html">Documentation
+	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/9.0/tasks.html">Documentation
 	 *      on elastic.co</a>
 	 */
 
@@ -147,10 +185,11 @@ public class ElasticsearchTasksAsyncClient extends ApiClient<ElasticsearchTransp
 	// ----- Endpoint: tasks.list
 
 	/**
-	 * Returns a list of tasks.
+	 * Get all tasks. Get information about the tasks currently running on one or
+	 * more nodes in the cluster.
 	 * 
 	 * @see <a href=
-	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/8.15/tasks.html">Documentation
+	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/9.0/tasks.html">Documentation
 	 *      on elastic.co</a>
 	 */
 
@@ -162,13 +201,14 @@ public class ElasticsearchTasksAsyncClient extends ApiClient<ElasticsearchTransp
 	}
 
 	/**
-	 * Returns a list of tasks.
+	 * Get all tasks. Get information about the tasks currently running on one or
+	 * more nodes in the cluster.
 	 * 
 	 * @param fn
 	 *            a function that initializes a builder to create the
 	 *            {@link ListRequest}
 	 * @see <a href=
-	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/8.15/tasks.html">Documentation
+	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/9.0/tasks.html">Documentation
 	 *      on elastic.co</a>
 	 */
 
@@ -177,10 +217,11 @@ public class ElasticsearchTasksAsyncClient extends ApiClient<ElasticsearchTransp
 	}
 
 	/**
-	 * Returns a list of tasks.
+	 * Get all tasks. Get information about the tasks currently running on one or
+	 * more nodes in the cluster.
 	 * 
 	 * @see <a href=
-	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/8.15/tasks.html">Documentation
+	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/9.0/tasks.html">Documentation
 	 *      on elastic.co</a>
 	 */
 

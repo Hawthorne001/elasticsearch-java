@@ -82,7 +82,7 @@ public class Aggregate implements OpenTaggedUnion<Aggregate.Kind, Object>, Jsonp
 
 		Avg("avg"),
 
-		BoxPlot("box_plot"),
+		Boxplot("boxplot"),
 
 		BucketMetricValue("bucket_metric_value"),
 
@@ -195,6 +195,8 @@ public class Aggregate implements OpenTaggedUnion<Aggregate.Kind, Object>, Jsonp
 		TdigestPercentiles("tdigest_percentiles"),
 
 		TTest("t_test"),
+
+		TimeSeries("time_series"),
 
 		TopHits("top_hits"),
 
@@ -328,20 +330,20 @@ public class Aggregate implements OpenTaggedUnion<Aggregate.Kind, Object>, Jsonp
 	}
 
 	/**
-	 * Is this variant instance of kind {@code box_plot}?
+	 * Is this variant instance of kind {@code boxplot}?
 	 */
-	public boolean isBoxPlot() {
-		return _kind == Kind.BoxPlot;
+	public boolean isBoxplot() {
+		return _kind == Kind.Boxplot;
 	}
 
 	/**
-	 * Get the {@code box_plot} variant value.
+	 * Get the {@code boxplot} variant value.
 	 *
 	 * @throws IllegalStateException
-	 *             if the current variant is not of the {@code box_plot} kind.
+	 *             if the current variant is not of the {@code boxplot} kind.
 	 */
-	public BoxPlotAggregate boxPlot() {
-		return TaggedUnionUtils.get(this, Kind.BoxPlot);
+	public BoxPlotAggregate boxplot() {
+		return TaggedUnionUtils.get(this, Kind.Boxplot);
 	}
 
 	/**
@@ -1308,6 +1310,23 @@ public class Aggregate implements OpenTaggedUnion<Aggregate.Kind, Object>, Jsonp
 	}
 
 	/**
+	 * Is this variant instance of kind {@code time_series}?
+	 */
+	public boolean isTimeSeries() {
+		return _kind == Kind.TimeSeries;
+	}
+
+	/**
+	 * Get the {@code time_series} variant value.
+	 *
+	 * @throws IllegalStateException
+	 *             if the current variant is not of the {@code time_series} kind.
+	 */
+	public TimeSeriesAggregate timeSeries() {
+		return TaggedUnionUtils.get(this, Kind.TimeSeries);
+	}
+
+	/**
 	 * Is this variant instance of kind {@code top_hits}?
 	 */
 	public boolean isTopHits() {
@@ -1540,15 +1559,15 @@ public class Aggregate implements OpenTaggedUnion<Aggregate.Kind, Object>, Jsonp
 			return this.avg(fn.apply(new AvgAggregate.Builder()).build());
 		}
 
-		public ObjectBuilder<Aggregate> boxPlot(BoxPlotAggregate v) {
-			this._kind = Kind.BoxPlot;
+		public ObjectBuilder<Aggregate> boxplot(BoxPlotAggregate v) {
+			this._kind = Kind.Boxplot;
 			this._value = v;
 			return this;
 		}
 
-		public ObjectBuilder<Aggregate> boxPlot(
+		public ObjectBuilder<Aggregate> boxplot(
 				Function<BoxPlotAggregate.Builder, ObjectBuilder<BoxPlotAggregate>> fn) {
-			return this.boxPlot(fn.apply(new BoxPlotAggregate.Builder()).build());
+			return this.boxplot(fn.apply(new BoxPlotAggregate.Builder()).build());
 		}
 
 		public ObjectBuilder<Aggregate> bucketMetricValue(BucketMetricValueAggregate v) {
@@ -2156,6 +2175,17 @@ public class Aggregate implements OpenTaggedUnion<Aggregate.Kind, Object>, Jsonp
 			return this.tTest(fn.apply(new TTestAggregate.Builder()).build());
 		}
 
+		public ObjectBuilder<Aggregate> timeSeries(TimeSeriesAggregate v) {
+			this._kind = Kind.TimeSeries;
+			this._value = v;
+			return this;
+		}
+
+		public ObjectBuilder<Aggregate> timeSeries(
+				Function<TimeSeriesAggregate.Builder, ObjectBuilder<TimeSeriesAggregate>> fn) {
+			return this.timeSeries(fn.apply(new TimeSeriesAggregate.Builder()).build());
+		}
+
 		public ObjectBuilder<Aggregate> topHits(TopHitsAggregate v) {
 			this._kind = Kind.TopHits;
 			this._value = v;
@@ -2285,7 +2315,7 @@ public class Aggregate implements OpenTaggedUnion<Aggregate.Kind, Object>, Jsonp
 		deserializers.put("adjacency_matrix", AdjacencyMatrixAggregate._DESERIALIZER);
 		deserializers.put("auto_date_histogram", AutoDateHistogramAggregate._DESERIALIZER);
 		deserializers.put("avg", AvgAggregate._DESERIALIZER);
-		deserializers.put("box_plot", BoxPlotAggregate._DESERIALIZER);
+		deserializers.put("boxplot", BoxPlotAggregate._DESERIALIZER);
 		deserializers.put("bucket_metric_value", BucketMetricValueAggregate._DESERIALIZER);
 		deserializers.put("cardinality", CardinalityAggregate._DESERIALIZER);
 		deserializers.put("children", ChildrenAggregate._DESERIALIZER);
@@ -2342,6 +2372,7 @@ public class Aggregate implements OpenTaggedUnion<Aggregate.Kind, Object>, Jsonp
 		deserializers.put("tdigest_percentile_ranks", TDigestPercentileRanksAggregate._DESERIALIZER);
 		deserializers.put("tdigest_percentiles", TDigestPercentilesAggregate._DESERIALIZER);
 		deserializers.put("t_test", TTestAggregate._DESERIALIZER);
+		deserializers.put("time_series", TimeSeriesAggregate._DESERIALIZER);
 		deserializers.put("top_hits", TopHitsAggregate._DESERIALIZER);
 		deserializers.put("top_metrics", TopMetricsAggregate._DESERIALIZER);
 		deserializers.put("umrareterms", UnmappedRareTermsAggregate._DESERIALIZER);

@@ -21,6 +21,7 @@ package co.elastic.clients.elasticsearch.features;
 
 import co.elastic.clients.elasticsearch._types.ErrorResponse;
 import co.elastic.clients.elasticsearch._types.RequestBase;
+import co.elastic.clients.elasticsearch._types.Time;
 import co.elastic.clients.json.JsonpDeserializable;
 import co.elastic.clients.json.JsonpDeserializer;
 import co.elastic.clients.json.ObjectBuilderDeserializer;
@@ -30,7 +31,11 @@ import co.elastic.clients.transport.endpoints.SimpleEndpoint;
 import co.elastic.clients.util.ObjectBuilder;
 import jakarta.json.stream.JsonGenerator;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
+import java.util.function.Function;
+import javax.annotation.Nullable;
 
 //----------------------------------------------------------------
 //       THIS CODE IS GENERATED. MANUAL EDITS WILL BE LOST.
@@ -50,20 +55,108 @@ import java.util.Objects;
 // typedef: features.reset_features.Request
 
 /**
- * Resets the internal state of features, usually by deleting system indices
+ * Reset the features. Clear all of the state information stored in system
+ * indices by Elasticsearch features, including the security and machine
+ * learning indices.
+ * <p>
+ * WARNING: Intended for development and testing use only. Do not reset features
+ * on a production cluster.
+ * <p>
+ * Return a cluster to the same state as a new installation by resetting the
+ * feature state for all Elasticsearch features. This deletes all state
+ * information stored in system indices.
+ * <p>
+ * The response code is HTTP 200 if the state is successfully reset for all
+ * features. It is HTTP 500 if the reset operation failed for any feature.
+ * <p>
+ * Note that select features might provide a way to reset particular system
+ * indices. Using this API resets all features, both those that are built-in and
+ * implemented as plugins.
+ * <p>
+ * To list the features that will be affected, use the get features API.
+ * <p>
+ * IMPORTANT: The features installed on the node you submit this request to are
+ * the features that will be reset. Run on the master node if you have any
+ * doubts about which plugins are installed on individual nodes.
  * 
  * @see <a href="../doc-files/api-spec.html#features.reset_features.Request">API
  *      specification</a>
  */
 
 public class ResetFeaturesRequest extends RequestBase {
-	public ResetFeaturesRequest() {
+	@Nullable
+	private final Time masterTimeout;
+
+	// ---------------------------------------------------------------------------------------------
+
+	private ResetFeaturesRequest(Builder builder) {
+
+		this.masterTimeout = builder.masterTimeout;
+
+	}
+
+	public static ResetFeaturesRequest of(Function<Builder, ObjectBuilder<ResetFeaturesRequest>> fn) {
+		return fn.apply(new Builder()).build();
 	}
 
 	/**
-	 * Singleton instance for {@link ResetFeaturesRequest}.
+	 * Period to wait for a connection to the master node.
+	 * <p>
+	 * API name: {@code master_timeout}
 	 */
-	public static final ResetFeaturesRequest _INSTANCE = new ResetFeaturesRequest();
+	@Nullable
+	public final Time masterTimeout() {
+		return this.masterTimeout;
+	}
+
+	// ---------------------------------------------------------------------------------------------
+
+	/**
+	 * Builder for {@link ResetFeaturesRequest}.
+	 */
+
+	public static class Builder extends RequestBase.AbstractBuilder<Builder>
+			implements
+				ObjectBuilder<ResetFeaturesRequest> {
+		@Nullable
+		private Time masterTimeout;
+
+		/**
+		 * Period to wait for a connection to the master node.
+		 * <p>
+		 * API name: {@code master_timeout}
+		 */
+		public final Builder masterTimeout(@Nullable Time value) {
+			this.masterTimeout = value;
+			return this;
+		}
+
+		/**
+		 * Period to wait for a connection to the master node.
+		 * <p>
+		 * API name: {@code master_timeout}
+		 */
+		public final Builder masterTimeout(Function<Time.Builder, ObjectBuilder<Time>> fn) {
+			return this.masterTimeout(fn.apply(new Time.Builder()).build());
+		}
+
+		@Override
+		protected Builder self() {
+			return this;
+		}
+
+		/**
+		 * Builds a {@link ResetFeaturesRequest}.
+		 *
+		 * @throws NullPointerException
+		 *             if some of the required fields are null.
+		 */
+		public ResetFeaturesRequest build() {
+			_checkSingleUse();
+
+			return new ResetFeaturesRequest(this);
+		}
+	}
 
 	// ---------------------------------------------------------------------------------------------
 
@@ -92,7 +185,11 @@ public class ResetFeaturesRequest extends RequestBase {
 
 			// Request parameters
 			request -> {
-				return Collections.emptyMap();
+				Map<String, String> params = new HashMap<>();
+				if (request.masterTimeout != null) {
+					params.put("master_timeout", request.masterTimeout._toJsonString());
+				}
+				return params;
 
 			}, SimpleEndpoint.emptyMap(), false, ResetFeaturesResponse._DESERIALIZER);
 }

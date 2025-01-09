@@ -424,6 +424,25 @@ public class PropertyBuilders {
 	}
 
 	/**
+	 * Creates a builder for the {@link IcuCollationProperty icu_collation_keyword}
+	 * {@code Property} variant.
+	 */
+	public static IcuCollationProperty.Builder icuCollationKeyword() {
+		return new IcuCollationProperty.Builder();
+	}
+
+	/**
+	 * Creates a Property of the {@link IcuCollationProperty icu_collation_keyword}
+	 * {@code Property} variant.
+	 */
+	public static Property icuCollationKeyword(
+			Function<IcuCollationProperty.Builder, ObjectBuilder<IcuCollationProperty>> fn) {
+		Property.Builder builder = new Property.Builder();
+		builder.icuCollationKeyword(fn.apply(new IcuCollationProperty.Builder()).build());
+		return builder.build();
+	}
+
+	/**
 	 * Creates a builder for the {@link IntegerNumberProperty integer}
 	 * {@code Property} variant.
 	 */
@@ -638,6 +657,25 @@ public class PropertyBuilders {
 	}
 
 	/**
+	 * Creates a builder for the {@link PassthroughObjectProperty passthrough}
+	 * {@code Property} variant.
+	 */
+	public static PassthroughObjectProperty.Builder passthrough() {
+		return new PassthroughObjectProperty.Builder();
+	}
+
+	/**
+	 * Creates a Property of the {@link PassthroughObjectProperty passthrough}
+	 * {@code Property} variant.
+	 */
+	public static Property passthrough(
+			Function<PassthroughObjectProperty.Builder, ObjectBuilder<PassthroughObjectProperty>> fn) {
+		Property.Builder builder = new Property.Builder();
+		builder.passthrough(fn.apply(new PassthroughObjectProperty.Builder()).build());
+		return builder.build();
+	}
+
+	/**
 	 * Creates a builder for the {@link PercolatorProperty percolator}
 	 * {@code Property} variant.
 	 */
@@ -745,6 +783,25 @@ public class PropertyBuilders {
 			Function<SearchAsYouTypeProperty.Builder, ObjectBuilder<SearchAsYouTypeProperty>> fn) {
 		Property.Builder builder = new Property.Builder();
 		builder.searchAsYouType(fn.apply(new SearchAsYouTypeProperty.Builder()).build());
+		return builder.build();
+	}
+
+	/**
+	 * Creates a builder for the {@link SemanticTextProperty semantic_text}
+	 * {@code Property} variant.
+	 */
+	public static SemanticTextProperty.Builder semanticText() {
+		return new SemanticTextProperty.Builder();
+	}
+
+	/**
+	 * Creates a Property of the {@link SemanticTextProperty semantic_text}
+	 * {@code Property} variant.
+	 */
+	public static Property semanticText(
+			Function<SemanticTextProperty.Builder, ObjectBuilder<SemanticTextProperty>> fn) {
+		Property.Builder builder = new Property.Builder();
+		builder.semanticText(fn.apply(new SemanticTextProperty.Builder()).build());
 		return builder.build();
 	}
 

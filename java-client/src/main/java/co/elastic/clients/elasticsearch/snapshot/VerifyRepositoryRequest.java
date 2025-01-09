@@ -56,7 +56,8 @@ import javax.annotation.Nullable;
 // typedef: snapshot.verify_repository.Request
 
 /**
- * Verifies a repository.
+ * Verify a snapshot repository. Check for common misconfigurations in a
+ * snapshot repository.
  * 
  * @see <a href=
  *      "../doc-files/api-spec.html#snapshot.verify_repository.Request">API
@@ -87,7 +88,9 @@ public class VerifyRepositoryRequest extends RequestBase {
 	}
 
 	/**
-	 * Explicit operation timeout for connection to master node
+	 * The period to wait for the master node. If the master node is not available
+	 * before the timeout expires, the request fails and returns an error. To
+	 * indicate that the request should never timeout, set it to <code>-1</code>.
 	 * <p>
 	 * API name: {@code master_timeout}
 	 */
@@ -97,7 +100,7 @@ public class VerifyRepositoryRequest extends RequestBase {
 	}
 
 	/**
-	 * Required - A repository name
+	 * Required - The name of the snapshot repository to verify.
 	 * <p>
 	 * API name: {@code repository}
 	 */
@@ -106,7 +109,11 @@ public class VerifyRepositoryRequest extends RequestBase {
 	}
 
 	/**
-	 * Explicit operation timeout
+	 * The period to wait for a response from all relevant nodes in the cluster
+	 * after updating the cluster metadata. If no response is received before the
+	 * timeout expires, the cluster metadata update still applies but the response
+	 * will indicate that it was not completely acknowledged. To indicate that the
+	 * request should never timeout, set it to <code>-1</code>.
 	 * <p>
 	 * API name: {@code timeout}
 	 */
@@ -133,7 +140,9 @@ public class VerifyRepositoryRequest extends RequestBase {
 		private Time timeout;
 
 		/**
-		 * Explicit operation timeout for connection to master node
+		 * The period to wait for the master node. If the master node is not available
+		 * before the timeout expires, the request fails and returns an error. To
+		 * indicate that the request should never timeout, set it to <code>-1</code>.
 		 * <p>
 		 * API name: {@code master_timeout}
 		 */
@@ -143,7 +152,9 @@ public class VerifyRepositoryRequest extends RequestBase {
 		}
 
 		/**
-		 * Explicit operation timeout for connection to master node
+		 * The period to wait for the master node. If the master node is not available
+		 * before the timeout expires, the request fails and returns an error. To
+		 * indicate that the request should never timeout, set it to <code>-1</code>.
 		 * <p>
 		 * API name: {@code master_timeout}
 		 */
@@ -152,7 +163,7 @@ public class VerifyRepositoryRequest extends RequestBase {
 		}
 
 		/**
-		 * Required - A repository name
+		 * Required - The name of the snapshot repository to verify.
 		 * <p>
 		 * API name: {@code repository}
 		 */
@@ -162,7 +173,11 @@ public class VerifyRepositoryRequest extends RequestBase {
 		}
 
 		/**
-		 * Explicit operation timeout
+		 * The period to wait for a response from all relevant nodes in the cluster
+		 * after updating the cluster metadata. If no response is received before the
+		 * timeout expires, the cluster metadata update still applies but the response
+		 * will indicate that it was not completely acknowledged. To indicate that the
+		 * request should never timeout, set it to <code>-1</code>.
 		 * <p>
 		 * API name: {@code timeout}
 		 */
@@ -172,7 +187,11 @@ public class VerifyRepositoryRequest extends RequestBase {
 		}
 
 		/**
-		 * Explicit operation timeout
+		 * The period to wait for a response from all relevant nodes in the cluster
+		 * after updating the cluster metadata. If no response is received before the
+		 * timeout expires, the cluster metadata update still applies but the response
+		 * will indicate that it was not completely acknowledged. To indicate that the
+		 * request should never timeout, set it to <code>-1</code>.
 		 * <p>
 		 * API name: {@code timeout}
 		 */

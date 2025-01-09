@@ -63,7 +63,14 @@ import javax.annotation.Nullable;
 // typedef: indices.analyze.Request
 
 /**
- * Performs analysis on a text string and returns the resulting tokens.
+ * Get tokens from text analysis. The analyze API performs analysis on a text
+ * string and returns the resulting tokens.
+ * <p>
+ * Generating excessive amount of tokens may cause a node to run out of memory.
+ * The <code>index.analyze.max_token_count</code> setting enables you to limit
+ * the number of tokens that can be produced. If more than this limit of tokens
+ * gets generated, an error occurs. The <code>_analyze</code> endpoint without a
+ * specified index will always use <code>10000</code> as its limit.
  * 
  * @see <a href="../doc-files/api-spec.html#indices.analyze.Request">API
  *      specification</a>

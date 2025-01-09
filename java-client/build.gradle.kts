@@ -31,6 +31,10 @@ plugins {
     id("de.thetaphi.forbiddenapis") version "3.4"
 }
 
+checkstyle {
+    toolVersion = "10.16.0"
+}
+
 java {
     targetCompatibility = JavaVersion.VERSION_1_8
     sourceCompatibility = JavaVersion.VERSION_1_8
@@ -235,7 +239,7 @@ dependencies {
     }
 
     // Apache-2.0
-    testImplementation("commons-io:commons-io:2.11.0")
+    testImplementation("commons-io:commons-io:2.17.0")
 
     // EPL-2.0
     // https://junit.org/junit5/
@@ -250,6 +254,8 @@ dependencies {
     // https://www.testcontainers.org/
     testImplementation("org.testcontainers", "testcontainers", "1.17.3")
     testImplementation("org.testcontainers", "elasticsearch", "1.17.3")
+    // updating transitive dependency from testcontainers
+    testImplementation("org.apache.commons","commons-compress","1.26.1")
 
     testImplementation("io.opentelemetry", "opentelemetry-sdk", openTelemetryVersion)
 

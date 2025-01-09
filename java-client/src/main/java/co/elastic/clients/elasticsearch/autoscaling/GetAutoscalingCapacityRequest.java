@@ -21,6 +21,7 @@ package co.elastic.clients.elasticsearch.autoscaling;
 
 import co.elastic.clients.elasticsearch._types.ErrorResponse;
 import co.elastic.clients.elasticsearch._types.RequestBase;
+import co.elastic.clients.elasticsearch._types.Time;
 import co.elastic.clients.json.JsonpDeserializable;
 import co.elastic.clients.json.JsonpDeserializer;
 import co.elastic.clients.json.ObjectBuilderDeserializer;
@@ -30,7 +31,11 @@ import co.elastic.clients.transport.endpoints.SimpleEndpoint;
 import co.elastic.clients.util.ObjectBuilder;
 import jakarta.json.stream.JsonGenerator;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
+import java.util.function.Function;
+import javax.annotation.Nullable;
 
 //----------------------------------------------------------------
 //       THIS CODE IS GENERATED. MANUAL EDITS WILL BE LOST.
@@ -50,9 +55,28 @@ import java.util.Objects;
 // typedef: autoscaling.get_autoscaling_capacity.Request
 
 /**
- * Gets the current autoscaling capacity based on the configured autoscaling
- * policy. Designed for indirect use by ECE/ESS and ECK. Direct use is not
+ * Get the autoscaling capacity.
+ * <p>
+ * NOTE: This feature is designed for indirect use by Elasticsearch Service,
+ * Elastic Cloud Enterprise, and Elastic Cloud on Kubernetes. Direct use is not
  * supported.
+ * <p>
+ * This API gets the current autoscaling capacity based on the configured
+ * autoscaling policy. It will return information to size the cluster
+ * appropriately to the current workload.
+ * <p>
+ * The <code>required_capacity</code> is calculated as the maximum of the
+ * <code>required_capacity</code> result of all individual deciders that are
+ * enabled for the policy.
+ * <p>
+ * The operator should verify that the <code>current_nodes</code> match the
+ * operator’s knowledge of the cluster to avoid making autoscaling decisions
+ * based on stale or incomplete information.
+ * <p>
+ * The response contains decider-specific information you can use to diagnose
+ * how and why autoscaling determined a certain capacity was required. This
+ * information is provided for diagnosis only. Do not use this information to
+ * make autoscaling decisions.
  * 
  * @see <a href=
  *      "../doc-files/api-spec.html#autoscaling.get_autoscaling_capacity.Request">API
@@ -60,13 +84,82 @@ import java.util.Objects;
  */
 
 public class GetAutoscalingCapacityRequest extends RequestBase {
-	public GetAutoscalingCapacityRequest() {
+	@Nullable
+	private final Time masterTimeout;
+
+	// ---------------------------------------------------------------------------------------------
+
+	private GetAutoscalingCapacityRequest(Builder builder) {
+
+		this.masterTimeout = builder.masterTimeout;
+
+	}
+
+	public static GetAutoscalingCapacityRequest of(Function<Builder, ObjectBuilder<GetAutoscalingCapacityRequest>> fn) {
+		return fn.apply(new Builder()).build();
 	}
 
 	/**
-	 * Singleton instance for {@link GetAutoscalingCapacityRequest}.
+	 * Period to wait for a connection to the master node. If no response is
+	 * received before the timeout expires, the request fails and returns an error.
+	 * <p>
+	 * API name: {@code master_timeout}
 	 */
-	public static final GetAutoscalingCapacityRequest _INSTANCE = new GetAutoscalingCapacityRequest();
+	@Nullable
+	public final Time masterTimeout() {
+		return this.masterTimeout;
+	}
+
+	// ---------------------------------------------------------------------------------------------
+
+	/**
+	 * Builder for {@link GetAutoscalingCapacityRequest}.
+	 */
+
+	public static class Builder extends RequestBase.AbstractBuilder<Builder>
+			implements
+				ObjectBuilder<GetAutoscalingCapacityRequest> {
+		@Nullable
+		private Time masterTimeout;
+
+		/**
+		 * Period to wait for a connection to the master node. If no response is
+		 * received before the timeout expires, the request fails and returns an error.
+		 * <p>
+		 * API name: {@code master_timeout}
+		 */
+		public final Builder masterTimeout(@Nullable Time value) {
+			this.masterTimeout = value;
+			return this;
+		}
+
+		/**
+		 * Period to wait for a connection to the master node. If no response is
+		 * received before the timeout expires, the request fails and returns an error.
+		 * <p>
+		 * API name: {@code master_timeout}
+		 */
+		public final Builder masterTimeout(Function<Time.Builder, ObjectBuilder<Time>> fn) {
+			return this.masterTimeout(fn.apply(new Time.Builder()).build());
+		}
+
+		@Override
+		protected Builder self() {
+			return this;
+		}
+
+		/**
+		 * Builds a {@link GetAutoscalingCapacityRequest}.
+		 *
+		 * @throws NullPointerException
+		 *             if some of the required fields are null.
+		 */
+		public GetAutoscalingCapacityRequest build() {
+			_checkSingleUse();
+
+			return new GetAutoscalingCapacityRequest(this);
+		}
+	}
 
 	// ---------------------------------------------------------------------------------------------
 
@@ -95,7 +188,11 @@ public class GetAutoscalingCapacityRequest extends RequestBase {
 
 			// Request parameters
 			request -> {
-				return Collections.emptyMap();
+				Map<String, String> params = new HashMap<>();
+				if (request.masterTimeout != null) {
+					params.put("master_timeout", request.masterTimeout._toJsonString());
+				}
+				return params;
 
 			}, SimpleEndpoint.emptyMap(), false, GetAutoscalingCapacityResponse._DESERIALIZER);
 }

@@ -21,7 +21,6 @@ package co.elastic.clients.elasticsearch.ingest;
 
 import co.elastic.clients.elasticsearch._types.ErrorResponse;
 import co.elastic.clients.elasticsearch._types.RequestBase;
-import co.elastic.clients.elasticsearch.ingest.simulate.Document;
 import co.elastic.clients.json.JsonpDeserializable;
 import co.elastic.clients.json.JsonpDeserializer;
 import co.elastic.clients.json.JsonpMapper;
@@ -60,7 +59,10 @@ import javax.annotation.Nullable;
 // typedef: ingest.simulate.Request
 
 /**
- * Executes an ingest pipeline against a set of provided documents.
+ * Simulate a pipeline. Run an ingest pipeline against a set of provided
+ * documents. You can either specify an existing pipeline to use with the
+ * provided documents or supply a pipeline definition in the body of the
+ * request.
  * 
  * @see <a href="../doc-files/api-spec.html#ingest.simulate.Request">API
  *      specification</a>
@@ -82,7 +84,7 @@ public class SimulateRequest extends RequestBase implements JsonpSerializable {
 
 	private SimulateRequest(Builder builder) {
 
-		this.docs = ApiTypeHelper.unmodifiable(builder.docs);
+		this.docs = ApiTypeHelper.unmodifiableRequired(builder.docs, this, "docs");
 		this.id = builder.id;
 		this.pipeline = builder.pipeline;
 		this.verbose = builder.verbose;
@@ -94,7 +96,7 @@ public class SimulateRequest extends RequestBase implements JsonpSerializable {
 	}
 
 	/**
-	 * Sample documents to test in the pipeline.
+	 * Required - Sample documents to test in the pipeline.
 	 * <p>
 	 * API name: {@code docs}
 	 */
@@ -172,7 +174,6 @@ public class SimulateRequest extends RequestBase implements JsonpSerializable {
 	 */
 
 	public static class Builder extends RequestBase.AbstractBuilder<Builder> implements ObjectBuilder<SimulateRequest> {
-		@Nullable
 		private List<Document> docs;
 
 		@Nullable
@@ -185,7 +186,7 @@ public class SimulateRequest extends RequestBase implements JsonpSerializable {
 		private Boolean verbose;
 
 		/**
-		 * Sample documents to test in the pipeline.
+		 * Required - Sample documents to test in the pipeline.
 		 * <p>
 		 * API name: {@code docs}
 		 * <p>
@@ -197,7 +198,7 @@ public class SimulateRequest extends RequestBase implements JsonpSerializable {
 		}
 
 		/**
-		 * Sample documents to test in the pipeline.
+		 * Required - Sample documents to test in the pipeline.
 		 * <p>
 		 * API name: {@code docs}
 		 * <p>
@@ -209,7 +210,7 @@ public class SimulateRequest extends RequestBase implements JsonpSerializable {
 		}
 
 		/**
-		 * Sample documents to test in the pipeline.
+		 * Required - Sample documents to test in the pipeline.
 		 * <p>
 		 * API name: {@code docs}
 		 * <p>

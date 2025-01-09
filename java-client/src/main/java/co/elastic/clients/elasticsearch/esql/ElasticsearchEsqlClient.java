@@ -71,10 +71,11 @@ public class ElasticsearchEsqlClient extends ApiClient<ElasticsearchTransport, E
 	// ----- Endpoint: esql.query
 
 	/**
-	 * Executes an ESQL request
+	 * Run an ES|QL query. Get search results for an ES|QL (Elasticsearch query
+	 * language) query.
 	 * 
 	 * @see <a href=
-	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/8.15/esql-rest.html">Documentation
+	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/9.0/esql-rest.html">Documentation
 	 *      on elastic.co</a>
 	 */
 
@@ -86,13 +87,14 @@ public class ElasticsearchEsqlClient extends ApiClient<ElasticsearchTransport, E
 	}
 
 	/**
-	 * Executes an ESQL request
+	 * Run an ES|QL query. Get search results for an ES|QL (Elasticsearch query
+	 * language) query.
 	 * 
 	 * @param fn
 	 *            a function that initializes a builder to create the
 	 *            {@link QueryRequest}
 	 * @see <a href=
-	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/8.15/esql-rest.html">Documentation
+	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/9.0/esql-rest.html">Documentation
 	 *      on elastic.co</a>
 	 */
 
@@ -113,24 +115,7 @@ public class ElasticsearchEsqlClient extends ApiClient<ElasticsearchTransport, E
 	 */
 	public final <T> T query(EsqlAdapter<T> adapter, String query, Object... parameters)
 			throws IOException, ElasticsearchException {
-		return EsqlHelper.query(this, null, adapter, query, parameters);
-	}
-
-	/**
-	 * Executes an ES|QL request and adapts its result to a target type.
-	 *
-	 * @param version
-	 *            the ES|QL language version
-	 * @param adapter
-	 *            the ES|QL response adapter
-	 * @param query
-	 *            the ES|QL query
-	 * @param parameters
-	 *            values for query parameters, if any
-	 */
-	public final <T> T query(EsqlVersion version, EsqlAdapter<T> adapter, String query, Object... parameters)
-			throws IOException, ElasticsearchException {
-		return EsqlHelper.query(this, version, adapter, query, parameters);
+		return EsqlHelper.query(this, adapter, query, parameters);
 	}
 
 	/**

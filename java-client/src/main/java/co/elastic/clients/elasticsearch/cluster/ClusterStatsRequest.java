@@ -59,10 +59,9 @@ import javax.annotation.Nullable;
 // typedef: cluster.stats.Request
 
 /**
- * Returns cluster statistics. It returns basic index metrics (shard numbers,
- * store size, memory usage) and information about the current nodes that form
- * the cluster (number, roles, os, jvm versions, memory usage, cpu and installed
- * plugins).
+ * Get cluster statistics. Get basic index metrics (shard numbers, store size,
+ * memory usage) and information about the current nodes that form the cluster
+ * (number, roles, os, jvm versions, memory usage, cpu and installed plugins).
  * 
  * @see <a href="../doc-files/api-spec.html#cluster.stats.Request">API
  *      specification</a>
@@ -70,7 +69,7 @@ import javax.annotation.Nullable;
 
 public class ClusterStatsRequest extends RequestBase {
 	@Nullable
-	private final Boolean flatSettings;
+	private final Boolean includeRemotes;
 
 	private final List<String> nodeId;
 
@@ -81,7 +80,7 @@ public class ClusterStatsRequest extends RequestBase {
 
 	private ClusterStatsRequest(Builder builder) {
 
-		this.flatSettings = builder.flatSettings;
+		this.includeRemotes = builder.includeRemotes;
 		this.nodeId = ApiTypeHelper.unmodifiable(builder.nodeId);
 		this.timeout = builder.timeout;
 
@@ -92,13 +91,13 @@ public class ClusterStatsRequest extends RequestBase {
 	}
 
 	/**
-	 * If <code>true</code>, returns settings in flat format.
+	 * Include remote cluster data into the response
 	 * <p>
-	 * API name: {@code flat_settings}
+	 * API name: {@code include_remotes}
 	 */
 	@Nullable
-	public final Boolean flatSettings() {
-		return this.flatSettings;
+	public final Boolean includeRemotes() {
+		return this.includeRemotes;
 	}
 
 	/**
@@ -134,7 +133,7 @@ public class ClusterStatsRequest extends RequestBase {
 			implements
 				ObjectBuilder<ClusterStatsRequest> {
 		@Nullable
-		private Boolean flatSettings;
+		private Boolean includeRemotes;
 
 		@Nullable
 		private List<String> nodeId;
@@ -143,12 +142,12 @@ public class ClusterStatsRequest extends RequestBase {
 		private Time timeout;
 
 		/**
-		 * If <code>true</code>, returns settings in flat format.
+		 * Include remote cluster data into the response
 		 * <p>
-		 * API name: {@code flat_settings}
+		 * API name: {@code include_remotes}
 		 */
-		public final Builder flatSettings(@Nullable Boolean value) {
-			this.flatSettings = value;
+		public final Builder includeRemotes(@Nullable Boolean value) {
+			this.includeRemotes = value;
 			return this;
 		}
 
@@ -285,8 +284,8 @@ public class ClusterStatsRequest extends RequestBase {
 			// Request parameters
 			request -> {
 				Map<String, String> params = new HashMap<>();
-				if (request.flatSettings != null) {
-					params.put("flat_settings", String.valueOf(request.flatSettings));
+				if (request.includeRemotes != null) {
+					params.put("include_remotes", String.valueOf(request.includeRemotes));
 				}
 				if (request.timeout != null) {
 					params.put("timeout", request.timeout._toJsonString());

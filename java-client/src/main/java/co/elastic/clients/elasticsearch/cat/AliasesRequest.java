@@ -21,6 +21,7 @@ package co.elastic.clients.elasticsearch.cat;
 
 import co.elastic.clients.elasticsearch._types.ErrorResponse;
 import co.elastic.clients.elasticsearch._types.ExpandWildcard;
+import co.elastic.clients.elasticsearch._types.Time;
 import co.elastic.clients.json.JsonpDeserializable;
 import co.elastic.clients.json.JsonpDeserializer;
 import co.elastic.clients.json.ObjectBuilderDeserializer;
@@ -57,11 +58,12 @@ import javax.annotation.Nullable;
 // typedef: cat.aliases.Request
 
 /**
- * Retrieves the cluster’s index aliases, including filter and routing
- * information. The API does not return data stream aliases. IMPORTANT: cat APIs
- * are only intended for human consumption using the command line or the Kibana
- * console. They are not intended for use by applications. For application
- * consumption, use the aliases API.
+ * Get aliases. Retrieves the cluster’s index aliases, including filter and
+ * routing information. The API does not return data stream aliases.
+ * <p>
+ * CAT APIs are only intended for human consumption using the command line or
+ * the Kibana console. They are not intended for use by applications. For
+ * application consumption, use the aliases API.
  * 
  * @see <a href="../doc-files/api-spec.html#cat.aliases.Request">API
  *      specification</a>
@@ -70,6 +72,9 @@ import javax.annotation.Nullable;
 public class AliasesRequest extends CatRequestBase {
 	private final List<ExpandWildcard> expandWildcards;
 
+	@Nullable
+	private final Time masterTimeout;
+
 	private final List<String> name;
 
 	// ---------------------------------------------------------------------------------------------
@@ -77,6 +82,7 @@ public class AliasesRequest extends CatRequestBase {
 	private AliasesRequest(Builder builder) {
 
 		this.expandWildcards = ApiTypeHelper.unmodifiable(builder.expandWildcards);
+		this.masterTimeout = builder.masterTimeout;
 		this.name = ApiTypeHelper.unmodifiable(builder.name);
 
 	}
@@ -93,6 +99,16 @@ public class AliasesRequest extends CatRequestBase {
 	 */
 	public final List<ExpandWildcard> expandWildcards() {
 		return this.expandWildcards;
+	}
+
+	/**
+	 * Period to wait for a connection to the master node.
+	 * <p>
+	 * API name: {@code master_timeout}
+	 */
+	@Nullable
+	public final Time masterTimeout() {
+		return this.masterTimeout;
 	}
 
 	/**
@@ -117,6 +133,9 @@ public class AliasesRequest extends CatRequestBase {
 				ObjectBuilder<AliasesRequest> {
 		@Nullable
 		private List<ExpandWildcard> expandWildcards;
+
+		@Nullable
+		private Time masterTimeout;
 
 		@Nullable
 		private List<String> name;
@@ -145,6 +164,25 @@ public class AliasesRequest extends CatRequestBase {
 		public final Builder expandWildcards(ExpandWildcard value, ExpandWildcard... values) {
 			this.expandWildcards = _listAdd(this.expandWildcards, value, values);
 			return this;
+		}
+
+		/**
+		 * Period to wait for a connection to the master node.
+		 * <p>
+		 * API name: {@code master_timeout}
+		 */
+		public final Builder masterTimeout(@Nullable Time value) {
+			this.masterTimeout = value;
+			return this;
+		}
+
+		/**
+		 * Period to wait for a connection to the master node.
+		 * <p>
+		 * API name: {@code master_timeout}
+		 */
+		public final Builder masterTimeout(Function<Time.Builder, ObjectBuilder<Time>> fn) {
+			return this.masterTimeout(fn.apply(new Time.Builder()).build());
 		}
 
 		/**
@@ -256,6 +294,9 @@ public class AliasesRequest extends CatRequestBase {
 			request -> {
 				Map<String, String> params = new HashMap<>();
 				params.put("format", "json");
+				if (request.masterTimeout != null) {
+					params.put("master_timeout", request.masterTimeout._toJsonString());
+				}
 				if (ApiTypeHelper.isDefined(request.expandWildcards)) {
 					params.put("expand_wildcards",
 							request.expandWildcards.stream().map(v -> v.jsonValue()).collect(Collectors.joining(",")));

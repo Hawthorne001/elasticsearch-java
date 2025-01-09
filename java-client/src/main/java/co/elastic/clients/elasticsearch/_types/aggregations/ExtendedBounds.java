@@ -215,7 +215,7 @@ public class ExtendedBounds<T> implements JsonpSerializable {
 	 */
 	public static final JsonpDeserializer<ExtendedBounds<Object>> _DESERIALIZER = JsonpDeserializer
 			.lazy(() -> createExtendedBoundsDeserializer(
-					new NamedDeserializer<>("co.elastic.clients:Deserializer:_types.aggregations.T")));
+					new NamedDeserializer<>("co.elastic.clients:Deserializer:_types.aggregations.ExtendedBounds.T")));
 
 	protected static <T> void setupExtendedBoundsDeserializer(ObjectDeserializer<ExtendedBounds.Builder<T>> op,
 			JsonpDeserializer<T> tDeserializer) {

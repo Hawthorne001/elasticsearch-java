@@ -23,8 +23,11 @@ import co.elastic.clients.elasticsearch._types.ErrorResponse;
 import co.elastic.clients.elasticsearch._types.ExpandWildcard;
 import co.elastic.clients.elasticsearch._types.RequestBase;
 import co.elastic.clients.elasticsearch._types.Time;
+import co.elastic.clients.elasticsearch._types.query_dsl.Query;
 import co.elastic.clients.json.JsonpDeserializable;
 import co.elastic.clients.json.JsonpDeserializer;
+import co.elastic.clients.json.JsonpMapper;
+import co.elastic.clients.json.JsonpSerializable;
 import co.elastic.clients.json.ObjectBuilderDeserializer;
 import co.elastic.clients.json.ObjectDeserializer;
 import co.elastic.clients.transport.Endpoint;
@@ -60,27 +63,39 @@ import javax.annotation.Nullable;
 // typedef: _global.open_point_in_time.Request
 
 /**
- * A search request by default executes against the most recent visible data of
- * the target indices, which is called point in time. Elasticsearch pit (point
- * in time) is a lightweight view into the state of the data as it existed when
+ * Open a point in time.
+ * <p>
+ * A search request by default runs against the most recent visible data of the
+ * target indices, which is called point in time. Elasticsearch pit (point in
+ * time) is a lightweight view into the state of the data as it existed when
  * initiated. In some cases, it’s preferred to perform multiple search requests
  * using the same point in time. For example, if refreshes happen between
  * <code>search_after</code> requests, then the results of those requests might
  * not be consistent as changes happening between searches are only visible to
  * the more recent point in time.
+ * <p>
+ * A point in time must be opened explicitly before being used in search
+ * requests. The <code>keep_alive</code> parameter tells Elasticsearch how long
+ * it should persist.
  * 
  * @see <a href=
  *      "../doc-files/api-spec.html#_global.open_point_in_time.Request">API
  *      specification</a>
  */
+@JsonpDeserializable
+public class OpenPointInTimeRequest extends RequestBase implements JsonpSerializable {
+	@Nullable
+	private final Boolean allowPartialSearchResults;
 
-public class OpenPointInTimeRequest extends RequestBase {
 	private final List<ExpandWildcard> expandWildcards;
 
 	@Nullable
 	private final Boolean ignoreUnavailable;
 
 	private final List<String> index;
+
+	@Nullable
+	private final Query indexFilter;
 
 	private final Time keepAlive;
 
@@ -94,9 +109,11 @@ public class OpenPointInTimeRequest extends RequestBase {
 
 	private OpenPointInTimeRequest(Builder builder) {
 
+		this.allowPartialSearchResults = builder.allowPartialSearchResults;
 		this.expandWildcards = ApiTypeHelper.unmodifiable(builder.expandWildcards);
 		this.ignoreUnavailable = builder.ignoreUnavailable;
 		this.index = ApiTypeHelper.unmodifiableRequired(builder.index, this, "index");
+		this.indexFilter = builder.indexFilter;
 		this.keepAlive = ApiTypeHelper.requireNonNull(builder.keepAlive, this, "keepAlive");
 		this.preference = builder.preference;
 		this.routing = builder.routing;
@@ -105,6 +122,19 @@ public class OpenPointInTimeRequest extends RequestBase {
 
 	public static OpenPointInTimeRequest of(Function<Builder, ObjectBuilder<OpenPointInTimeRequest>> fn) {
 		return fn.apply(new Builder()).build();
+	}
+
+	/**
+	 * If <code>false</code>, creating a point in time request when a shard is
+	 * missing or unavailable will throw an exception. If <code>true</code>, the
+	 * point in time will contain all the shards that are available at the time of
+	 * the request.
+	 * <p>
+	 * API name: {@code allow_partial_search_results}
+	 */
+	@Nullable
+	public final Boolean allowPartialSearchResults() {
+		return this.allowPartialSearchResults;
 	}
 
 	/**
@@ -143,6 +173,17 @@ public class OpenPointInTimeRequest extends RequestBase {
 	}
 
 	/**
+	 * Allows to filter indices if the provided query rewrites to
+	 * <code>match_none</code> on every shard.
+	 * <p>
+	 * API name: {@code index_filter}
+	 */
+	@Nullable
+	public final Query indexFilter() {
+		return this.indexFilter;
+	}
+
+	/**
 	 * Required - Extends the time to live of the corresponding point in time.
 	 * <p>
 	 * API name: {@code keep_alive}
@@ -172,6 +213,25 @@ public class OpenPointInTimeRequest extends RequestBase {
 		return this.routing;
 	}
 
+	/**
+	 * Serialize this object to JSON.
+	 */
+	public void serialize(JsonGenerator generator, JsonpMapper mapper) {
+		generator.writeStartObject();
+		serializeInternal(generator, mapper);
+		generator.writeEnd();
+	}
+
+	protected void serializeInternal(JsonGenerator generator, JsonpMapper mapper) {
+
+		if (this.indexFilter != null) {
+			generator.writeKey("index_filter");
+			this.indexFilter.serialize(generator, mapper);
+
+		}
+
+	}
+
 	// ---------------------------------------------------------------------------------------------
 
 	/**
@@ -182,12 +242,18 @@ public class OpenPointInTimeRequest extends RequestBase {
 			implements
 				ObjectBuilder<OpenPointInTimeRequest> {
 		@Nullable
+		private Boolean allowPartialSearchResults;
+
+		@Nullable
 		private List<ExpandWildcard> expandWildcards;
 
 		@Nullable
 		private Boolean ignoreUnavailable;
 
 		private List<String> index;
+
+		@Nullable
+		private Query indexFilter;
 
 		private Time keepAlive;
 
@@ -196,6 +262,19 @@ public class OpenPointInTimeRequest extends RequestBase {
 
 		@Nullable
 		private String routing;
+
+		/**
+		 * If <code>false</code>, creating a point in time request when a shard is
+		 * missing or unavailable will throw an exception. If <code>true</code>, the
+		 * point in time will contain all the shards that are available at the time of
+		 * the request.
+		 * <p>
+		 * API name: {@code allow_partial_search_results}
+		 */
+		public final Builder allowPartialSearchResults(@Nullable Boolean value) {
+			this.allowPartialSearchResults = value;
+			return this;
+		}
 
 		/**
 		 * Type of index that wildcard patterns can match. If the request can target
@@ -269,6 +348,27 @@ public class OpenPointInTimeRequest extends RequestBase {
 		}
 
 		/**
+		 * Allows to filter indices if the provided query rewrites to
+		 * <code>match_none</code> on every shard.
+		 * <p>
+		 * API name: {@code index_filter}
+		 */
+		public final Builder indexFilter(@Nullable Query value) {
+			this.indexFilter = value;
+			return this;
+		}
+
+		/**
+		 * Allows to filter indices if the provided query rewrites to
+		 * <code>match_none</code> on every shard.
+		 * <p>
+		 * API name: {@code index_filter}
+		 */
+		public final Builder indexFilter(Function<Query.Builder, ObjectBuilder<Query>> fn) {
+			return this.indexFilter(fn.apply(new Query.Builder()).build());
+		}
+
+		/**
 		 * Required - Extends the time to live of the corresponding point in time.
 		 * <p>
 		 * API name: {@code keep_alive}
@@ -329,6 +429,21 @@ public class OpenPointInTimeRequest extends RequestBase {
 	// ---------------------------------------------------------------------------------------------
 
 	/**
+	 * Json deserializer for {@link OpenPointInTimeRequest}
+	 */
+	public static final JsonpDeserializer<OpenPointInTimeRequest> _DESERIALIZER = ObjectBuilderDeserializer
+			.lazy(Builder::new, OpenPointInTimeRequest::setupOpenPointInTimeRequestDeserializer);
+
+	protected static void setupOpenPointInTimeRequestDeserializer(
+			ObjectDeserializer<OpenPointInTimeRequest.Builder> op) {
+
+		op.add(Builder::indexFilter, Query._DESERIALIZER, "index_filter");
+
+	}
+
+	// ---------------------------------------------------------------------------------------------
+
+	/**
 	 * Endpoint "{@code open_point_in_time}".
 	 */
 	public static final Endpoint<OpenPointInTimeRequest, OpenPointInTimeResponse, ErrorResponse> _ENDPOINT = new SimpleEndpoint<>(
@@ -380,6 +495,9 @@ public class OpenPointInTimeRequest extends RequestBase {
 				if (request.routing != null) {
 					params.put("routing", request.routing);
 				}
+				if (request.allowPartialSearchResults != null) {
+					params.put("allow_partial_search_results", String.valueOf(request.allowPartialSearchResults));
+				}
 				if (request.ignoreUnavailable != null) {
 					params.put("ignore_unavailable", String.valueOf(request.ignoreUnavailable));
 				}
@@ -393,5 +511,5 @@ public class OpenPointInTimeRequest extends RequestBase {
 				params.put("keep_alive", request.keepAlive._toJsonString());
 				return params;
 
-			}, SimpleEndpoint.emptyMap(), false, OpenPointInTimeResponse._DESERIALIZER);
+			}, SimpleEndpoint.emptyMap(), true, OpenPointInTimeResponse._DESERIALIZER);
 }

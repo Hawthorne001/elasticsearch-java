@@ -21,6 +21,7 @@ package co.elastic.clients.elasticsearch.ccr;
 
 import co.elastic.clients.elasticsearch._types.ErrorResponse;
 import co.elastic.clients.elasticsearch._types.RequestBase;
+import co.elastic.clients.elasticsearch._types.Time;
 import co.elastic.clients.json.JsonpDeserializable;
 import co.elastic.clients.json.JsonpDeserializer;
 import co.elastic.clients.json.ObjectBuilderDeserializer;
@@ -31,7 +32,6 @@ import co.elastic.clients.util.ApiTypeHelper;
 import co.elastic.clients.util.ObjectBuilder;
 import jakarta.json.stream.JsonGenerator;
 import java.lang.String;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -58,8 +58,9 @@ import javax.annotation.Nullable;
 // typedef: ccr.follow_stats.Request
 
 /**
- * Retrieves follower stats. return shard-level stats about the following tasks
- * associated with each shard for the specified indices.
+ * Get follower stats. Get cross-cluster replication follower stats. The API
+ * returns shard-level stats about the &quot;following tasks&quot; associated
+ * with each shard for the specified indices.
  * 
  * @see <a href="../doc-files/api-spec.html#ccr.follow_stats.Request">API
  *      specification</a>
@@ -68,11 +69,15 @@ import javax.annotation.Nullable;
 public class FollowStatsRequest extends RequestBase {
 	private final List<String> index;
 
+	@Nullable
+	private final Time timeout;
+
 	// ---------------------------------------------------------------------------------------------
 
 	private FollowStatsRequest(Builder builder) {
 
 		this.index = ApiTypeHelper.unmodifiableRequired(builder.index, this, "index");
+		this.timeout = builder.timeout;
 
 	}
 
@@ -90,6 +95,17 @@ public class FollowStatsRequest extends RequestBase {
 		return this.index;
 	}
 
+	/**
+	 * Period to wait for a response. If no response is received before the timeout
+	 * expires, the request fails and returns an error.
+	 * <p>
+	 * API name: {@code timeout}
+	 */
+	@Nullable
+	public final Time timeout() {
+		return this.timeout;
+	}
+
 	// ---------------------------------------------------------------------------------------------
 
 	/**
@@ -100,6 +116,9 @@ public class FollowStatsRequest extends RequestBase {
 			implements
 				ObjectBuilder<FollowStatsRequest> {
 		private List<String> index;
+
+		@Nullable
+		private Time timeout;
 
 		/**
 		 * Required - A comma-separated list of index patterns; use <code>_all</code> to
@@ -125,6 +144,27 @@ public class FollowStatsRequest extends RequestBase {
 		public final Builder index(String value, String... values) {
 			this.index = _listAdd(this.index, value, values);
 			return this;
+		}
+
+		/**
+		 * Period to wait for a response. If no response is received before the timeout
+		 * expires, the request fails and returns an error.
+		 * <p>
+		 * API name: {@code timeout}
+		 */
+		public final Builder timeout(@Nullable Time value) {
+			this.timeout = value;
+			return this;
+		}
+
+		/**
+		 * Period to wait for a response. If no response is received before the timeout
+		 * expires, the request fails and returns an error.
+		 * <p>
+		 * API name: {@code timeout}
+		 */
+		public final Builder timeout(Function<Time.Builder, ObjectBuilder<Time>> fn) {
+			return this.timeout(fn.apply(new Time.Builder()).build());
 		}
 
 		@Override
@@ -196,7 +236,11 @@ public class FollowStatsRequest extends RequestBase {
 
 			// Request parameters
 			request -> {
-				return Collections.emptyMap();
+				Map<String, String> params = new HashMap<>();
+				if (request.timeout != null) {
+					params.put("timeout", request.timeout._toJsonString());
+				}
+				return params;
 
 			}, SimpleEndpoint.emptyMap(), false, FollowStatsResponse._DESERIALIZER);
 }

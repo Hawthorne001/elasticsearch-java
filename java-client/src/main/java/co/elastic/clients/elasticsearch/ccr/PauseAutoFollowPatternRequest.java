@@ -21,6 +21,7 @@ package co.elastic.clients.elasticsearch.ccr;
 
 import co.elastic.clients.elasticsearch._types.ErrorResponse;
 import co.elastic.clients.elasticsearch._types.RequestBase;
+import co.elastic.clients.elasticsearch._types.Time;
 import co.elastic.clients.json.JsonpDeserializable;
 import co.elastic.clients.json.JsonpDeserializer;
 import co.elastic.clients.json.ObjectBuilderDeserializer;
@@ -31,7 +32,6 @@ import co.elastic.clients.util.ApiTypeHelper;
 import co.elastic.clients.util.ObjectBuilder;
 import jakarta.json.stream.JsonGenerator;
 import java.lang.String;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -56,7 +56,17 @@ import javax.annotation.Nullable;
 // typedef: ccr.pause_auto_follow_pattern.Request
 
 /**
- * Pauses an auto-follow pattern
+ * Pause an auto-follow pattern. Pause a cross-cluster replication auto-follow
+ * pattern. When the API returns, the auto-follow pattern is inactive. New
+ * indices that are created on the remote cluster and match the auto-follow
+ * patterns are ignored.
+ * <p>
+ * You can resume auto-following with the resume auto-follow pattern API. When
+ * it resumes, the auto-follow pattern is active again and automatically
+ * configures follower indices for newly created indices on the remote cluster
+ * that match its patterns. Remote indices that were created while the pattern
+ * was paused will also be followed, unless they have been deleted or closed in
+ * the interim.
  * 
  * @see <a href=
  *      "../doc-files/api-spec.html#ccr.pause_auto_follow_pattern.Request">API
@@ -64,18 +74,32 @@ import javax.annotation.Nullable;
  */
 
 public class PauseAutoFollowPatternRequest extends RequestBase {
+	@Nullable
+	private final Time masterTimeout;
+
 	private final String name;
 
 	// ---------------------------------------------------------------------------------------------
 
 	private PauseAutoFollowPatternRequest(Builder builder) {
 
+		this.masterTimeout = builder.masterTimeout;
 		this.name = ApiTypeHelper.requireNonNull(builder.name, this, "name");
 
 	}
 
 	public static PauseAutoFollowPatternRequest of(Function<Builder, ObjectBuilder<PauseAutoFollowPatternRequest>> fn) {
 		return fn.apply(new Builder()).build();
+	}
+
+	/**
+	 * Period to wait for a connection to the master node.
+	 * <p>
+	 * API name: {@code master_timeout}
+	 */
+	@Nullable
+	public final Time masterTimeout() {
+		return this.masterTimeout;
 	}
 
 	/**
@@ -97,7 +121,29 @@ public class PauseAutoFollowPatternRequest extends RequestBase {
 	public static class Builder extends RequestBase.AbstractBuilder<Builder>
 			implements
 				ObjectBuilder<PauseAutoFollowPatternRequest> {
+		@Nullable
+		private Time masterTimeout;
+
 		private String name;
+
+		/**
+		 * Period to wait for a connection to the master node.
+		 * <p>
+		 * API name: {@code master_timeout}
+		 */
+		public final Builder masterTimeout(@Nullable Time value) {
+			this.masterTimeout = value;
+			return this;
+		}
+
+		/**
+		 * Period to wait for a connection to the master node.
+		 * <p>
+		 * API name: {@code master_timeout}
+		 */
+		public final Builder masterTimeout(Function<Time.Builder, ObjectBuilder<Time>> fn) {
+			return this.masterTimeout(fn.apply(new Time.Builder()).build());
+		}
 
 		/**
 		 * Required - The name of the auto follow pattern that should pause discovering
@@ -180,7 +226,11 @@ public class PauseAutoFollowPatternRequest extends RequestBase {
 
 			// Request parameters
 			request -> {
-				return Collections.emptyMap();
+				Map<String, String> params = new HashMap<>();
+				if (request.masterTimeout != null) {
+					params.put("master_timeout", request.masterTimeout._toJsonString());
+				}
+				return params;
 
 			}, SimpleEndpoint.emptyMap(), false, PauseAutoFollowPatternResponse._DESERIALIZER);
 }

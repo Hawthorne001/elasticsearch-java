@@ -60,8 +60,8 @@ import javax.annotation.Nullable;
 // typedef: tasks.list.Request
 
 /**
- * The task management API returns information about tasks currently executing
- * on one or more nodes in the cluster.
+ * Get all tasks. Get information about the tasks currently running on one or
+ * more nodes in the cluster.
  * 
  * @see <a href="../doc-files/api-spec.html#tasks.list.Request">API
  *      specification</a>
@@ -76,10 +76,7 @@ public class ListRequest extends RequestBase {
 	@Nullable
 	private final GroupBy groupBy;
 
-	@Nullable
-	private final Time masterTimeout;
-
-	private final List<String> nodeId;
+	private final List<String> nodes;
 
 	@Nullable
 	private final String parentTaskId;
@@ -97,8 +94,7 @@ public class ListRequest extends RequestBase {
 		this.actions = ApiTypeHelper.unmodifiable(builder.actions);
 		this.detailed = builder.detailed;
 		this.groupBy = builder.groupBy;
-		this.masterTimeout = builder.masterTimeout;
-		this.nodeId = ApiTypeHelper.unmodifiable(builder.nodeId);
+		this.nodes = ApiTypeHelper.unmodifiable(builder.nodes);
 		this.parentTaskId = builder.parentTaskId;
 		this.timeout = builder.timeout;
 		this.waitForCompletion = builder.waitForCompletion;
@@ -121,7 +117,8 @@ public class ListRequest extends RequestBase {
 
 	/**
 	 * If <code>true</code>, the response includes detailed information about shard
-	 * recoveries.
+	 * recoveries. This information is useful to distinguish tasks from each other
+	 * but is more costly to run.
 	 * <p>
 	 * API name: {@code detailed}
 	 */
@@ -141,23 +138,12 @@ public class ListRequest extends RequestBase {
 	}
 
 	/**
-	 * Period to wait for a connection to the master node. If no response is
-	 * received before the timeout expires, the request fails and returns an error.
-	 * <p>
-	 * API name: {@code master_timeout}
-	 */
-	@Nullable
-	public final Time masterTimeout() {
-		return this.masterTimeout;
-	}
-
-	/**
 	 * Comma-separated list of node IDs or names used to limit returned information.
 	 * <p>
-	 * API name: {@code node_id}
+	 * API name: {@code nodes}
 	 */
-	public final List<String> nodeId() {
-		return this.nodeId;
+	public final List<String> nodes() {
+		return this.nodes;
 	}
 
 	/**
@@ -209,10 +195,7 @@ public class ListRequest extends RequestBase {
 		private GroupBy groupBy;
 
 		@Nullable
-		private Time masterTimeout;
-
-		@Nullable
-		private List<String> nodeId;
+		private List<String> nodes;
 
 		@Nullable
 		private String parentTaskId;
@@ -251,7 +234,8 @@ public class ListRequest extends RequestBase {
 
 		/**
 		 * If <code>true</code>, the response includes detailed information about shard
-		 * recoveries.
+		 * recoveries. This information is useful to distinguish tasks from each other
+		 * but is more costly to run.
 		 * <p>
 		 * API name: {@code detailed}
 		 */
@@ -271,47 +255,26 @@ public class ListRequest extends RequestBase {
 		}
 
 		/**
-		 * Period to wait for a connection to the master node. If no response is
-		 * received before the timeout expires, the request fails and returns an error.
-		 * <p>
-		 * API name: {@code master_timeout}
-		 */
-		public final Builder masterTimeout(@Nullable Time value) {
-			this.masterTimeout = value;
-			return this;
-		}
-
-		/**
-		 * Period to wait for a connection to the master node. If no response is
-		 * received before the timeout expires, the request fails and returns an error.
-		 * <p>
-		 * API name: {@code master_timeout}
-		 */
-		public final Builder masterTimeout(Function<Time.Builder, ObjectBuilder<Time>> fn) {
-			return this.masterTimeout(fn.apply(new Time.Builder()).build());
-		}
-
-		/**
 		 * Comma-separated list of node IDs or names used to limit returned information.
 		 * <p>
-		 * API name: {@code node_id}
+		 * API name: {@code nodes}
 		 * <p>
-		 * Adds all elements of <code>list</code> to <code>nodeId</code>.
+		 * Adds all elements of <code>list</code> to <code>nodes</code>.
 		 */
-		public final Builder nodeId(List<String> list) {
-			this.nodeId = _listAddAll(this.nodeId, list);
+		public final Builder nodes(List<String> list) {
+			this.nodes = _listAddAll(this.nodes, list);
 			return this;
 		}
 
 		/**
 		 * Comma-separated list of node IDs or names used to limit returned information.
 		 * <p>
-		 * API name: {@code node_id}
+		 * API name: {@code nodes}
 		 * <p>
-		 * Adds one or more values to <code>nodeId</code>.
+		 * Adds one or more values to <code>nodes</code>.
 		 */
-		public final Builder nodeId(String value, String... values) {
-			this.nodeId = _listAdd(this.nodeId, value, values);
+		public final Builder nodes(String value, String... values) {
+			this.nodes = _listAdd(this.nodes, value, values);
 			return this;
 		}
 
@@ -403,8 +366,8 @@ public class ListRequest extends RequestBase {
 			// Request parameters
 			request -> {
 				Map<String, String> params = new HashMap<>();
-				if (request.masterTimeout != null) {
-					params.put("master_timeout", request.masterTimeout._toJsonString());
+				if (ApiTypeHelper.isDefined(request.nodes)) {
+					params.put("nodes", request.nodes.stream().map(v -> v).collect(Collectors.joining(",")));
 				}
 				if (request.parentTaskId != null) {
 					params.put("parent_task_id", request.parentTaskId);
@@ -423,9 +386,6 @@ public class ListRequest extends RequestBase {
 				}
 				if (request.timeout != null) {
 					params.put("timeout", request.timeout._toJsonString());
-				}
-				if (ApiTypeHelper.isDefined(request.nodeId)) {
-					params.put("node_id", request.nodeId.stream().map(v -> v).collect(Collectors.joining(",")));
 				}
 				return params;
 

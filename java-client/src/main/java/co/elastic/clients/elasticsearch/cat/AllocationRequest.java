@@ -21,6 +21,7 @@ package co.elastic.clients.elasticsearch.cat;
 
 import co.elastic.clients.elasticsearch._types.Bytes;
 import co.elastic.clients.elasticsearch._types.ErrorResponse;
+import co.elastic.clients.elasticsearch._types.Time;
 import co.elastic.clients.json.JsonpDeserializable;
 import co.elastic.clients.json.JsonpDeserializer;
 import co.elastic.clients.json.ObjectBuilderDeserializer;
@@ -30,6 +31,7 @@ import co.elastic.clients.transport.endpoints.SimpleEndpoint;
 import co.elastic.clients.util.ApiTypeHelper;
 import co.elastic.clients.util.ObjectBuilder;
 import jakarta.json.stream.JsonGenerator;
+import java.lang.Boolean;
 import java.lang.String;
 import java.util.HashMap;
 import java.util.List;
@@ -57,10 +59,10 @@ import javax.annotation.Nullable;
 // typedef: cat.allocation.Request
 
 /**
- * Provides a snapshot of the number of shards allocated to each data node and
- * their disk space. IMPORTANT: cat APIs are only intended for human consumption
- * using the command line or Kibana console. They are not intended for use by
- * applications.
+ * Get shard allocation information. Get a snapshot of the number of shards
+ * allocated to each data node and their disk space. IMPORTANT: cat APIs are
+ * only intended for human consumption using the command line or Kibana console.
+ * They are not intended for use by applications.
  * 
  * @see <a href="../doc-files/api-spec.html#cat.allocation.Request">API
  *      specification</a>
@@ -70,6 +72,12 @@ public class AllocationRequest extends CatRequestBase {
 	@Nullable
 	private final Bytes bytes;
 
+	@Nullable
+	private final Boolean local;
+
+	@Nullable
+	private final Time masterTimeout;
+
 	private final List<String> nodeId;
 
 	// ---------------------------------------------------------------------------------------------
@@ -77,6 +85,8 @@ public class AllocationRequest extends CatRequestBase {
 	private AllocationRequest(Builder builder) {
 
 		this.bytes = builder.bytes;
+		this.local = builder.local;
+		this.masterTimeout = builder.masterTimeout;
 		this.nodeId = ApiTypeHelper.unmodifiable(builder.nodeId);
 
 	}
@@ -93,6 +103,30 @@ public class AllocationRequest extends CatRequestBase {
 	@Nullable
 	public final Bytes bytes() {
 		return this.bytes;
+	}
+
+	/**
+	 * If <code>true</code>, the request computes the list of selected nodes from
+	 * the local cluster state. If <code>false</code> the list of selected nodes are
+	 * computed from the cluster state of the master node. In both cases the
+	 * coordinating node will send requests for further information to each selected
+	 * node.
+	 * <p>
+	 * API name: {@code local}
+	 */
+	@Nullable
+	public final Boolean local() {
+		return this.local;
+	}
+
+	/**
+	 * Period to wait for a connection to the master node.
+	 * <p>
+	 * API name: {@code master_timeout}
+	 */
+	@Nullable
+	public final Time masterTimeout() {
+		return this.masterTimeout;
 	}
 
 	/**
@@ -118,6 +152,12 @@ public class AllocationRequest extends CatRequestBase {
 		private Bytes bytes;
 
 		@Nullable
+		private Boolean local;
+
+		@Nullable
+		private Time masterTimeout;
+
+		@Nullable
 		private List<String> nodeId;
 
 		/**
@@ -128,6 +168,39 @@ public class AllocationRequest extends CatRequestBase {
 		public final Builder bytes(@Nullable Bytes value) {
 			this.bytes = value;
 			return this;
+		}
+
+		/**
+		 * If <code>true</code>, the request computes the list of selected nodes from
+		 * the local cluster state. If <code>false</code> the list of selected nodes are
+		 * computed from the cluster state of the master node. In both cases the
+		 * coordinating node will send requests for further information to each selected
+		 * node.
+		 * <p>
+		 * API name: {@code local}
+		 */
+		public final Builder local(@Nullable Boolean value) {
+			this.local = value;
+			return this;
+		}
+
+		/**
+		 * Period to wait for a connection to the master node.
+		 * <p>
+		 * API name: {@code master_timeout}
+		 */
+		public final Builder masterTimeout(@Nullable Time value) {
+			this.masterTimeout = value;
+			return this;
+		}
+
+		/**
+		 * Period to wait for a connection to the master node.
+		 * <p>
+		 * API name: {@code master_timeout}
+		 */
+		public final Builder masterTimeout(Function<Time.Builder, ObjectBuilder<Time>> fn) {
+			return this.masterTimeout(fn.apply(new Time.Builder()).build());
 		}
 
 		/**
@@ -238,8 +311,14 @@ public class AllocationRequest extends CatRequestBase {
 			request -> {
 				Map<String, String> params = new HashMap<>();
 				params.put("format", "json");
+				if (request.masterTimeout != null) {
+					params.put("master_timeout", request.masterTimeout._toJsonString());
+				}
 				if (request.bytes != null) {
 					params.put("bytes", request.bytes.jsonValue());
+				}
+				if (request.local != null) {
+					params.put("local", String.valueOf(request.local));
 				}
 				return params;
 

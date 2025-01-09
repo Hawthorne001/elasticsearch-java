@@ -60,12 +60,14 @@ import javax.annotation.Nullable;
 // typedef: indices.unfreeze.Request
 
 /**
- * Unfreezes an index.
+ * Unfreeze an index. When a frozen index is unfrozen, the index goes through
+ * the normal recovery process and becomes writeable again.
  * 
  * @see <a href="../doc-files/api-spec.html#indices.unfreeze.Request">API
  *      specification</a>
+ * @deprecated 7.14.0
  */
-
+@Deprecated
 public class UnfreezeRequest extends RequestBase {
 	@Nullable
 	private final Boolean allowNoIndices;
@@ -190,7 +192,7 @@ public class UnfreezeRequest extends RequestBase {
 	/**
 	 * Builder for {@link UnfreezeRequest}.
 	 */
-
+	@Deprecated
 	public static class Builder extends RequestBase.AbstractBuilder<Builder> implements ObjectBuilder<UnfreezeRequest> {
 		@Nullable
 		private Boolean allowNoIndices;

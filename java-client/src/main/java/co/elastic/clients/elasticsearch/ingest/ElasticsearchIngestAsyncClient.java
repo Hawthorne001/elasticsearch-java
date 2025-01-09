@@ -65,10 +65,79 @@ public class ElasticsearchIngestAsyncClient extends ApiClient<ElasticsearchTrans
 		return new ElasticsearchIngestAsyncClient(this.transport, transportOptions);
 	}
 
+	// ----- Endpoint: ingest.delete_geoip_database
+
+	/**
+	 * Delete GeoIP database configurations. Delete one or more IP geolocation
+	 * database configurations.
+	 * 
+	 * @see <a href=
+	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/master/delete-geoip-database-api.html">Documentation
+	 *      on elastic.co</a>
+	 */
+
+	public CompletableFuture<DeleteGeoipDatabaseResponse> deleteGeoipDatabase(DeleteGeoipDatabaseRequest request) {
+		@SuppressWarnings("unchecked")
+		JsonEndpoint<DeleteGeoipDatabaseRequest, DeleteGeoipDatabaseResponse, ErrorResponse> endpoint = (JsonEndpoint<DeleteGeoipDatabaseRequest, DeleteGeoipDatabaseResponse, ErrorResponse>) DeleteGeoipDatabaseRequest._ENDPOINT;
+
+		return this.transport.performRequestAsync(request, endpoint, this.transportOptions);
+	}
+
+	/**
+	 * Delete GeoIP database configurations. Delete one or more IP geolocation
+	 * database configurations.
+	 * 
+	 * @param fn
+	 *            a function that initializes a builder to create the
+	 *            {@link DeleteGeoipDatabaseRequest}
+	 * @see <a href=
+	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/master/delete-geoip-database-api.html">Documentation
+	 *      on elastic.co</a>
+	 */
+
+	public final CompletableFuture<DeleteGeoipDatabaseResponse> deleteGeoipDatabase(
+			Function<DeleteGeoipDatabaseRequest.Builder, ObjectBuilder<DeleteGeoipDatabaseRequest>> fn) {
+		return deleteGeoipDatabase(fn.apply(new DeleteGeoipDatabaseRequest.Builder()).build());
+	}
+
+	// ----- Endpoint: ingest.delete_ip_location_database
+
+	/**
+	 * Delete IP geolocation database configurations.
+	 * 
+	 * @see <a href=
+	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/master/delete-ip-location-database-api.html">Documentation
+	 *      on elastic.co</a>
+	 */
+
+	public CompletableFuture<DeleteIpLocationDatabaseResponse> deleteIpLocationDatabase(
+			DeleteIpLocationDatabaseRequest request) {
+		@SuppressWarnings("unchecked")
+		JsonEndpoint<DeleteIpLocationDatabaseRequest, DeleteIpLocationDatabaseResponse, ErrorResponse> endpoint = (JsonEndpoint<DeleteIpLocationDatabaseRequest, DeleteIpLocationDatabaseResponse, ErrorResponse>) DeleteIpLocationDatabaseRequest._ENDPOINT;
+
+		return this.transport.performRequestAsync(request, endpoint, this.transportOptions);
+	}
+
+	/**
+	 * Delete IP geolocation database configurations.
+	 * 
+	 * @param fn
+	 *            a function that initializes a builder to create the
+	 *            {@link DeleteIpLocationDatabaseRequest}
+	 * @see <a href=
+	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/master/delete-ip-location-database-api.html">Documentation
+	 *      on elastic.co</a>
+	 */
+
+	public final CompletableFuture<DeleteIpLocationDatabaseResponse> deleteIpLocationDatabase(
+			Function<DeleteIpLocationDatabaseRequest.Builder, ObjectBuilder<DeleteIpLocationDatabaseRequest>> fn) {
+		return deleteIpLocationDatabase(fn.apply(new DeleteIpLocationDatabaseRequest.Builder()).build());
+	}
+
 	// ----- Endpoint: ingest.delete_pipeline
 
 	/**
-	 * Deletes a pipeline.
+	 * Delete pipelines. Delete one or more ingest pipelines.
 	 * 
 	 * @see <a href=
 	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/master/delete-pipeline-api.html">Documentation
@@ -83,7 +152,7 @@ public class ElasticsearchIngestAsyncClient extends ApiClient<ElasticsearchTrans
 	}
 
 	/**
-	 * Deletes a pipeline.
+	 * Delete pipelines. Delete one or more ingest pipelines.
 	 * 
 	 * @param fn
 	 *            a function that initializes a builder to create the
@@ -101,10 +170,11 @@ public class ElasticsearchIngestAsyncClient extends ApiClient<ElasticsearchTrans
 	// ----- Endpoint: ingest.geo_ip_stats
 
 	/**
-	 * Returns statistical information about geoip databases
+	 * Get GeoIP statistics. Get download statistics for GeoIP2 databases that are
+	 * used with the GeoIP processor.
 	 * 
 	 * @see <a href=
-	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/8.15/geoip-processor.html">Documentation
+	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/9.0/geoip-processor.html">Documentation
 	 *      on elastic.co</a>
 	 */
 	public CompletableFuture<GeoIpStatsResponse> geoIpStats() {
@@ -112,10 +182,107 @@ public class ElasticsearchIngestAsyncClient extends ApiClient<ElasticsearchTrans
 				this.transportOptions);
 	}
 
+	// ----- Endpoint: ingest.get_geoip_database
+
+	/**
+	 * Get GeoIP database configurations. Get information about one or more IP
+	 * geolocation database configurations.
+	 * 
+	 * @see <a href=
+	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/master/get-geoip-database-api.html">Documentation
+	 *      on elastic.co</a>
+	 */
+
+	public CompletableFuture<GetGeoipDatabaseResponse> getGeoipDatabase(GetGeoipDatabaseRequest request) {
+		@SuppressWarnings("unchecked")
+		JsonEndpoint<GetGeoipDatabaseRequest, GetGeoipDatabaseResponse, ErrorResponse> endpoint = (JsonEndpoint<GetGeoipDatabaseRequest, GetGeoipDatabaseResponse, ErrorResponse>) GetGeoipDatabaseRequest._ENDPOINT;
+
+		return this.transport.performRequestAsync(request, endpoint, this.transportOptions);
+	}
+
+	/**
+	 * Get GeoIP database configurations. Get information about one or more IP
+	 * geolocation database configurations.
+	 * 
+	 * @param fn
+	 *            a function that initializes a builder to create the
+	 *            {@link GetGeoipDatabaseRequest}
+	 * @see <a href=
+	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/master/get-geoip-database-api.html">Documentation
+	 *      on elastic.co</a>
+	 */
+
+	public final CompletableFuture<GetGeoipDatabaseResponse> getGeoipDatabase(
+			Function<GetGeoipDatabaseRequest.Builder, ObjectBuilder<GetGeoipDatabaseRequest>> fn) {
+		return getGeoipDatabase(fn.apply(new GetGeoipDatabaseRequest.Builder()).build());
+	}
+
+	/**
+	 * Get GeoIP database configurations. Get information about one or more IP
+	 * geolocation database configurations.
+	 * 
+	 * @see <a href=
+	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/master/get-geoip-database-api.html">Documentation
+	 *      on elastic.co</a>
+	 */
+
+	public CompletableFuture<GetGeoipDatabaseResponse> getGeoipDatabase() {
+		return this.transport.performRequestAsync(new GetGeoipDatabaseRequest.Builder().build(),
+				GetGeoipDatabaseRequest._ENDPOINT, this.transportOptions);
+	}
+
+	// ----- Endpoint: ingest.get_ip_location_database
+
+	/**
+	 * Get IP geolocation database configurations.
+	 * 
+	 * @see <a href=
+	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/master/get-ip-location-database-api.html">Documentation
+	 *      on elastic.co</a>
+	 */
+
+	public CompletableFuture<GetIpLocationDatabaseResponse> getIpLocationDatabase(
+			GetIpLocationDatabaseRequest request) {
+		@SuppressWarnings("unchecked")
+		JsonEndpoint<GetIpLocationDatabaseRequest, GetIpLocationDatabaseResponse, ErrorResponse> endpoint = (JsonEndpoint<GetIpLocationDatabaseRequest, GetIpLocationDatabaseResponse, ErrorResponse>) GetIpLocationDatabaseRequest._ENDPOINT;
+
+		return this.transport.performRequestAsync(request, endpoint, this.transportOptions);
+	}
+
+	/**
+	 * Get IP geolocation database configurations.
+	 * 
+	 * @param fn
+	 *            a function that initializes a builder to create the
+	 *            {@link GetIpLocationDatabaseRequest}
+	 * @see <a href=
+	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/master/get-ip-location-database-api.html">Documentation
+	 *      on elastic.co</a>
+	 */
+
+	public final CompletableFuture<GetIpLocationDatabaseResponse> getIpLocationDatabase(
+			Function<GetIpLocationDatabaseRequest.Builder, ObjectBuilder<GetIpLocationDatabaseRequest>> fn) {
+		return getIpLocationDatabase(fn.apply(new GetIpLocationDatabaseRequest.Builder()).build());
+	}
+
+	/**
+	 * Get IP geolocation database configurations.
+	 * 
+	 * @see <a href=
+	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/master/get-ip-location-database-api.html">Documentation
+	 *      on elastic.co</a>
+	 */
+
+	public CompletableFuture<GetIpLocationDatabaseResponse> getIpLocationDatabase() {
+		return this.transport.performRequestAsync(new GetIpLocationDatabaseRequest.Builder().build(),
+				GetIpLocationDatabaseRequest._ENDPOINT, this.transportOptions);
+	}
+
 	// ----- Endpoint: ingest.get_pipeline
 
 	/**
-	 * Returns a pipeline.
+	 * Get pipelines. Get information about one or more ingest pipelines. This API
+	 * returns a local reference of the pipeline.
 	 * 
 	 * @see <a href=
 	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/master/get-pipeline-api.html">Documentation
@@ -130,7 +297,8 @@ public class ElasticsearchIngestAsyncClient extends ApiClient<ElasticsearchTrans
 	}
 
 	/**
-	 * Returns a pipeline.
+	 * Get pipelines. Get information about one or more ingest pipelines. This API
+	 * returns a local reference of the pipeline.
 	 * 
 	 * @param fn
 	 *            a function that initializes a builder to create the
@@ -146,7 +314,8 @@ public class ElasticsearchIngestAsyncClient extends ApiClient<ElasticsearchTrans
 	}
 
 	/**
-	 * Returns a pipeline.
+	 * Get pipelines. Get information about one or more ingest pipelines. This API
+	 * returns a local reference of the pipeline.
 	 * 
 	 * @see <a href=
 	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/master/get-pipeline-api.html">Documentation
@@ -161,10 +330,14 @@ public class ElasticsearchIngestAsyncClient extends ApiClient<ElasticsearchTrans
 	// ----- Endpoint: ingest.processor_grok
 
 	/**
-	 * Returns a list of the built-in patterns.
+	 * Run a grok processor. Extract structured fields out of a single text field
+	 * within a document. You must choose which field to extract matched fields
+	 * from, as well as the grok pattern you expect will match. A grok pattern is
+	 * like a regular expression that supports aliased expressions that can be
+	 * reused.
 	 * 
 	 * @see <a href=
-	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/8.15/grok-processor.html">Documentation
+	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/9.0/grok-processor.html">Documentation
 	 *      on elastic.co</a>
 	 */
 	public CompletableFuture<ProcessorGrokResponse> processorGrok() {
@@ -172,13 +345,83 @@ public class ElasticsearchIngestAsyncClient extends ApiClient<ElasticsearchTrans
 				this.transportOptions);
 	}
 
+	// ----- Endpoint: ingest.put_geoip_database
+
+	/**
+	 * Create or update a GeoIP database configuration. Refer to the create or
+	 * update IP geolocation database configuration API.
+	 * 
+	 * @see <a href=
+	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/master/put-geoip-database-api.html">Documentation
+	 *      on elastic.co</a>
+	 */
+
+	public CompletableFuture<PutGeoipDatabaseResponse> putGeoipDatabase(PutGeoipDatabaseRequest request) {
+		@SuppressWarnings("unchecked")
+		JsonEndpoint<PutGeoipDatabaseRequest, PutGeoipDatabaseResponse, ErrorResponse> endpoint = (JsonEndpoint<PutGeoipDatabaseRequest, PutGeoipDatabaseResponse, ErrorResponse>) PutGeoipDatabaseRequest._ENDPOINT;
+
+		return this.transport.performRequestAsync(request, endpoint, this.transportOptions);
+	}
+
+	/**
+	 * Create or update a GeoIP database configuration. Refer to the create or
+	 * update IP geolocation database configuration API.
+	 * 
+	 * @param fn
+	 *            a function that initializes a builder to create the
+	 *            {@link PutGeoipDatabaseRequest}
+	 * @see <a href=
+	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/master/put-geoip-database-api.html">Documentation
+	 *      on elastic.co</a>
+	 */
+
+	public final CompletableFuture<PutGeoipDatabaseResponse> putGeoipDatabase(
+			Function<PutGeoipDatabaseRequest.Builder, ObjectBuilder<PutGeoipDatabaseRequest>> fn) {
+		return putGeoipDatabase(fn.apply(new PutGeoipDatabaseRequest.Builder()).build());
+	}
+
+	// ----- Endpoint: ingest.put_ip_location_database
+
+	/**
+	 * Create or update an IP geolocation database configuration.
+	 * 
+	 * @see <a href=
+	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/master/put-ip-location-database-api.html">Documentation
+	 *      on elastic.co</a>
+	 */
+
+	public CompletableFuture<PutIpLocationDatabaseResponse> putIpLocationDatabase(
+			PutIpLocationDatabaseRequest request) {
+		@SuppressWarnings("unchecked")
+		JsonEndpoint<PutIpLocationDatabaseRequest, PutIpLocationDatabaseResponse, ErrorResponse> endpoint = (JsonEndpoint<PutIpLocationDatabaseRequest, PutIpLocationDatabaseResponse, ErrorResponse>) PutIpLocationDatabaseRequest._ENDPOINT;
+
+		return this.transport.performRequestAsync(request, endpoint, this.transportOptions);
+	}
+
+	/**
+	 * Create or update an IP geolocation database configuration.
+	 * 
+	 * @param fn
+	 *            a function that initializes a builder to create the
+	 *            {@link PutIpLocationDatabaseRequest}
+	 * @see <a href=
+	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/master/put-ip-location-database-api.html">Documentation
+	 *      on elastic.co</a>
+	 */
+
+	public final CompletableFuture<PutIpLocationDatabaseResponse> putIpLocationDatabase(
+			Function<PutIpLocationDatabaseRequest.Builder, ObjectBuilder<PutIpLocationDatabaseRequest>> fn) {
+		return putIpLocationDatabase(fn.apply(new PutIpLocationDatabaseRequest.Builder()).build());
+	}
+
 	// ----- Endpoint: ingest.put_pipeline
 
 	/**
-	 * Creates or updates a pipeline.
+	 * Create or update a pipeline. Changes made using this API take effect
+	 * immediately.
 	 * 
 	 * @see <a href=
-	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/8.15/ingest.html">Documentation
+	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/9.0/ingest.html">Documentation
 	 *      on elastic.co</a>
 	 */
 
@@ -190,13 +433,14 @@ public class ElasticsearchIngestAsyncClient extends ApiClient<ElasticsearchTrans
 	}
 
 	/**
-	 * Creates or updates a pipeline.
+	 * Create or update a pipeline. Changes made using this API take effect
+	 * immediately.
 	 * 
 	 * @param fn
 	 *            a function that initializes a builder to create the
 	 *            {@link PutPipelineRequest}
 	 * @see <a href=
-	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/8.15/ingest.html">Documentation
+	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/9.0/ingest.html">Documentation
 	 *      on elastic.co</a>
 	 */
 
@@ -208,7 +452,10 @@ public class ElasticsearchIngestAsyncClient extends ApiClient<ElasticsearchTrans
 	// ----- Endpoint: ingest.simulate
 
 	/**
-	 * Allows to simulate a pipeline with example documents.
+	 * Simulate a pipeline. Run an ingest pipeline against a set of provided
+	 * documents. You can either specify an existing pipeline to use with the
+	 * provided documents or supply a pipeline definition in the body of the
+	 * request.
 	 * 
 	 * @see <a href=
 	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/master/simulate-pipeline-api.html">Documentation
@@ -223,7 +470,10 @@ public class ElasticsearchIngestAsyncClient extends ApiClient<ElasticsearchTrans
 	}
 
 	/**
-	 * Allows to simulate a pipeline with example documents.
+	 * Simulate a pipeline. Run an ingest pipeline against a set of provided
+	 * documents. You can either specify an existing pipeline to use with the
+	 * provided documents or supply a pipeline definition in the body of the
+	 * request.
 	 * 
 	 * @param fn
 	 *            a function that initializes a builder to create the
@@ -236,19 +486,6 @@ public class ElasticsearchIngestAsyncClient extends ApiClient<ElasticsearchTrans
 	public final CompletableFuture<SimulateResponse> simulate(
 			Function<SimulateRequest.Builder, ObjectBuilder<SimulateRequest>> fn) {
 		return simulate(fn.apply(new SimulateRequest.Builder()).build());
-	}
-
-	/**
-	 * Allows to simulate a pipeline with example documents.
-	 * 
-	 * @see <a href=
-	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/master/simulate-pipeline-api.html">Documentation
-	 *      on elastic.co</a>
-	 */
-
-	public CompletableFuture<SimulateResponse> simulate() {
-		return this.transport.performRequestAsync(new SimulateRequest.Builder().build(), SimulateRequest._ENDPOINT,
-				this.transportOptions);
 	}
 
 }

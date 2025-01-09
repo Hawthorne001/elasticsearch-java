@@ -25,6 +25,7 @@ import co.elastic.clients.elasticsearch._types.FieldValue;
 import co.elastic.clients.elasticsearch._types.KnnSearch;
 import co.elastic.clients.elasticsearch._types.Rank;
 import co.elastic.clients.elasticsearch._types.RequestBase;
+import co.elastic.clients.elasticsearch._types.Retriever;
 import co.elastic.clients.elasticsearch._types.ScriptField;
 import co.elastic.clients.elasticsearch._types.SearchType;
 import co.elastic.clients.elasticsearch._types.SlicedScroll;
@@ -86,9 +87,11 @@ import javax.annotation.Nullable;
 // typedef: _global.search.Request
 
 /**
- * Returns search hits that match the query defined in the request. You can
- * provide search queries using the <code>q</code> query string parameter or the
- * request body. If both are specified, only the query parameter is used.
+ * Run a search.
+ * <p>
+ * Get search hits that match the query defined in the request. You can provide
+ * search queries using the <code>q</code> query string parameter or the request
+ * body. If both are specified, only the query parameter is used.
  * 
  * @see <a href="../doc-files/api-spec.html#_global.search.Request">API
  *      specification</a>
@@ -166,9 +169,6 @@ public class SearchRequest extends RequestBase implements JsonpSerializable {
 	private final Long maxConcurrentShardRequests;
 
 	@Nullable
-	private final String minCompatibleShardNode;
-
-	@Nullable
 	private final Double minScore;
 
 	@Nullable
@@ -199,6 +199,9 @@ public class SearchRequest extends RequestBase implements JsonpSerializable {
 	private final Boolean requestCache;
 
 	private final List<Rescore> rescore;
+
+	@Nullable
+	private final Retriever retriever;
 
 	@Nullable
 	private final String routing;
@@ -278,7 +281,6 @@ public class SearchRequest extends RequestBase implements JsonpSerializable {
 		this.knn = ApiTypeHelper.unmodifiable(builder.knn);
 		this.lenient = builder.lenient;
 		this.maxConcurrentShardRequests = builder.maxConcurrentShardRequests;
-		this.minCompatibleShardNode = builder.minCompatibleShardNode;
 		this.minScore = builder.minScore;
 		this.pit = builder.pit;
 		this.postFilter = builder.postFilter;
@@ -290,6 +292,7 @@ public class SearchRequest extends RequestBase implements JsonpSerializable {
 		this.rank = builder.rank;
 		this.requestCache = builder.requestCache;
 		this.rescore = ApiTypeHelper.unmodifiable(builder.rescore);
+		this.retriever = builder.retriever;
 		this.routing = builder.routing;
 		this.runtimeMappings = ApiTypeHelper.unmodifiable(builder.runtimeMappings);
 		this.scriptFields = ApiTypeHelper.unmodifiable(builder.scriptFields);
@@ -607,17 +610,6 @@ public class SearchRequest extends RequestBase implements JsonpSerializable {
 	}
 
 	/**
-	 * The minimum version of the node that can handle the request Any handling node
-	 * with a lower version will fail the request.
-	 * <p>
-	 * API name: {@code min_compatible_shard_node}
-	 */
-	@Nullable
-	public final String minCompatibleShardNode() {
-		return this.minCompatibleShardNode;
-	}
-
-	/**
 	 * Minimum <code>_score</code> for matching documents. Documents with a lower
 	 * <code>_score</code> are not included in the search results.
 	 * <p>
@@ -758,6 +750,18 @@ public class SearchRequest extends RequestBase implements JsonpSerializable {
 	 */
 	public final List<Rescore> rescore() {
 		return this.rescore;
+	}
+
+	/**
+	 * A retriever is a specification to describe top documents returned from a
+	 * search. A retriever replaces other elements of the search API that also
+	 * return top documents such as query and knn.
+	 * <p>
+	 * API name: {@code retriever}
+	 */
+	@Nullable
+	public final Retriever retriever() {
+		return this.retriever;
 	}
 
 	/**
@@ -1109,6 +1113,11 @@ public class SearchRequest extends RequestBase implements JsonpSerializable {
 			generator.writeEnd();
 
 		}
+		if (this.retriever != null) {
+			generator.writeKey("retriever");
+			this.retriever.serialize(generator, mapper);
+
+		}
 		if (ApiTypeHelper.isDefined(this.runtimeMappings)) {
 			generator.writeKey("runtime_mappings");
 			generator.writeStartObject();
@@ -1178,12 +1187,18 @@ public class SearchRequest extends RequestBase implements JsonpSerializable {
 		}
 		if (ApiTypeHelper.isDefined(this.storedFields)) {
 			generator.writeKey("stored_fields");
-			generator.writeStartArray();
-			for (String item0 : this.storedFields) {
-				generator.write(item0);
+			if (this.storedFields.size() == 1) {
+				String singleItem = this.storedFields.get(0);
+				generator.write(singleItem);
 
+			} else {
+				generator.writeStartArray();
+				for (String item0 : this.storedFields) {
+					generator.write(item0);
+
+				}
+				generator.writeEnd();
 			}
-			generator.writeEnd();
 
 		}
 		if (this.suggest != null) {
@@ -1305,9 +1320,6 @@ public class SearchRequest extends RequestBase implements JsonpSerializable {
 		private Long maxConcurrentShardRequests;
 
 		@Nullable
-		private String minCompatibleShardNode;
-
-		@Nullable
 		private Double minScore;
 
 		@Nullable
@@ -1339,6 +1351,9 @@ public class SearchRequest extends RequestBase implements JsonpSerializable {
 
 		@Nullable
 		private List<Rescore> rescore;
+
+		@Nullable
+		private Retriever retriever;
 
 		@Nullable
 		private String routing;
@@ -1892,17 +1907,6 @@ public class SearchRequest extends RequestBase implements JsonpSerializable {
 		}
 
 		/**
-		 * The minimum version of the node that can handle the request Any handling node
-		 * with a lower version will fail the request.
-		 * <p>
-		 * API name: {@code min_compatible_shard_node}
-		 */
-		public final Builder minCompatibleShardNode(@Nullable String value) {
-			this.minCompatibleShardNode = value;
-			return this;
-		}
-
-		/**
 		 * Minimum <code>_score</code> for matching documents. Documents with a lower
 		 * <code>_score</code> are not included in the search results.
 		 * <p>
@@ -2112,6 +2116,29 @@ public class SearchRequest extends RequestBase implements JsonpSerializable {
 		 */
 		public final Builder rescore(Function<Rescore.Builder, ObjectBuilder<Rescore>> fn) {
 			return rescore(fn.apply(new Rescore.Builder()).build());
+		}
+
+		/**
+		 * A retriever is a specification to describe top documents returned from a
+		 * search. A retriever replaces other elements of the search API that also
+		 * return top documents such as query and knn.
+		 * <p>
+		 * API name: {@code retriever}
+		 */
+		public final Builder retriever(@Nullable Retriever value) {
+			this.retriever = value;
+			return this;
+		}
+
+		/**
+		 * A retriever is a specification to describe top documents returned from a
+		 * search. A retriever replaces other elements of the search API that also
+		 * return top documents such as query and knn.
+		 * <p>
+		 * API name: {@code retriever}
+		 */
+		public final Builder retriever(Function<Retriever.Builder, ObjectBuilder<Retriever>> fn) {
+			return this.retriever(fn.apply(new Retriever.Builder()).build());
 		}
 
 		/**
@@ -2629,6 +2656,7 @@ public class SearchRequest extends RequestBase implements JsonpSerializable {
 		op.add(Builder::query, Query._DESERIALIZER, "query");
 		op.add(Builder::rank, Rank._DESERIALIZER, "rank");
 		op.add(Builder::rescore, JsonpDeserializer.arrayDeserializer(Rescore._DESERIALIZER), "rescore");
+		op.add(Builder::retriever, Retriever._DESERIALIZER, "retriever");
 		op.add(Builder::runtimeMappings, JsonpDeserializer.stringMapDeserializer(RuntimeField._DESERIALIZER),
 				"runtime_mappings");
 		op.add(Builder::scriptFields, JsonpDeserializer.stringMapDeserializer(ScriptField._DESERIALIZER),
@@ -2715,9 +2743,6 @@ public class SearchRequest extends RequestBase implements JsonpSerializable {
 				}
 				if (request.preFilterShardSize != null) {
 					params.put("pre_filter_shard_size", String.valueOf(request.preFilterShardSize));
-				}
-				if (request.minCompatibleShardNode != null) {
-					params.put("min_compatible_shard_node", request.minCompatibleShardNode);
 				}
 				if (request.forceSyntheticSource != null) {
 					params.put("force_synthetic_source", String.valueOf(request.forceSyntheticSource));

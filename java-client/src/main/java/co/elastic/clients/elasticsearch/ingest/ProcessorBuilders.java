@@ -45,24 +45,6 @@ public class ProcessorBuilders {
 	}
 
 	/**
-	 * Creates a builder for the {@link AttachmentProcessor attachment}
-	 * {@code Processor} variant.
-	 */
-	public static AttachmentProcessor.Builder attachment() {
-		return new AttachmentProcessor.Builder();
-	}
-
-	/**
-	 * Creates a Processor of the {@link AttachmentProcessor attachment}
-	 * {@code Processor} variant.
-	 */
-	public static Processor attachment(Function<AttachmentProcessor.Builder, ObjectBuilder<AttachmentProcessor>> fn) {
-		Processor.Builder builder = new Processor.Builder();
-		builder.attachment(fn.apply(new AttachmentProcessor.Builder()).build());
-		return builder.build();
-	}
-
-	/**
 	 * Creates a builder for the {@link AppendProcessor append} {@code Processor}
 	 * variant.
 	 */
@@ -81,19 +63,75 @@ public class ProcessorBuilders {
 	}
 
 	/**
-	 * Creates a builder for the {@link CsvProcessor csv} {@code Processor} variant.
+	 * Creates a builder for the {@link AttachmentProcessor attachment}
+	 * {@code Processor} variant.
 	 */
-	public static CsvProcessor.Builder csv() {
-		return new CsvProcessor.Builder();
+	public static AttachmentProcessor.Builder attachment() {
+		return new AttachmentProcessor.Builder();
 	}
 
 	/**
-	 * Creates a Processor of the {@link CsvProcessor csv} {@code Processor}
+	 * Creates a Processor of the {@link AttachmentProcessor attachment}
+	 * {@code Processor} variant.
+	 */
+	public static Processor attachment(Function<AttachmentProcessor.Builder, ObjectBuilder<AttachmentProcessor>> fn) {
+		Processor.Builder builder = new Processor.Builder();
+		builder.attachment(fn.apply(new AttachmentProcessor.Builder()).build());
+		return builder.build();
+	}
+
+	/**
+	 * Creates a builder for the {@link BytesProcessor bytes} {@code Processor}
 	 * variant.
 	 */
-	public static Processor csv(Function<CsvProcessor.Builder, ObjectBuilder<CsvProcessor>> fn) {
+	public static BytesProcessor.Builder bytes() {
+		return new BytesProcessor.Builder();
+	}
+
+	/**
+	 * Creates a Processor of the {@link BytesProcessor bytes} {@code Processor}
+	 * variant.
+	 */
+	public static Processor bytes(Function<BytesProcessor.Builder, ObjectBuilder<BytesProcessor>> fn) {
 		Processor.Builder builder = new Processor.Builder();
-		builder.csv(fn.apply(new CsvProcessor.Builder()).build());
+		builder.bytes(fn.apply(new BytesProcessor.Builder()).build());
+		return builder.build();
+	}
+
+	/**
+	 * Creates a builder for the {@link CircleProcessor circle} {@code Processor}
+	 * variant.
+	 */
+	public static CircleProcessor.Builder circle() {
+		return new CircleProcessor.Builder();
+	}
+
+	/**
+	 * Creates a Processor of the {@link CircleProcessor circle} {@code Processor}
+	 * variant.
+	 */
+	public static Processor circle(Function<CircleProcessor.Builder, ObjectBuilder<CircleProcessor>> fn) {
+		Processor.Builder builder = new Processor.Builder();
+		builder.circle(fn.apply(new CircleProcessor.Builder()).build());
+		return builder.build();
+	}
+
+	/**
+	 * Creates a builder for the {@link CommunityIDProcessor community_id}
+	 * {@code Processor} variant.
+	 */
+	public static CommunityIDProcessor.Builder communityId() {
+		return new CommunityIDProcessor.Builder();
+	}
+
+	/**
+	 * Creates a Processor of the {@link CommunityIDProcessor community_id}
+	 * {@code Processor} variant.
+	 */
+	public static Processor communityId(
+			Function<CommunityIDProcessor.Builder, ObjectBuilder<CommunityIDProcessor>> fn) {
+		Processor.Builder builder = new Processor.Builder();
+		builder.communityId(fn.apply(new CommunityIDProcessor.Builder()).build());
 		return builder.build();
 	}
 
@@ -112,6 +150,23 @@ public class ProcessorBuilders {
 	public static Processor convert(Function<ConvertProcessor.Builder, ObjectBuilder<ConvertProcessor>> fn) {
 		Processor.Builder builder = new Processor.Builder();
 		builder.convert(fn.apply(new ConvertProcessor.Builder()).build());
+		return builder.build();
+	}
+
+	/**
+	 * Creates a builder for the {@link CsvProcessor csv} {@code Processor} variant.
+	 */
+	public static CsvProcessor.Builder csv() {
+		return new CsvProcessor.Builder();
+	}
+
+	/**
+	 * Creates a Processor of the {@link CsvProcessor csv} {@code Processor}
+	 * variant.
+	 */
+	public static Processor csv(Function<CsvProcessor.Builder, ObjectBuilder<CsvProcessor>> fn) {
+		Processor.Builder builder = new Processor.Builder();
+		builder.csv(fn.apply(new CsvProcessor.Builder()).build());
 		return builder.build();
 	}
 
@@ -153,6 +208,24 @@ public class ProcessorBuilders {
 	}
 
 	/**
+	 * Creates a builder for the {@link DissectProcessor dissect} {@code Processor}
+	 * variant.
+	 */
+	public static DissectProcessor.Builder dissect() {
+		return new DissectProcessor.Builder();
+	}
+
+	/**
+	 * Creates a Processor of the {@link DissectProcessor dissect} {@code Processor}
+	 * variant.
+	 */
+	public static Processor dissect(Function<DissectProcessor.Builder, ObjectBuilder<DissectProcessor>> fn) {
+		Processor.Builder builder = new Processor.Builder();
+		builder.dissect(fn.apply(new DissectProcessor.Builder()).build());
+		return builder.build();
+	}
+
+	/**
 	 * Creates a builder for the {@link DotExpanderProcessor dot_expander}
 	 * {@code Processor} variant.
 	 */
@@ -168,6 +241,24 @@ public class ProcessorBuilders {
 			Function<DotExpanderProcessor.Builder, ObjectBuilder<DotExpanderProcessor>> fn) {
 		Processor.Builder builder = new Processor.Builder();
 		builder.dotExpander(fn.apply(new DotExpanderProcessor.Builder()).build());
+		return builder.build();
+	}
+
+	/**
+	 * Creates a builder for the {@link DropProcessor drop} {@code Processor}
+	 * variant.
+	 */
+	public static DropProcessor.Builder drop() {
+		return new DropProcessor.Builder();
+	}
+
+	/**
+	 * Creates a Processor of the {@link DropProcessor drop} {@code Processor}
+	 * variant.
+	 */
+	public static Processor drop(Function<DropProcessor.Builder, ObjectBuilder<DropProcessor>> fn) {
+		Processor.Builder builder = new Processor.Builder();
+		builder.drop(fn.apply(new DropProcessor.Builder()).build());
 		return builder.build();
 	}
 
@@ -208,6 +299,25 @@ public class ProcessorBuilders {
 	}
 
 	/**
+	 * Creates a builder for the {@link FingerprintProcessor fingerprint}
+	 * {@code Processor} variant.
+	 */
+	public static FingerprintProcessor.Builder fingerprint() {
+		return new FingerprintProcessor.Builder();
+	}
+
+	/**
+	 * Creates a Processor of the {@link FingerprintProcessor fingerprint}
+	 * {@code Processor} variant.
+	 */
+	public static Processor fingerprint(
+			Function<FingerprintProcessor.Builder, ObjectBuilder<FingerprintProcessor>> fn) {
+		Processor.Builder builder = new Processor.Builder();
+		builder.fingerprint(fn.apply(new FingerprintProcessor.Builder()).build());
+		return builder.build();
+	}
+
+	/**
 	 * Creates a builder for the {@link ForeachProcessor foreach} {@code Processor}
 	 * variant.
 	 */
@@ -226,56 +336,38 @@ public class ProcessorBuilders {
 	}
 
 	/**
-	 * Creates a builder for the {@link JsonProcessor json} {@code Processor}
-	 * variant.
+	 * Creates a builder for the {@link IpLocationProcessor ip_location}
+	 * {@code Processor} variant.
 	 */
-	public static JsonProcessor.Builder json() {
-		return new JsonProcessor.Builder();
+	public static IpLocationProcessor.Builder ipLocation() {
+		return new IpLocationProcessor.Builder();
 	}
 
 	/**
-	 * Creates a Processor of the {@link JsonProcessor json} {@code Processor}
-	 * variant.
+	 * Creates a Processor of the {@link IpLocationProcessor ip_location}
+	 * {@code Processor} variant.
 	 */
-	public static Processor json(Function<JsonProcessor.Builder, ObjectBuilder<JsonProcessor>> fn) {
+	public static Processor ipLocation(Function<IpLocationProcessor.Builder, ObjectBuilder<IpLocationProcessor>> fn) {
 		Processor.Builder builder = new Processor.Builder();
-		builder.json(fn.apply(new JsonProcessor.Builder()).build());
+		builder.ipLocation(fn.apply(new IpLocationProcessor.Builder()).build());
 		return builder.build();
 	}
 
 	/**
-	 * Creates a builder for the {@link UserAgentProcessor user_agent}
-	 * {@code Processor} variant.
-	 */
-	public static UserAgentProcessor.Builder userAgent() {
-		return new UserAgentProcessor.Builder();
-	}
-
-	/**
-	 * Creates a Processor of the {@link UserAgentProcessor user_agent}
-	 * {@code Processor} variant.
-	 */
-	public static Processor userAgent(Function<UserAgentProcessor.Builder, ObjectBuilder<UserAgentProcessor>> fn) {
-		Processor.Builder builder = new Processor.Builder();
-		builder.userAgent(fn.apply(new UserAgentProcessor.Builder()).build());
-		return builder.build();
-	}
-
-	/**
-	 * Creates a builder for the {@link KeyValueProcessor kv} {@code Processor}
+	 * Creates a builder for the {@link GeoGridProcessor geo_grid} {@code Processor}
 	 * variant.
 	 */
-	public static KeyValueProcessor.Builder kv() {
-		return new KeyValueProcessor.Builder();
+	public static GeoGridProcessor.Builder geoGrid() {
+		return new GeoGridProcessor.Builder();
 	}
 
 	/**
-	 * Creates a Processor of the {@link KeyValueProcessor kv} {@code Processor}
-	 * variant.
+	 * Creates a Processor of the {@link GeoGridProcessor geo_grid}
+	 * {@code Processor} variant.
 	 */
-	public static Processor kv(Function<KeyValueProcessor.Builder, ObjectBuilder<KeyValueProcessor>> fn) {
+	public static Processor geoGrid(Function<GeoGridProcessor.Builder, ObjectBuilder<GeoGridProcessor>> fn) {
 		Processor.Builder builder = new Processor.Builder();
-		builder.kv(fn.apply(new KeyValueProcessor.Builder()).build());
+		builder.geoGrid(fn.apply(new GeoGridProcessor.Builder()).build());
 		return builder.build();
 	}
 
@@ -334,6 +426,42 @@ public class ProcessorBuilders {
 	}
 
 	/**
+	 * Creates a builder for the {@link HtmlStripProcessor html_strip}
+	 * {@code Processor} variant.
+	 */
+	public static HtmlStripProcessor.Builder htmlStrip() {
+		return new HtmlStripProcessor.Builder();
+	}
+
+	/**
+	 * Creates a Processor of the {@link HtmlStripProcessor html_strip}
+	 * {@code Processor} variant.
+	 */
+	public static Processor htmlStrip(Function<HtmlStripProcessor.Builder, ObjectBuilder<HtmlStripProcessor>> fn) {
+		Processor.Builder builder = new Processor.Builder();
+		builder.htmlStrip(fn.apply(new HtmlStripProcessor.Builder()).build());
+		return builder.build();
+	}
+
+	/**
+	 * Creates a builder for the {@link InferenceProcessor inference}
+	 * {@code Processor} variant.
+	 */
+	public static InferenceProcessor.Builder inference() {
+		return new InferenceProcessor.Builder();
+	}
+
+	/**
+	 * Creates a Processor of the {@link InferenceProcessor inference}
+	 * {@code Processor} variant.
+	 */
+	public static Processor inference(Function<InferenceProcessor.Builder, ObjectBuilder<InferenceProcessor>> fn) {
+		Processor.Builder builder = new Processor.Builder();
+		builder.inference(fn.apply(new InferenceProcessor.Builder()).build());
+		return builder.build();
+	}
+
+	/**
 	 * Creates a builder for the {@link JoinProcessor join} {@code Processor}
 	 * variant.
 	 */
@@ -352,6 +480,42 @@ public class ProcessorBuilders {
 	}
 
 	/**
+	 * Creates a builder for the {@link JsonProcessor json} {@code Processor}
+	 * variant.
+	 */
+	public static JsonProcessor.Builder json() {
+		return new JsonProcessor.Builder();
+	}
+
+	/**
+	 * Creates a Processor of the {@link JsonProcessor json} {@code Processor}
+	 * variant.
+	 */
+	public static Processor json(Function<JsonProcessor.Builder, ObjectBuilder<JsonProcessor>> fn) {
+		Processor.Builder builder = new Processor.Builder();
+		builder.json(fn.apply(new JsonProcessor.Builder()).build());
+		return builder.build();
+	}
+
+	/**
+	 * Creates a builder for the {@link KeyValueProcessor kv} {@code Processor}
+	 * variant.
+	 */
+	public static KeyValueProcessor.Builder kv() {
+		return new KeyValueProcessor.Builder();
+	}
+
+	/**
+	 * Creates a Processor of the {@link KeyValueProcessor kv} {@code Processor}
+	 * variant.
+	 */
+	public static Processor kv(Function<KeyValueProcessor.Builder, ObjectBuilder<KeyValueProcessor>> fn) {
+		Processor.Builder builder = new Processor.Builder();
+		builder.kv(fn.apply(new KeyValueProcessor.Builder()).build());
+		return builder.build();
+	}
+
+	/**
 	 * Creates a builder for the {@link LowercaseProcessor lowercase}
 	 * {@code Processor} variant.
 	 */
@@ -366,6 +530,80 @@ public class ProcessorBuilders {
 	public static Processor lowercase(Function<LowercaseProcessor.Builder, ObjectBuilder<LowercaseProcessor>> fn) {
 		Processor.Builder builder = new Processor.Builder();
 		builder.lowercase(fn.apply(new LowercaseProcessor.Builder()).build());
+		return builder.build();
+	}
+
+	/**
+	 * Creates a builder for the {@link NetworkDirectionProcessor network_direction}
+	 * {@code Processor} variant.
+	 */
+	public static NetworkDirectionProcessor.Builder networkDirection() {
+		return new NetworkDirectionProcessor.Builder();
+	}
+
+	/**
+	 * Creates a Processor of the {@link NetworkDirectionProcessor
+	 * network_direction} {@code Processor} variant.
+	 */
+	public static Processor networkDirection(
+			Function<NetworkDirectionProcessor.Builder, ObjectBuilder<NetworkDirectionProcessor>> fn) {
+		Processor.Builder builder = new Processor.Builder();
+		builder.networkDirection(fn.apply(new NetworkDirectionProcessor.Builder()).build());
+		return builder.build();
+	}
+
+	/**
+	 * Creates a builder for the {@link PipelineProcessor pipeline}
+	 * {@code Processor} variant.
+	 */
+	public static PipelineProcessor.Builder pipeline() {
+		return new PipelineProcessor.Builder();
+	}
+
+	/**
+	 * Creates a Processor of the {@link PipelineProcessor pipeline}
+	 * {@code Processor} variant.
+	 */
+	public static Processor pipeline(Function<PipelineProcessor.Builder, ObjectBuilder<PipelineProcessor>> fn) {
+		Processor.Builder builder = new Processor.Builder();
+		builder.pipeline(fn.apply(new PipelineProcessor.Builder()).build());
+		return builder.build();
+	}
+
+	/**
+	 * Creates a builder for the {@link RedactProcessor redact} {@code Processor}
+	 * variant.
+	 */
+	public static RedactProcessor.Builder redact() {
+		return new RedactProcessor.Builder();
+	}
+
+	/**
+	 * Creates a Processor of the {@link RedactProcessor redact} {@code Processor}
+	 * variant.
+	 */
+	public static Processor redact(Function<RedactProcessor.Builder, ObjectBuilder<RedactProcessor>> fn) {
+		Processor.Builder builder = new Processor.Builder();
+		builder.redact(fn.apply(new RedactProcessor.Builder()).build());
+		return builder.build();
+	}
+
+	/**
+	 * Creates a builder for the {@link RegisteredDomainProcessor registered_domain}
+	 * {@code Processor} variant.
+	 */
+	public static RegisteredDomainProcessor.Builder registeredDomain() {
+		return new RegisteredDomainProcessor.Builder();
+	}
+
+	/**
+	 * Creates a Processor of the {@link RegisteredDomainProcessor
+	 * registered_domain} {@code Processor} variant.
+	 */
+	public static Processor registeredDomain(
+			Function<RegisteredDomainProcessor.Builder, ObjectBuilder<RegisteredDomainProcessor>> fn) {
+		Processor.Builder builder = new Processor.Builder();
+		builder.registeredDomain(fn.apply(new RegisteredDomainProcessor.Builder()).build());
 		return builder.build();
 	}
 
@@ -459,6 +697,25 @@ public class ProcessorBuilders {
 	}
 
 	/**
+	 * Creates a builder for the {@link SetSecurityUserProcessor set_security_user}
+	 * {@code Processor} variant.
+	 */
+	public static SetSecurityUserProcessor.Builder setSecurityUser() {
+		return new SetSecurityUserProcessor.Builder();
+	}
+
+	/**
+	 * Creates a Processor of the {@link SetSecurityUserProcessor set_security_user}
+	 * {@code Processor} variant.
+	 */
+	public static Processor setSecurityUser(
+			Function<SetSecurityUserProcessor.Builder, ObjectBuilder<SetSecurityUserProcessor>> fn) {
+		Processor.Builder builder = new Processor.Builder();
+		builder.setSecurityUser(fn.apply(new SetSecurityUserProcessor.Builder()).build());
+		return builder.build();
+	}
+
+	/**
 	 * Creates a builder for the {@link SortProcessor sort} {@code Processor}
 	 * variant.
 	 */
@@ -491,6 +748,24 @@ public class ProcessorBuilders {
 	public static Processor split(Function<SplitProcessor.Builder, ObjectBuilder<SplitProcessor>> fn) {
 		Processor.Builder builder = new Processor.Builder();
 		builder.split(fn.apply(new SplitProcessor.Builder()).build());
+		return builder.build();
+	}
+
+	/**
+	 * Creates a builder for the {@link TerminateProcessor terminate}
+	 * {@code Processor} variant.
+	 */
+	public static TerminateProcessor.Builder terminate() {
+		return new TerminateProcessor.Builder();
+	}
+
+	/**
+	 * Creates a Processor of the {@link TerminateProcessor terminate}
+	 * {@code Processor} variant.
+	 */
+	public static Processor terminate(Function<TerminateProcessor.Builder, ObjectBuilder<TerminateProcessor>> fn) {
+		Processor.Builder builder = new Processor.Builder();
+		builder.terminate(fn.apply(new TerminateProcessor.Builder()).build());
 		return builder.build();
 	}
 
@@ -549,129 +824,38 @@ public class ProcessorBuilders {
 	}
 
 	/**
-	 * Creates a builder for the {@link BytesProcessor bytes} {@code Processor}
-	 * variant.
+	 * Creates a builder for the {@link UriPartsProcessor uri_parts}
+	 * {@code Processor} variant.
 	 */
-	public static BytesProcessor.Builder bytes() {
-		return new BytesProcessor.Builder();
+	public static UriPartsProcessor.Builder uriParts() {
+		return new UriPartsProcessor.Builder();
 	}
 
 	/**
-	 * Creates a Processor of the {@link BytesProcessor bytes} {@code Processor}
-	 * variant.
+	 * Creates a Processor of the {@link UriPartsProcessor uri_parts}
+	 * {@code Processor} variant.
 	 */
-	public static Processor bytes(Function<BytesProcessor.Builder, ObjectBuilder<BytesProcessor>> fn) {
+	public static Processor uriParts(Function<UriPartsProcessor.Builder, ObjectBuilder<UriPartsProcessor>> fn) {
 		Processor.Builder builder = new Processor.Builder();
-		builder.bytes(fn.apply(new BytesProcessor.Builder()).build());
+		builder.uriParts(fn.apply(new UriPartsProcessor.Builder()).build());
 		return builder.build();
 	}
 
 	/**
-	 * Creates a builder for the {@link DissectProcessor dissect} {@code Processor}
-	 * variant.
-	 */
-	public static DissectProcessor.Builder dissect() {
-		return new DissectProcessor.Builder();
-	}
-
-	/**
-	 * Creates a Processor of the {@link DissectProcessor dissect} {@code Processor}
-	 * variant.
-	 */
-	public static Processor dissect(Function<DissectProcessor.Builder, ObjectBuilder<DissectProcessor>> fn) {
-		Processor.Builder builder = new Processor.Builder();
-		builder.dissect(fn.apply(new DissectProcessor.Builder()).build());
-		return builder.build();
-	}
-
-	/**
-	 * Creates a builder for the {@link SetSecurityUserProcessor set_security_user}
+	 * Creates a builder for the {@link UserAgentProcessor user_agent}
 	 * {@code Processor} variant.
 	 */
-	public static SetSecurityUserProcessor.Builder setSecurityUser() {
-		return new SetSecurityUserProcessor.Builder();
+	public static UserAgentProcessor.Builder userAgent() {
+		return new UserAgentProcessor.Builder();
 	}
 
 	/**
-	 * Creates a Processor of the {@link SetSecurityUserProcessor set_security_user}
+	 * Creates a Processor of the {@link UserAgentProcessor user_agent}
 	 * {@code Processor} variant.
 	 */
-	public static Processor setSecurityUser(
-			Function<SetSecurityUserProcessor.Builder, ObjectBuilder<SetSecurityUserProcessor>> fn) {
+	public static Processor userAgent(Function<UserAgentProcessor.Builder, ObjectBuilder<UserAgentProcessor>> fn) {
 		Processor.Builder builder = new Processor.Builder();
-		builder.setSecurityUser(fn.apply(new SetSecurityUserProcessor.Builder()).build());
-		return builder.build();
-	}
-
-	/**
-	 * Creates a builder for the {@link PipelineProcessor pipeline}
-	 * {@code Processor} variant.
-	 */
-	public static PipelineProcessor.Builder pipeline() {
-		return new PipelineProcessor.Builder();
-	}
-
-	/**
-	 * Creates a Processor of the {@link PipelineProcessor pipeline}
-	 * {@code Processor} variant.
-	 */
-	public static Processor pipeline(Function<PipelineProcessor.Builder, ObjectBuilder<PipelineProcessor>> fn) {
-		Processor.Builder builder = new Processor.Builder();
-		builder.pipeline(fn.apply(new PipelineProcessor.Builder()).build());
-		return builder.build();
-	}
-
-	/**
-	 * Creates a builder for the {@link DropProcessor drop} {@code Processor}
-	 * variant.
-	 */
-	public static DropProcessor.Builder drop() {
-		return new DropProcessor.Builder();
-	}
-
-	/**
-	 * Creates a Processor of the {@link DropProcessor drop} {@code Processor}
-	 * variant.
-	 */
-	public static Processor drop(Function<DropProcessor.Builder, ObjectBuilder<DropProcessor>> fn) {
-		Processor.Builder builder = new Processor.Builder();
-		builder.drop(fn.apply(new DropProcessor.Builder()).build());
-		return builder.build();
-	}
-
-	/**
-	 * Creates a builder for the {@link CircleProcessor circle} {@code Processor}
-	 * variant.
-	 */
-	public static CircleProcessor.Builder circle() {
-		return new CircleProcessor.Builder();
-	}
-
-	/**
-	 * Creates a Processor of the {@link CircleProcessor circle} {@code Processor}
-	 * variant.
-	 */
-	public static Processor circle(Function<CircleProcessor.Builder, ObjectBuilder<CircleProcessor>> fn) {
-		Processor.Builder builder = new Processor.Builder();
-		builder.circle(fn.apply(new CircleProcessor.Builder()).build());
-		return builder.build();
-	}
-
-	/**
-	 * Creates a builder for the {@link InferenceProcessor inference}
-	 * {@code Processor} variant.
-	 */
-	public static InferenceProcessor.Builder inference() {
-		return new InferenceProcessor.Builder();
-	}
-
-	/**
-	 * Creates a Processor of the {@link InferenceProcessor inference}
-	 * {@code Processor} variant.
-	 */
-	public static Processor inference(Function<InferenceProcessor.Builder, ObjectBuilder<InferenceProcessor>> fn) {
-		Processor.Builder builder = new Processor.Builder();
-		builder.inference(fn.apply(new InferenceProcessor.Builder()).build());
+		builder.userAgent(fn.apply(new UserAgentProcessor.Builder()).build());
 		return builder.build();
 	}
 

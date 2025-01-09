@@ -29,6 +29,7 @@ import co.elastic.clients.json.ObjectDeserializer;
 import co.elastic.clients.util.ObjectBuilder;
 import co.elastic.clients.util.WithJsonObjectBuilderBase;
 import jakarta.json.stream.JsonGenerator;
+import java.lang.Double;
 import java.lang.String;
 import java.util.Objects;
 import java.util.function.Function;
@@ -60,13 +61,13 @@ import javax.annotation.Nullable;
 @JsonpDeserializable
 public class AggregationRange implements JsonpSerializable {
 	@Nullable
-	private final String from;
+	private final Double from;
 
 	@Nullable
 	private final String key;
 
 	@Nullable
-	private final String to;
+	private final Double to;
 
 	// ---------------------------------------------------------------------------------------------
 
@@ -86,9 +87,11 @@ public class AggregationRange implements JsonpSerializable {
 	 * Start of the range (inclusive).
 	 * <p>
 	 * API name: {@code from}
+	 * <p>
+	 * Defaults to {@code 0} if parsed from a JSON {@code null} value.
 	 */
 	@Nullable
-	public final String from() {
+	public final Double from() {
 		return this.from;
 	}
 
@@ -106,9 +109,11 @@ public class AggregationRange implements JsonpSerializable {
 	 * End of the range (exclusive).
 	 * <p>
 	 * API name: {@code to}
+	 * <p>
+	 * Defaults to {@code 0} if parsed from a JSON {@code null} value.
 	 */
 	@Nullable
-	public final String to() {
+	public final Double to() {
 		return this.to;
 	}
 
@@ -125,8 +130,7 @@ public class AggregationRange implements JsonpSerializable {
 
 		if (this.from != null) {
 			generator.writeKey("from");
-			generator.write(this.from);
-
+			JsonpUtils.serializeDoubleOrNull(generator, this.from, 0);
 		}
 		if (this.key != null) {
 			generator.writeKey("key");
@@ -135,8 +139,7 @@ public class AggregationRange implements JsonpSerializable {
 		}
 		if (this.to != null) {
 			generator.writeKey("to");
-			generator.write(this.to);
-
+			JsonpUtils.serializeDoubleOrNull(generator, this.to, 0);
 		}
 
 	}
@@ -154,20 +157,22 @@ public class AggregationRange implements JsonpSerializable {
 
 	public static class Builder extends WithJsonObjectBuilderBase<Builder> implements ObjectBuilder<AggregationRange> {
 		@Nullable
-		private String from;
+		private Double from;
 
 		@Nullable
 		private String key;
 
 		@Nullable
-		private String to;
+		private Double to;
 
 		/**
 		 * Start of the range (inclusive).
 		 * <p>
 		 * API name: {@code from}
+		 * <p>
+		 * Defaults to {@code 0} if parsed from a JSON {@code null} value.
 		 */
-		public final Builder from(@Nullable String value) {
+		public final Builder from(@Nullable Double value) {
 			this.from = value;
 			return this;
 		}
@@ -186,8 +191,10 @@ public class AggregationRange implements JsonpSerializable {
 		 * End of the range (exclusive).
 		 * <p>
 		 * API name: {@code to}
+		 * <p>
+		 * Defaults to {@code 0} if parsed from a JSON {@code null} value.
 		 */
-		public final Builder to(@Nullable String value) {
+		public final Builder to(@Nullable Double value) {
 			this.to = value;
 			return this;
 		}
@@ -220,9 +227,9 @@ public class AggregationRange implements JsonpSerializable {
 
 	protected static void setupAggregationRangeDeserializer(ObjectDeserializer<AggregationRange.Builder> op) {
 
-		op.add(Builder::from, JsonpDeserializer.stringDeserializer(), "from");
+		op.add(Builder::from, JsonpDeserializer.doubleOrNullDeserializer(0), "from");
 		op.add(Builder::key, JsonpDeserializer.stringDeserializer(), "key");
-		op.add(Builder::to, JsonpDeserializer.stringDeserializer(), "to");
+		op.add(Builder::to, JsonpDeserializer.doubleOrNullDeserializer(0), "to");
 
 	}
 

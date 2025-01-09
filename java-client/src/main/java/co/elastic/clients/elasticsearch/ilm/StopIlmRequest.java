@@ -55,8 +55,15 @@ import javax.annotation.Nullable;
 // typedef: ilm.stop.Request
 
 /**
- * Halts all lifecycle management operations and stops the index lifecycle
- * management (ILM) plugin
+ * Stop the ILM plugin. Halt all lifecycle management operations and stop the
+ * index lifecycle management plugin. This is useful when you are performing
+ * maintenance on the cluster and need to prevent ILM from performing any
+ * actions on your indices.
+ * <p>
+ * The API returns as soon as the stop request has been acknowledged, but the
+ * plugin might continue to run until in-progress operations complete and the
+ * plugin can be safely stopped. Use the get ILM status API to check whether ILM
+ * is running.
  * 
  * @see <a href="../doc-files/api-spec.html#ilm.stop.Request">API
  *      specification</a>
@@ -83,6 +90,9 @@ public class StopIlmRequest extends RequestBase {
 	}
 
 	/**
+	 * Period to wait for a connection to the master node. If no response is
+	 * received before the timeout expires, the request fails and returns an error.
+	 * <p>
 	 * API name: {@code master_timeout}
 	 */
 	@Nullable
@@ -91,6 +101,9 @@ public class StopIlmRequest extends RequestBase {
 	}
 
 	/**
+	 * Period to wait for a response. If no response is received before the timeout
+	 * expires, the request fails and returns an error.
+	 * <p>
 	 * API name: {@code timeout}
 	 */
 	@Nullable
@@ -112,6 +125,9 @@ public class StopIlmRequest extends RequestBase {
 		private Time timeout;
 
 		/**
+		 * Period to wait for a connection to the master node. If no response is
+		 * received before the timeout expires, the request fails and returns an error.
+		 * <p>
 		 * API name: {@code master_timeout}
 		 */
 		public final Builder masterTimeout(@Nullable Time value) {
@@ -120,6 +136,9 @@ public class StopIlmRequest extends RequestBase {
 		}
 
 		/**
+		 * Period to wait for a connection to the master node. If no response is
+		 * received before the timeout expires, the request fails and returns an error.
+		 * <p>
 		 * API name: {@code master_timeout}
 		 */
 		public final Builder masterTimeout(Function<Time.Builder, ObjectBuilder<Time>> fn) {
@@ -127,6 +146,9 @@ public class StopIlmRequest extends RequestBase {
 		}
 
 		/**
+		 * Period to wait for a response. If no response is received before the timeout
+		 * expires, the request fails and returns an error.
+		 * <p>
 		 * API name: {@code timeout}
 		 */
 		public final Builder timeout(@Nullable Time value) {
@@ -135,6 +157,9 @@ public class StopIlmRequest extends RequestBase {
 		}
 
 		/**
+		 * Period to wait for a response. If no response is received before the timeout
+		 * expires, the request fails and returns an error.
+		 * <p>
 		 * API name: {@code timeout}
 		 */
 		public final Builder timeout(Function<Time.Builder, ObjectBuilder<Time>> fn) {

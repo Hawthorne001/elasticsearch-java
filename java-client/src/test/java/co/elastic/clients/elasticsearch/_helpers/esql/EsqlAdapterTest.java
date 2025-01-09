@@ -22,6 +22,8 @@ package co.elastic.clients.elasticsearch._helpers.esql;
 import co.elastic.clients.elasticsearch.ElasticsearchClient;
 import co.elastic.clients.elasticsearch._helpers.esql.jdbc.ResultSetEsqlAdapter;
 import co.elastic.clients.elasticsearch._helpers.esql.objects.ObjectsEsqlAdapter;
+import co.elastic.clients.elasticsearch.esql.query.EsqlFormat;
+import co.elastic.clients.json.JsonpMappingException;
 import co.elastic.clients.json.jackson.JacksonJsonpMapper;
 import co.elastic.clients.testkit.MockHttpClient;
 import co.elastic.clients.transport.endpoints.BinaryResponse;
@@ -35,6 +37,7 @@ import java.sql.Types;
 public class EsqlAdapterTest extends Assertions {
 
     String json = "{\n" +
+        "  \"took\": 10," +
         "  \"columns\": [\n" +
         "\t{\"name\": \"avg_salary\", \"type\": \"double\"},\n" +
         "\t{\"name\": \"lang\",   \t\"type\": \"keyword\"}\n" +
@@ -56,11 +59,35 @@ public class EsqlAdapterTest extends Assertions {
     }
 
     @Test
+    public void testMissingColumns() throws IOException {
+        String badJson = "{\n" +
+            "  \"took\": 10," +
+            "  \"values\": [\n" +
+            "\t[43760.0, \"Spanish\"],\n" +
+            "\t[48644.0, \"French\"],\n" +
+            "\t[48832.0, \"German\"]\n" +
+            "  ]\n" +
+            "}\n";
+
+        ElasticsearchClient esClient = new MockHttpClient()
+            .add("/_query", "application/json", badJson)
+            .client(new JacksonJsonpMapper());
+
+        JsonpMappingException jsonMappingException = assertThrows(JsonpMappingException.class, () -> {
+            esClient.esql().query(
+                ResultSetEsqlAdapter.INSTANCE,
+                "FROM employees | STATS avg_salary = AVG(salary) by country"
+            );
+        });
+        assertTrue(jsonMappingException.getMessage().contains("Expecting a 'columns' property"));
+    }
+
+    @Test
     public void testObjectDeserializer() throws IOException {
 
         BinaryResponse response = esClient.esql().query(q -> q
             .query("FROM foo")
-            .format("json")
+            .format(EsqlFormat.Json)
         );
 
         Iterable<Data> data = esClient.esql().query(

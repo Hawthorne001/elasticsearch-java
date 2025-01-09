@@ -29,8 +29,6 @@ import co.elastic.clients.transport.endpoints.SimpleEndpoint;
 import co.elastic.clients.util.ObjectBuilder;
 import jakarta.json.stream.JsonGenerator;
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Objects;
 
 //----------------------------------------------------------------
@@ -51,13 +49,13 @@ import java.util.Objects;
 // typedef: cat.help.Request
 
 /**
- * Returns help for the Cat APIs.
+ * Get CAT help. Returns help for the CAT APIs.
  * 
  * @see <a href="../doc-files/api-spec.html#cat.help.Request">API
  *      specification</a>
  */
 
-public class HelpRequest extends CatRequestBase {
+public class HelpRequest {
 	public HelpRequest() {
 	}
 
@@ -93,9 +91,7 @@ public class HelpRequest extends CatRequestBase {
 
 			// Request parameters
 			request -> {
-				Map<String, String> params = new HashMap<>();
-				params.put("format", "json");
-				return params;
+				return Collections.emptyMap();
 
 			}, SimpleEndpoint.emptyMap(), false, HelpResponse._DESERIALIZER);
 }

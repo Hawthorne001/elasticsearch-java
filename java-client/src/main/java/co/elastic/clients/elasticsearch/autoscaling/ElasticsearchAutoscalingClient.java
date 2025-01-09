@@ -69,11 +69,14 @@ public class ElasticsearchAutoscalingClient extends ApiClient<ElasticsearchTrans
 	// ----- Endpoint: autoscaling.delete_autoscaling_policy
 
 	/**
-	 * Deletes an autoscaling policy. Designed for indirect use by ECE/ESS and ECK.
-	 * Direct use is not supported.
+	 * Delete an autoscaling policy.
+	 * <p>
+	 * NOTE: This feature is designed for indirect use by Elasticsearch Service,
+	 * Elastic Cloud Enterprise, and Elastic Cloud on Kubernetes. Direct use is not
+	 * supported.
 	 * 
 	 * @see <a href=
-	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/8.15/autoscaling-delete-autoscaling-policy.html">Documentation
+	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/9.0/autoscaling-delete-autoscaling-policy.html">Documentation
 	 *      on elastic.co</a>
 	 */
 
@@ -86,14 +89,17 @@ public class ElasticsearchAutoscalingClient extends ApiClient<ElasticsearchTrans
 	}
 
 	/**
-	 * Deletes an autoscaling policy. Designed for indirect use by ECE/ESS and ECK.
-	 * Direct use is not supported.
+	 * Delete an autoscaling policy.
+	 * <p>
+	 * NOTE: This feature is designed for indirect use by Elasticsearch Service,
+	 * Elastic Cloud Enterprise, and Elastic Cloud on Kubernetes. Direct use is not
+	 * supported.
 	 * 
 	 * @param fn
 	 *            a function that initializes a builder to create the
 	 *            {@link DeleteAutoscalingPolicyRequest}
 	 * @see <a href=
-	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/8.15/autoscaling-delete-autoscaling-policy.html">Documentation
+	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/9.0/autoscaling-delete-autoscaling-policy.html">Documentation
 	 *      on elastic.co</a>
 	 */
 
@@ -106,27 +112,125 @@ public class ElasticsearchAutoscalingClient extends ApiClient<ElasticsearchTrans
 	// ----- Endpoint: autoscaling.get_autoscaling_capacity
 
 	/**
-	 * Gets the current autoscaling capacity based on the configured autoscaling
-	 * policy. Designed for indirect use by ECE/ESS and ECK. Direct use is not
+	 * Get the autoscaling capacity.
+	 * <p>
+	 * NOTE: This feature is designed for indirect use by Elasticsearch Service,
+	 * Elastic Cloud Enterprise, and Elastic Cloud on Kubernetes. Direct use is not
 	 * supported.
+	 * <p>
+	 * This API gets the current autoscaling capacity based on the configured
+	 * autoscaling policy. It will return information to size the cluster
+	 * appropriately to the current workload.
+	 * <p>
+	 * The <code>required_capacity</code> is calculated as the maximum of the
+	 * <code>required_capacity</code> result of all individual deciders that are
+	 * enabled for the policy.
+	 * <p>
+	 * The operator should verify that the <code>current_nodes</code> match the
+	 * operator’s knowledge of the cluster to avoid making autoscaling decisions
+	 * based on stale or incomplete information.
+	 * <p>
+	 * The response contains decider-specific information you can use to diagnose
+	 * how and why autoscaling determined a certain capacity was required. This
+	 * information is provided for diagnosis only. Do not use this information to
+	 * make autoscaling decisions.
 	 * 
 	 * @see <a href=
-	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/8.15/autoscaling-get-autoscaling-capacity.html">Documentation
+	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/9.0/autoscaling-get-autoscaling-capacity.html">Documentation
 	 *      on elastic.co</a>
 	 */
+
+	public GetAutoscalingCapacityResponse getAutoscalingCapacity(GetAutoscalingCapacityRequest request)
+			throws IOException, ElasticsearchException {
+		@SuppressWarnings("unchecked")
+		JsonEndpoint<GetAutoscalingCapacityRequest, GetAutoscalingCapacityResponse, ErrorResponse> endpoint = (JsonEndpoint<GetAutoscalingCapacityRequest, GetAutoscalingCapacityResponse, ErrorResponse>) GetAutoscalingCapacityRequest._ENDPOINT;
+
+		return this.transport.performRequest(request, endpoint, this.transportOptions);
+	}
+
+	/**
+	 * Get the autoscaling capacity.
+	 * <p>
+	 * NOTE: This feature is designed for indirect use by Elasticsearch Service,
+	 * Elastic Cloud Enterprise, and Elastic Cloud on Kubernetes. Direct use is not
+	 * supported.
+	 * <p>
+	 * This API gets the current autoscaling capacity based on the configured
+	 * autoscaling policy. It will return information to size the cluster
+	 * appropriately to the current workload.
+	 * <p>
+	 * The <code>required_capacity</code> is calculated as the maximum of the
+	 * <code>required_capacity</code> result of all individual deciders that are
+	 * enabled for the policy.
+	 * <p>
+	 * The operator should verify that the <code>current_nodes</code> match the
+	 * operator’s knowledge of the cluster to avoid making autoscaling decisions
+	 * based on stale or incomplete information.
+	 * <p>
+	 * The response contains decider-specific information you can use to diagnose
+	 * how and why autoscaling determined a certain capacity was required. This
+	 * information is provided for diagnosis only. Do not use this information to
+	 * make autoscaling decisions.
+	 * 
+	 * @param fn
+	 *            a function that initializes a builder to create the
+	 *            {@link GetAutoscalingCapacityRequest}
+	 * @see <a href=
+	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/9.0/autoscaling-get-autoscaling-capacity.html">Documentation
+	 *      on elastic.co</a>
+	 */
+
+	public final GetAutoscalingCapacityResponse getAutoscalingCapacity(
+			Function<GetAutoscalingCapacityRequest.Builder, ObjectBuilder<GetAutoscalingCapacityRequest>> fn)
+			throws IOException, ElasticsearchException {
+		return getAutoscalingCapacity(fn.apply(new GetAutoscalingCapacityRequest.Builder()).build());
+	}
+
+	/**
+	 * Get the autoscaling capacity.
+	 * <p>
+	 * NOTE: This feature is designed for indirect use by Elasticsearch Service,
+	 * Elastic Cloud Enterprise, and Elastic Cloud on Kubernetes. Direct use is not
+	 * supported.
+	 * <p>
+	 * This API gets the current autoscaling capacity based on the configured
+	 * autoscaling policy. It will return information to size the cluster
+	 * appropriately to the current workload.
+	 * <p>
+	 * The <code>required_capacity</code> is calculated as the maximum of the
+	 * <code>required_capacity</code> result of all individual deciders that are
+	 * enabled for the policy.
+	 * <p>
+	 * The operator should verify that the <code>current_nodes</code> match the
+	 * operator’s knowledge of the cluster to avoid making autoscaling decisions
+	 * based on stale or incomplete information.
+	 * <p>
+	 * The response contains decider-specific information you can use to diagnose
+	 * how and why autoscaling determined a certain capacity was required. This
+	 * information is provided for diagnosis only. Do not use this information to
+	 * make autoscaling decisions.
+	 * 
+	 * @see <a href=
+	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/9.0/autoscaling-get-autoscaling-capacity.html">Documentation
+	 *      on elastic.co</a>
+	 */
+
 	public GetAutoscalingCapacityResponse getAutoscalingCapacity() throws IOException, ElasticsearchException {
-		return this.transport.performRequest(GetAutoscalingCapacityRequest._INSTANCE,
+		return this.transport.performRequest(new GetAutoscalingCapacityRequest.Builder().build(),
 				GetAutoscalingCapacityRequest._ENDPOINT, this.transportOptions);
 	}
 
 	// ----- Endpoint: autoscaling.get_autoscaling_policy
 
 	/**
-	 * Retrieves an autoscaling policy. Designed for indirect use by ECE/ESS and
-	 * ECK. Direct use is not supported.
+	 * Get an autoscaling policy.
+	 * <p>
+	 * NOTE: This feature is designed for indirect use by Elasticsearch Service,
+	 * Elastic Cloud Enterprise, and Elastic Cloud on Kubernetes. Direct use is not
+	 * supported.
 	 * 
 	 * @see <a href=
-	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/8.15/autoscaling-get-autoscaling-capacity.html">Documentation
+	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/9.0/autoscaling-get-autoscaling-capacity.html">Documentation
 	 *      on elastic.co</a>
 	 */
 
@@ -139,14 +243,17 @@ public class ElasticsearchAutoscalingClient extends ApiClient<ElasticsearchTrans
 	}
 
 	/**
-	 * Retrieves an autoscaling policy. Designed for indirect use by ECE/ESS and
-	 * ECK. Direct use is not supported.
+	 * Get an autoscaling policy.
+	 * <p>
+	 * NOTE: This feature is designed for indirect use by Elasticsearch Service,
+	 * Elastic Cloud Enterprise, and Elastic Cloud on Kubernetes. Direct use is not
+	 * supported.
 	 * 
 	 * @param fn
 	 *            a function that initializes a builder to create the
 	 *            {@link GetAutoscalingPolicyRequest}
 	 * @see <a href=
-	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/8.15/autoscaling-get-autoscaling-capacity.html">Documentation
+	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/9.0/autoscaling-get-autoscaling-capacity.html">Documentation
 	 *      on elastic.co</a>
 	 */
 
@@ -159,11 +266,14 @@ public class ElasticsearchAutoscalingClient extends ApiClient<ElasticsearchTrans
 	// ----- Endpoint: autoscaling.put_autoscaling_policy
 
 	/**
-	 * Creates a new autoscaling policy. Designed for indirect use by ECE/ESS and
-	 * ECK. Direct use is not supported.
+	 * Create or update an autoscaling policy.
+	 * <p>
+	 * NOTE: This feature is designed for indirect use by Elasticsearch Service,
+	 * Elastic Cloud Enterprise, and Elastic Cloud on Kubernetes. Direct use is not
+	 * supported.
 	 * 
 	 * @see <a href=
-	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/8.15/autoscaling-put-autoscaling-policy.html">Documentation
+	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/9.0/autoscaling-put-autoscaling-policy.html">Documentation
 	 *      on elastic.co</a>
 	 */
 
@@ -176,14 +286,17 @@ public class ElasticsearchAutoscalingClient extends ApiClient<ElasticsearchTrans
 	}
 
 	/**
-	 * Creates a new autoscaling policy. Designed for indirect use by ECE/ESS and
-	 * ECK. Direct use is not supported.
+	 * Create or update an autoscaling policy.
+	 * <p>
+	 * NOTE: This feature is designed for indirect use by Elasticsearch Service,
+	 * Elastic Cloud Enterprise, and Elastic Cloud on Kubernetes. Direct use is not
+	 * supported.
 	 * 
 	 * @param fn
 	 *            a function that initializes a builder to create the
 	 *            {@link PutAutoscalingPolicyRequest}
 	 * @see <a href=
-	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/8.15/autoscaling-put-autoscaling-policy.html">Documentation
+	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/9.0/autoscaling-put-autoscaling-policy.html">Documentation
 	 *      on elastic.co</a>
 	 */
 

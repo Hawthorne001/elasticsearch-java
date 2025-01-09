@@ -67,89 +67,89 @@ public class ElasticsearchInferenceAsyncClient
 		return new ElasticsearchInferenceAsyncClient(this.transport, transportOptions);
 	}
 
-	// ----- Endpoint: inference.delete_model
+	// ----- Endpoint: inference.delete
 
 	/**
-	 * Delete model in the Inference API
+	 * Delete an inference endpoint
 	 * 
 	 * @see <a href=
 	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/master/delete-inference-api.html">Documentation
 	 *      on elastic.co</a>
 	 */
 
-	public CompletableFuture<DeleteModelResponse> deleteModel(DeleteModelRequest request) {
+	public CompletableFuture<DeleteInferenceResponse> delete(DeleteInferenceRequest request) {
 		@SuppressWarnings("unchecked")
-		JsonEndpoint<DeleteModelRequest, DeleteModelResponse, ErrorResponse> endpoint = (JsonEndpoint<DeleteModelRequest, DeleteModelResponse, ErrorResponse>) DeleteModelRequest._ENDPOINT;
+		JsonEndpoint<DeleteInferenceRequest, DeleteInferenceResponse, ErrorResponse> endpoint = (JsonEndpoint<DeleteInferenceRequest, DeleteInferenceResponse, ErrorResponse>) DeleteInferenceRequest._ENDPOINT;
 
 		return this.transport.performRequestAsync(request, endpoint, this.transportOptions);
 	}
 
 	/**
-	 * Delete model in the Inference API
+	 * Delete an inference endpoint
 	 * 
 	 * @param fn
 	 *            a function that initializes a builder to create the
-	 *            {@link DeleteModelRequest}
+	 *            {@link DeleteInferenceRequest}
 	 * @see <a href=
 	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/master/delete-inference-api.html">Documentation
 	 *      on elastic.co</a>
 	 */
 
-	public final CompletableFuture<DeleteModelResponse> deleteModel(
-			Function<DeleteModelRequest.Builder, ObjectBuilder<DeleteModelRequest>> fn) {
-		return deleteModel(fn.apply(new DeleteModelRequest.Builder()).build());
+	public final CompletableFuture<DeleteInferenceResponse> delete(
+			Function<DeleteInferenceRequest.Builder, ObjectBuilder<DeleteInferenceRequest>> fn) {
+		return delete(fn.apply(new DeleteInferenceRequest.Builder()).build());
 	}
 
-	// ----- Endpoint: inference.get_model
+	// ----- Endpoint: inference.get
 
 	/**
-	 * Get a model in the Inference API
+	 * Get an inference endpoint
 	 * 
 	 * @see <a href=
 	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/master/get-inference-api.html">Documentation
 	 *      on elastic.co</a>
 	 */
 
-	public CompletableFuture<GetModelResponse> getModel(GetModelRequest request) {
+	public CompletableFuture<GetInferenceResponse> get(GetInferenceRequest request) {
 		@SuppressWarnings("unchecked")
-		JsonEndpoint<GetModelRequest, GetModelResponse, ErrorResponse> endpoint = (JsonEndpoint<GetModelRequest, GetModelResponse, ErrorResponse>) GetModelRequest._ENDPOINT;
+		JsonEndpoint<GetInferenceRequest, GetInferenceResponse, ErrorResponse> endpoint = (JsonEndpoint<GetInferenceRequest, GetInferenceResponse, ErrorResponse>) GetInferenceRequest._ENDPOINT;
 
 		return this.transport.performRequestAsync(request, endpoint, this.transportOptions);
 	}
 
 	/**
-	 * Get a model in the Inference API
+	 * Get an inference endpoint
 	 * 
 	 * @param fn
 	 *            a function that initializes a builder to create the
-	 *            {@link GetModelRequest}
+	 *            {@link GetInferenceRequest}
 	 * @see <a href=
 	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/master/get-inference-api.html">Documentation
 	 *      on elastic.co</a>
 	 */
 
-	public final CompletableFuture<GetModelResponse> getModel(
-			Function<GetModelRequest.Builder, ObjectBuilder<GetModelRequest>> fn) {
-		return getModel(fn.apply(new GetModelRequest.Builder()).build());
+	public final CompletableFuture<GetInferenceResponse> get(
+			Function<GetInferenceRequest.Builder, ObjectBuilder<GetInferenceRequest>> fn) {
+		return get(fn.apply(new GetInferenceRequest.Builder()).build());
 	}
 
 	/**
-	 * Get a model in the Inference API
+	 * Get an inference endpoint
 	 * 
 	 * @see <a href=
 	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/master/get-inference-api.html">Documentation
 	 *      on elastic.co</a>
 	 */
 
-	public CompletableFuture<GetModelResponse> getModel() {
-		return this.transport.performRequestAsync(new GetModelRequest.Builder().build(), GetModelRequest._ENDPOINT,
-				this.transportOptions);
+	public CompletableFuture<GetInferenceResponse> get() {
+		return this.transport.performRequestAsync(new GetInferenceRequest.Builder().build(),
+				GetInferenceRequest._ENDPOINT, this.transportOptions);
 	}
 
 	// ----- Endpoint: inference.inference
 
 	/**
-	 * Perform inference on a model
+	 * Perform inference on the service
 	 * 
 	 * @see <a href=
 	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/master/post-inference-api.html">Documentation
@@ -164,7 +164,7 @@ public class ElasticsearchInferenceAsyncClient
 	}
 
 	/**
-	 * Perform inference on a model
+	 * Perform inference on the service
 	 * 
 	 * @param fn
 	 *            a function that initializes a builder to create the
@@ -179,37 +179,72 @@ public class ElasticsearchInferenceAsyncClient
 		return inference(fn.apply(new InferenceRequest.Builder()).build());
 	}
 
-	// ----- Endpoint: inference.put_model
+	// ----- Endpoint: inference.put
 
 	/**
-	 * Configure a model for use in the Inference API
+	 * Create an inference endpoint. When you create an inference endpoint, the
+	 * associated machine learning model is automatically deployed if it is not
+	 * already running. After creating the endpoint, wait for the model deployment
+	 * to complete before using it. To verify the deployment status, use the get
+	 * trained model statistics API. Look for
+	 * <code>&quot;state&quot;: &quot;fully_allocated&quot;</code> in the response
+	 * and ensure that the <code>&quot;allocation_count&quot;</code> matches the
+	 * <code>&quot;target_allocation_count&quot;</code>. Avoid creating multiple
+	 * endpoints for the same model unless required, as each endpoint consumes
+	 * significant resources.
+	 * <p>
+	 * IMPORTANT: The inference APIs enable you to use certain services, such as
+	 * built-in machine learning models (ELSER, E5), models uploaded through Eland,
+	 * Cohere, OpenAI, Mistral, Azure OpenAI, Google AI Studio, Google Vertex AI,
+	 * Anthropic, Watsonx.ai, or Hugging Face. For built-in models and models
+	 * uploaded through Eland, the inference APIs offer an alternative way to use
+	 * and manage trained models. However, if you do not plan to use the inference
+	 * APIs to use these models or if you want to use non-NLP models, use the
+	 * machine learning trained model APIs.
 	 * 
 	 * @see <a href=
 	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/master/put-inference-api.html">Documentation
 	 *      on elastic.co</a>
 	 */
 
-	public CompletableFuture<PutModelResponse> putModel(PutModelRequest request) {
+	public CompletableFuture<PutResponse> put(PutRequest request) {
 		@SuppressWarnings("unchecked")
-		JsonEndpoint<PutModelRequest, PutModelResponse, ErrorResponse> endpoint = (JsonEndpoint<PutModelRequest, PutModelResponse, ErrorResponse>) PutModelRequest._ENDPOINT;
+		JsonEndpoint<PutRequest, PutResponse, ErrorResponse> endpoint = (JsonEndpoint<PutRequest, PutResponse, ErrorResponse>) PutRequest._ENDPOINT;
 
 		return this.transport.performRequestAsync(request, endpoint, this.transportOptions);
 	}
 
 	/**
-	 * Configure a model for use in the Inference API
+	 * Create an inference endpoint. When you create an inference endpoint, the
+	 * associated machine learning model is automatically deployed if it is not
+	 * already running. After creating the endpoint, wait for the model deployment
+	 * to complete before using it. To verify the deployment status, use the get
+	 * trained model statistics API. Look for
+	 * <code>&quot;state&quot;: &quot;fully_allocated&quot;</code> in the response
+	 * and ensure that the <code>&quot;allocation_count&quot;</code> matches the
+	 * <code>&quot;target_allocation_count&quot;</code>. Avoid creating multiple
+	 * endpoints for the same model unless required, as each endpoint consumes
+	 * significant resources.
+	 * <p>
+	 * IMPORTANT: The inference APIs enable you to use certain services, such as
+	 * built-in machine learning models (ELSER, E5), models uploaded through Eland,
+	 * Cohere, OpenAI, Mistral, Azure OpenAI, Google AI Studio, Google Vertex AI,
+	 * Anthropic, Watsonx.ai, or Hugging Face. For built-in models and models
+	 * uploaded through Eland, the inference APIs offer an alternative way to use
+	 * and manage trained models. However, if you do not plan to use the inference
+	 * APIs to use these models or if you want to use non-NLP models, use the
+	 * machine learning trained model APIs.
 	 * 
 	 * @param fn
 	 *            a function that initializes a builder to create the
-	 *            {@link PutModelRequest}
+	 *            {@link PutRequest}
 	 * @see <a href=
 	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/master/put-inference-api.html">Documentation
 	 *      on elastic.co</a>
 	 */
 
-	public final CompletableFuture<PutModelResponse> putModel(
-			Function<PutModelRequest.Builder, ObjectBuilder<PutModelRequest>> fn) {
-		return putModel(fn.apply(new PutModelRequest.Builder()).build());
+	public final CompletableFuture<PutResponse> put(Function<PutRequest.Builder, ObjectBuilder<PutRequest>> fn) {
+		return put(fn.apply(new PutRequest.Builder()).build());
 	}
 
 }

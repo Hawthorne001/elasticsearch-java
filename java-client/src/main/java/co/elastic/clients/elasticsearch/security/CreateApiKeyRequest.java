@@ -61,7 +61,9 @@ import javax.annotation.Nullable;
 // typedef: security.create_api_key.Request
 
 /**
- * Creates an API key for access without requiring basic authentication. A
+ * Create an API key.
+ * <p>
+ * Create an API key for access without requiring basic authentication. A
  * successful request returns a JSON structure that contains the API key, its
  * unique id, and its name. If applicable, it also returns expiration
  * information for the API key in milliseconds. NOTE: By default, API keys never

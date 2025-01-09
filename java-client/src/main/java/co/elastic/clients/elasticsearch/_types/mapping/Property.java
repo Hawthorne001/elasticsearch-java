@@ -114,6 +114,8 @@ public class Property implements OpenTaggedUnion<Property.Kind, Object>, JsonpSe
 
 		Histogram("histogram"),
 
+		IcuCollationKeyword("icu_collation_keyword"),
+
 		Integer("integer"),
 
 		IntegerRange("integer_range"),
@@ -138,6 +140,8 @@ public class Property implements OpenTaggedUnion<Property.Kind, Object>, JsonpSe
 
 		Object("object"),
 
+		Passthrough("passthrough"),
+
 		Percolator("percolator"),
 
 		Point("point"),
@@ -149,6 +153,8 @@ public class Property implements OpenTaggedUnion<Property.Kind, Object>, JsonpSe
 		ScaledFloat("scaled_float"),
 
 		SearchAsYouType("search_as_you_type"),
+
+		SemanticText("semantic_text"),
 
 		Shape("shape"),
 
@@ -586,6 +592,24 @@ public class Property implements OpenTaggedUnion<Property.Kind, Object>, JsonpSe
 	}
 
 	/**
+	 * Is this variant instance of kind {@code icu_collation_keyword}?
+	 */
+	public boolean isIcuCollationKeyword() {
+		return _kind == Kind.IcuCollationKeyword;
+	}
+
+	/**
+	 * Get the {@code icu_collation_keyword} variant value.
+	 *
+	 * @throws IllegalStateException
+	 *             if the current variant is not of the
+	 *             {@code icu_collation_keyword} kind.
+	 */
+	public IcuCollationProperty icuCollationKeyword() {
+		return TaggedUnionUtils.get(this, Kind.IcuCollationKeyword);
+	}
+
+	/**
 	 * Is this variant instance of kind {@code integer}?
 	 */
 	public boolean isInteger() {
@@ -791,6 +815,23 @@ public class Property implements OpenTaggedUnion<Property.Kind, Object>, JsonpSe
 	}
 
 	/**
+	 * Is this variant instance of kind {@code passthrough}?
+	 */
+	public boolean isPassthrough() {
+		return _kind == Kind.Passthrough;
+	}
+
+	/**
+	 * Get the {@code passthrough} variant value.
+	 *
+	 * @throws IllegalStateException
+	 *             if the current variant is not of the {@code passthrough} kind.
+	 */
+	public PassthroughObjectProperty passthrough() {
+		return TaggedUnionUtils.get(this, Kind.Passthrough);
+	}
+
+	/**
 	 * Is this variant instance of kind {@code percolator}?
 	 */
 	public boolean isPercolator() {
@@ -891,6 +932,23 @@ public class Property implements OpenTaggedUnion<Property.Kind, Object>, JsonpSe
 	 */
 	public SearchAsYouTypeProperty searchAsYouType() {
 		return TaggedUnionUtils.get(this, Kind.SearchAsYouType);
+	}
+
+	/**
+	 * Is this variant instance of kind {@code semantic_text}?
+	 */
+	public boolean isSemanticText() {
+		return _kind == Kind.SemanticText;
+	}
+
+	/**
+	 * Get the {@code semantic_text} variant value.
+	 *
+	 * @throws IllegalStateException
+	 *             if the current variant is not of the {@code semantic_text} kind.
+	 */
+	public SemanticTextProperty semanticText() {
+		return TaggedUnionUtils.get(this, Kind.SemanticText);
 	}
 
 	/**
@@ -1307,6 +1365,17 @@ public class Property implements OpenTaggedUnion<Property.Kind, Object>, JsonpSe
 			return this.histogram(fn.apply(new HistogramProperty.Builder()).build());
 		}
 
+		public ObjectBuilder<Property> icuCollationKeyword(IcuCollationProperty v) {
+			this._kind = Kind.IcuCollationKeyword;
+			this._value = v;
+			return this;
+		}
+
+		public ObjectBuilder<Property> icuCollationKeyword(
+				Function<IcuCollationProperty.Builder, ObjectBuilder<IcuCollationProperty>> fn) {
+			return this.icuCollationKeyword(fn.apply(new IcuCollationProperty.Builder()).build());
+		}
+
 		public ObjectBuilder<Property> integer(IntegerNumberProperty v) {
 			this._kind = Kind.Integer;
 			this._value = v;
@@ -1433,6 +1502,17 @@ public class Property implements OpenTaggedUnion<Property.Kind, Object>, JsonpSe
 			return this.object(fn.apply(new ObjectProperty.Builder()).build());
 		}
 
+		public ObjectBuilder<Property> passthrough(PassthroughObjectProperty v) {
+			this._kind = Kind.Passthrough;
+			this._value = v;
+			return this;
+		}
+
+		public ObjectBuilder<Property> passthrough(
+				Function<PassthroughObjectProperty.Builder, ObjectBuilder<PassthroughObjectProperty>> fn) {
+			return this.passthrough(fn.apply(new PassthroughObjectProperty.Builder()).build());
+		}
+
 		public ObjectBuilder<Property> percolator(PercolatorProperty v) {
 			this._kind = Kind.Percolator;
 			this._value = v;
@@ -1496,6 +1576,17 @@ public class Property implements OpenTaggedUnion<Property.Kind, Object>, JsonpSe
 		public ObjectBuilder<Property> searchAsYouType(
 				Function<SearchAsYouTypeProperty.Builder, ObjectBuilder<SearchAsYouTypeProperty>> fn) {
 			return this.searchAsYouType(fn.apply(new SearchAsYouTypeProperty.Builder()).build());
+		}
+
+		public ObjectBuilder<Property> semanticText(SemanticTextProperty v) {
+			this._kind = Kind.SemanticText;
+			this._value = v;
+			return this;
+		}
+
+		public ObjectBuilder<Property> semanticText(
+				Function<SemanticTextProperty.Builder, ObjectBuilder<SemanticTextProperty>> fn) {
+			return this.semanticText(fn.apply(new SemanticTextProperty.Builder()).build());
 		}
 
 		public ObjectBuilder<Property> shape(ShapeProperty v) {
@@ -1629,6 +1720,7 @@ public class Property implements OpenTaggedUnion<Property.Kind, Object>, JsonpSe
 		op.add(Builder::geoShape, GeoShapeProperty._DESERIALIZER, "geo_shape");
 		op.add(Builder::halfFloat, HalfFloatNumberProperty._DESERIALIZER, "half_float");
 		op.add(Builder::histogram, HistogramProperty._DESERIALIZER, "histogram");
+		op.add(Builder::icuCollationKeyword, IcuCollationProperty._DESERIALIZER, "icu_collation_keyword");
 		op.add(Builder::integer, IntegerNumberProperty._DESERIALIZER, "integer");
 		op.add(Builder::integerRange, IntegerRangeProperty._DESERIALIZER, "integer_range");
 		op.add(Builder::ip, IpProperty._DESERIALIZER, "ip");
@@ -1641,12 +1733,14 @@ public class Property implements OpenTaggedUnion<Property.Kind, Object>, JsonpSe
 		op.add(Builder::murmur3, Murmur3HashProperty._DESERIALIZER, "murmur3");
 		op.add(Builder::nested, NestedProperty._DESERIALIZER, "nested");
 		op.add(Builder::object, ObjectProperty._DESERIALIZER, "object");
+		op.add(Builder::passthrough, PassthroughObjectProperty._DESERIALIZER, "passthrough");
 		op.add(Builder::percolator, PercolatorProperty._DESERIALIZER, "percolator");
 		op.add(Builder::point, PointProperty._DESERIALIZER, "point");
 		op.add(Builder::rankFeature, RankFeatureProperty._DESERIALIZER, "rank_feature");
 		op.add(Builder::rankFeatures, RankFeaturesProperty._DESERIALIZER, "rank_features");
 		op.add(Builder::scaledFloat, ScaledFloatNumberProperty._DESERIALIZER, "scaled_float");
 		op.add(Builder::searchAsYouType, SearchAsYouTypeProperty._DESERIALIZER, "search_as_you_type");
+		op.add(Builder::semanticText, SemanticTextProperty._DESERIALIZER, "semantic_text");
 		op.add(Builder::shape, ShapeProperty._DESERIALIZER, "shape");
 		op.add(Builder::short_, ShortNumberProperty._DESERIALIZER, "short");
 		op.add(Builder::sparseVector, SparseVectorProperty._DESERIALIZER, "sparse_vector");

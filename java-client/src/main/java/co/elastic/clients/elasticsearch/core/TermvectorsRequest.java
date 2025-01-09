@@ -67,7 +67,9 @@ import javax.annotation.Nullable;
 // typedef: _global.termvectors.Request
 
 /**
- * Returns information and statistics about terms in the fields of a particular
+ * Get term vector information.
+ * <p>
+ * Get information and statistics about terms in the fields of a particular
  * document.
  * 
  * @see <a href="../doc-files/api-spec.html#_global.termvectors.Request">API
@@ -661,7 +663,7 @@ public class TermvectorsRequest<TDocument> extends RequestBase implements JsonpS
 	 */
 	public static final JsonpDeserializer<TermvectorsRequest<Object>> _DESERIALIZER = JsonpDeserializer
 			.lazy(() -> createTermvectorsRequestDeserializer(
-					new NamedDeserializer<>("co.elastic.clients:Deserializer:_global.termvectors.TDocument")));
+					new NamedDeserializer<>("co.elastic.clients:Deserializer:_global.termvectors.Request.TDocument")));
 
 	protected static <TDocument> void setupTermvectorsRequestDeserializer(
 			ObjectDeserializer<TermvectorsRequest.Builder<TDocument>> op,

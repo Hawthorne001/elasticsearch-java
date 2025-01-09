@@ -70,21 +70,71 @@ public class ElasticsearchLicenseAsyncClient
 	// ----- Endpoint: license.delete
 
 	/**
-	 * Deletes licensing information for the cluster
+	 * Delete the license. When the license expires, your subscription level reverts
+	 * to Basic.
+	 * <p>
+	 * If the operator privileges feature is enabled, only operator users can use
+	 * this API.
 	 * 
 	 * @see <a href=
 	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/master/delete-license.html">Documentation
 	 *      on elastic.co</a>
 	 */
+
+	public CompletableFuture<DeleteLicenseResponse> delete(DeleteLicenseRequest request) {
+		@SuppressWarnings("unchecked")
+		JsonEndpoint<DeleteLicenseRequest, DeleteLicenseResponse, ErrorResponse> endpoint = (JsonEndpoint<DeleteLicenseRequest, DeleteLicenseResponse, ErrorResponse>) DeleteLicenseRequest._ENDPOINT;
+
+		return this.transport.performRequestAsync(request, endpoint, this.transportOptions);
+	}
+
+	/**
+	 * Delete the license. When the license expires, your subscription level reverts
+	 * to Basic.
+	 * <p>
+	 * If the operator privileges feature is enabled, only operator users can use
+	 * this API.
+	 * 
+	 * @param fn
+	 *            a function that initializes a builder to create the
+	 *            {@link DeleteLicenseRequest}
+	 * @see <a href=
+	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/master/delete-license.html">Documentation
+	 *      on elastic.co</a>
+	 */
+
+	public final CompletableFuture<DeleteLicenseResponse> delete(
+			Function<DeleteLicenseRequest.Builder, ObjectBuilder<DeleteLicenseRequest>> fn) {
+		return delete(fn.apply(new DeleteLicenseRequest.Builder()).build());
+	}
+
+	/**
+	 * Delete the license. When the license expires, your subscription level reverts
+	 * to Basic.
+	 * <p>
+	 * If the operator privileges feature is enabled, only operator users can use
+	 * this API.
+	 * 
+	 * @see <a href=
+	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/master/delete-license.html">Documentation
+	 *      on elastic.co</a>
+	 */
+
 	public CompletableFuture<DeleteLicenseResponse> delete() {
-		return this.transport.performRequestAsync(DeleteLicenseRequest._INSTANCE, DeleteLicenseRequest._ENDPOINT,
-				this.transportOptions);
+		return this.transport.performRequestAsync(new DeleteLicenseRequest.Builder().build(),
+				DeleteLicenseRequest._ENDPOINT, this.transportOptions);
 	}
 
 	// ----- Endpoint: license.get
 
 	/**
-	 * Retrieves licensing information for the cluster
+	 * Get license information. Get information about your Elastic license including
+	 * its type, its status, when it was issued, and when it expires.
+	 * <p>
+	 * NOTE: If the master node is generating a new cluster state, the get license
+	 * API may return a <code>404 Not Found</code> response. If you receive an
+	 * unexpected 404 response after cluster startup, wait a short period and retry
+	 * the request.
 	 * 
 	 * @see <a href=
 	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/master/get-license.html">Documentation
@@ -99,7 +149,13 @@ public class ElasticsearchLicenseAsyncClient
 	}
 
 	/**
-	 * Retrieves licensing information for the cluster
+	 * Get license information. Get information about your Elastic license including
+	 * its type, its status, when it was issued, and when it expires.
+	 * <p>
+	 * NOTE: If the master node is generating a new cluster state, the get license
+	 * API may return a <code>404 Not Found</code> response. If you receive an
+	 * unexpected 404 response after cluster startup, wait a short period and retry
+	 * the request.
 	 * 
 	 * @param fn
 	 *            a function that initializes a builder to create the
@@ -115,7 +171,13 @@ public class ElasticsearchLicenseAsyncClient
 	}
 
 	/**
-	 * Retrieves licensing information for the cluster
+	 * Get license information. Get information about your Elastic license including
+	 * its type, its status, when it was issued, and when it expires.
+	 * <p>
+	 * NOTE: If the master node is generating a new cluster state, the get license
+	 * API may return a <code>404 Not Found</code> response. If you receive an
+	 * unexpected 404 response after cluster startup, wait a short period and retry
+	 * the request.
 	 * 
 	 * @see <a href=
 	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/master/get-license.html">Documentation
@@ -130,7 +192,7 @@ public class ElasticsearchLicenseAsyncClient
 	// ----- Endpoint: license.get_basic_status
 
 	/**
-	 * Retrieves information about the status of the basic license.
+	 * Get the basic license status.
 	 * 
 	 * @see <a href=
 	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/master/get-basic-status.html">Documentation
@@ -144,7 +206,7 @@ public class ElasticsearchLicenseAsyncClient
 	// ----- Endpoint: license.get_trial_status
 
 	/**
-	 * Retrieves information about the status of the trial license.
+	 * Get the trial status.
 	 * 
 	 * @see <a href=
 	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/master/get-trial-status.html">Documentation
@@ -158,7 +220,16 @@ public class ElasticsearchLicenseAsyncClient
 	// ----- Endpoint: license.post
 
 	/**
-	 * Updates the license for the cluster.
+	 * Update the license. You can update your license at runtime without shutting
+	 * down your nodes. License updates take effect immediately. If the license you
+	 * are installing does not support all of the features that were available with
+	 * your previous license, however, you are notified in the response. You must
+	 * then re-submit the API request with the acknowledge parameter set to true.
+	 * <p>
+	 * NOTE: If Elasticsearch security features are enabled and you are installing a
+	 * gold or higher license, you must enable TLS on the transport networking layer
+	 * before you install the license. If the operator privileges feature is
+	 * enabled, only operator users can use this API.
 	 * 
 	 * @see <a href=
 	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/master/update-license.html">Documentation
@@ -173,7 +244,16 @@ public class ElasticsearchLicenseAsyncClient
 	}
 
 	/**
-	 * Updates the license for the cluster.
+	 * Update the license. You can update your license at runtime without shutting
+	 * down your nodes. License updates take effect immediately. If the license you
+	 * are installing does not support all of the features that were available with
+	 * your previous license, however, you are notified in the response. You must
+	 * then re-submit the API request with the acknowledge parameter set to true.
+	 * <p>
+	 * NOTE: If Elasticsearch security features are enabled and you are installing a
+	 * gold or higher license, you must enable TLS on the transport networking layer
+	 * before you install the license. If the operator privileges feature is
+	 * enabled, only operator users can use this API.
 	 * 
 	 * @param fn
 	 *            a function that initializes a builder to create the
@@ -188,7 +268,16 @@ public class ElasticsearchLicenseAsyncClient
 	}
 
 	/**
-	 * Updates the license for the cluster.
+	 * Update the license. You can update your license at runtime without shutting
+	 * down your nodes. License updates take effect immediately. If the license you
+	 * are installing does not support all of the features that were available with
+	 * your previous license, however, you are notified in the response. You must
+	 * then re-submit the API request with the acknowledge parameter set to true.
+	 * <p>
+	 * NOTE: If Elasticsearch security features are enabled and you are installing a
+	 * gold or higher license, you must enable TLS on the transport networking layer
+	 * before you install the license. If the operator privileges feature is
+	 * enabled, only operator users can use this API.
 	 * 
 	 * @see <a href=
 	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/master/update-license.html">Documentation
@@ -203,7 +292,18 @@ public class ElasticsearchLicenseAsyncClient
 	// ----- Endpoint: license.post_start_basic
 
 	/**
-	 * Starts an indefinite basic license.
+	 * Start a basic license. Start an indefinite basic license, which gives access
+	 * to all the basic features.
+	 * <p>
+	 * NOTE: In order to start a basic license, you must not currently have a basic
+	 * license.
+	 * <p>
+	 * If the basic license does not support all of the features that are available
+	 * with your current license, however, you are notified in the response. You
+	 * must then re-submit the API request with the <code>acknowledge</code>
+	 * parameter set to <code>true</code>.
+	 * <p>
+	 * To check the status of your basic license, use the get basic license API.
 	 * 
 	 * @see <a href=
 	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/master/start-basic.html">Documentation
@@ -218,7 +318,18 @@ public class ElasticsearchLicenseAsyncClient
 	}
 
 	/**
-	 * Starts an indefinite basic license.
+	 * Start a basic license. Start an indefinite basic license, which gives access
+	 * to all the basic features.
+	 * <p>
+	 * NOTE: In order to start a basic license, you must not currently have a basic
+	 * license.
+	 * <p>
+	 * If the basic license does not support all of the features that are available
+	 * with your current license, however, you are notified in the response. You
+	 * must then re-submit the API request with the <code>acknowledge</code>
+	 * parameter set to <code>true</code>.
+	 * <p>
+	 * To check the status of your basic license, use the get basic license API.
 	 * 
 	 * @param fn
 	 *            a function that initializes a builder to create the
@@ -234,7 +345,18 @@ public class ElasticsearchLicenseAsyncClient
 	}
 
 	/**
-	 * Starts an indefinite basic license.
+	 * Start a basic license. Start an indefinite basic license, which gives access
+	 * to all the basic features.
+	 * <p>
+	 * NOTE: In order to start a basic license, you must not currently have a basic
+	 * license.
+	 * <p>
+	 * If the basic license does not support all of the features that are available
+	 * with your current license, however, you are notified in the response. You
+	 * must then re-submit the API request with the <code>acknowledge</code>
+	 * parameter set to <code>true</code>.
+	 * <p>
+	 * To check the status of your basic license, use the get basic license API.
 	 * 
 	 * @see <a href=
 	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/master/start-basic.html">Documentation
@@ -249,10 +371,19 @@ public class ElasticsearchLicenseAsyncClient
 	// ----- Endpoint: license.post_start_trial
 
 	/**
-	 * starts a limited time trial license.
+	 * Start a trial. Start a 30-day trial, which gives access to all subscription
+	 * features.
+	 * <p>
+	 * NOTE: You are allowed to start a trial only if your cluster has not already
+	 * activated a trial for the current major product version. For example, if you
+	 * have already activated a trial for v8.0, you cannot start a new trial until
+	 * v9.0. You can, however, request an extended trial at <a href=
+	 * "https://www.elastic.co/trialextension">https://www.elastic.co/trialextension</a>.
+	 * <p>
+	 * To check the status of your trial, use the get trial status API.
 	 * 
 	 * @see <a href=
-	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/master/start-trial.html">Documentation
+	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/9.0/start-trial.html">Documentation
 	 *      on elastic.co</a>
 	 */
 
@@ -264,13 +395,22 @@ public class ElasticsearchLicenseAsyncClient
 	}
 
 	/**
-	 * starts a limited time trial license.
+	 * Start a trial. Start a 30-day trial, which gives access to all subscription
+	 * features.
+	 * <p>
+	 * NOTE: You are allowed to start a trial only if your cluster has not already
+	 * activated a trial for the current major product version. For example, if you
+	 * have already activated a trial for v8.0, you cannot start a new trial until
+	 * v9.0. You can, however, request an extended trial at <a href=
+	 * "https://www.elastic.co/trialextension">https://www.elastic.co/trialextension</a>.
+	 * <p>
+	 * To check the status of your trial, use the get trial status API.
 	 * 
 	 * @param fn
 	 *            a function that initializes a builder to create the
 	 *            {@link PostStartTrialRequest}
 	 * @see <a href=
-	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/master/start-trial.html">Documentation
+	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/9.0/start-trial.html">Documentation
 	 *      on elastic.co</a>
 	 */
 
@@ -280,10 +420,19 @@ public class ElasticsearchLicenseAsyncClient
 	}
 
 	/**
-	 * starts a limited time trial license.
+	 * Start a trial. Start a 30-day trial, which gives access to all subscription
+	 * features.
+	 * <p>
+	 * NOTE: You are allowed to start a trial only if your cluster has not already
+	 * activated a trial for the current major product version. For example, if you
+	 * have already activated a trial for v8.0, you cannot start a new trial until
+	 * v9.0. You can, however, request an extended trial at <a href=
+	 * "https://www.elastic.co/trialextension">https://www.elastic.co/trialextension</a>.
+	 * <p>
+	 * To check the status of your trial, use the get trial status API.
 	 * 
 	 * @see <a href=
-	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/master/start-trial.html">Documentation
+	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/9.0/start-trial.html">Documentation
 	 *      on elastic.co</a>
 	 */
 

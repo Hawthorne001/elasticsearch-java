@@ -20,6 +20,7 @@
 package co.elastic.clients.elasticsearch.cat;
 
 import co.elastic.clients.elasticsearch._types.ErrorResponse;
+import co.elastic.clients.elasticsearch._types.Time;
 import co.elastic.clients.json.JsonpDeserializable;
 import co.elastic.clients.json.JsonpDeserializer;
 import co.elastic.clients.json.ObjectBuilderDeserializer;
@@ -28,6 +29,7 @@ import co.elastic.clients.transport.Endpoint;
 import co.elastic.clients.transport.endpoints.SimpleEndpoint;
 import co.elastic.clients.util.ObjectBuilder;
 import jakarta.json.stream.JsonGenerator;
+import java.lang.Boolean;
 import java.lang.String;
 import java.util.HashMap;
 import java.util.Map;
@@ -53,11 +55,12 @@ import javax.annotation.Nullable;
 // typedef: cat.templates.Request
 
 /**
- * Returns information about index templates in a cluster. You can use index
- * templates to apply index settings and field mappings to new indices at
- * creation. IMPORTANT: cat APIs are only intended for human consumption using
- * the command line or Kibana console. They are not intended for use by
- * applications. For application consumption, use the get index template API.
+ * Get index template information. Get information about the index templates in
+ * a cluster. You can use index templates to apply index settings and field
+ * mappings to new indices at creation. IMPORTANT: cat APIs are only intended
+ * for human consumption using the command line or Kibana console. They are not
+ * intended for use by applications. For application consumption, use the get
+ * index template API.
  * 
  * @see <a href="../doc-files/api-spec.html#cat.templates.Request">API
  *      specification</a>
@@ -65,18 +68,50 @@ import javax.annotation.Nullable;
 
 public class TemplatesRequest extends CatRequestBase {
 	@Nullable
+	private final Boolean local;
+
+	@Nullable
+	private final Time masterTimeout;
+
+	@Nullable
 	private final String name;
 
 	// ---------------------------------------------------------------------------------------------
 
 	private TemplatesRequest(Builder builder) {
 
+		this.local = builder.local;
+		this.masterTimeout = builder.masterTimeout;
 		this.name = builder.name;
 
 	}
 
 	public static TemplatesRequest of(Function<Builder, ObjectBuilder<TemplatesRequest>> fn) {
 		return fn.apply(new Builder()).build();
+	}
+
+	/**
+	 * If <code>true</code>, the request computes the list of selected nodes from
+	 * the local cluster state. If <code>false</code> the list of selected nodes are
+	 * computed from the cluster state of the master node. In both cases the
+	 * coordinating node will send requests for further information to each selected
+	 * node.
+	 * <p>
+	 * API name: {@code local}
+	 */
+	@Nullable
+	public final Boolean local() {
+		return this.local;
+	}
+
+	/**
+	 * Period to wait for a connection to the master node.
+	 * <p>
+	 * API name: {@code master_timeout}
+	 */
+	@Nullable
+	public final Time masterTimeout() {
+		return this.masterTimeout;
 	}
 
 	/**
@@ -100,7 +135,46 @@ public class TemplatesRequest extends CatRequestBase {
 			implements
 				ObjectBuilder<TemplatesRequest> {
 		@Nullable
+		private Boolean local;
+
+		@Nullable
+		private Time masterTimeout;
+
+		@Nullable
 		private String name;
+
+		/**
+		 * If <code>true</code>, the request computes the list of selected nodes from
+		 * the local cluster state. If <code>false</code> the list of selected nodes are
+		 * computed from the cluster state of the master node. In both cases the
+		 * coordinating node will send requests for further information to each selected
+		 * node.
+		 * <p>
+		 * API name: {@code local}
+		 */
+		public final Builder local(@Nullable Boolean value) {
+			this.local = value;
+			return this;
+		}
+
+		/**
+		 * Period to wait for a connection to the master node.
+		 * <p>
+		 * API name: {@code master_timeout}
+		 */
+		public final Builder masterTimeout(@Nullable Time value) {
+			this.masterTimeout = value;
+			return this;
+		}
+
+		/**
+		 * Period to wait for a connection to the master node.
+		 * <p>
+		 * API name: {@code master_timeout}
+		 */
+		public final Builder masterTimeout(Function<Time.Builder, ObjectBuilder<Time>> fn) {
+			return this.masterTimeout(fn.apply(new Time.Builder()).build());
+		}
 
 		/**
 		 * The name of the template to return. Accepts wildcard expressions. If omitted,
@@ -194,6 +268,12 @@ public class TemplatesRequest extends CatRequestBase {
 			request -> {
 				Map<String, String> params = new HashMap<>();
 				params.put("format", "json");
+				if (request.masterTimeout != null) {
+					params.put("master_timeout", request.masterTimeout._toJsonString());
+				}
+				if (request.local != null) {
+					params.put("local", String.valueOf(request.local));
+				}
 				return params;
 
 			}, SimpleEndpoint.emptyMap(), false, TemplatesResponse._DESERIALIZER);

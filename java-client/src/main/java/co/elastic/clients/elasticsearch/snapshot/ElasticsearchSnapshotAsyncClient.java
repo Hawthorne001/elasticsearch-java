@@ -70,10 +70,12 @@ public class ElasticsearchSnapshotAsyncClient
 	// ----- Endpoint: snapshot.cleanup_repository
 
 	/**
-	 * Removes stale data from repository.
+	 * Clean up the snapshot repository. Trigger the review of the contents of a
+	 * snapshot repository and delete any stale data not referenced by existing
+	 * snapshots.
 	 * 
 	 * @see <a href=
-	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/master/clean-up-snapshot-repo-api.html">Documentation
+	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/9.0/clean-up-snapshot-repo-api.html">Documentation
 	 *      on elastic.co</a>
 	 */
 
@@ -85,13 +87,15 @@ public class ElasticsearchSnapshotAsyncClient
 	}
 
 	/**
-	 * Removes stale data from repository.
+	 * Clean up the snapshot repository. Trigger the review of the contents of a
+	 * snapshot repository and delete any stale data not referenced by existing
+	 * snapshots.
 	 * 
 	 * @param fn
 	 *            a function that initializes a builder to create the
 	 *            {@link CleanupRepositoryRequest}
 	 * @see <a href=
-	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/master/clean-up-snapshot-repo-api.html">Documentation
+	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/9.0/clean-up-snapshot-repo-api.html">Documentation
 	 *      on elastic.co</a>
 	 */
 
@@ -103,11 +107,11 @@ public class ElasticsearchSnapshotAsyncClient
 	// ----- Endpoint: snapshot.clone
 
 	/**
-	 * Clones indices from one snapshot into another snapshot in the same
-	 * repository.
+	 * Clone a snapshot. Clone part of all of a snapshot into another snapshot in
+	 * the same repository.
 	 * 
 	 * @see <a href=
-	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots.html">Documentation
+	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/9.0/clone-snapshot-api.html">Documentation
 	 *      on elastic.co</a>
 	 */
 
@@ -119,14 +123,14 @@ public class ElasticsearchSnapshotAsyncClient
 	}
 
 	/**
-	 * Clones indices from one snapshot into another snapshot in the same
-	 * repository.
+	 * Clone a snapshot. Clone part of all of a snapshot into another snapshot in
+	 * the same repository.
 	 * 
 	 * @param fn
 	 *            a function that initializes a builder to create the
 	 *            {@link CloneSnapshotRequest}
 	 * @see <a href=
-	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots.html">Documentation
+	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/9.0/clone-snapshot-api.html">Documentation
 	 *      on elastic.co</a>
 	 */
 
@@ -138,10 +142,11 @@ public class ElasticsearchSnapshotAsyncClient
 	// ----- Endpoint: snapshot.create
 
 	/**
-	 * Creates a snapshot in a repository.
+	 * Create a snapshot. Take a snapshot of a cluster or of data streams and
+	 * indices.
 	 * 
 	 * @see <a href=
-	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots.html">Documentation
+	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/9.0/create-snapshot-api.html">Documentation
 	 *      on elastic.co</a>
 	 */
 
@@ -153,13 +158,14 @@ public class ElasticsearchSnapshotAsyncClient
 	}
 
 	/**
-	 * Creates a snapshot in a repository.
+	 * Create a snapshot. Take a snapshot of a cluster or of data streams and
+	 * indices.
 	 * 
 	 * @param fn
 	 *            a function that initializes a builder to create the
 	 *            {@link CreateSnapshotRequest}
 	 * @see <a href=
-	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots.html">Documentation
+	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/9.0/create-snapshot-api.html">Documentation
 	 *      on elastic.co</a>
 	 */
 
@@ -171,10 +177,20 @@ public class ElasticsearchSnapshotAsyncClient
 	// ----- Endpoint: snapshot.create_repository
 
 	/**
-	 * Creates a repository.
+	 * Create or update a snapshot repository. IMPORTANT: If you are migrating
+	 * searchable snapshots, the repository name must be identical in the source and
+	 * destination clusters. To register a snapshot repository, the cluster's global
+	 * metadata must be writeable. Ensure there are no cluster blocks (for example,
+	 * <code>cluster.blocks.read_only</code> and
+	 * <code>clsuter.blocks.read_only_allow_delete</code> settings) that prevent
+	 * write access.
+	 * <p>
+	 * Several options for this API can be specified using a query parameter or a
+	 * request body parameter. If both parameters are specified, only the query
+	 * parameter is used.
 	 * 
 	 * @see <a href=
-	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots.html">Documentation
+	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/9.0/put-snapshot-repo-api.html">Documentation
 	 *      on elastic.co</a>
 	 */
 
@@ -186,13 +202,23 @@ public class ElasticsearchSnapshotAsyncClient
 	}
 
 	/**
-	 * Creates a repository.
+	 * Create or update a snapshot repository. IMPORTANT: If you are migrating
+	 * searchable snapshots, the repository name must be identical in the source and
+	 * destination clusters. To register a snapshot repository, the cluster's global
+	 * metadata must be writeable. Ensure there are no cluster blocks (for example,
+	 * <code>cluster.blocks.read_only</code> and
+	 * <code>clsuter.blocks.read_only_allow_delete</code> settings) that prevent
+	 * write access.
+	 * <p>
+	 * Several options for this API can be specified using a query parameter or a
+	 * request body parameter. If both parameters are specified, only the query
+	 * parameter is used.
 	 * 
 	 * @param fn
 	 *            a function that initializes a builder to create the
 	 *            {@link CreateRepositoryRequest}
 	 * @see <a href=
-	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots.html">Documentation
+	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/9.0/put-snapshot-repo-api.html">Documentation
 	 *      on elastic.co</a>
 	 */
 
@@ -204,10 +230,10 @@ public class ElasticsearchSnapshotAsyncClient
 	// ----- Endpoint: snapshot.delete
 
 	/**
-	 * Deletes one or more snapshots.
+	 * Delete snapshots.
 	 * 
 	 * @see <a href=
-	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots.html">Documentation
+	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/9.0/delete-snapshot-api.html">Documentation
 	 *      on elastic.co</a>
 	 */
 
@@ -219,13 +245,13 @@ public class ElasticsearchSnapshotAsyncClient
 	}
 
 	/**
-	 * Deletes one or more snapshots.
+	 * Delete snapshots.
 	 * 
 	 * @param fn
 	 *            a function that initializes a builder to create the
 	 *            {@link DeleteSnapshotRequest}
 	 * @see <a href=
-	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots.html">Documentation
+	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/9.0/delete-snapshot-api.html">Documentation
 	 *      on elastic.co</a>
 	 */
 
@@ -237,10 +263,13 @@ public class ElasticsearchSnapshotAsyncClient
 	// ----- Endpoint: snapshot.delete_repository
 
 	/**
-	 * Deletes a repository.
+	 * Delete snapshot repositories. When a repository is unregistered,
+	 * Elasticsearch removes only the reference to the location where the repository
+	 * is storing the snapshots. The snapshots themselves are left untouched and in
+	 * place.
 	 * 
 	 * @see <a href=
-	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots.html">Documentation
+	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/9.0/delete-snapshot-repo-api.html">Documentation
 	 *      on elastic.co</a>
 	 */
 
@@ -252,13 +281,16 @@ public class ElasticsearchSnapshotAsyncClient
 	}
 
 	/**
-	 * Deletes a repository.
+	 * Delete snapshot repositories. When a repository is unregistered,
+	 * Elasticsearch removes only the reference to the location where the repository
+	 * is storing the snapshots. The snapshots themselves are left untouched and in
+	 * place.
 	 * 
 	 * @param fn
 	 *            a function that initializes a builder to create the
 	 *            {@link DeleteRepositoryRequest}
 	 * @see <a href=
-	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots.html">Documentation
+	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/9.0/delete-snapshot-repo-api.html">Documentation
 	 *      on elastic.co</a>
 	 */
 
@@ -270,10 +302,17 @@ public class ElasticsearchSnapshotAsyncClient
 	// ----- Endpoint: snapshot.get
 
 	/**
-	 * Returns information about a snapshot.
+	 * Get snapshot information.
+	 * <p>
+	 * NOTE: The <code>after</code> parameter and <code>next</code> field enable you
+	 * to iterate through snapshots with some consistency guarantees regarding
+	 * concurrent creation or deletion of snapshots. It is guaranteed that any
+	 * snapshot that exists at the beginning of the iteration and is not
+	 * concurrently deleted will be seen during the iteration. Snapshots
+	 * concurrently created may be seen during an iteration.
 	 * 
 	 * @see <a href=
-	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots.html">Documentation
+	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/9.0/get-snapshot-api.html">Documentation
 	 *      on elastic.co</a>
 	 */
 
@@ -285,13 +324,20 @@ public class ElasticsearchSnapshotAsyncClient
 	}
 
 	/**
-	 * Returns information about a snapshot.
+	 * Get snapshot information.
+	 * <p>
+	 * NOTE: The <code>after</code> parameter and <code>next</code> field enable you
+	 * to iterate through snapshots with some consistency guarantees regarding
+	 * concurrent creation or deletion of snapshots. It is guaranteed that any
+	 * snapshot that exists at the beginning of the iteration and is not
+	 * concurrently deleted will be seen during the iteration. Snapshots
+	 * concurrently created may be seen during an iteration.
 	 * 
 	 * @param fn
 	 *            a function that initializes a builder to create the
 	 *            {@link GetSnapshotRequest}
 	 * @see <a href=
-	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots.html">Documentation
+	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/9.0/get-snapshot-api.html">Documentation
 	 *      on elastic.co</a>
 	 */
 
@@ -303,10 +349,10 @@ public class ElasticsearchSnapshotAsyncClient
 	// ----- Endpoint: snapshot.get_repository
 
 	/**
-	 * Returns information about a repository.
+	 * Get snapshot repository information.
 	 * 
 	 * @see <a href=
-	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots.html">Documentation
+	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/9.0/get-snapshot-repo-api.html">Documentation
 	 *      on elastic.co</a>
 	 */
 
@@ -318,13 +364,13 @@ public class ElasticsearchSnapshotAsyncClient
 	}
 
 	/**
-	 * Returns information about a repository.
+	 * Get snapshot repository information.
 	 * 
 	 * @param fn
 	 *            a function that initializes a builder to create the
 	 *            {@link GetRepositoryRequest}
 	 * @see <a href=
-	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots.html">Documentation
+	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/9.0/get-snapshot-repo-api.html">Documentation
 	 *      on elastic.co</a>
 	 */
 
@@ -334,10 +380,10 @@ public class ElasticsearchSnapshotAsyncClient
 	}
 
 	/**
-	 * Returns information about a repository.
+	 * Get snapshot repository information.
 	 * 
 	 * @see <a href=
-	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots.html">Documentation
+	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/9.0/get-snapshot-repo-api.html">Documentation
 	 *      on elastic.co</a>
 	 */
 
@@ -346,13 +392,198 @@ public class ElasticsearchSnapshotAsyncClient
 				GetRepositoryRequest._ENDPOINT, this.transportOptions);
 	}
 
+	// ----- Endpoint: snapshot.repository_verify_integrity
+
+	/**
+	 * Verify the repository integrity. Verify the integrity of the contents of a
+	 * snapshot repository.
+	 * <p>
+	 * This API enables you to perform a comprehensive check of the contents of a
+	 * repository, looking for any anomalies in its data or metadata which might
+	 * prevent you from restoring snapshots from the repository or which might cause
+	 * future snapshot create or delete operations to fail.
+	 * <p>
+	 * If you suspect the integrity of the contents of one of your snapshot
+	 * repositories, cease all write activity to this repository immediately, set
+	 * its <code>read_only</code> option to <code>true</code>, and use this API to
+	 * verify its integrity. Until you do so:
+	 * <ul>
+	 * <li>It may not be possible to restore some snapshots from this
+	 * repository.</li>
+	 * <li>Searchable snapshots may report errors when searched or may have
+	 * unassigned shards.</li>
+	 * <li>Taking snapshots into this repository may fail or may appear to succeed
+	 * but have created a snapshot which cannot be restored.</li>
+	 * <li>Deleting snapshots from this repository may fail or may appear to succeed
+	 * but leave the underlying data on disk.</li>
+	 * <li>Continuing to write to the repository while it is in an invalid state may
+	 * causing additional damage to its contents.</li>
+	 * </ul>
+	 * <p>
+	 * If the API finds any problems with the integrity of the contents of your
+	 * repository, Elasticsearch will not be able to repair the damage. The only way
+	 * to bring the repository back into a fully working state after its contents
+	 * have been damaged is by restoring its contents from a repository backup which
+	 * was taken before the damage occurred. You must also identify what caused the
+	 * damage and take action to prevent it from happening again.
+	 * <p>
+	 * If you cannot restore a repository backup, register a new repository and use
+	 * this for all future snapshot operations. In some cases it may be possible to
+	 * recover some of the contents of a damaged repository, either by restoring as
+	 * many of its snapshots as needed and taking new snapshots of the restored
+	 * data, or by using the reindex API to copy data from any searchable snapshots
+	 * mounted from the damaged repository.
+	 * <p>
+	 * Avoid all operations which write to the repository while the verify
+	 * repository integrity API is running. If something changes the repository
+	 * contents while an integrity verification is running then Elasticsearch may
+	 * incorrectly report having detected some anomalies in its contents due to the
+	 * concurrent writes. It may also incorrectly fail to report some anomalies that
+	 * the concurrent writes prevented it from detecting.
+	 * <p>
+	 * NOTE: This API is intended for exploratory use by humans. You should expect
+	 * the request parameters and the response format to vary in future versions.
+	 * <p>
+	 * NOTE: This API may not work correctly in a mixed-version cluster.
+	 * <p>
+	 * The default values for the parameters of this API are designed to limit the
+	 * impact of the integrity verification on other activities in your cluster. For
+	 * instance, by default it will only use at most half of the
+	 * <code>snapshot_meta</code> threads to verify the integrity of each snapshot,
+	 * allowing other snapshot operations to use the other half of this thread pool.
+	 * If you modify these parameters to speed up the verification process, you risk
+	 * disrupting other snapshot-related operations in your cluster. For large
+	 * repositories, consider setting up a separate single-node Elasticsearch
+	 * cluster just for running the integrity verification API.
+	 * <p>
+	 * The response exposes implementation details of the analysis which may change
+	 * from version to version. The response body format is therefore not considered
+	 * stable and may be different in newer versions.
+	 * 
+	 * @see <a href=
+	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/9.0/verify-repo-integrity-api.html">Documentation
+	 *      on elastic.co</a>
+	 */
+
+	public CompletableFuture<RepositoryVerifyIntegrityResponse> repositoryVerifyIntegrity(
+			RepositoryVerifyIntegrityRequest request) {
+		@SuppressWarnings("unchecked")
+		JsonEndpoint<RepositoryVerifyIntegrityRequest, RepositoryVerifyIntegrityResponse, ErrorResponse> endpoint = (JsonEndpoint<RepositoryVerifyIntegrityRequest, RepositoryVerifyIntegrityResponse, ErrorResponse>) RepositoryVerifyIntegrityRequest._ENDPOINT;
+
+		return this.transport.performRequestAsync(request, endpoint, this.transportOptions);
+	}
+
+	/**
+	 * Verify the repository integrity. Verify the integrity of the contents of a
+	 * snapshot repository.
+	 * <p>
+	 * This API enables you to perform a comprehensive check of the contents of a
+	 * repository, looking for any anomalies in its data or metadata which might
+	 * prevent you from restoring snapshots from the repository or which might cause
+	 * future snapshot create or delete operations to fail.
+	 * <p>
+	 * If you suspect the integrity of the contents of one of your snapshot
+	 * repositories, cease all write activity to this repository immediately, set
+	 * its <code>read_only</code> option to <code>true</code>, and use this API to
+	 * verify its integrity. Until you do so:
+	 * <ul>
+	 * <li>It may not be possible to restore some snapshots from this
+	 * repository.</li>
+	 * <li>Searchable snapshots may report errors when searched or may have
+	 * unassigned shards.</li>
+	 * <li>Taking snapshots into this repository may fail or may appear to succeed
+	 * but have created a snapshot which cannot be restored.</li>
+	 * <li>Deleting snapshots from this repository may fail or may appear to succeed
+	 * but leave the underlying data on disk.</li>
+	 * <li>Continuing to write to the repository while it is in an invalid state may
+	 * causing additional damage to its contents.</li>
+	 * </ul>
+	 * <p>
+	 * If the API finds any problems with the integrity of the contents of your
+	 * repository, Elasticsearch will not be able to repair the damage. The only way
+	 * to bring the repository back into a fully working state after its contents
+	 * have been damaged is by restoring its contents from a repository backup which
+	 * was taken before the damage occurred. You must also identify what caused the
+	 * damage and take action to prevent it from happening again.
+	 * <p>
+	 * If you cannot restore a repository backup, register a new repository and use
+	 * this for all future snapshot operations. In some cases it may be possible to
+	 * recover some of the contents of a damaged repository, either by restoring as
+	 * many of its snapshots as needed and taking new snapshots of the restored
+	 * data, or by using the reindex API to copy data from any searchable snapshots
+	 * mounted from the damaged repository.
+	 * <p>
+	 * Avoid all operations which write to the repository while the verify
+	 * repository integrity API is running. If something changes the repository
+	 * contents while an integrity verification is running then Elasticsearch may
+	 * incorrectly report having detected some anomalies in its contents due to the
+	 * concurrent writes. It may also incorrectly fail to report some anomalies that
+	 * the concurrent writes prevented it from detecting.
+	 * <p>
+	 * NOTE: This API is intended for exploratory use by humans. You should expect
+	 * the request parameters and the response format to vary in future versions.
+	 * <p>
+	 * NOTE: This API may not work correctly in a mixed-version cluster.
+	 * <p>
+	 * The default values for the parameters of this API are designed to limit the
+	 * impact of the integrity verification on other activities in your cluster. For
+	 * instance, by default it will only use at most half of the
+	 * <code>snapshot_meta</code> threads to verify the integrity of each snapshot,
+	 * allowing other snapshot operations to use the other half of this thread pool.
+	 * If you modify these parameters to speed up the verification process, you risk
+	 * disrupting other snapshot-related operations in your cluster. For large
+	 * repositories, consider setting up a separate single-node Elasticsearch
+	 * cluster just for running the integrity verification API.
+	 * <p>
+	 * The response exposes implementation details of the analysis which may change
+	 * from version to version. The response body format is therefore not considered
+	 * stable and may be different in newer versions.
+	 * 
+	 * @param fn
+	 *            a function that initializes a builder to create the
+	 *            {@link RepositoryVerifyIntegrityRequest}
+	 * @see <a href=
+	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/9.0/verify-repo-integrity-api.html">Documentation
+	 *      on elastic.co</a>
+	 */
+
+	public final CompletableFuture<RepositoryVerifyIntegrityResponse> repositoryVerifyIntegrity(
+			Function<RepositoryVerifyIntegrityRequest.Builder, ObjectBuilder<RepositoryVerifyIntegrityRequest>> fn) {
+		return repositoryVerifyIntegrity(fn.apply(new RepositoryVerifyIntegrityRequest.Builder()).build());
+	}
+
 	// ----- Endpoint: snapshot.restore
 
 	/**
-	 * Restores a snapshot.
+	 * Restore a snapshot. Restore a snapshot of a cluster or data streams and
+	 * indices.
+	 * <p>
+	 * You can restore a snapshot only to a running cluster with an elected master
+	 * node. The snapshot repository must be registered and available to the
+	 * cluster. The snapshot and cluster versions must be compatible.
+	 * <p>
+	 * To restore a snapshot, the cluster's global metadata must be writable. Ensure
+	 * there are't any cluster blocks that prevent writes. The restore operation
+	 * ignores index blocks.
+	 * <p>
+	 * Before you restore a data stream, ensure the cluster contains a matching
+	 * index template with data streams enabled. To check, use the index management
+	 * feature in Kibana or the get index template API:
+	 * 
+	 * <pre>
+	 * <code>GET _index_template/*?filter_path=index_templates.name,index_templates.index_template.index_patterns,index_templates.index_template.data_stream
+	 * </code>
+	 * </pre>
+	 * <p>
+	 * If no such template exists, you can create one or restore a cluster state
+	 * that contains one. Without a matching index template, a data stream can't
+	 * roll over or create backing indices.
+	 * <p>
+	 * If your snapshot contains data from App Search or Workplace Search, you must
+	 * restore the Enterprise Search encryption key before you restore the snapshot.
 	 * 
 	 * @see <a href=
-	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots.html">Documentation
+	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/9.0/restore-snapshot-api.html">Documentation
 	 *      on elastic.co</a>
 	 */
 
@@ -364,13 +595,38 @@ public class ElasticsearchSnapshotAsyncClient
 	}
 
 	/**
-	 * Restores a snapshot.
+	 * Restore a snapshot. Restore a snapshot of a cluster or data streams and
+	 * indices.
+	 * <p>
+	 * You can restore a snapshot only to a running cluster with an elected master
+	 * node. The snapshot repository must be registered and available to the
+	 * cluster. The snapshot and cluster versions must be compatible.
+	 * <p>
+	 * To restore a snapshot, the cluster's global metadata must be writable. Ensure
+	 * there are't any cluster blocks that prevent writes. The restore operation
+	 * ignores index blocks.
+	 * <p>
+	 * Before you restore a data stream, ensure the cluster contains a matching
+	 * index template with data streams enabled. To check, use the index management
+	 * feature in Kibana or the get index template API:
+	 * 
+	 * <pre>
+	 * <code>GET _index_template/*?filter_path=index_templates.name,index_templates.index_template.index_patterns,index_templates.index_template.data_stream
+	 * </code>
+	 * </pre>
+	 * <p>
+	 * If no such template exists, you can create one or restore a cluster state
+	 * that contains one. Without a matching index template, a data stream can't
+	 * roll over or create backing indices.
+	 * <p>
+	 * If your snapshot contains data from App Search or Workplace Search, you must
+	 * restore the Enterprise Search encryption key before you restore the snapshot.
 	 * 
 	 * @param fn
 	 *            a function that initializes a builder to create the
 	 *            {@link RestoreRequest}
 	 * @see <a href=
-	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots.html">Documentation
+	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/9.0/restore-snapshot-api.html">Documentation
 	 *      on elastic.co</a>
 	 */
 
@@ -382,10 +638,32 @@ public class ElasticsearchSnapshotAsyncClient
 	// ----- Endpoint: snapshot.status
 
 	/**
-	 * Returns information about the status of a snapshot.
+	 * Get the snapshot status. Get a detailed description of the current state for
+	 * each shard participating in the snapshot.
+	 * <p>
+	 * Note that this API should be used only to obtain detailed shard-level
+	 * information for ongoing snapshots. If this detail is not needed or you want
+	 * to obtain information about one or more existing snapshots, use the get
+	 * snapshot API.
+	 * <p>
+	 * If you omit the <code>&lt;snapshot&gt;</code> request path parameter, the
+	 * request retrieves information only for currently running snapshots. This
+	 * usage is preferred. If needed, you can specify
+	 * <code>&lt;repository&gt;</code> and <code>&lt;snapshot&gt;</code> to retrieve
+	 * information for specific snapshots, even if they're not currently running.
+	 * <p>
+	 * WARNING: Using the API to return the status of any snapshots other than
+	 * currently running snapshots can be expensive. The API requires a read from
+	 * the repository for each shard in each snapshot. For example, if you have 100
+	 * snapshots with 1,000 shards each, an API request that includes all snapshots
+	 * will require 100,000 reads (100 snapshots x 1,000 shards).
+	 * <p>
+	 * Depending on the latency of your storage, such requests can take an extremely
+	 * long time to return results. These requests can also tax machine resources
+	 * and, when using cloud storage, incur high processing costs.
 	 * 
 	 * @see <a href=
-	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots.html">Documentation
+	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/9.0/get-snapshot-status-api.html">Documentation
 	 *      on elastic.co</a>
 	 */
 
@@ -397,13 +675,35 @@ public class ElasticsearchSnapshotAsyncClient
 	}
 
 	/**
-	 * Returns information about the status of a snapshot.
+	 * Get the snapshot status. Get a detailed description of the current state for
+	 * each shard participating in the snapshot.
+	 * <p>
+	 * Note that this API should be used only to obtain detailed shard-level
+	 * information for ongoing snapshots. If this detail is not needed or you want
+	 * to obtain information about one or more existing snapshots, use the get
+	 * snapshot API.
+	 * <p>
+	 * If you omit the <code>&lt;snapshot&gt;</code> request path parameter, the
+	 * request retrieves information only for currently running snapshots. This
+	 * usage is preferred. If needed, you can specify
+	 * <code>&lt;repository&gt;</code> and <code>&lt;snapshot&gt;</code> to retrieve
+	 * information for specific snapshots, even if they're not currently running.
+	 * <p>
+	 * WARNING: Using the API to return the status of any snapshots other than
+	 * currently running snapshots can be expensive. The API requires a read from
+	 * the repository for each shard in each snapshot. For example, if you have 100
+	 * snapshots with 1,000 shards each, an API request that includes all snapshots
+	 * will require 100,000 reads (100 snapshots x 1,000 shards).
+	 * <p>
+	 * Depending on the latency of your storage, such requests can take an extremely
+	 * long time to return results. These requests can also tax machine resources
+	 * and, when using cloud storage, incur high processing costs.
 	 * 
 	 * @param fn
 	 *            a function that initializes a builder to create the
 	 *            {@link SnapshotStatusRequest}
 	 * @see <a href=
-	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots.html">Documentation
+	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/9.0/get-snapshot-status-api.html">Documentation
 	 *      on elastic.co</a>
 	 */
 
@@ -413,10 +713,32 @@ public class ElasticsearchSnapshotAsyncClient
 	}
 
 	/**
-	 * Returns information about the status of a snapshot.
+	 * Get the snapshot status. Get a detailed description of the current state for
+	 * each shard participating in the snapshot.
+	 * <p>
+	 * Note that this API should be used only to obtain detailed shard-level
+	 * information for ongoing snapshots. If this detail is not needed or you want
+	 * to obtain information about one or more existing snapshots, use the get
+	 * snapshot API.
+	 * <p>
+	 * If you omit the <code>&lt;snapshot&gt;</code> request path parameter, the
+	 * request retrieves information only for currently running snapshots. This
+	 * usage is preferred. If needed, you can specify
+	 * <code>&lt;repository&gt;</code> and <code>&lt;snapshot&gt;</code> to retrieve
+	 * information for specific snapshots, even if they're not currently running.
+	 * <p>
+	 * WARNING: Using the API to return the status of any snapshots other than
+	 * currently running snapshots can be expensive. The API requires a read from
+	 * the repository for each shard in each snapshot. For example, if you have 100
+	 * snapshots with 1,000 shards each, an API request that includes all snapshots
+	 * will require 100,000 reads (100 snapshots x 1,000 shards).
+	 * <p>
+	 * Depending on the latency of your storage, such requests can take an extremely
+	 * long time to return results. These requests can also tax machine resources
+	 * and, when using cloud storage, incur high processing costs.
 	 * 
 	 * @see <a href=
-	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots.html">Documentation
+	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/9.0/get-snapshot-status-api.html">Documentation
 	 *      on elastic.co</a>
 	 */
 
@@ -428,10 +750,11 @@ public class ElasticsearchSnapshotAsyncClient
 	// ----- Endpoint: snapshot.verify_repository
 
 	/**
-	 * Verifies a repository.
+	 * Verify a snapshot repository. Check for common misconfigurations in a
+	 * snapshot repository.
 	 * 
 	 * @see <a href=
-	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots.html">Documentation
+	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/9.0/verify-snapshot-repo-api.html">Documentation
 	 *      on elastic.co</a>
 	 */
 
@@ -443,13 +766,14 @@ public class ElasticsearchSnapshotAsyncClient
 	}
 
 	/**
-	 * Verifies a repository.
+	 * Verify a snapshot repository. Check for common misconfigurations in a
+	 * snapshot repository.
 	 * 
 	 * @param fn
 	 *            a function that initializes a builder to create the
 	 *            {@link VerifyRepositoryRequest}
 	 * @see <a href=
-	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-snapshots.html">Documentation
+	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/9.0/verify-snapshot-repo-api.html">Documentation
 	 *      on elastic.co</a>
 	 */
 
