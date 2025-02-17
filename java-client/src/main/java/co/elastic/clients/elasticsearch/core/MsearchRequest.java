@@ -66,7 +66,27 @@ import javax.annotation.Nullable;
 // typedef: _global.msearch.Request
 
 /**
- * Allows to execute several search operations in one request.
+ * Run multiple searches.
+ * <p>
+ * The format of the request is similar to the bulk API format and makes use of
+ * the newline delimited JSON (NDJSON) format. The structure is as follows:
+ * 
+ * <pre>
+ * <code>header\n
+ * body\n
+ * header\n
+ * body\n
+ * </code>
+ * </pre>
+ * <p>
+ * This structure is specifically optimized to reduce parsing if a specific
+ * search ends up redirected to another node.
+ * <p>
+ * IMPORTANT: The final line of data must end with a newline character
+ * <code>\n</code>. Each newline character may be preceded by a carriage return
+ * <code>\r</code>. When sending requests to this endpoint the
+ * <code>Content-Type</code> header should be set to
+ * <code>application/x-ndjson</code>.
  * 
  * @see <a href="../doc-files/api-spec.html#_global.msearch.Request">API
  *      specification</a>
@@ -578,9 +598,6 @@ public class MsearchRequest extends RequestBase implements NdJsonpSerializable, 
 			request -> {
 				Map<String, String> params = new HashMap<>();
 				params.put("typed_keys", "true");
-				if (request.routing != null) {
-					params.put("routing", request.routing);
-				}
 				if (request.preFilterShardSize != null) {
 					params.put("pre_filter_shard_size", String.valueOf(request.preFilterShardSize));
 				}
@@ -590,6 +607,15 @@ public class MsearchRequest extends RequestBase implements NdJsonpSerializable, 
 				if (ApiTypeHelper.isDefined(request.expandWildcards)) {
 					params.put("expand_wildcards",
 							request.expandWildcards.stream().map(v -> v.jsonValue()).collect(Collectors.joining(",")));
+				}
+				if (request.searchType != null) {
+					params.put("search_type", request.searchType.jsonValue());
+				}
+				if (request.ccsMinimizeRoundtrips != null) {
+					params.put("ccs_minimize_roundtrips", String.valueOf(request.ccsMinimizeRoundtrips));
+				}
+				if (request.routing != null) {
+					params.put("routing", request.routing);
 				}
 				if (request.ignoreUnavailable != null) {
 					params.put("ignore_unavailable", String.valueOf(request.ignoreUnavailable));
@@ -602,12 +628,6 @@ public class MsearchRequest extends RequestBase implements NdJsonpSerializable, 
 				}
 				if (request.maxConcurrentSearches != null) {
 					params.put("max_concurrent_searches", String.valueOf(request.maxConcurrentSearches));
-				}
-				if (request.searchType != null) {
-					params.put("search_type", request.searchType.jsonValue());
-				}
-				if (request.ccsMinimizeRoundtrips != null) {
-					params.put("ccs_minimize_roundtrips", String.valueOf(request.ccsMinimizeRoundtrips));
 				}
 				return params;
 

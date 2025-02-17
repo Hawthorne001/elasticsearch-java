@@ -68,10 +68,16 @@ public class ElasticsearchXpackClient extends ApiClient<ElasticsearchTransport, 
 	// ----- Endpoint: xpack.info
 
 	/**
-	 * Retrieves information about the installed X-Pack features.
-	 * 
+	 * Get information. The information provided by the API includes:
+	 * <ul>
+	 * <li>Build information including the build number and timestamp.</li>
+	 * <li>License information about the currently installed license.</li>
+	 * <li>Feature information for the features that are currently enabled and
+	 * available under the current license.</li>
+	 * </ul>
+	 *
 	 * @see <a href=
-	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/current/info-api.html">Documentation
+	 *      "https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-info">Documentation
 	 *      on elastic.co</a>
 	 */
 
@@ -83,13 +89,19 @@ public class ElasticsearchXpackClient extends ApiClient<ElasticsearchTransport, 
 	}
 
 	/**
-	 * Retrieves information about the installed X-Pack features.
-	 * 
+	 * Get information. The information provided by the API includes:
+	 * <ul>
+	 * <li>Build information including the build number and timestamp.</li>
+	 * <li>License information about the currently installed license.</li>
+	 * <li>Feature information for the features that are currently enabled and
+	 * available under the current license.</li>
+	 * </ul>
+	 *
 	 * @param fn
 	 *            a function that initializes a builder to create the
 	 *            {@link XpackInfoRequest}
 	 * @see <a href=
-	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/current/info-api.html">Documentation
+	 *      "https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-info">Documentation
 	 *      on elastic.co</a>
 	 */
 
@@ -99,10 +111,16 @@ public class ElasticsearchXpackClient extends ApiClient<ElasticsearchTransport, 
 	}
 
 	/**
-	 * Retrieves information about the installed X-Pack features.
-	 * 
+	 * Get information. The information provided by the API includes:
+	 * <ul>
+	 * <li>Build information including the build number and timestamp.</li>
+	 * <li>License information about the currently installed license.</li>
+	 * <li>Feature information for the features that are currently enabled and
+	 * available under the current license.</li>
+	 * </ul>
+	 *
 	 * @see <a href=
-	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/current/info-api.html">Documentation
+	 *      "https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-info">Documentation
 	 *      on elastic.co</a>
 	 */
 
@@ -114,10 +132,12 @@ public class ElasticsearchXpackClient extends ApiClient<ElasticsearchTransport, 
 	// ----- Endpoint: xpack.usage
 
 	/**
-	 * Retrieves usage information about the installed X-Pack features.
+	 * Get usage information. Get information about the features that are currently
+	 * enabled and available under the current license. The API also provides some
+	 * usage statistics.
 	 * 
 	 * @see <a href=
-	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/current/usage-api.html">Documentation
+	 *      "https://www.elastic.co/docs/api/doc/elasticsearch/group/endpoint-xpack">Documentation
 	 *      on elastic.co</a>
 	 */
 
@@ -129,13 +149,15 @@ public class ElasticsearchXpackClient extends ApiClient<ElasticsearchTransport, 
 	}
 
 	/**
-	 * Retrieves usage information about the installed X-Pack features.
+	 * Get usage information. Get information about the features that are currently
+	 * enabled and available under the current license. The API also provides some
+	 * usage statistics.
 	 * 
 	 * @param fn
 	 *            a function that initializes a builder to create the
 	 *            {@link XpackUsageRequest}
 	 * @see <a href=
-	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/current/usage-api.html">Documentation
+	 *      "https://www.elastic.co/docs/api/doc/elasticsearch/group/endpoint-xpack">Documentation
 	 *      on elastic.co</a>
 	 */
 
@@ -145,10 +167,12 @@ public class ElasticsearchXpackClient extends ApiClient<ElasticsearchTransport, 
 	}
 
 	/**
-	 * Retrieves usage information about the installed X-Pack features.
+	 * Get usage information. Get information about the features that are currently
+	 * enabled and available under the current license. The API also provides some
+	 * usage statistics.
 	 * 
 	 * @see <a href=
-	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/current/usage-api.html">Documentation
+	 *      "https://www.elastic.co/docs/api/doc/elasticsearch/group/endpoint-xpack">Documentation
 	 *      on elastic.co</a>
 	 */
 

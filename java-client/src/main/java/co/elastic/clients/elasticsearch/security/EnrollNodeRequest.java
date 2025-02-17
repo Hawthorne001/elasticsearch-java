@@ -50,7 +50,16 @@ import java.util.Objects;
 // typedef: security.enroll_node.Request
 
 /**
- * Allows a new node to join an existing cluster with security features enabled.
+ * Enroll a node.
+ * <p>
+ * Enroll a new node to allow it to join an existing cluster with security
+ * features enabled.
+ * <p>
+ * The response contains all the necessary information for the joining node to
+ * bootstrap discovery and security related settings so that it can successfully
+ * join the cluster. The response contains key and certificate material that
+ * allows the caller to generate valid signed certificates for the HTTP layer of
+ * all nodes in the cluster.
  * 
  * @see <a href="../doc-files/api-spec.html#security.enroll_node.Request">API
  *      specification</a>

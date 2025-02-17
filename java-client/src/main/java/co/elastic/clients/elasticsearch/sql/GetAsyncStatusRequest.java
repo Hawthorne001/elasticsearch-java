@@ -56,8 +56,8 @@ import javax.annotation.Nullable;
 // typedef: sql.get_async_status.Request
 
 /**
- * Returns the current status of an async SQL search or a stored synchronous SQL
- * search
+ * Get the async SQL search status. Get the current status of an async SQL
+ * search or a stored synchronous SQL search.
  * 
  * @see <a href="../doc-files/api-spec.html#sql.get_async_status.Request">API
  *      specification</a>
@@ -79,7 +79,7 @@ public class GetAsyncStatusRequest extends RequestBase {
 	}
 
 	/**
-	 * Required - Identifier for the search.
+	 * Required - The identifier for the search.
 	 * <p>
 	 * API name: {@code id}
 	 */
@@ -99,7 +99,7 @@ public class GetAsyncStatusRequest extends RequestBase {
 		private String id;
 
 		/**
-		 * Required - Identifier for the search.
+		 * Required - The identifier for the search.
 		 * <p>
 		 * API name: {@code id}
 		 */

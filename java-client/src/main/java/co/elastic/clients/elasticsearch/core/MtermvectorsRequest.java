@@ -63,7 +63,19 @@ import javax.annotation.Nullable;
 // typedef: _global.mtermvectors.Request
 
 /**
- * Returns multiple termvectors in one request.
+ * Get multiple term vectors.
+ * <p>
+ * Get multiple term vectors with a single request. You can specify existing
+ * documents by index and ID or provide artificial documents in the body of the
+ * request. You can specify the index in the request body or request URI. The
+ * response contains a <code>docs</code> array with all the fetched termvectors.
+ * Each element has the structure provided by the termvectors API.
+ * <p>
+ * <strong>Artificial documents</strong>
+ * <p>
+ * You can also use <code>mtermvectors</code> to generate term vectors for
+ * artificial documents provided in the body of the request. The mapping used is
+ * determined by the specified <code>_index</code>.
  * 
  * @see <a href="../doc-files/api-spec.html#_global.mtermvectors.Request">API
  *      specification</a>
@@ -135,7 +147,7 @@ public class MtermvectorsRequest extends RequestBase implements JsonpSerializabl
 	}
 
 	/**
-	 * Array of existing or artificial documents.
+	 * An array of existing or artificial documents.
 	 * <p>
 	 * API name: {@code docs}
 	 */
@@ -155,10 +167,10 @@ public class MtermvectorsRequest extends RequestBase implements JsonpSerializabl
 	}
 
 	/**
-	 * Comma-separated list or wildcard expressions of fields to include in the
-	 * statistics. Used as the default list unless a specific field list is provided
-	 * in the <code>completion_fields</code> or <code>fielddata_fields</code>
-	 * parameters.
+	 * A comma-separated list or wildcard expressions of fields to include in the
+	 * statistics. It is used as the default list unless a specific field list is
+	 * provided in the <code>completion_fields</code> or
+	 * <code>fielddata_fields</code> parameters.
 	 * <p>
 	 * API name: {@code fields}
 	 */
@@ -167,7 +179,7 @@ public class MtermvectorsRequest extends RequestBase implements JsonpSerializabl
 	}
 
 	/**
-	 * Simplified syntax to specify documents by their ID if they're in the same
+	 * A simplified syntax to specify documents by their ID if they're in the same
 	 * index.
 	 * <p>
 	 * API name: {@code ids}
@@ -177,7 +189,7 @@ public class MtermvectorsRequest extends RequestBase implements JsonpSerializabl
 	}
 
 	/**
-	 * Name of the index that contains the documents.
+	 * The name of the index that contains the documents.
 	 * <p>
 	 * API name: {@code index}
 	 */
@@ -217,7 +229,7 @@ public class MtermvectorsRequest extends RequestBase implements JsonpSerializabl
 	}
 
 	/**
-	 * Specifies the node or shard the operation should be performed on. Random by
+	 * The node or shard the operation should be performed on. It is random by
 	 * default.
 	 * <p>
 	 * API name: {@code preference}
@@ -238,7 +250,7 @@ public class MtermvectorsRequest extends RequestBase implements JsonpSerializabl
 	}
 
 	/**
-	 * Custom value used to route operations to a specific shard.
+	 * A custom value used to route operations to a specific shard.
 	 * <p>
 	 * API name: {@code routing}
 	 */
@@ -268,7 +280,7 @@ public class MtermvectorsRequest extends RequestBase implements JsonpSerializabl
 	}
 
 	/**
-	 * Specific version type.
+	 * The version type.
 	 * <p>
 	 * API name: {@code version_type}
 	 */
@@ -363,7 +375,7 @@ public class MtermvectorsRequest extends RequestBase implements JsonpSerializabl
 		private VersionType versionType;
 
 		/**
-		 * Array of existing or artificial documents.
+		 * An array of existing or artificial documents.
 		 * <p>
 		 * API name: {@code docs}
 		 * <p>
@@ -375,7 +387,7 @@ public class MtermvectorsRequest extends RequestBase implements JsonpSerializabl
 		}
 
 		/**
-		 * Array of existing or artificial documents.
+		 * An array of existing or artificial documents.
 		 * <p>
 		 * API name: {@code docs}
 		 * <p>
@@ -387,7 +399,7 @@ public class MtermvectorsRequest extends RequestBase implements JsonpSerializabl
 		}
 
 		/**
-		 * Array of existing or artificial documents.
+		 * An array of existing or artificial documents.
 		 * <p>
 		 * API name: {@code docs}
 		 * <p>
@@ -410,10 +422,10 @@ public class MtermvectorsRequest extends RequestBase implements JsonpSerializabl
 		}
 
 		/**
-		 * Comma-separated list or wildcard expressions of fields to include in the
-		 * statistics. Used as the default list unless a specific field list is provided
-		 * in the <code>completion_fields</code> or <code>fielddata_fields</code>
-		 * parameters.
+		 * A comma-separated list or wildcard expressions of fields to include in the
+		 * statistics. It is used as the default list unless a specific field list is
+		 * provided in the <code>completion_fields</code> or
+		 * <code>fielddata_fields</code> parameters.
 		 * <p>
 		 * API name: {@code fields}
 		 * <p>
@@ -425,10 +437,10 @@ public class MtermvectorsRequest extends RequestBase implements JsonpSerializabl
 		}
 
 		/**
-		 * Comma-separated list or wildcard expressions of fields to include in the
-		 * statistics. Used as the default list unless a specific field list is provided
-		 * in the <code>completion_fields</code> or <code>fielddata_fields</code>
-		 * parameters.
+		 * A comma-separated list or wildcard expressions of fields to include in the
+		 * statistics. It is used as the default list unless a specific field list is
+		 * provided in the <code>completion_fields</code> or
+		 * <code>fielddata_fields</code> parameters.
 		 * <p>
 		 * API name: {@code fields}
 		 * <p>
@@ -440,7 +452,7 @@ public class MtermvectorsRequest extends RequestBase implements JsonpSerializabl
 		}
 
 		/**
-		 * Simplified syntax to specify documents by their ID if they're in the same
+		 * A simplified syntax to specify documents by their ID if they're in the same
 		 * index.
 		 * <p>
 		 * API name: {@code ids}
@@ -453,7 +465,7 @@ public class MtermvectorsRequest extends RequestBase implements JsonpSerializabl
 		}
 
 		/**
-		 * Simplified syntax to specify documents by their ID if they're in the same
+		 * A simplified syntax to specify documents by their ID if they're in the same
 		 * index.
 		 * <p>
 		 * API name: {@code ids}
@@ -466,7 +478,7 @@ public class MtermvectorsRequest extends RequestBase implements JsonpSerializabl
 		}
 
 		/**
-		 * Name of the index that contains the documents.
+		 * The name of the index that contains the documents.
 		 * <p>
 		 * API name: {@code index}
 		 */
@@ -506,7 +518,7 @@ public class MtermvectorsRequest extends RequestBase implements JsonpSerializabl
 		}
 
 		/**
-		 * Specifies the node or shard the operation should be performed on. Random by
+		 * The node or shard the operation should be performed on. It is random by
 		 * default.
 		 * <p>
 		 * API name: {@code preference}
@@ -527,7 +539,7 @@ public class MtermvectorsRequest extends RequestBase implements JsonpSerializabl
 		}
 
 		/**
-		 * Custom value used to route operations to a specific shard.
+		 * A custom value used to route operations to a specific shard.
 		 * <p>
 		 * API name: {@code routing}
 		 */
@@ -557,7 +569,7 @@ public class MtermvectorsRequest extends RequestBase implements JsonpSerializabl
 		}
 
 		/**
-		 * Specific version type.
+		 * The version type.
 		 * <p>
 		 * API name: {@code version_type}
 		 */

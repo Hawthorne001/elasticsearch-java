@@ -31,6 +31,7 @@ import co.elastic.clients.util.ObjectBuilder;
 import co.elastic.clients.util.WithJsonObjectBuilderBase;
 import jakarta.json.stream.JsonGenerator;
 import java.lang.String;
+import java.util.List;
 import java.util.Objects;
 import java.util.function.Function;
 import javax.annotation.Nullable;
@@ -60,13 +61,13 @@ import javax.annotation.Nullable;
  */
 @JsonpDeserializable
 public class NodeInfoSettingsNetwork implements JsonpSerializable {
-	private final String host;
+	private final List<String> host;
 
 	// ---------------------------------------------------------------------------------------------
 
 	private NodeInfoSettingsNetwork(Builder builder) {
 
-		this.host = ApiTypeHelper.requireNonNull(builder.host, this, "host");
+		this.host = ApiTypeHelper.unmodifiable(builder.host);
 
 	}
 
@@ -75,9 +76,9 @@ public class NodeInfoSettingsNetwork implements JsonpSerializable {
 	}
 
 	/**
-	 * Required - API name: {@code host}
+	 * API name: {@code host}
 	 */
-	public final String host() {
+	public final List<String> host() {
 		return this.host;
 	}
 
@@ -92,8 +93,16 @@ public class NodeInfoSettingsNetwork implements JsonpSerializable {
 
 	protected void serializeInternal(JsonGenerator generator, JsonpMapper mapper) {
 
-		generator.writeKey("host");
-		generator.write(this.host);
+		if (ApiTypeHelper.isDefined(this.host)) {
+			generator.writeKey("host");
+			generator.writeStartArray();
+			for (String item0 : this.host) {
+				generator.write(item0);
+
+			}
+			generator.writeEnd();
+
+		}
 
 	}
 
@@ -111,13 +120,26 @@ public class NodeInfoSettingsNetwork implements JsonpSerializable {
 	public static class Builder extends WithJsonObjectBuilderBase<Builder>
 			implements
 				ObjectBuilder<NodeInfoSettingsNetwork> {
-		private String host;
+		@Nullable
+		private List<String> host;
 
 		/**
-		 * Required - API name: {@code host}
+		 * API name: {@code host}
+		 * <p>
+		 * Adds all elements of <code>list</code> to <code>host</code>.
 		 */
-		public final Builder host(String value) {
-			this.host = value;
+		public final Builder host(List<String> list) {
+			this.host = _listAddAll(this.host, list);
+			return this;
+		}
+
+		/**
+		 * API name: {@code host}
+		 * <p>
+		 * Adds one or more values to <code>host</code>.
+		 */
+		public final Builder host(String value, String... values) {
+			this.host = _listAdd(this.host, value, values);
 			return this;
 		}
 
@@ -150,7 +172,7 @@ public class NodeInfoSettingsNetwork implements JsonpSerializable {
 	protected static void setupNodeInfoSettingsNetworkDeserializer(
 			ObjectDeserializer<NodeInfoSettingsNetwork.Builder> op) {
 
-		op.add(Builder::host, JsonpDeserializer.stringDeserializer(), "host");
+		op.add(Builder::host, JsonpDeserializer.arrayDeserializer(JsonpDeserializer.stringDeserializer()), "host");
 
 	}
 

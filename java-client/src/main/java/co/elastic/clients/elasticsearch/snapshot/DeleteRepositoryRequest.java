@@ -58,7 +58,10 @@ import javax.annotation.Nullable;
 // typedef: snapshot.delete_repository.Request
 
 /**
- * Deletes a repository.
+ * Delete snapshot repositories. When a repository is unregistered,
+ * Elasticsearch removes only the reference to the location where the repository
+ * is storing the snapshots. The snapshots themselves are left untouched and in
+ * place.
  * 
  * @see <a href=
  *      "../doc-files/api-spec.html#snapshot.delete_repository.Request">API
@@ -89,7 +92,9 @@ public class DeleteRepositoryRequest extends RequestBase {
 	}
 
 	/**
-	 * Explicit operation timeout for connection to master node
+	 * The period to wait for the master node. If the master node is not available
+	 * before the timeout expires, the request fails and returns an error. To
+	 * indicate that the request should never timeout, set it to <code>-1</code>.
 	 * <p>
 	 * API name: {@code master_timeout}
 	 */
@@ -99,7 +104,7 @@ public class DeleteRepositoryRequest extends RequestBase {
 	}
 
 	/**
-	 * Required - Name of the snapshot repository to unregister. Wildcard
+	 * Required - The ame of the snapshot repositories to unregister. Wildcard
 	 * (<code>*</code>) patterns are supported.
 	 * <p>
 	 * API name: {@code repository}
@@ -109,7 +114,11 @@ public class DeleteRepositoryRequest extends RequestBase {
 	}
 
 	/**
-	 * Explicit operation timeout
+	 * The period to wait for a response from all relevant nodes in the cluster
+	 * after updating the cluster metadata. If no response is received before the
+	 * timeout expires, the cluster metadata update still applies but the response
+	 * will indicate that it was not completely acknowledged. To indicate that the
+	 * request should never timeout, set it to <code>-1</code>.
 	 * <p>
 	 * API name: {@code timeout}
 	 */
@@ -136,7 +145,9 @@ public class DeleteRepositoryRequest extends RequestBase {
 		private Time timeout;
 
 		/**
-		 * Explicit operation timeout for connection to master node
+		 * The period to wait for the master node. If the master node is not available
+		 * before the timeout expires, the request fails and returns an error. To
+		 * indicate that the request should never timeout, set it to <code>-1</code>.
 		 * <p>
 		 * API name: {@code master_timeout}
 		 */
@@ -146,7 +157,9 @@ public class DeleteRepositoryRequest extends RequestBase {
 		}
 
 		/**
-		 * Explicit operation timeout for connection to master node
+		 * The period to wait for the master node. If the master node is not available
+		 * before the timeout expires, the request fails and returns an error. To
+		 * indicate that the request should never timeout, set it to <code>-1</code>.
 		 * <p>
 		 * API name: {@code master_timeout}
 		 */
@@ -155,7 +168,7 @@ public class DeleteRepositoryRequest extends RequestBase {
 		}
 
 		/**
-		 * Required - Name of the snapshot repository to unregister. Wildcard
+		 * Required - The ame of the snapshot repositories to unregister. Wildcard
 		 * (<code>*</code>) patterns are supported.
 		 * <p>
 		 * API name: {@code repository}
@@ -168,7 +181,7 @@ public class DeleteRepositoryRequest extends RequestBase {
 		}
 
 		/**
-		 * Required - Name of the snapshot repository to unregister. Wildcard
+		 * Required - The ame of the snapshot repositories to unregister. Wildcard
 		 * (<code>*</code>) patterns are supported.
 		 * <p>
 		 * API name: {@code repository}
@@ -181,7 +194,11 @@ public class DeleteRepositoryRequest extends RequestBase {
 		}
 
 		/**
-		 * Explicit operation timeout
+		 * The period to wait for a response from all relevant nodes in the cluster
+		 * after updating the cluster metadata. If no response is received before the
+		 * timeout expires, the cluster metadata update still applies but the response
+		 * will indicate that it was not completely acknowledged. To indicate that the
+		 * request should never timeout, set it to <code>-1</code>.
 		 * <p>
 		 * API name: {@code timeout}
 		 */
@@ -191,7 +208,11 @@ public class DeleteRepositoryRequest extends RequestBase {
 		}
 
 		/**
-		 * Explicit operation timeout
+		 * The period to wait for a response from all relevant nodes in the cluster
+		 * after updating the cluster metadata. If no response is received before the
+		 * timeout expires, the cluster metadata update still applies but the response
+		 * will indicate that it was not completely acknowledged. To indicate that the
+		 * request should never timeout, set it to <code>-1</code>.
 		 * <p>
 		 * API name: {@code timeout}
 		 */

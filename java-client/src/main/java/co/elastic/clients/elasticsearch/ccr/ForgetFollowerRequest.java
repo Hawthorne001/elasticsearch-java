@@ -21,6 +21,7 @@ package co.elastic.clients.elasticsearch.ccr;
 
 import co.elastic.clients.elasticsearch._types.ErrorResponse;
 import co.elastic.clients.elasticsearch._types.RequestBase;
+import co.elastic.clients.elasticsearch._types.Time;
 import co.elastic.clients.json.JsonpDeserializable;
 import co.elastic.clients.json.JsonpDeserializer;
 import co.elastic.clients.json.JsonpMapper;
@@ -33,7 +34,6 @@ import co.elastic.clients.util.ApiTypeHelper;
 import co.elastic.clients.util.ObjectBuilder;
 import jakarta.json.stream.JsonGenerator;
 import java.lang.String;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -58,7 +58,27 @@ import javax.annotation.Nullable;
 // typedef: ccr.forget_follower.Request
 
 /**
- * Removes the follower retention leases from the leader.
+ * Forget a follower. Remove the cross-cluster replication follower retention
+ * leases from the leader.
+ * <p>
+ * A following index takes out retention leases on its leader index. These
+ * leases are used to increase the likelihood that the shards of the leader
+ * index retain the history of operations that the shards of the following index
+ * need to run replication. When a follower index is converted to a regular
+ * index by the unfollow API (either by directly calling the API or by index
+ * lifecycle management tasks), these leases are removed. However, removal of
+ * the leases can fail, for example when the remote cluster containing the
+ * leader index is unavailable. While the leases will eventually expire on their
+ * own, their extended existence can cause the leader index to hold more history
+ * than necessary and prevent index lifecycle management from performing some
+ * operations on the leader index. This API exists to enable manually removing
+ * the leases when the unfollow API is unable to do so.
+ * <p>
+ * NOTE: This API does not stop replication by a following index. If you use
+ * this API with a follower index that is still actively following, the
+ * following index will add back retention leases on the leader. The only
+ * purpose of this API is to handle the case of failure to remove the following
+ * retention leases after the unfollow API is invoked.
  * 
  * @see <a href="../doc-files/api-spec.html#ccr.forget_follower.Request">API
  *      specification</a>
@@ -79,6 +99,9 @@ public class ForgetFollowerRequest extends RequestBase implements JsonpSerializa
 	@Nullable
 	private final String leaderRemoteCluster;
 
+	@Nullable
+	private final Time timeout;
+
 	// ---------------------------------------------------------------------------------------------
 
 	private ForgetFollowerRequest(Builder builder) {
@@ -88,6 +111,7 @@ public class ForgetFollowerRequest extends RequestBase implements JsonpSerializa
 		this.followerIndexUuid = builder.followerIndexUuid;
 		this.index = ApiTypeHelper.requireNonNull(builder.index, this, "index");
 		this.leaderRemoteCluster = builder.leaderRemoteCluster;
+		this.timeout = builder.timeout;
 
 	}
 
@@ -135,6 +159,17 @@ public class ForgetFollowerRequest extends RequestBase implements JsonpSerializa
 	@Nullable
 	public final String leaderRemoteCluster() {
 		return this.leaderRemoteCluster;
+	}
+
+	/**
+	 * Period to wait for a response. If no response is received before the timeout
+	 * expires, the request fails and returns an error.
+	 * <p>
+	 * API name: {@code timeout}
+	 */
+	@Nullable
+	public final Time timeout() {
+		return this.timeout;
 	}
 
 	/**
@@ -194,6 +229,9 @@ public class ForgetFollowerRequest extends RequestBase implements JsonpSerializa
 		@Nullable
 		private String leaderRemoteCluster;
 
+		@Nullable
+		private Time timeout;
+
 		/**
 		 * API name: {@code follower_cluster}
 		 */
@@ -235,6 +273,27 @@ public class ForgetFollowerRequest extends RequestBase implements JsonpSerializa
 		public final Builder leaderRemoteCluster(@Nullable String value) {
 			this.leaderRemoteCluster = value;
 			return this;
+		}
+
+		/**
+		 * Period to wait for a response. If no response is received before the timeout
+		 * expires, the request fails and returns an error.
+		 * <p>
+		 * API name: {@code timeout}
+		 */
+		public final Builder timeout(@Nullable Time value) {
+			this.timeout = value;
+			return this;
+		}
+
+		/**
+		 * Period to wait for a response. If no response is received before the timeout
+		 * expires, the request fails and returns an error.
+		 * <p>
+		 * API name: {@code timeout}
+		 */
+		public final Builder timeout(Function<Time.Builder, ObjectBuilder<Time>> fn) {
+			return this.timeout(fn.apply(new Time.Builder()).build());
 		}
 
 		@Override
@@ -323,7 +382,11 @@ public class ForgetFollowerRequest extends RequestBase implements JsonpSerializa
 
 			// Request parameters
 			request -> {
-				return Collections.emptyMap();
+				Map<String, String> params = new HashMap<>();
+				if (request.timeout != null) {
+					params.put("timeout", request.timeout._toJsonString());
+				}
+				return params;
 
 			}, SimpleEndpoint.emptyMap(), true, ForgetFollowerResponse._DESERIALIZER);
 }

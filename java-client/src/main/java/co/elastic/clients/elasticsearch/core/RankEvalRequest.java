@@ -63,8 +63,10 @@ import javax.annotation.Nullable;
 // typedef: _global.rank_eval.Request
 
 /**
- * Enables you to evaluate the quality of ranked search results over a set of
- * typical search queries.
+ * Evaluate ranked search results.
+ * <p>
+ * Evaluate the quality of ranked search results over a set of typical search
+ * queries.
  * 
  * @see <a href="../doc-files/api-spec.html#_global.rank_eval.Request">API
  *      specification</a>
@@ -144,7 +146,7 @@ public class RankEvalRequest extends RequestBase implements JsonpSerializable {
 	}
 
 	/**
-	 * Comma-separated list of data streams, indices, and index aliases used to
+	 * A comma-separated list of data streams, indices, and index aliases used to
 	 * limit the request. Wildcard (<code>*</code>) expressions are supported. To
 	 * target all data streams and indices in a cluster, omit this parameter or use
 	 * <code>_all</code> or <code>*</code>.
@@ -294,7 +296,7 @@ public class RankEvalRequest extends RequestBase implements JsonpSerializable {
 		}
 
 		/**
-		 * Comma-separated list of data streams, indices, and index aliases used to
+		 * A comma-separated list of data streams, indices, and index aliases used to
 		 * limit the request. Wildcard (<code>*</code>) expressions are supported. To
 		 * target all data streams and indices in a cluster, omit this parameter or use
 		 * <code>_all</code> or <code>*</code>.
@@ -309,7 +311,7 @@ public class RankEvalRequest extends RequestBase implements JsonpSerializable {
 		}
 
 		/**
-		 * Comma-separated list of data streams, indices, and index aliases used to
+		 * A comma-separated list of data streams, indices, and index aliases used to
 		 * limit the request. Wildcard (<code>*</code>) expressions are supported. To
 		 * target all data streams and indices in a cluster, omit this parameter or use
 		 * <code>_all</code> or <code>*</code>.

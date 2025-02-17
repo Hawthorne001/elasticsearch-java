@@ -134,6 +134,8 @@ public enum ClusterPrivilege implements JsonEnum {
 
 	MonitorSnapshot("monitor_snapshot"),
 
+	MonitorStats("monitor_stats"),
+
 	MonitorTextStructure("monitor_text_structure"),
 
 	MonitorTransform("monitor_transform"),
@@ -145,8 +147,6 @@ public enum ClusterPrivilege implements JsonEnum {
 	PostBehavioralAnalyticsEvent("post_behavioral_analytics_event"),
 
 	ReadCcr("read_ccr"),
-
-	ReadConnectorSecrets("read_connector_secrets"),
 
 	ReadFleetSecrets("read_fleet_secrets"),
 

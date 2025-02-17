@@ -63,7 +63,8 @@ import javax.annotation.Nullable;
 // typedef: ml.update_job.Request
 
 /**
- * Updates certain properties of an anomaly detection job.
+ * Update an anomaly detection job. Updates certain properties of an anomaly
+ * detection job.
  * 
  * @see <a href="../doc-files/api-spec.html#ml.update_job.Request">API
  *      specification</a>
@@ -89,7 +90,7 @@ public class UpdateJobRequest extends RequestBase implements JsonpSerializable {
 	@Nullable
 	private final String description;
 
-	private final List<Detector> detectors;
+	private final List<DetectorUpdate> detectors;
 
 	private final List<String> groups;
 
@@ -231,7 +232,7 @@ public class UpdateJobRequest extends RequestBase implements JsonpSerializable {
 	 * <p>
 	 * API name: {@code detectors}
 	 */
-	public final List<Detector> detectors() {
+	public final List<DetectorUpdate> detectors() {
 		return this.detectors;
 	}
 
@@ -378,7 +379,7 @@ public class UpdateJobRequest extends RequestBase implements JsonpSerializable {
 		if (ApiTypeHelper.isDefined(this.detectors)) {
 			generator.writeKey("detectors");
 			generator.writeStartArray();
-			for (Detector item0 : this.detectors) {
+			for (DetectorUpdate item0 : this.detectors) {
 				item0.serialize(generator, mapper);
 
 			}
@@ -459,7 +460,7 @@ public class UpdateJobRequest extends RequestBase implements JsonpSerializable {
 		private String description;
 
 		@Nullable
-		private List<Detector> detectors;
+		private List<DetectorUpdate> detectors;
 
 		@Nullable
 		private List<String> groups;
@@ -630,7 +631,7 @@ public class UpdateJobRequest extends RequestBase implements JsonpSerializable {
 		 * <p>
 		 * Adds all elements of <code>list</code> to <code>detectors</code>.
 		 */
-		public final Builder detectors(List<Detector> list) {
+		public final Builder detectors(List<DetectorUpdate> list) {
 			this.detectors = _listAddAll(this.detectors, list);
 			return this;
 		}
@@ -642,7 +643,7 @@ public class UpdateJobRequest extends RequestBase implements JsonpSerializable {
 		 * <p>
 		 * Adds one or more values to <code>detectors</code>.
 		 */
-		public final Builder detectors(Detector value, Detector... values) {
+		public final Builder detectors(DetectorUpdate value, DetectorUpdate... values) {
 			this.detectors = _listAdd(this.detectors, value, values);
 			return this;
 		}
@@ -654,8 +655,8 @@ public class UpdateJobRequest extends RequestBase implements JsonpSerializable {
 		 * <p>
 		 * Adds a value to <code>detectors</code> using a builder lambda.
 		 */
-		public final Builder detectors(Function<Detector.Builder, ObjectBuilder<Detector>> fn) {
-			return detectors(fn.apply(new Detector.Builder()).build());
+		public final Builder detectors(Function<DetectorUpdate.Builder, ObjectBuilder<DetectorUpdate>> fn) {
+			return detectors(fn.apply(new DetectorUpdate.Builder()).build());
 		}
 
 		/**
@@ -819,7 +820,7 @@ public class UpdateJobRequest extends RequestBase implements JsonpSerializable {
 		op.add(Builder::dailyModelSnapshotRetentionAfterDays, JsonpDeserializer.longDeserializer(),
 				"daily_model_snapshot_retention_after_days");
 		op.add(Builder::description, JsonpDeserializer.stringDeserializer(), "description");
-		op.add(Builder::detectors, JsonpDeserializer.arrayDeserializer(Detector._DESERIALIZER), "detectors");
+		op.add(Builder::detectors, JsonpDeserializer.arrayDeserializer(DetectorUpdate._DESERIALIZER), "detectors");
 		op.add(Builder::groups, JsonpDeserializer.arrayDeserializer(JsonpDeserializer.stringDeserializer()), "groups");
 		op.add(Builder::modelPlotConfig, ModelPlotConfig._DESERIALIZER, "model_plot_config");
 		op.add(Builder::modelPruneWindow, Time._DESERIALIZER, "model_prune_window");

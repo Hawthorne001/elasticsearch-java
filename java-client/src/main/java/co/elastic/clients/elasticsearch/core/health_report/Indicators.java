@@ -71,6 +71,9 @@ public class Indicators implements JsonpSerializable {
 	private final RepositoryIntegrityIndicator repositoryIntegrity;
 
 	@Nullable
+	private final DataStreamLifecycleIndicator dataStreamLifecycle;
+
+	@Nullable
 	private final IlmIndicator ilm;
 
 	@Nullable
@@ -78,6 +81,9 @@ public class Indicators implements JsonpSerializable {
 
 	@Nullable
 	private final ShardsCapacityIndicator shardsCapacity;
+
+	@Nullable
+	private final FileSettingsIndicator fileSettings;
 
 	// ---------------------------------------------------------------------------------------------
 
@@ -87,9 +93,11 @@ public class Indicators implements JsonpSerializable {
 		this.shardsAvailability = builder.shardsAvailability;
 		this.disk = builder.disk;
 		this.repositoryIntegrity = builder.repositoryIntegrity;
+		this.dataStreamLifecycle = builder.dataStreamLifecycle;
 		this.ilm = builder.ilm;
 		this.slm = builder.slm;
 		this.shardsCapacity = builder.shardsCapacity;
+		this.fileSettings = builder.fileSettings;
 
 	}
 
@@ -130,6 +138,14 @@ public class Indicators implements JsonpSerializable {
 	}
 
 	/**
+	 * API name: {@code data_stream_lifecycle}
+	 */
+	@Nullable
+	public final DataStreamLifecycleIndicator dataStreamLifecycle() {
+		return this.dataStreamLifecycle;
+	}
+
+	/**
 	 * API name: {@code ilm}
 	 */
 	@Nullable
@@ -151,6 +167,14 @@ public class Indicators implements JsonpSerializable {
 	@Nullable
 	public final ShardsCapacityIndicator shardsCapacity() {
 		return this.shardsCapacity;
+	}
+
+	/**
+	 * API name: {@code file_settings}
+	 */
+	@Nullable
+	public final FileSettingsIndicator fileSettings() {
+		return this.fileSettings;
 	}
 
 	/**
@@ -184,6 +208,11 @@ public class Indicators implements JsonpSerializable {
 			this.repositoryIntegrity.serialize(generator, mapper);
 
 		}
+		if (this.dataStreamLifecycle != null) {
+			generator.writeKey("data_stream_lifecycle");
+			this.dataStreamLifecycle.serialize(generator, mapper);
+
+		}
 		if (this.ilm != null) {
 			generator.writeKey("ilm");
 			this.ilm.serialize(generator, mapper);
@@ -197,6 +226,11 @@ public class Indicators implements JsonpSerializable {
 		if (this.shardsCapacity != null) {
 			generator.writeKey("shards_capacity");
 			this.shardsCapacity.serialize(generator, mapper);
+
+		}
+		if (this.fileSettings != null) {
+			generator.writeKey("file_settings");
+			this.fileSettings.serialize(generator, mapper);
 
 		}
 
@@ -227,6 +261,9 @@ public class Indicators implements JsonpSerializable {
 		private RepositoryIntegrityIndicator repositoryIntegrity;
 
 		@Nullable
+		private DataStreamLifecycleIndicator dataStreamLifecycle;
+
+		@Nullable
 		private IlmIndicator ilm;
 
 		@Nullable
@@ -234,6 +271,9 @@ public class Indicators implements JsonpSerializable {
 
 		@Nullable
 		private ShardsCapacityIndicator shardsCapacity;
+
+		@Nullable
+		private FileSettingsIndicator fileSettings;
 
 		/**
 		 * API name: {@code master_is_stable}
@@ -299,6 +339,22 @@ public class Indicators implements JsonpSerializable {
 		}
 
 		/**
+		 * API name: {@code data_stream_lifecycle}
+		 */
+		public final Builder dataStreamLifecycle(@Nullable DataStreamLifecycleIndicator value) {
+			this.dataStreamLifecycle = value;
+			return this;
+		}
+
+		/**
+		 * API name: {@code data_stream_lifecycle}
+		 */
+		public final Builder dataStreamLifecycle(
+				Function<DataStreamLifecycleIndicator.Builder, ObjectBuilder<DataStreamLifecycleIndicator>> fn) {
+			return this.dataStreamLifecycle(fn.apply(new DataStreamLifecycleIndicator.Builder()).build());
+		}
+
+		/**
 		 * API name: {@code ilm}
 		 */
 		public final Builder ilm(@Nullable IlmIndicator value) {
@@ -344,6 +400,22 @@ public class Indicators implements JsonpSerializable {
 			return this.shardsCapacity(fn.apply(new ShardsCapacityIndicator.Builder()).build());
 		}
 
+		/**
+		 * API name: {@code file_settings}
+		 */
+		public final Builder fileSettings(@Nullable FileSettingsIndicator value) {
+			this.fileSettings = value;
+			return this;
+		}
+
+		/**
+		 * API name: {@code file_settings}
+		 */
+		public final Builder fileSettings(
+				Function<FileSettingsIndicator.Builder, ObjectBuilder<FileSettingsIndicator>> fn) {
+			return this.fileSettings(fn.apply(new FileSettingsIndicator.Builder()).build());
+		}
+
 		@Override
 		protected Builder self() {
 			return this;
@@ -376,9 +448,11 @@ public class Indicators implements JsonpSerializable {
 		op.add(Builder::shardsAvailability, ShardsAvailabilityIndicator._DESERIALIZER, "shards_availability");
 		op.add(Builder::disk, DiskIndicator._DESERIALIZER, "disk");
 		op.add(Builder::repositoryIntegrity, RepositoryIntegrityIndicator._DESERIALIZER, "repository_integrity");
+		op.add(Builder::dataStreamLifecycle, DataStreamLifecycleIndicator._DESERIALIZER, "data_stream_lifecycle");
 		op.add(Builder::ilm, IlmIndicator._DESERIALIZER, "ilm");
 		op.add(Builder::slm, SlmIndicator._DESERIALIZER, "slm");
 		op.add(Builder::shardsCapacity, ShardsCapacityIndicator._DESERIALIZER, "shards_capacity");
+		op.add(Builder::fileSettings, FileSettingsIndicator._DESERIALIZER, "file_settings");
 
 	}
 

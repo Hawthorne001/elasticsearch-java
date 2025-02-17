@@ -56,7 +56,9 @@ import javax.annotation.Nullable;
 // typedef: security.delete_service_token.Request
 
 /**
- * Deletes a service account token.
+ * Delete service account tokens.
+ * <p>
+ * Delete service account tokens for a service in a specified namespace.
  * 
  * @see <a href=
  *      "../doc-files/api-spec.html#security.delete_service_token.Request">API
@@ -89,7 +91,7 @@ public class DeleteServiceTokenRequest extends RequestBase {
 	}
 
 	/**
-	 * Required - An identifier for the token name
+	 * Required - The name of the service account token.
 	 * <p>
 	 * API name: {@code name}
 	 */
@@ -98,7 +100,7 @@ public class DeleteServiceTokenRequest extends RequestBase {
 	}
 
 	/**
-	 * Required - An identifier for the namespace
+	 * Required - The namespace, which is a top-level grouping of service accounts.
 	 * <p>
 	 * API name: {@code namespace}
 	 */
@@ -120,7 +122,7 @@ public class DeleteServiceTokenRequest extends RequestBase {
 	}
 
 	/**
-	 * Required - An identifier for the service name
+	 * Required - The service name.
 	 * <p>
 	 * API name: {@code service}
 	 */
@@ -147,7 +149,7 @@ public class DeleteServiceTokenRequest extends RequestBase {
 		private String service;
 
 		/**
-		 * Required - An identifier for the token name
+		 * Required - The name of the service account token.
 		 * <p>
 		 * API name: {@code name}
 		 */
@@ -157,7 +159,7 @@ public class DeleteServiceTokenRequest extends RequestBase {
 		}
 
 		/**
-		 * Required - An identifier for the namespace
+		 * Required - The namespace, which is a top-level grouping of service accounts.
 		 * <p>
 		 * API name: {@code namespace}
 		 */
@@ -180,7 +182,7 @@ public class DeleteServiceTokenRequest extends RequestBase {
 		}
 
 		/**
-		 * Required - An identifier for the service name
+		 * Required - The service name.
 		 * <p>
 		 * API name: {@code service}
 		 */

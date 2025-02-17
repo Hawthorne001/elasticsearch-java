@@ -31,7 +31,7 @@ import co.elastic.clients.util.ApiTypeHelper;
 import co.elastic.clients.util.ObjectBuilder;
 import jakarta.json.stream.JsonGenerator;
 import java.lang.Float;
-import java.lang.Long;
+import java.lang.Integer;
 import java.lang.String;
 import java.util.List;
 import java.util.Objects;
@@ -70,12 +70,18 @@ public class KnnQuery extends QueryBase implements QueryVariant {
 	private final QueryVectorBuilder queryVectorBuilder;
 
 	@Nullable
-	private final Long numCandidates;
+	private final Integer numCandidates;
+
+	@Nullable
+	private final Integer k;
 
 	private final List<Query> filter;
 
 	@Nullable
 	private final Float similarity;
+
+	@Nullable
+	private final RescoreVector rescoreVector;
 
 	// ---------------------------------------------------------------------------------------------
 
@@ -86,8 +92,10 @@ public class KnnQuery extends QueryBase implements QueryVariant {
 		this.queryVector = ApiTypeHelper.unmodifiable(builder.queryVector);
 		this.queryVectorBuilder = builder.queryVectorBuilder;
 		this.numCandidates = builder.numCandidates;
+		this.k = builder.k;
 		this.filter = ApiTypeHelper.unmodifiable(builder.filter);
 		this.similarity = builder.similarity;
+		this.rescoreVector = builder.rescoreVector;
 
 	}
 
@@ -138,8 +146,18 @@ public class KnnQuery extends QueryBase implements QueryVariant {
 	 * API name: {@code num_candidates}
 	 */
 	@Nullable
-	public final Long numCandidates() {
+	public final Integer numCandidates() {
 		return this.numCandidates;
+	}
+
+	/**
+	 * The final number of nearest neighbors to return as top hits
+	 * <p>
+	 * API name: {@code k}
+	 */
+	@Nullable
+	public final Integer k() {
+		return this.k;
 	}
 
 	/**
@@ -159,6 +177,16 @@ public class KnnQuery extends QueryBase implements QueryVariant {
 	@Nullable
 	public final Float similarity() {
 		return this.similarity;
+	}
+
+	/**
+	 * Apply oversampling and rescoring to quantized vectors *
+	 * <p>
+	 * API name: {@code rescore_vector}
+	 */
+	@Nullable
+	public final RescoreVector rescoreVector() {
+		return this.rescoreVector;
 	}
 
 	protected void serializeInternal(JsonGenerator generator, JsonpMapper mapper) {
@@ -187,6 +215,11 @@ public class KnnQuery extends QueryBase implements QueryVariant {
 			generator.write(this.numCandidates);
 
 		}
+		if (this.k != null) {
+			generator.writeKey("k");
+			generator.write(this.k);
+
+		}
 		if (ApiTypeHelper.isDefined(this.filter)) {
 			generator.writeKey("filter");
 			generator.writeStartArray();
@@ -200,6 +233,11 @@ public class KnnQuery extends QueryBase implements QueryVariant {
 		if (this.similarity != null) {
 			generator.writeKey("similarity");
 			generator.write(this.similarity);
+
+		}
+		if (this.rescoreVector != null) {
+			generator.writeKey("rescore_vector");
+			this.rescoreVector.serialize(generator, mapper);
 
 		}
 
@@ -221,13 +259,19 @@ public class KnnQuery extends QueryBase implements QueryVariant {
 		private QueryVectorBuilder queryVectorBuilder;
 
 		@Nullable
-		private Long numCandidates;
+		private Integer numCandidates;
+
+		@Nullable
+		private Integer k;
 
 		@Nullable
 		private List<Query> filter;
 
 		@Nullable
 		private Float similarity;
+
+		@Nullable
+		private RescoreVector rescoreVector;
 
 		/**
 		 * Required - The name of the vector field to search against
@@ -290,8 +334,18 @@ public class KnnQuery extends QueryBase implements QueryVariant {
 		 * <p>
 		 * API name: {@code num_candidates}
 		 */
-		public final Builder numCandidates(@Nullable Long value) {
+		public final Builder numCandidates(@Nullable Integer value) {
 			this.numCandidates = value;
+			return this;
+		}
+
+		/**
+		 * The final number of nearest neighbors to return as top hits
+		 * <p>
+		 * API name: {@code k}
+		 */
+		public final Builder k(@Nullable Integer value) {
+			this.k = value;
 			return this;
 		}
 
@@ -340,6 +394,25 @@ public class KnnQuery extends QueryBase implements QueryVariant {
 			return this;
 		}
 
+		/**
+		 * Apply oversampling and rescoring to quantized vectors *
+		 * <p>
+		 * API name: {@code rescore_vector}
+		 */
+		public final Builder rescoreVector(@Nullable RescoreVector value) {
+			this.rescoreVector = value;
+			return this;
+		}
+
+		/**
+		 * Apply oversampling and rescoring to quantized vectors *
+		 * <p>
+		 * API name: {@code rescore_vector}
+		 */
+		public final Builder rescoreVector(Function<RescoreVector.Builder, ObjectBuilder<RescoreVector>> fn) {
+			return this.rescoreVector(fn.apply(new RescoreVector.Builder()).build());
+		}
+
 		@Override
 		protected Builder self() {
 			return this;
@@ -372,9 +445,11 @@ public class KnnQuery extends QueryBase implements QueryVariant {
 		op.add(Builder::queryVector, JsonpDeserializer.arrayDeserializer(JsonpDeserializer.floatDeserializer()),
 				"query_vector");
 		op.add(Builder::queryVectorBuilder, QueryVectorBuilder._DESERIALIZER, "query_vector_builder");
-		op.add(Builder::numCandidates, JsonpDeserializer.longDeserializer(), "num_candidates");
+		op.add(Builder::numCandidates, JsonpDeserializer.integerDeserializer(), "num_candidates");
+		op.add(Builder::k, JsonpDeserializer.integerDeserializer(), "k");
 		op.add(Builder::filter, JsonpDeserializer.arrayDeserializer(Query._DESERIALIZER), "filter");
 		op.add(Builder::similarity, JsonpDeserializer.floatDeserializer(), "similarity");
+		op.add(Builder::rescoreVector, RescoreVector._DESERIALIZER, "rescore_vector");
 
 	}
 

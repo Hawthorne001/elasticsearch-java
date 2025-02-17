@@ -55,7 +55,22 @@ import javax.annotation.Nullable;
 // typedef: security.invalidate_token.Request
 
 /**
- * Invalidates one or more access tokens or refresh tokens.
+ * Invalidate a token.
+ * <p>
+ * The access tokens returned by the get token API have a finite period of time
+ * for which they are valid. After that time period, they can no longer be used.
+ * The time period is defined by the
+ * <code>xpack.security.authc.token.timeout</code> setting.
+ * <p>
+ * The refresh tokens returned by the get token API are only valid for 24 hours.
+ * They can also be used exactly once. If you want to invalidate one or more
+ * access or refresh tokens immediately, use this invalidate token API.
+ * <p>
+ * NOTE: While all parameters are optional, at least one of them is required.
+ * More specifically, either one of <code>token</code> or
+ * <code>refresh_token</code> parameters is required. If none of these two are
+ * specified, then <code>realm_name</code> and/or <code>username</code> need to
+ * be specified.
  * 
  * @see <a href=
  *      "../doc-files/api-spec.html#security.invalidate_token.Request">API
@@ -91,6 +106,9 @@ public class InvalidateTokenRequest extends RequestBase implements JsonpSerializ
 	}
 
 	/**
+	 * The name of an authentication realm. This parameter cannot be used with
+	 * either <code>refresh_token</code> or <code>token</code>.
+	 * <p>
 	 * API name: {@code realm_name}
 	 */
 	@Nullable
@@ -99,6 +117,10 @@ public class InvalidateTokenRequest extends RequestBase implements JsonpSerializ
 	}
 
 	/**
+	 * A refresh token. This parameter cannot be used if any of
+	 * <code>refresh_token</code>, <code>realm_name</code>, or <code>username</code>
+	 * are used.
+	 * <p>
 	 * API name: {@code refresh_token}
 	 */
 	@Nullable
@@ -107,6 +129,10 @@ public class InvalidateTokenRequest extends RequestBase implements JsonpSerializ
 	}
 
 	/**
+	 * An access token. This parameter cannot be used if any of
+	 * <code>refresh_token</code>, <code>realm_name</code>, or <code>username</code>
+	 * are used.
+	 * <p>
 	 * API name: {@code token}
 	 */
 	@Nullable
@@ -115,6 +141,9 @@ public class InvalidateTokenRequest extends RequestBase implements JsonpSerializ
 	}
 
 	/**
+	 * The username of a user. This parameter cannot be used with either
+	 * <code>refresh_token</code> or <code>token</code>.
+	 * <p>
 	 * API name: {@code username}
 	 */
 	@Nullable
@@ -178,6 +207,9 @@ public class InvalidateTokenRequest extends RequestBase implements JsonpSerializ
 		private String username;
 
 		/**
+		 * The name of an authentication realm. This parameter cannot be used with
+		 * either <code>refresh_token</code> or <code>token</code>.
+		 * <p>
 		 * API name: {@code realm_name}
 		 */
 		public final Builder realmName(@Nullable String value) {
@@ -186,6 +218,10 @@ public class InvalidateTokenRequest extends RequestBase implements JsonpSerializ
 		}
 
 		/**
+		 * A refresh token. This parameter cannot be used if any of
+		 * <code>refresh_token</code>, <code>realm_name</code>, or <code>username</code>
+		 * are used.
+		 * <p>
 		 * API name: {@code refresh_token}
 		 */
 		public final Builder refreshToken(@Nullable String value) {
@@ -194,6 +230,10 @@ public class InvalidateTokenRequest extends RequestBase implements JsonpSerializ
 		}
 
 		/**
+		 * An access token. This parameter cannot be used if any of
+		 * <code>refresh_token</code>, <code>realm_name</code>, or <code>username</code>
+		 * are used.
+		 * <p>
 		 * API name: {@code token}
 		 */
 		public final Builder token(@Nullable String value) {
@@ -202,6 +242,9 @@ public class InvalidateTokenRequest extends RequestBase implements JsonpSerializ
 		}
 
 		/**
+		 * The username of a user. This parameter cannot be used with either
+		 * <code>refresh_token</code> or <code>token</code>.
+		 * <p>
 		 * API name: {@code username}
 		 */
 		public final Builder username(@Nullable String value) {

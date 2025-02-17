@@ -100,20 +100,20 @@ public class AggregateBuilders {
 	}
 
 	/**
-	 * Creates a builder for the {@link BoxPlotAggregate box_plot} {@code Aggregate}
+	 * Creates a builder for the {@link BoxPlotAggregate boxplot} {@code Aggregate}
 	 * variant.
 	 */
-	public static BoxPlotAggregate.Builder boxPlot() {
+	public static BoxPlotAggregate.Builder boxplot() {
 		return new BoxPlotAggregate.Builder();
 	}
 
 	/**
-	 * Creates a Aggregate of the {@link BoxPlotAggregate box_plot}
-	 * {@code Aggregate} variant.
+	 * Creates a Aggregate of the {@link BoxPlotAggregate boxplot} {@code Aggregate}
+	 * variant.
 	 */
-	public static Aggregate boxPlot(Function<BoxPlotAggregate.Builder, ObjectBuilder<BoxPlotAggregate>> fn) {
+	public static Aggregate boxplot(Function<BoxPlotAggregate.Builder, ObjectBuilder<BoxPlotAggregate>> fn) {
 		Aggregate.Builder builder = new Aggregate.Builder();
-		builder.boxPlot(fn.apply(new BoxPlotAggregate.Builder()).build());
+		builder.boxplot(fn.apply(new BoxPlotAggregate.Builder()).build());
 		return builder.build();
 	}
 
@@ -1146,6 +1146,24 @@ public class AggregateBuilders {
 	public static Aggregate tTest(Function<TTestAggregate.Builder, ObjectBuilder<TTestAggregate>> fn) {
 		Aggregate.Builder builder = new Aggregate.Builder();
 		builder.tTest(fn.apply(new TTestAggregate.Builder()).build());
+		return builder.build();
+	}
+
+	/**
+	 * Creates a builder for the {@link TimeSeriesAggregate time_series}
+	 * {@code Aggregate} variant.
+	 */
+	public static TimeSeriesAggregate.Builder timeSeries() {
+		return new TimeSeriesAggregate.Builder();
+	}
+
+	/**
+	 * Creates a Aggregate of the {@link TimeSeriesAggregate time_series}
+	 * {@code Aggregate} variant.
+	 */
+	public static Aggregate timeSeries(Function<TimeSeriesAggregate.Builder, ObjectBuilder<TimeSeriesAggregate>> fn) {
+		Aggregate.Builder builder = new Aggregate.Builder();
+		builder.timeSeries(fn.apply(new TimeSeriesAggregate.Builder()).build());
 		return builder.build();
 	}
 

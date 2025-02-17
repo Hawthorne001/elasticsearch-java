@@ -56,6 +56,8 @@ import javax.annotation.Nullable;
 // typedef: security.get_api_key.Request
 
 /**
+ * Get API key information.
+ * <p>
  * Retrieves information for one or more API keys. NOTE: If you have only the
  * <code>manage_own_api_key</code> privilege, this API returns only the API keys
  * that you own. If you have <code>read_security</code>,

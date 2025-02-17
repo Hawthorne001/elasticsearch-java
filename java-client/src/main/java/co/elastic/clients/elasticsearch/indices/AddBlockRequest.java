@@ -61,7 +61,10 @@ import javax.annotation.Nullable;
 // typedef: indices.add_block.Request
 
 /**
- * Adds a block to an index.
+ * Add an index block.
+ * <p>
+ * Add an index block to an index. Index blocks limit the operations allowed on
+ * an index by blocking specific operation types.
  * 
  * @see <a href="../doc-files/api-spec.html#indices.add_block.Request">API
  *      specification</a>
@@ -105,9 +108,12 @@ public class AddBlockRequest extends RequestBase {
 	}
 
 	/**
-	 * Whether to ignore if a wildcard indices expression resolves into no concrete
-	 * indices. (This includes <code>_all</code> string or when no indices have been
-	 * specified)
+	 * If <code>false</code>, the request returns an error if any wildcard
+	 * expression, index alias, or <code>_all</code> value targets only missing or
+	 * closed indices. This behavior applies even if the request targets other open
+	 * indices. For example, a request targeting <code>foo*,bar*</code> returns an
+	 * error if an index starts with <code>foo</code> but no index starts with
+	 * <code>bar</code>.
 	 * <p>
 	 * API name: {@code allow_no_indices}
 	 */
@@ -117,7 +123,7 @@ public class AddBlockRequest extends RequestBase {
 	}
 
 	/**
-	 * Required - The block to add (one of read, write, read_only or metadata)
+	 * Required - The block type to add to the index.
 	 * <p>
 	 * API name: {@code block}
 	 */
@@ -126,8 +132,10 @@ public class AddBlockRequest extends RequestBase {
 	}
 
 	/**
-	 * Whether to expand wildcard expression to concrete indices that are open,
-	 * closed or both.
+	 * The type of index that wildcard patterns can match. If the request can target
+	 * data streams, this argument determines whether wildcard expressions match
+	 * hidden data streams. It supports comma-separated values, such as
+	 * <code>open,hidden</code>.
 	 * <p>
 	 * API name: {@code expand_wildcards}
 	 */
@@ -136,8 +144,8 @@ public class AddBlockRequest extends RequestBase {
 	}
 
 	/**
-	 * Whether specified concrete indices should be ignored when unavailable
-	 * (missing or closed)
+	 * If <code>false</code>, the request returns an error if it targets a missing
+	 * or closed index.
 	 * <p>
 	 * API name: {@code ignore_unavailable}
 	 */
@@ -147,7 +155,13 @@ public class AddBlockRequest extends RequestBase {
 	}
 
 	/**
-	 * Required - A comma separated list of indices to add a block to
+	 * Required - A comma-separated list or wildcard expression of index names used
+	 * to limit the request. By default, you must explicitly name the indices you
+	 * are adding blocks to. To allow the adding of blocks to indices with
+	 * <code>_all</code>, <code>*</code>, or other wildcard expressions, change the
+	 * <code>action.destructive_requires_name</code> setting to <code>false</code>.
+	 * You can update this setting in the <code>elasticsearch.yml</code> file or by
+	 * using the cluster update settings API.
 	 * <p>
 	 * API name: {@code index}
 	 */
@@ -156,7 +170,10 @@ public class AddBlockRequest extends RequestBase {
 	}
 
 	/**
-	 * Specify timeout for connection to master
+	 * The period to wait for the master node. If the master node is not available
+	 * before the timeout expires, the request fails and returns an error. It can
+	 * also be set to <code>-1</code> to indicate that the request should never
+	 * timeout.
 	 * <p>
 	 * API name: {@code master_timeout}
 	 */
@@ -166,7 +183,11 @@ public class AddBlockRequest extends RequestBase {
 	}
 
 	/**
-	 * Explicit operation timeout
+	 * The period to wait for a response from all relevant nodes in the cluster
+	 * after updating the cluster metadata. If no response is received before the
+	 * timeout expires, the cluster metadata update still applies but the response
+	 * will indicate that it was not completely acknowledged. It can also be set to
+	 * <code>-1</code> to indicate that the request should never timeout.
 	 * <p>
 	 * API name: {@code timeout}
 	 */
@@ -202,9 +223,12 @@ public class AddBlockRequest extends RequestBase {
 		private Time timeout;
 
 		/**
-		 * Whether to ignore if a wildcard indices expression resolves into no concrete
-		 * indices. (This includes <code>_all</code> string or when no indices have been
-		 * specified)
+		 * If <code>false</code>, the request returns an error if any wildcard
+		 * expression, index alias, or <code>_all</code> value targets only missing or
+		 * closed indices. This behavior applies even if the request targets other open
+		 * indices. For example, a request targeting <code>foo*,bar*</code> returns an
+		 * error if an index starts with <code>foo</code> but no index starts with
+		 * <code>bar</code>.
 		 * <p>
 		 * API name: {@code allow_no_indices}
 		 */
@@ -214,7 +238,7 @@ public class AddBlockRequest extends RequestBase {
 		}
 
 		/**
-		 * Required - The block to add (one of read, write, read_only or metadata)
+		 * Required - The block type to add to the index.
 		 * <p>
 		 * API name: {@code block}
 		 */
@@ -224,8 +248,10 @@ public class AddBlockRequest extends RequestBase {
 		}
 
 		/**
-		 * Whether to expand wildcard expression to concrete indices that are open,
-		 * closed or both.
+		 * The type of index that wildcard patterns can match. If the request can target
+		 * data streams, this argument determines whether wildcard expressions match
+		 * hidden data streams. It supports comma-separated values, such as
+		 * <code>open,hidden</code>.
 		 * <p>
 		 * API name: {@code expand_wildcards}
 		 * <p>
@@ -237,8 +263,10 @@ public class AddBlockRequest extends RequestBase {
 		}
 
 		/**
-		 * Whether to expand wildcard expression to concrete indices that are open,
-		 * closed or both.
+		 * The type of index that wildcard patterns can match. If the request can target
+		 * data streams, this argument determines whether wildcard expressions match
+		 * hidden data streams. It supports comma-separated values, such as
+		 * <code>open,hidden</code>.
 		 * <p>
 		 * API name: {@code expand_wildcards}
 		 * <p>
@@ -250,8 +278,8 @@ public class AddBlockRequest extends RequestBase {
 		}
 
 		/**
-		 * Whether specified concrete indices should be ignored when unavailable
-		 * (missing or closed)
+		 * If <code>false</code>, the request returns an error if it targets a missing
+		 * or closed index.
 		 * <p>
 		 * API name: {@code ignore_unavailable}
 		 */
@@ -261,7 +289,13 @@ public class AddBlockRequest extends RequestBase {
 		}
 
 		/**
-		 * Required - A comma separated list of indices to add a block to
+		 * Required - A comma-separated list or wildcard expression of index names used
+		 * to limit the request. By default, you must explicitly name the indices you
+		 * are adding blocks to. To allow the adding of blocks to indices with
+		 * <code>_all</code>, <code>*</code>, or other wildcard expressions, change the
+		 * <code>action.destructive_requires_name</code> setting to <code>false</code>.
+		 * You can update this setting in the <code>elasticsearch.yml</code> file or by
+		 * using the cluster update settings API.
 		 * <p>
 		 * API name: {@code index}
 		 */
@@ -271,7 +305,10 @@ public class AddBlockRequest extends RequestBase {
 		}
 
 		/**
-		 * Specify timeout for connection to master
+		 * The period to wait for the master node. If the master node is not available
+		 * before the timeout expires, the request fails and returns an error. It can
+		 * also be set to <code>-1</code> to indicate that the request should never
+		 * timeout.
 		 * <p>
 		 * API name: {@code master_timeout}
 		 */
@@ -281,7 +318,10 @@ public class AddBlockRequest extends RequestBase {
 		}
 
 		/**
-		 * Specify timeout for connection to master
+		 * The period to wait for the master node. If the master node is not available
+		 * before the timeout expires, the request fails and returns an error. It can
+		 * also be set to <code>-1</code> to indicate that the request should never
+		 * timeout.
 		 * <p>
 		 * API name: {@code master_timeout}
 		 */
@@ -290,7 +330,11 @@ public class AddBlockRequest extends RequestBase {
 		}
 
 		/**
-		 * Explicit operation timeout
+		 * The period to wait for a response from all relevant nodes in the cluster
+		 * after updating the cluster metadata. If no response is received before the
+		 * timeout expires, the cluster metadata update still applies but the response
+		 * will indicate that it was not completely acknowledged. It can also be set to
+		 * <code>-1</code> to indicate that the request should never timeout.
 		 * <p>
 		 * API name: {@code timeout}
 		 */
@@ -300,7 +344,11 @@ public class AddBlockRequest extends RequestBase {
 		}
 
 		/**
-		 * Explicit operation timeout
+		 * The period to wait for a response from all relevant nodes in the cluster
+		 * after updating the cluster metadata. If no response is received before the
+		 * timeout expires, the cluster metadata update still applies but the response
+		 * will indicate that it was not completely acknowledged. It can also be set to
+		 * <code>-1</code> to indicate that the request should never timeout.
 		 * <p>
 		 * API name: {@code timeout}
 		 */

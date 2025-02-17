@@ -56,7 +56,7 @@ import javax.annotation.Nullable;
 // typedef: watcher.deactivate_watch.Request
 
 /**
- * Deactivates a currently active watch.
+ * Deactivate a watch. A watch can be either active or inactive.
  * 
  * @see <a href=
  *      "../doc-files/api-spec.html#watcher.deactivate_watch.Request">API
@@ -79,7 +79,7 @@ public class DeactivateWatchRequest extends RequestBase {
 	}
 
 	/**
-	 * Required - Watch ID
+	 * Required - The watch identifier.
 	 * <p>
 	 * API name: {@code watch_id}
 	 */
@@ -99,7 +99,7 @@ public class DeactivateWatchRequest extends RequestBase {
 		private String watchId;
 
 		/**
-		 * Required - Watch ID
+		 * Required - The watch identifier.
 		 * <p>
 		 * API name: {@code watch_id}
 		 */

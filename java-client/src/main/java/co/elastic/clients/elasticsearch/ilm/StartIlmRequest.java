@@ -55,7 +55,10 @@ import javax.annotation.Nullable;
 // typedef: ilm.start.Request
 
 /**
- * Start the index lifecycle management (ILM) plugin.
+ * Start the ILM plugin. Start the index lifecycle management plugin if it is
+ * currently stopped. ILM is started automatically when the cluster is formed.
+ * Restarting ILM is necessary only when it has been stopped using the stop ILM
+ * API.
  * 
  * @see <a href="../doc-files/api-spec.html#ilm.start.Request">API
  *      specification</a>
@@ -82,6 +85,9 @@ public class StartIlmRequest extends RequestBase {
 	}
 
 	/**
+	 * Period to wait for a connection to the master node. If no response is
+	 * received before the timeout expires, the request fails and returns an error.
+	 * <p>
 	 * API name: {@code master_timeout}
 	 */
 	@Nullable
@@ -90,6 +96,9 @@ public class StartIlmRequest extends RequestBase {
 	}
 
 	/**
+	 * Period to wait for a response. If no response is received before the timeout
+	 * expires, the request fails and returns an error.
+	 * <p>
 	 * API name: {@code timeout}
 	 */
 	@Nullable
@@ -111,6 +120,9 @@ public class StartIlmRequest extends RequestBase {
 		private Time timeout;
 
 		/**
+		 * Period to wait for a connection to the master node. If no response is
+		 * received before the timeout expires, the request fails and returns an error.
+		 * <p>
 		 * API name: {@code master_timeout}
 		 */
 		public final Builder masterTimeout(@Nullable Time value) {
@@ -119,6 +131,9 @@ public class StartIlmRequest extends RequestBase {
 		}
 
 		/**
+		 * Period to wait for a connection to the master node. If no response is
+		 * received before the timeout expires, the request fails and returns an error.
+		 * <p>
 		 * API name: {@code master_timeout}
 		 */
 		public final Builder masterTimeout(Function<Time.Builder, ObjectBuilder<Time>> fn) {
@@ -126,6 +141,9 @@ public class StartIlmRequest extends RequestBase {
 		}
 
 		/**
+		 * Period to wait for a response. If no response is received before the timeout
+		 * expires, the request fails and returns an error.
+		 * <p>
 		 * API name: {@code timeout}
 		 */
 		public final Builder timeout(@Nullable Time value) {
@@ -134,6 +152,9 @@ public class StartIlmRequest extends RequestBase {
 		}
 
 		/**
+		 * Period to wait for a response. If no response is received before the timeout
+		 * expires, the request fails and returns an error.
+		 * <p>
 		 * API name: {@code timeout}
 		 */
 		public final Builder timeout(Function<Time.Builder, ObjectBuilder<Time>> fn) {

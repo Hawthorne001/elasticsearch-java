@@ -61,8 +61,11 @@ import javax.annotation.Nullable;
 // typedef: security.put_user.Request
 
 /**
- * Adds and updates users in the native realm. These users are commonly referred
- * to as native users.
+ * Create or update users.
+ * <p>
+ * Add and update users in the native realm. A password is required for adding a
+ * new user but is optional when updating an existing user. To change a user's
+ * password without updating any other fields, use the change password API.
  * 
  * @see <a href="../doc-files/api-spec.html#security.put_user.Request">API
  *      specification</a>
@@ -114,6 +117,8 @@ public class PutUserRequest extends RequestBase implements JsonpSerializable {
 	}
 
 	/**
+	 * The email of the user.
+	 * <p>
 	 * API name: {@code email}
 	 */
 	@Nullable
@@ -122,6 +127,8 @@ public class PutUserRequest extends RequestBase implements JsonpSerializable {
 	}
 
 	/**
+	 * Specifies whether the user is enabled.
+	 * <p>
 	 * API name: {@code enabled}
 	 */
 	@Nullable
@@ -130,6 +137,8 @@ public class PutUserRequest extends RequestBase implements JsonpSerializable {
 	}
 
 	/**
+	 * The full name of the user.
+	 * <p>
 	 * API name: {@code full_name}
 	 */
 	@Nullable
@@ -138,6 +147,8 @@ public class PutUserRequest extends RequestBase implements JsonpSerializable {
 	}
 
 	/**
+	 * Arbitrary metadata that you want to associate with the user.
+	 * <p>
 	 * API name: {@code metadata}
 	 */
 	public final Map<String, JsonData> metadata() {
@@ -145,6 +156,12 @@ public class PutUserRequest extends RequestBase implements JsonpSerializable {
 	}
 
 	/**
+	 * The user's password. Passwords must be at least 6 characters long. When
+	 * adding a user, one of <code>password</code> or <code>password_hash</code> is
+	 * required. When updating an existing user, the password is optional, so that
+	 * other fields on the user (such as their roles) may be updated without
+	 * modifying the user's password
+	 * <p>
 	 * API name: {@code password}
 	 */
 	@Nullable
@@ -153,6 +170,15 @@ public class PutUserRequest extends RequestBase implements JsonpSerializable {
 	}
 
 	/**
+	 * A hash of the user's password. This must be produced using the same hashing
+	 * algorithm as has been configured for password storage. For more details, see
+	 * the explanation of the
+	 * <code>xpack.security.authc.password_hashing.algorithm</code> setting in the
+	 * user cache and password hash algorithm documentation. Using this parameter
+	 * allows the client to pre-hash the password for performance and/or
+	 * confidentiality reasons. The <code>password</code> parameter and the
+	 * <code>password_hash</code> parameter cannot be used in the same request.
+	 * <p>
 	 * API name: {@code password_hash}
 	 */
 	@Nullable
@@ -161,10 +187,9 @@ public class PutUserRequest extends RequestBase implements JsonpSerializable {
 	}
 
 	/**
-	 * If <code>true</code> (the default) then refresh the affected shards to make
-	 * this operation visible to search, if <code>wait_for</code> then wait for a
-	 * refresh to make this operation visible to search, if <code>false</code> then
-	 * do nothing with refreshes.
+	 * Valid values are <code>true</code>, <code>false</code>, and
+	 * <code>wait_for</code>. These values have the same meaning as in the index
+	 * API, but the default value for this API is true.
 	 * <p>
 	 * API name: {@code refresh}
 	 */
@@ -174,6 +199,10 @@ public class PutUserRequest extends RequestBase implements JsonpSerializable {
 	}
 
 	/**
+	 * A set of roles the user has. The roles determine the user's access
+	 * permissions. To create a user without any roles, specify an empty list
+	 * (<code>[]</code>).
+	 * <p>
 	 * API name: {@code roles}
 	 */
 	public final List<String> roles() {
@@ -181,7 +210,12 @@ public class PutUserRequest extends RequestBase implements JsonpSerializable {
 	}
 
 	/**
-	 * Required - The username of the User
+	 * Required - An identifier for the user.
+	 * <p>
+	 * NOTE: Usernames must be at least 1 and no more than 507 characters. They can
+	 * contain alphanumeric characters (a-z, A-Z, 0-9), spaces, punctuation, and
+	 * printable symbols in the Basic Latin (ASCII) block. Leading or trailing
+	 * whitespace is not allowed.
 	 * <p>
 	 * API name: {@code username}
 	 */
@@ -283,6 +317,8 @@ public class PutUserRequest extends RequestBase implements JsonpSerializable {
 		private String username;
 
 		/**
+		 * The email of the user.
+		 * <p>
 		 * API name: {@code email}
 		 */
 		public final Builder email(@Nullable String value) {
@@ -291,6 +327,8 @@ public class PutUserRequest extends RequestBase implements JsonpSerializable {
 		}
 
 		/**
+		 * Specifies whether the user is enabled.
+		 * <p>
 		 * API name: {@code enabled}
 		 */
 		public final Builder enabled(@Nullable Boolean value) {
@@ -299,6 +337,8 @@ public class PutUserRequest extends RequestBase implements JsonpSerializable {
 		}
 
 		/**
+		 * The full name of the user.
+		 * <p>
 		 * API name: {@code full_name}
 		 */
 		public final Builder fullName(@Nullable String value) {
@@ -307,6 +347,8 @@ public class PutUserRequest extends RequestBase implements JsonpSerializable {
 		}
 
 		/**
+		 * Arbitrary metadata that you want to associate with the user.
+		 * <p>
 		 * API name: {@code metadata}
 		 * <p>
 		 * Adds all entries of <code>map</code> to <code>metadata</code>.
@@ -317,6 +359,8 @@ public class PutUserRequest extends RequestBase implements JsonpSerializable {
 		}
 
 		/**
+		 * Arbitrary metadata that you want to associate with the user.
+		 * <p>
 		 * API name: {@code metadata}
 		 * <p>
 		 * Adds an entry to <code>metadata</code>.
@@ -327,6 +371,12 @@ public class PutUserRequest extends RequestBase implements JsonpSerializable {
 		}
 
 		/**
+		 * The user's password. Passwords must be at least 6 characters long. When
+		 * adding a user, one of <code>password</code> or <code>password_hash</code> is
+		 * required. When updating an existing user, the password is optional, so that
+		 * other fields on the user (such as their roles) may be updated without
+		 * modifying the user's password
+		 * <p>
 		 * API name: {@code password}
 		 */
 		public final Builder password(@Nullable String value) {
@@ -335,6 +385,15 @@ public class PutUserRequest extends RequestBase implements JsonpSerializable {
 		}
 
 		/**
+		 * A hash of the user's password. This must be produced using the same hashing
+		 * algorithm as has been configured for password storage. For more details, see
+		 * the explanation of the
+		 * <code>xpack.security.authc.password_hashing.algorithm</code> setting in the
+		 * user cache and password hash algorithm documentation. Using this parameter
+		 * allows the client to pre-hash the password for performance and/or
+		 * confidentiality reasons. The <code>password</code> parameter and the
+		 * <code>password_hash</code> parameter cannot be used in the same request.
+		 * <p>
 		 * API name: {@code password_hash}
 		 */
 		public final Builder passwordHash(@Nullable String value) {
@@ -343,10 +402,9 @@ public class PutUserRequest extends RequestBase implements JsonpSerializable {
 		}
 
 		/**
-		 * If <code>true</code> (the default) then refresh the affected shards to make
-		 * this operation visible to search, if <code>wait_for</code> then wait for a
-		 * refresh to make this operation visible to search, if <code>false</code> then
-		 * do nothing with refreshes.
+		 * Valid values are <code>true</code>, <code>false</code>, and
+		 * <code>wait_for</code>. These values have the same meaning as in the index
+		 * API, but the default value for this API is true.
 		 * <p>
 		 * API name: {@code refresh}
 		 */
@@ -356,6 +414,10 @@ public class PutUserRequest extends RequestBase implements JsonpSerializable {
 		}
 
 		/**
+		 * A set of roles the user has. The roles determine the user's access
+		 * permissions. To create a user without any roles, specify an empty list
+		 * (<code>[]</code>).
+		 * <p>
 		 * API name: {@code roles}
 		 * <p>
 		 * Adds all elements of <code>list</code> to <code>roles</code>.
@@ -366,6 +428,10 @@ public class PutUserRequest extends RequestBase implements JsonpSerializable {
 		}
 
 		/**
+		 * A set of roles the user has. The roles determine the user's access
+		 * permissions. To create a user without any roles, specify an empty list
+		 * (<code>[]</code>).
+		 * <p>
 		 * API name: {@code roles}
 		 * <p>
 		 * Adds one or more values to <code>roles</code>.
@@ -376,7 +442,12 @@ public class PutUserRequest extends RequestBase implements JsonpSerializable {
 		}
 
 		/**
-		 * Required - The username of the User
+		 * Required - An identifier for the user.
+		 * <p>
+		 * NOTE: Usernames must be at least 1 and no more than 507 characters. They can
+		 * contain alphanumeric characters (a-z, A-Z, 0-9), spaces, punctuation, and
+		 * printable symbols in the Basic Latin (ASCII) block. Leading or trailing
+		 * whitespace is not allowed.
 		 * <p>
 		 * API name: {@code username}
 		 */

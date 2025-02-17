@@ -59,28 +59,45 @@ import javax.annotation.Nullable;
 // typedef: ilm.move_to_step.Request
 
 /**
- * Manually moves an index into the specified step and executes that step.
+ * Move to a lifecycle step. Manually move an index into a specific step in the
+ * lifecycle policy and run that step.
+ * <p>
+ * WARNING: This operation can result in the loss of data. Manually moving an
+ * index into a specific step runs that step even if it has already been
+ * performed. This is a potentially destructive action and this should be
+ * considered an expert level API.
+ * <p>
+ * You must specify both the current step and the step to be executed in the
+ * body of the request. The request will fail if the current step does not match
+ * the step currently running for the index This is to prevent the index from
+ * being moved from an unexpected step into the next step.
+ * <p>
+ * When specifying the target (<code>next_step</code>) to which the index will
+ * be moved, either the name or both the action and name fields are optional. If
+ * only the phase is specified, the index will move to the first step of the
+ * first action in the target phase. If the phase and action are specified, the
+ * index will move to the first step of the specified action in the specified
+ * phase. Only actions specified in the ILM policy are considered valid. An
+ * index cannot move to a step that is not part of its policy.
  * 
  * @see <a href="../doc-files/api-spec.html#ilm.move_to_step.Request">API
  *      specification</a>
  */
 @JsonpDeserializable
 public class MoveToStepRequest extends RequestBase implements JsonpSerializable {
-	@Nullable
 	private final StepKey currentStep;
 
 	private final String index;
 
-	@Nullable
 	private final StepKey nextStep;
 
 	// ---------------------------------------------------------------------------------------------
 
 	private MoveToStepRequest(Builder builder) {
 
-		this.currentStep = builder.currentStep;
+		this.currentStep = ApiTypeHelper.requireNonNull(builder.currentStep, this, "currentStep");
 		this.index = ApiTypeHelper.requireNonNull(builder.index, this, "index");
-		this.nextStep = builder.nextStep;
+		this.nextStep = ApiTypeHelper.requireNonNull(builder.nextStep, this, "nextStep");
 
 	}
 
@@ -89,9 +106,10 @@ public class MoveToStepRequest extends RequestBase implements JsonpSerializable 
 	}
 
 	/**
+	 * Required - The step that the index is expected to be in.
+	 * <p>
 	 * API name: {@code current_step}
 	 */
-	@Nullable
 	public final StepKey currentStep() {
 		return this.currentStep;
 	}
@@ -106,9 +124,10 @@ public class MoveToStepRequest extends RequestBase implements JsonpSerializable 
 	}
 
 	/**
+	 * Required - The step that you want to run.
+	 * <p>
 	 * API name: {@code next_step}
 	 */
-	@Nullable
 	public final StepKey nextStep() {
 		return this.nextStep;
 	}
@@ -124,16 +143,11 @@ public class MoveToStepRequest extends RequestBase implements JsonpSerializable 
 
 	protected void serializeInternal(JsonGenerator generator, JsonpMapper mapper) {
 
-		if (this.currentStep != null) {
-			generator.writeKey("current_step");
-			this.currentStep.serialize(generator, mapper);
+		generator.writeKey("current_step");
+		this.currentStep.serialize(generator, mapper);
 
-		}
-		if (this.nextStep != null) {
-			generator.writeKey("next_step");
-			this.nextStep.serialize(generator, mapper);
-
-		}
+		generator.writeKey("next_step");
+		this.nextStep.serialize(generator, mapper);
 
 	}
 
@@ -146,23 +160,25 @@ public class MoveToStepRequest extends RequestBase implements JsonpSerializable 
 	public static class Builder extends RequestBase.AbstractBuilder<Builder>
 			implements
 				ObjectBuilder<MoveToStepRequest> {
-		@Nullable
 		private StepKey currentStep;
 
 		private String index;
 
-		@Nullable
 		private StepKey nextStep;
 
 		/**
+		 * Required - The step that the index is expected to be in.
+		 * <p>
 		 * API name: {@code current_step}
 		 */
-		public final Builder currentStep(@Nullable StepKey value) {
+		public final Builder currentStep(StepKey value) {
 			this.currentStep = value;
 			return this;
 		}
 
 		/**
+		 * Required - The step that the index is expected to be in.
+		 * <p>
 		 * API name: {@code current_step}
 		 */
 		public final Builder currentStep(Function<StepKey.Builder, ObjectBuilder<StepKey>> fn) {
@@ -180,14 +196,18 @@ public class MoveToStepRequest extends RequestBase implements JsonpSerializable 
 		}
 
 		/**
+		 * Required - The step that you want to run.
+		 * <p>
 		 * API name: {@code next_step}
 		 */
-		public final Builder nextStep(@Nullable StepKey value) {
+		public final Builder nextStep(StepKey value) {
 			this.nextStep = value;
 			return this;
 		}
 
 		/**
+		 * Required - The step that you want to run.
+		 * <p>
 		 * API name: {@code next_step}
 		 */
 		public final Builder nextStep(Function<StepKey.Builder, ObjectBuilder<StepKey>> fn) {

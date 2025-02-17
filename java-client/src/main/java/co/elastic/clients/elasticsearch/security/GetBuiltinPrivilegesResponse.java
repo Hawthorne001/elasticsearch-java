@@ -65,12 +65,15 @@ public class GetBuiltinPrivilegesResponse implements JsonpSerializable {
 
 	private final List<String> index;
 
+	private final List<RemoteClusterPrivilege> remoteCluster;
+
 	// ---------------------------------------------------------------------------------------------
 
 	private GetBuiltinPrivilegesResponse(Builder builder) {
 
 		this.cluster = ApiTypeHelper.unmodifiableRequired(builder.cluster, this, "cluster");
 		this.index = ApiTypeHelper.unmodifiableRequired(builder.index, this, "index");
+		this.remoteCluster = ApiTypeHelper.unmodifiable(builder.remoteCluster);
 
 	}
 
@@ -79,17 +82,33 @@ public class GetBuiltinPrivilegesResponse implements JsonpSerializable {
 	}
 
 	/**
-	 * Required - API name: {@code cluster}
+	 * Required - The list of cluster privileges that are understood by this version
+	 * of Elasticsearch.
+	 * <p>
+	 * API name: {@code cluster}
 	 */
 	public final List<String> cluster() {
 		return this.cluster;
 	}
 
 	/**
-	 * Required - API name: {@code index}
+	 * Required - The list of index privileges that are understood by this version
+	 * of Elasticsearch.
+	 * <p>
+	 * API name: {@code index}
 	 */
 	public final List<String> index() {
 		return this.index;
+	}
+
+	/**
+	 * Required - The list of remote_cluster privileges that are understood by this
+	 * version of Elasticsearch.
+	 * <p>
+	 * API name: {@code remote_cluster}
+	 */
+	public final List<RemoteClusterPrivilege> remoteCluster() {
+		return this.remoteCluster;
 	}
 
 	/**
@@ -123,6 +142,15 @@ public class GetBuiltinPrivilegesResponse implements JsonpSerializable {
 			generator.writeEnd();
 
 		}
+		if (ApiTypeHelper.isDefined(this.remoteCluster)) {
+			generator.writeKey("remote_cluster");
+			generator.writeStartArray();
+			for (RemoteClusterPrivilege item0 : this.remoteCluster) {
+				item0.serialize(generator, mapper);
+			}
+			generator.writeEnd();
+
+		}
 
 	}
 
@@ -144,8 +172,14 @@ public class GetBuiltinPrivilegesResponse implements JsonpSerializable {
 
 		private List<String> index;
 
+		@Nullable
+		private List<RemoteClusterPrivilege> remoteCluster;
+
 		/**
-		 * Required - API name: {@code cluster}
+		 * Required - The list of cluster privileges that are understood by this version
+		 * of Elasticsearch.
+		 * <p>
+		 * API name: {@code cluster}
 		 * <p>
 		 * Adds all elements of <code>list</code> to <code>cluster</code>.
 		 */
@@ -155,7 +189,10 @@ public class GetBuiltinPrivilegesResponse implements JsonpSerializable {
 		}
 
 		/**
-		 * Required - API name: {@code cluster}
+		 * Required - The list of cluster privileges that are understood by this version
+		 * of Elasticsearch.
+		 * <p>
+		 * API name: {@code cluster}
 		 * <p>
 		 * Adds one or more values to <code>cluster</code>.
 		 */
@@ -165,7 +202,10 @@ public class GetBuiltinPrivilegesResponse implements JsonpSerializable {
 		}
 
 		/**
-		 * Required - API name: {@code index}
+		 * Required - The list of index privileges that are understood by this version
+		 * of Elasticsearch.
+		 * <p>
+		 * API name: {@code index}
 		 * <p>
 		 * Adds all elements of <code>list</code> to <code>index</code>.
 		 */
@@ -175,12 +215,41 @@ public class GetBuiltinPrivilegesResponse implements JsonpSerializable {
 		}
 
 		/**
-		 * Required - API name: {@code index}
+		 * Required - The list of index privileges that are understood by this version
+		 * of Elasticsearch.
+		 * <p>
+		 * API name: {@code index}
 		 * <p>
 		 * Adds one or more values to <code>index</code>.
 		 */
 		public final Builder index(String value, String... values) {
 			this.index = _listAdd(this.index, value, values);
+			return this;
+		}
+
+		/**
+		 * Required - The list of remote_cluster privileges that are understood by this
+		 * version of Elasticsearch.
+		 * <p>
+		 * API name: {@code remote_cluster}
+		 * <p>
+		 * Adds all elements of <code>list</code> to <code>remoteCluster</code>.
+		 */
+		public final Builder remoteCluster(List<RemoteClusterPrivilege> list) {
+			this.remoteCluster = _listAddAll(this.remoteCluster, list);
+			return this;
+		}
+
+		/**
+		 * Required - The list of remote_cluster privileges that are understood by this
+		 * version of Elasticsearch.
+		 * <p>
+		 * API name: {@code remote_cluster}
+		 * <p>
+		 * Adds one or more values to <code>remoteCluster</code>.
+		 */
+		public final Builder remoteCluster(RemoteClusterPrivilege value, RemoteClusterPrivilege... values) {
+			this.remoteCluster = _listAdd(this.remoteCluster, value, values);
 			return this;
 		}
 
@@ -216,6 +285,8 @@ public class GetBuiltinPrivilegesResponse implements JsonpSerializable {
 		op.add(Builder::cluster, JsonpDeserializer.arrayDeserializer(JsonpDeserializer.stringDeserializer()),
 				"cluster");
 		op.add(Builder::index, JsonpDeserializer.arrayDeserializer(JsonpDeserializer.stringDeserializer()), "index");
+		op.add(Builder::remoteCluster, JsonpDeserializer.arrayDeserializer(RemoteClusterPrivilege._DESERIALIZER),
+				"remote_cluster");
 
 	}
 

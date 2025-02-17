@@ -21,6 +21,7 @@ package co.elastic.clients.elasticsearch.cat;
 
 import co.elastic.clients.elasticsearch._types.Bytes;
 import co.elastic.clients.elasticsearch._types.ErrorResponse;
+import co.elastic.clients.elasticsearch._types.Time;
 import co.elastic.clients.json.JsonpDeserializable;
 import co.elastic.clients.json.JsonpDeserializer;
 import co.elastic.clients.json.ObjectBuilderDeserializer;
@@ -30,6 +31,7 @@ import co.elastic.clients.transport.endpoints.SimpleEndpoint;
 import co.elastic.clients.util.ApiTypeHelper;
 import co.elastic.clients.util.ObjectBuilder;
 import jakarta.json.stream.JsonGenerator;
+import java.lang.Boolean;
 import java.lang.String;
 import java.util.HashMap;
 import java.util.List;
@@ -57,10 +59,12 @@ import javax.annotation.Nullable;
 // typedef: cat.segments.Request
 
 /**
- * Returns low-level information about the Lucene segments in index shards. For
- * data streams, the API returns information about the backing indices.
- * IMPORTANT: cat APIs are only intended for human consumption using the command
- * line or Kibana console. They are not intended for use by applications. For
+ * Get segment information.
+ * <p>
+ * Get low-level information about the Lucene segments in index shards. For data
+ * streams, the API returns information about the backing indices. IMPORTANT:
+ * cat APIs are only intended for human consumption using the command line or
+ * Kibana console. They are not intended for use by applications. For
  * application consumption, use the index segments API.
  * 
  * @see <a href="../doc-files/api-spec.html#cat.segments.Request">API
@@ -73,12 +77,20 @@ public class SegmentsRequest extends CatRequestBase {
 
 	private final List<String> index;
 
+	@Nullable
+	private final Boolean local;
+
+	@Nullable
+	private final Time masterTimeout;
+
 	// ---------------------------------------------------------------------------------------------
 
 	private SegmentsRequest(Builder builder) {
 
 		this.bytes = builder.bytes;
 		this.index = ApiTypeHelper.unmodifiable(builder.index);
+		this.local = builder.local;
+		this.masterTimeout = builder.masterTimeout;
 
 	}
 
@@ -107,6 +119,30 @@ public class SegmentsRequest extends CatRequestBase {
 		return this.index;
 	}
 
+	/**
+	 * If <code>true</code>, the request computes the list of selected nodes from
+	 * the local cluster state. If <code>false</code> the list of selected nodes are
+	 * computed from the cluster state of the master node. In both cases the
+	 * coordinating node will send requests for further information to each selected
+	 * node.
+	 * <p>
+	 * API name: {@code local}
+	 */
+	@Nullable
+	public final Boolean local() {
+		return this.local;
+	}
+
+	/**
+	 * Period to wait for a connection to the master node.
+	 * <p>
+	 * API name: {@code master_timeout}
+	 */
+	@Nullable
+	public final Time masterTimeout() {
+		return this.masterTimeout;
+	}
+
 	// ---------------------------------------------------------------------------------------------
 
 	/**
@@ -121,6 +157,12 @@ public class SegmentsRequest extends CatRequestBase {
 
 		@Nullable
 		private List<String> index;
+
+		@Nullable
+		private Boolean local;
+
+		@Nullable
+		private Time masterTimeout;
 
 		/**
 		 * The unit used to display byte values.
@@ -158,6 +200,39 @@ public class SegmentsRequest extends CatRequestBase {
 		public final Builder index(String value, String... values) {
 			this.index = _listAdd(this.index, value, values);
 			return this;
+		}
+
+		/**
+		 * If <code>true</code>, the request computes the list of selected nodes from
+		 * the local cluster state. If <code>false</code> the list of selected nodes are
+		 * computed from the cluster state of the master node. In both cases the
+		 * coordinating node will send requests for further information to each selected
+		 * node.
+		 * <p>
+		 * API name: {@code local}
+		 */
+		public final Builder local(@Nullable Boolean value) {
+			this.local = value;
+			return this;
+		}
+
+		/**
+		 * Period to wait for a connection to the master node.
+		 * <p>
+		 * API name: {@code master_timeout}
+		 */
+		public final Builder masterTimeout(@Nullable Time value) {
+			this.masterTimeout = value;
+			return this;
+		}
+
+		/**
+		 * Period to wait for a connection to the master node.
+		 * <p>
+		 * API name: {@code master_timeout}
+		 */
+		public final Builder masterTimeout(Function<Time.Builder, ObjectBuilder<Time>> fn) {
+			return this.masterTimeout(fn.apply(new Time.Builder()).build());
 		}
 
 		@Override
@@ -241,8 +316,14 @@ public class SegmentsRequest extends CatRequestBase {
 			request -> {
 				Map<String, String> params = new HashMap<>();
 				params.put("format", "json");
+				if (request.masterTimeout != null) {
+					params.put("master_timeout", request.masterTimeout._toJsonString());
+				}
 				if (request.bytes != null) {
 					params.put("bytes", request.bytes.jsonValue());
+				}
+				if (request.local != null) {
+					params.put("local", String.valueOf(request.local));
 				}
 				return params;
 

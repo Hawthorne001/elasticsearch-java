@@ -72,10 +72,13 @@ public class ElasticsearchSearchApplicationAsyncClient
 	// ----- Endpoint: search_application.delete
 
 	/**
-	 * Deletes a search application.
+	 * Delete a search application.
+	 * <p>
+	 * Remove a search application and its associated alias. Indices attached to the
+	 * search application are not removed.
 	 * 
 	 * @see <a href=
-	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/master/delete-search-application.html">Documentation
+	 *      "https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-search-application-delete">Documentation
 	 *      on elastic.co</a>
 	 */
 
@@ -87,13 +90,16 @@ public class ElasticsearchSearchApplicationAsyncClient
 	}
 
 	/**
-	 * Deletes a search application.
+	 * Delete a search application.
+	 * <p>
+	 * Remove a search application and its associated alias. Indices attached to the
+	 * search application are not removed.
 	 * 
 	 * @param fn
 	 *            a function that initializes a builder to create the
 	 *            {@link DeleteSearchApplicationRequest}
 	 * @see <a href=
-	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/master/delete-search-application.html">Documentation
+	 *      "https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-search-application-delete">Documentation
 	 *      on elastic.co</a>
 	 */
 
@@ -105,10 +111,11 @@ public class ElasticsearchSearchApplicationAsyncClient
 	// ----- Endpoint: search_application.delete_behavioral_analytics
 
 	/**
-	 * Delete a behavioral analytics collection.
+	 * Delete a behavioral analytics collection. The associated data stream is also
+	 * deleted.
 	 * 
 	 * @see <a href=
-	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/master/delete-analytics-collection.html">Documentation
+	 *      "https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-search-application-delete-behavioral-analytics">Documentation
 	 *      on elastic.co</a>
 	 */
 
@@ -121,13 +128,14 @@ public class ElasticsearchSearchApplicationAsyncClient
 	}
 
 	/**
-	 * Delete a behavioral analytics collection.
+	 * Delete a behavioral analytics collection. The associated data stream is also
+	 * deleted.
 	 * 
 	 * @param fn
 	 *            a function that initializes a builder to create the
 	 *            {@link DeleteBehavioralAnalyticsRequest}
 	 * @see <a href=
-	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/master/delete-analytics-collection.html">Documentation
+	 *      "https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-search-application-delete-behavioral-analytics">Documentation
 	 *      on elastic.co</a>
 	 */
 
@@ -139,10 +147,10 @@ public class ElasticsearchSearchApplicationAsyncClient
 	// ----- Endpoint: search_application.get
 
 	/**
-	 * Returns the details about a search application.
+	 * Get search application details.
 	 * 
 	 * @see <a href=
-	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/master/get-search-application.html">Documentation
+	 *      "https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-search-application-get">Documentation
 	 *      on elastic.co</a>
 	 */
 
@@ -154,13 +162,13 @@ public class ElasticsearchSearchApplicationAsyncClient
 	}
 
 	/**
-	 * Returns the details about a search application.
+	 * Get search application details.
 	 * 
 	 * @param fn
 	 *            a function that initializes a builder to create the
 	 *            {@link GetSearchApplicationRequest}
 	 * @see <a href=
-	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/master/get-search-application.html">Documentation
+	 *      "https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-search-application-get">Documentation
 	 *      on elastic.co</a>
 	 */
 
@@ -172,10 +180,10 @@ public class ElasticsearchSearchApplicationAsyncClient
 	// ----- Endpoint: search_application.get_behavioral_analytics
 
 	/**
-	 * Returns the existing behavioral analytics collections.
+	 * Get behavioral analytics collections.
 	 * 
 	 * @see <a href=
-	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/master/list-analytics-collection.html">Documentation
+	 *      "https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-search-application-get-behavioral-analytics">Documentation
 	 *      on elastic.co</a>
 	 */
 
@@ -188,13 +196,13 @@ public class ElasticsearchSearchApplicationAsyncClient
 	}
 
 	/**
-	 * Returns the existing behavioral analytics collections.
+	 * Get behavioral analytics collections.
 	 * 
 	 * @param fn
 	 *            a function that initializes a builder to create the
 	 *            {@link GetBehavioralAnalyticsRequest}
 	 * @see <a href=
-	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/master/list-analytics-collection.html">Documentation
+	 *      "https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-search-application-get-behavioral-analytics">Documentation
 	 *      on elastic.co</a>
 	 */
 
@@ -204,10 +212,10 @@ public class ElasticsearchSearchApplicationAsyncClient
 	}
 
 	/**
-	 * Returns the existing behavioral analytics collections.
+	 * Get behavioral analytics collections.
 	 * 
 	 * @see <a href=
-	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/master/list-analytics-collection.html">Documentation
+	 *      "https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-search-application-get-behavioral-analytics">Documentation
 	 *      on elastic.co</a>
 	 */
 
@@ -219,10 +227,10 @@ public class ElasticsearchSearchApplicationAsyncClient
 	// ----- Endpoint: search_application.list
 
 	/**
-	 * Returns the existing search applications.
+	 * Get search applications. Get information about search applications.
 	 * 
 	 * @see <a href=
-	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/master/list-search-applications.html">Documentation
+	 *      "https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-search-application-get-behavioral-analytics">Documentation
 	 *      on elastic.co</a>
 	 */
 
@@ -234,13 +242,13 @@ public class ElasticsearchSearchApplicationAsyncClient
 	}
 
 	/**
-	 * Returns the existing search applications.
+	 * Get search applications. Get information about search applications.
 	 * 
 	 * @param fn
 	 *            a function that initializes a builder to create the
 	 *            {@link ListRequest}
 	 * @see <a href=
-	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/master/list-search-applications.html">Documentation
+	 *      "https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-search-application-get-behavioral-analytics">Documentation
 	 *      on elastic.co</a>
 	 */
 
@@ -249,10 +257,10 @@ public class ElasticsearchSearchApplicationAsyncClient
 	}
 
 	/**
-	 * Returns the existing search applications.
+	 * Get search applications. Get information about search applications.
 	 * 
 	 * @see <a href=
-	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/master/list-search-applications.html">Documentation
+	 *      "https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-search-application-get-behavioral-analytics">Documentation
 	 *      on elastic.co</a>
 	 */
 
@@ -261,13 +269,47 @@ public class ElasticsearchSearchApplicationAsyncClient
 				this.transportOptions);
 	}
 
+	// ----- Endpoint: search_application.post_behavioral_analytics_event
+
+	/**
+	 * Create a behavioral analytics collection event.
+	 * 
+	 * @see <a href=
+	 *      "https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-search-application-post-behavioral-analytics-event">Documentation
+	 *      on elastic.co</a>
+	 */
+
+	public CompletableFuture<PostBehavioralAnalyticsEventResponse> postBehavioralAnalyticsEvent(
+			PostBehavioralAnalyticsEventRequest request) {
+		@SuppressWarnings("unchecked")
+		JsonEndpoint<PostBehavioralAnalyticsEventRequest, PostBehavioralAnalyticsEventResponse, ErrorResponse> endpoint = (JsonEndpoint<PostBehavioralAnalyticsEventRequest, PostBehavioralAnalyticsEventResponse, ErrorResponse>) PostBehavioralAnalyticsEventRequest._ENDPOINT;
+
+		return this.transport.performRequestAsync(request, endpoint, this.transportOptions);
+	}
+
+	/**
+	 * Create a behavioral analytics collection event.
+	 * 
+	 * @param fn
+	 *            a function that initializes a builder to create the
+	 *            {@link PostBehavioralAnalyticsEventRequest}
+	 * @see <a href=
+	 *      "https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-search-application-post-behavioral-analytics-event">Documentation
+	 *      on elastic.co</a>
+	 */
+
+	public final CompletableFuture<PostBehavioralAnalyticsEventResponse> postBehavioralAnalyticsEvent(
+			Function<PostBehavioralAnalyticsEventRequest.Builder, ObjectBuilder<PostBehavioralAnalyticsEventRequest>> fn) {
+		return postBehavioralAnalyticsEvent(fn.apply(new PostBehavioralAnalyticsEventRequest.Builder()).build());
+	}
+
 	// ----- Endpoint: search_application.put
 
 	/**
-	 * Creates or updates a search application.
+	 * Create or update a search application.
 	 * 
 	 * @see <a href=
-	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/master/put-search-application.html">Documentation
+	 *      "https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-search-application-put">Documentation
 	 *      on elastic.co</a>
 	 */
 
@@ -279,13 +321,13 @@ public class ElasticsearchSearchApplicationAsyncClient
 	}
 
 	/**
-	 * Creates or updates a search application.
+	 * Create or update a search application.
 	 * 
 	 * @param fn
 	 *            a function that initializes a builder to create the
 	 *            {@link PutRequest}
 	 * @see <a href=
-	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/master/put-search-application.html">Documentation
+	 *      "https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-search-application-put">Documentation
 	 *      on elastic.co</a>
 	 */
 
@@ -296,10 +338,10 @@ public class ElasticsearchSearchApplicationAsyncClient
 	// ----- Endpoint: search_application.put_behavioral_analytics
 
 	/**
-	 * Creates a behavioral analytics collection.
+	 * Create a behavioral analytics collection.
 	 * 
 	 * @see <a href=
-	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/master/put-analytics-collection.html">Documentation
+	 *      "https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-search-application-put-behavioral-analytics">Documentation
 	 *      on elastic.co</a>
 	 */
 
@@ -312,13 +354,13 @@ public class ElasticsearchSearchApplicationAsyncClient
 	}
 
 	/**
-	 * Creates a behavioral analytics collection.
+	 * Create a behavioral analytics collection.
 	 * 
 	 * @param fn
 	 *            a function that initializes a builder to create the
 	 *            {@link PutBehavioralAnalyticsRequest}
 	 * @see <a href=
-	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/master/put-analytics-collection.html">Documentation
+	 *      "https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-search-application-put-behavioral-analytics">Documentation
 	 *      on elastic.co</a>
 	 */
 
@@ -327,13 +369,67 @@ public class ElasticsearchSearchApplicationAsyncClient
 		return putBehavioralAnalytics(fn.apply(new PutBehavioralAnalyticsRequest.Builder()).build());
 	}
 
+	// ----- Endpoint: search_application.render_query
+
+	/**
+	 * Render a search application query. Generate an Elasticsearch query using the
+	 * specified query parameters and the search template associated with the search
+	 * application or a default template if none is specified. If a parameter used
+	 * in the search template is not specified in <code>params</code>, the
+	 * parameter's default value will be used. The API returns the specific
+	 * Elasticsearch query that would be generated and run by calling the search
+	 * application search API.
+	 * <p>
+	 * You must have <code>read</code> privileges on the backing alias of the search
+	 * application.
+	 * 
+	 * @see <a href=
+	 *      "https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-search-application-render-query">Documentation
+	 *      on elastic.co</a>
+	 */
+
+	public CompletableFuture<RenderQueryResponse> renderQuery(RenderQueryRequest request) {
+		@SuppressWarnings("unchecked")
+		JsonEndpoint<RenderQueryRequest, RenderQueryResponse, ErrorResponse> endpoint = (JsonEndpoint<RenderQueryRequest, RenderQueryResponse, ErrorResponse>) RenderQueryRequest._ENDPOINT;
+
+		return this.transport.performRequestAsync(request, endpoint, this.transportOptions);
+	}
+
+	/**
+	 * Render a search application query. Generate an Elasticsearch query using the
+	 * specified query parameters and the search template associated with the search
+	 * application or a default template if none is specified. If a parameter used
+	 * in the search template is not specified in <code>params</code>, the
+	 * parameter's default value will be used. The API returns the specific
+	 * Elasticsearch query that would be generated and run by calling the search
+	 * application search API.
+	 * <p>
+	 * You must have <code>read</code> privileges on the backing alias of the search
+	 * application.
+	 * 
+	 * @param fn
+	 *            a function that initializes a builder to create the
+	 *            {@link RenderQueryRequest}
+	 * @see <a href=
+	 *      "https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-search-application-render-query">Documentation
+	 *      on elastic.co</a>
+	 */
+
+	public final CompletableFuture<RenderQueryResponse> renderQuery(
+			Function<RenderQueryRequest.Builder, ObjectBuilder<RenderQueryRequest>> fn) {
+		return renderQuery(fn.apply(new RenderQueryRequest.Builder()).build());
+	}
+
 	// ----- Endpoint: search_application.search
 
 	/**
-	 * Perform a search against a search application
+	 * Run a search application search. Generate and run an Elasticsearch query that
+	 * uses the specified query parameteter and the search template associated with
+	 * the search application or default template. Unspecified template parameters
+	 * are assigned their default values if applicable.
 	 * 
 	 * @see <a href=
-	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/master/search-application-search.html">Documentation
+	 *      "https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-search-application-search">Documentation
 	 *      on elastic.co</a>
 	 */
 
@@ -342,19 +438,23 @@ public class ElasticsearchSearchApplicationAsyncClient
 		@SuppressWarnings("unchecked")
 		JsonEndpoint<SearchApplicationSearchRequest, SearchApplicationSearchResponse<TDocument>, ErrorResponse> endpoint = (JsonEndpoint<SearchApplicationSearchRequest, SearchApplicationSearchResponse<TDocument>, ErrorResponse>) SearchApplicationSearchRequest._ENDPOINT;
 		endpoint = new EndpointWithResponseMapperAttr<>(endpoint,
-				"co.elastic.clients:Deserializer:search_application.search.TDocument", getDeserializer(tDocumentClass));
+				"co.elastic.clients:Deserializer:search_application.search.Response.TDocument",
+				getDeserializer(tDocumentClass));
 
 		return this.transport.performRequestAsync(request, endpoint, this.transportOptions);
 	}
 
 	/**
-	 * Perform a search against a search application
+	 * Run a search application search. Generate and run an Elasticsearch query that
+	 * uses the specified query parameteter and the search template associated with
+	 * the search application or default template. Unspecified template parameters
+	 * are assigned their default values if applicable.
 	 * 
 	 * @param fn
 	 *            a function that initializes a builder to create the
 	 *            {@link SearchApplicationSearchRequest}
 	 * @see <a href=
-	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/master/search-application-search.html">Documentation
+	 *      "https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-search-application-search">Documentation
 	 *      on elastic.co</a>
 	 */
 
@@ -365,10 +465,13 @@ public class ElasticsearchSearchApplicationAsyncClient
 	}
 
 	/**
-	 * Perform a search against a search application
+	 * Run a search application search. Generate and run an Elasticsearch query that
+	 * uses the specified query parameteter and the search template associated with
+	 * the search application or default template. Unspecified template parameters
+	 * are assigned their default values if applicable.
 	 * 
 	 * @see <a href=
-	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/master/search-application-search.html">Documentation
+	 *      "https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-search-application-search">Documentation
 	 *      on elastic.co</a>
 	 */
 
@@ -377,19 +480,23 @@ public class ElasticsearchSearchApplicationAsyncClient
 		@SuppressWarnings("unchecked")
 		JsonEndpoint<SearchApplicationSearchRequest, SearchApplicationSearchResponse<TDocument>, ErrorResponse> endpoint = (JsonEndpoint<SearchApplicationSearchRequest, SearchApplicationSearchResponse<TDocument>, ErrorResponse>) SearchApplicationSearchRequest._ENDPOINT;
 		endpoint = new EndpointWithResponseMapperAttr<>(endpoint,
-				"co.elastic.clients:Deserializer:search_application.search.TDocument", getDeserializer(tDocumentType));
+				"co.elastic.clients:Deserializer:search_application.search.Response.TDocument",
+				getDeserializer(tDocumentType));
 
 		return this.transport.performRequestAsync(request, endpoint, this.transportOptions);
 	}
 
 	/**
-	 * Perform a search against a search application
+	 * Run a search application search. Generate and run an Elasticsearch query that
+	 * uses the specified query parameteter and the search template associated with
+	 * the search application or default template. Unspecified template parameters
+	 * are assigned their default values if applicable.
 	 * 
 	 * @param fn
 	 *            a function that initializes a builder to create the
 	 *            {@link SearchApplicationSearchRequest}
 	 * @see <a href=
-	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/master/search-application-search.html">Documentation
+	 *      "https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-search-application-search">Documentation
 	 *      on elastic.co</a>
 	 */
 

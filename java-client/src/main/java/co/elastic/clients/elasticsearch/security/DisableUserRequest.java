@@ -56,7 +56,10 @@ import javax.annotation.Nullable;
 // typedef: security.disable_user.Request
 
 /**
- * Disables users in the native realm.
+ * Disable users.
+ * <p>
+ * Disable users in the native realm. By default, when you create users, they
+ * are enabled. You can use this API to revoke a user's access to Elasticsearch.
  * 
  * @see <a href="../doc-files/api-spec.html#security.disable_user.Request">API
  *      specification</a>
@@ -95,7 +98,7 @@ public class DisableUserRequest extends RequestBase {
 	}
 
 	/**
-	 * Required - The username of the user to disable
+	 * Required - An identifier for the user.
 	 * <p>
 	 * API name: {@code username}
 	 */
@@ -131,7 +134,7 @@ public class DisableUserRequest extends RequestBase {
 		}
 
 		/**
-		 * Required - The username of the user to disable
+		 * Required - An identifier for the user.
 		 * <p>
 		 * API name: {@code username}
 		 */

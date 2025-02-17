@@ -58,7 +58,24 @@ import javax.annotation.Nullable;
 // typedef: tasks.cancel.Request
 
 /**
- * Cancels a task, if it can be cancelled through an API.
+ * Cancel a task.
+ * <p>
+ * WARNING: The task management API is new and should still be considered a beta
+ * feature. The API may change in ways that are not backwards compatible.
+ * <p>
+ * A task may continue to run for some time after it has been cancelled because
+ * it may not be able to safely stop its current activity straight away. It is
+ * also possible that Elasticsearch must complete its work on other tasks before
+ * it can process the cancellation. The get task information API will continue
+ * to list these cancelled tasks until they complete. The cancelled flag in the
+ * response indicates that the cancellation command has been processed and the
+ * task will stop as soon as possible.
+ * <p>
+ * To troubleshoot why a cancelled task does not complete promptly, use the get
+ * task information API with the <code>?detailed</code> parameter to identify
+ * the other tasks the system is running. You can also use the node hot threads
+ * API to obtain detailed information about the work the system is doing instead
+ * of completing the cancelled task.
  * 
  * @see <a href="../doc-files/api-spec.html#tasks.cancel.Request">API
  *      specification</a>
@@ -95,8 +112,8 @@ public class CancelRequest extends RequestBase {
 	}
 
 	/**
-	 * Comma-separated list or wildcard expression of actions used to limit the
-	 * request.
+	 * A comma-separated list or wildcard expression of actions that is used to
+	 * limit the request.
 	 * <p>
 	 * API name: {@code actions}
 	 */
@@ -105,7 +122,8 @@ public class CancelRequest extends RequestBase {
 	}
 
 	/**
-	 * Comma-separated list of node IDs or names used to limit the request.
+	 * A comma-separated list of node IDs or names that is used to limit the
+	 * request.
 	 * <p>
 	 * API name: {@code nodes}
 	 */
@@ -114,7 +132,7 @@ public class CancelRequest extends RequestBase {
 	}
 
 	/**
-	 * Parent task ID used to limit the tasks.
+	 * A parent task ID that is used to limit the tasks.
 	 * <p>
 	 * API name: {@code parent_task_id}
 	 */
@@ -124,7 +142,7 @@ public class CancelRequest extends RequestBase {
 	}
 
 	/**
-	 * ID of the task.
+	 * The task identifier.
 	 * <p>
 	 * API name: {@code task_id}
 	 */
@@ -134,8 +152,7 @@ public class CancelRequest extends RequestBase {
 	}
 
 	/**
-	 * Should the request block until the cancellation of the task and its
-	 * descendant tasks is completed. Defaults to false
+	 * If true, the request blocks until all found tasks are complete.
 	 * <p>
 	 * API name: {@code wait_for_completion}
 	 */
@@ -167,8 +184,8 @@ public class CancelRequest extends RequestBase {
 		private Boolean waitForCompletion;
 
 		/**
-		 * Comma-separated list or wildcard expression of actions used to limit the
-		 * request.
+		 * A comma-separated list or wildcard expression of actions that is used to
+		 * limit the request.
 		 * <p>
 		 * API name: {@code actions}
 		 * <p>
@@ -180,8 +197,8 @@ public class CancelRequest extends RequestBase {
 		}
 
 		/**
-		 * Comma-separated list or wildcard expression of actions used to limit the
-		 * request.
+		 * A comma-separated list or wildcard expression of actions that is used to
+		 * limit the request.
 		 * <p>
 		 * API name: {@code actions}
 		 * <p>
@@ -193,7 +210,8 @@ public class CancelRequest extends RequestBase {
 		}
 
 		/**
-		 * Comma-separated list of node IDs or names used to limit the request.
+		 * A comma-separated list of node IDs or names that is used to limit the
+		 * request.
 		 * <p>
 		 * API name: {@code nodes}
 		 * <p>
@@ -205,7 +223,8 @@ public class CancelRequest extends RequestBase {
 		}
 
 		/**
-		 * Comma-separated list of node IDs or names used to limit the request.
+		 * A comma-separated list of node IDs or names that is used to limit the
+		 * request.
 		 * <p>
 		 * API name: {@code nodes}
 		 * <p>
@@ -217,7 +236,7 @@ public class CancelRequest extends RequestBase {
 		}
 
 		/**
-		 * Parent task ID used to limit the tasks.
+		 * A parent task ID that is used to limit the tasks.
 		 * <p>
 		 * API name: {@code parent_task_id}
 		 */
@@ -227,7 +246,7 @@ public class CancelRequest extends RequestBase {
 		}
 
 		/**
-		 * ID of the task.
+		 * The task identifier.
 		 * <p>
 		 * API name: {@code task_id}
 		 */
@@ -237,8 +256,7 @@ public class CancelRequest extends RequestBase {
 		}
 
 		/**
-		 * Should the request block until the cancellation of the task and its
-		 * descendant tasks is completed. Defaults to false
+		 * If true, the request blocks until all found tasks are complete.
 		 * <p>
 		 * API name: {@code wait_for_completion}
 		 */

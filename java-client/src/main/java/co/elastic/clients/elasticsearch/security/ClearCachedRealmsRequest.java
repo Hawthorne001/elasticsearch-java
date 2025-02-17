@@ -57,8 +57,16 @@ import javax.annotation.Nullable;
 // typedef: security.clear_cached_realms.Request
 
 /**
- * Evicts users from the user cache. Can completely clear the cache or evict
+ * Clear the user cache.
+ * <p>
+ * Evict users from the user cache. You can completely clear the cache or evict
  * specific users.
+ * <p>
+ * User credentials are cached in memory on each node to avoid connecting to a
+ * remote authentication service or hitting the disk for every incoming request.
+ * There are realm settings that you can use to configure the user cache. For
+ * more information, refer to the documentation about controlling the user
+ * cache.
  * 
  * @see <a href=
  *      "../doc-files/api-spec.html#security.clear_cached_realms.Request">API
@@ -84,7 +92,8 @@ public class ClearCachedRealmsRequest extends RequestBase {
 	}
 
 	/**
-	 * Required - Comma-separated list of realms to clear
+	 * Required - A comma-separated list of realms. To clear all realms, use an
+	 * asterisk (<code>*</code>). It does not support other wildcard patterns.
 	 * <p>
 	 * API name: {@code realms}
 	 */
@@ -93,7 +102,8 @@ public class ClearCachedRealmsRequest extends RequestBase {
 	}
 
 	/**
-	 * Comma-separated list of usernames to clear from the cache
+	 * A comma-separated list of the users to clear from the cache. If you do not
+	 * specify this parameter, the API evicts all users from the user cache.
 	 * <p>
 	 * API name: {@code usernames}
 	 */
@@ -116,7 +126,8 @@ public class ClearCachedRealmsRequest extends RequestBase {
 		private List<String> usernames;
 
 		/**
-		 * Required - Comma-separated list of realms to clear
+		 * Required - A comma-separated list of realms. To clear all realms, use an
+		 * asterisk (<code>*</code>). It does not support other wildcard patterns.
 		 * <p>
 		 * API name: {@code realms}
 		 * <p>
@@ -128,7 +139,8 @@ public class ClearCachedRealmsRequest extends RequestBase {
 		}
 
 		/**
-		 * Required - Comma-separated list of realms to clear
+		 * Required - A comma-separated list of realms. To clear all realms, use an
+		 * asterisk (<code>*</code>). It does not support other wildcard patterns.
 		 * <p>
 		 * API name: {@code realms}
 		 * <p>
@@ -140,7 +152,8 @@ public class ClearCachedRealmsRequest extends RequestBase {
 		}
 
 		/**
-		 * Comma-separated list of usernames to clear from the cache
+		 * A comma-separated list of the users to clear from the cache. If you do not
+		 * specify this parameter, the API evicts all users from the user cache.
 		 * <p>
 		 * API name: {@code usernames}
 		 * <p>
@@ -152,7 +165,8 @@ public class ClearCachedRealmsRequest extends RequestBase {
 		}
 
 		/**
-		 * Comma-separated list of usernames to clear from the cache
+		 * A comma-separated list of the users to clear from the cache. If you do not
+		 * specify this parameter, the API evicts all users from the user cache.
 		 * <p>
 		 * API name: {@code usernames}
 		 * <p>

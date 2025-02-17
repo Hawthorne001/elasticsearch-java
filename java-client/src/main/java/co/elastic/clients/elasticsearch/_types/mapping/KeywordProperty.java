@@ -19,6 +19,7 @@
 
 package co.elastic.clients.elasticsearch._types.mapping;
 
+import co.elastic.clients.elasticsearch._types.Script;
 import co.elastic.clients.json.JsonpDeserializable;
 import co.elastic.clients.json.JsonpDeserializer;
 import co.elastic.clients.json.JsonpMapper;
@@ -71,6 +72,12 @@ public class KeywordProperty extends DocValuesPropertyBase implements PropertyVa
 	private final IndexOptions indexOptions;
 
 	@Nullable
+	private final Script script;
+
+	@Nullable
+	private final OnScriptError onScriptError;
+
+	@Nullable
 	private final String normalizer;
 
 	@Nullable
@@ -78,6 +85,9 @@ public class KeywordProperty extends DocValuesPropertyBase implements PropertyVa
 
 	@Nullable
 	private final String nullValue;
+
+	@Nullable
+	private final String similarity;
 
 	@Nullable
 	private final Boolean splitQueriesOnWhitespace;
@@ -94,9 +104,12 @@ public class KeywordProperty extends DocValuesPropertyBase implements PropertyVa
 		this.eagerGlobalOrdinals = builder.eagerGlobalOrdinals;
 		this.index = builder.index;
 		this.indexOptions = builder.indexOptions;
+		this.script = builder.script;
+		this.onScriptError = builder.onScriptError;
 		this.normalizer = builder.normalizer;
 		this.norms = builder.norms;
 		this.nullValue = builder.nullValue;
+		this.similarity = builder.similarity;
 		this.splitQueriesOnWhitespace = builder.splitQueriesOnWhitespace;
 		this.timeSeriesDimension = builder.timeSeriesDimension;
 
@@ -147,6 +160,22 @@ public class KeywordProperty extends DocValuesPropertyBase implements PropertyVa
 	}
 
 	/**
+	 * API name: {@code script}
+	 */
+	@Nullable
+	public final Script script() {
+		return this.script;
+	}
+
+	/**
+	 * API name: {@code on_script_error}
+	 */
+	@Nullable
+	public final OnScriptError onScriptError() {
+		return this.onScriptError;
+	}
+
+	/**
 	 * API name: {@code normalizer}
 	 */
 	@Nullable
@@ -168,6 +197,14 @@ public class KeywordProperty extends DocValuesPropertyBase implements PropertyVa
 	@Nullable
 	public final String nullValue() {
 		return this.nullValue;
+	}
+
+	/**
+	 * API name: {@code similarity}
+	 */
+	@Nullable
+	public final String similarity() {
+		return this.similarity;
 	}
 
 	/**
@@ -212,6 +249,15 @@ public class KeywordProperty extends DocValuesPropertyBase implements PropertyVa
 			generator.writeKey("index_options");
 			this.indexOptions.serialize(generator, mapper);
 		}
+		if (this.script != null) {
+			generator.writeKey("script");
+			this.script.serialize(generator, mapper);
+
+		}
+		if (this.onScriptError != null) {
+			generator.writeKey("on_script_error");
+			this.onScriptError.serialize(generator, mapper);
+		}
 		if (this.normalizer != null) {
 			generator.writeKey("normalizer");
 			generator.write(this.normalizer);
@@ -225,6 +271,11 @@ public class KeywordProperty extends DocValuesPropertyBase implements PropertyVa
 		if (this.nullValue != null) {
 			generator.writeKey("null_value");
 			generator.write(this.nullValue);
+
+		}
+		if (this.similarity != null) {
+			generator.writeKey("similarity");
+			generator.write(this.similarity);
 
 		}
 		if (this.splitQueriesOnWhitespace != null) {
@@ -262,6 +313,12 @@ public class KeywordProperty extends DocValuesPropertyBase implements PropertyVa
 		private IndexOptions indexOptions;
 
 		@Nullable
+		private Script script;
+
+		@Nullable
+		private OnScriptError onScriptError;
+
+		@Nullable
 		private String normalizer;
 
 		@Nullable
@@ -269,6 +326,9 @@ public class KeywordProperty extends DocValuesPropertyBase implements PropertyVa
 
 		@Nullable
 		private String nullValue;
+
+		@Nullable
+		private String similarity;
 
 		@Nullable
 		private Boolean splitQueriesOnWhitespace;
@@ -309,6 +369,29 @@ public class KeywordProperty extends DocValuesPropertyBase implements PropertyVa
 		}
 
 		/**
+		 * API name: {@code script}
+		 */
+		public final Builder script(@Nullable Script value) {
+			this.script = value;
+			return this;
+		}
+
+		/**
+		 * API name: {@code script}
+		 */
+		public final Builder script(Function<Script.Builder, ObjectBuilder<Script>> fn) {
+			return this.script(fn.apply(new Script.Builder()).build());
+		}
+
+		/**
+		 * API name: {@code on_script_error}
+		 */
+		public final Builder onScriptError(@Nullable OnScriptError value) {
+			this.onScriptError = value;
+			return this;
+		}
+
+		/**
 		 * API name: {@code normalizer}
 		 */
 		public final Builder normalizer(@Nullable String value) {
@@ -329,6 +412,14 @@ public class KeywordProperty extends DocValuesPropertyBase implements PropertyVa
 		 */
 		public final Builder nullValue(@Nullable String value) {
 			this.nullValue = value;
+			return this;
+		}
+
+		/**
+		 * API name: {@code similarity}
+		 */
+		public final Builder similarity(@Nullable String value) {
+			this.similarity = value;
 			return this;
 		}
 
@@ -383,9 +474,12 @@ public class KeywordProperty extends DocValuesPropertyBase implements PropertyVa
 		op.add(Builder::eagerGlobalOrdinals, JsonpDeserializer.booleanDeserializer(), "eager_global_ordinals");
 		op.add(Builder::index, JsonpDeserializer.booleanDeserializer(), "index");
 		op.add(Builder::indexOptions, IndexOptions._DESERIALIZER, "index_options");
+		op.add(Builder::script, Script._DESERIALIZER, "script");
+		op.add(Builder::onScriptError, OnScriptError._DESERIALIZER, "on_script_error");
 		op.add(Builder::normalizer, JsonpDeserializer.stringDeserializer(), "normalizer");
 		op.add(Builder::norms, JsonpDeserializer.booleanDeserializer(), "norms");
 		op.add(Builder::nullValue, JsonpDeserializer.stringDeserializer(), "null_value");
+		op.add(Builder::similarity, JsonpDeserializer.stringDeserializer(), "similarity");
 		op.add(Builder::splitQueriesOnWhitespace, JsonpDeserializer.booleanDeserializer(),
 				"split_queries_on_whitespace");
 		op.add(Builder::timeSeriesDimension, JsonpDeserializer.booleanDeserializer(), "time_series_dimension");

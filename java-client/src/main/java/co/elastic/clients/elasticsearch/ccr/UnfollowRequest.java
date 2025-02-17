@@ -21,6 +21,7 @@ package co.elastic.clients.elasticsearch.ccr;
 
 import co.elastic.clients.elasticsearch._types.ErrorResponse;
 import co.elastic.clients.elasticsearch._types.RequestBase;
+import co.elastic.clients.elasticsearch._types.Time;
 import co.elastic.clients.json.JsonpDeserializable;
 import co.elastic.clients.json.JsonpDeserializer;
 import co.elastic.clients.json.ObjectBuilderDeserializer;
@@ -31,7 +32,6 @@ import co.elastic.clients.util.ApiTypeHelper;
 import co.elastic.clients.util.ObjectBuilder;
 import jakarta.json.stream.JsonGenerator;
 import java.lang.String;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -56,9 +56,20 @@ import javax.annotation.Nullable;
 // typedef: ccr.unfollow.Request
 
 /**
- * Stops the following task associated with a follower index and removes index
- * metadata and settings associated with cross-cluster replication.
- * 
+ * Unfollow an index.
+ * <p>
+ * Convert a cross-cluster replication follower index to a regular index. The
+ * API stops the following task associated with a follower index and removes
+ * index metadata and settings associated with cross-cluster replication. The
+ * follower index must be paused and closed before you call the unfollow API.
+ * <blockquote>
+ * <p>
+ * info Currently cross-cluster replication does not support converting an
+ * existing regular index to a follower index. Converting a follower index to a
+ * regular index is an irreversible operation.
+ * </p>
+ * </blockquote>
+ *
  * @see <a href="../doc-files/api-spec.html#ccr.unfollow.Request">API
  *      specification</a>
  */
@@ -66,11 +77,15 @@ import javax.annotation.Nullable;
 public class UnfollowRequest extends RequestBase {
 	private final String index;
 
+	@Nullable
+	private final Time masterTimeout;
+
 	// ---------------------------------------------------------------------------------------------
 
 	private UnfollowRequest(Builder builder) {
 
 		this.index = ApiTypeHelper.requireNonNull(builder.index, this, "index");
+		this.masterTimeout = builder.masterTimeout;
 
 	}
 
@@ -79,13 +94,25 @@ public class UnfollowRequest extends RequestBase {
 	}
 
 	/**
-	 * Required - The name of the follower index that should be turned into a
-	 * regular index.
+	 * Required - The name of the follower index.
 	 * <p>
 	 * API name: {@code index}
 	 */
 	public final String index() {
 		return this.index;
+	}
+
+	/**
+	 * The period to wait for a connection to the master node. If the master node is
+	 * not available before the timeout expires, the request fails and returns an
+	 * error. It can also be set to <code>-1</code> to indicate that the request
+	 * should never timeout.
+	 * <p>
+	 * API name: {@code master_timeout}
+	 */
+	@Nullable
+	public final Time masterTimeout() {
+		return this.masterTimeout;
 	}
 
 	// ---------------------------------------------------------------------------------------------
@@ -97,15 +124,42 @@ public class UnfollowRequest extends RequestBase {
 	public static class Builder extends RequestBase.AbstractBuilder<Builder> implements ObjectBuilder<UnfollowRequest> {
 		private String index;
 
+		@Nullable
+		private Time masterTimeout;
+
 		/**
-		 * Required - The name of the follower index that should be turned into a
-		 * regular index.
+		 * Required - The name of the follower index.
 		 * <p>
 		 * API name: {@code index}
 		 */
 		public final Builder index(String value) {
 			this.index = value;
 			return this;
+		}
+
+		/**
+		 * The period to wait for a connection to the master node. If the master node is
+		 * not available before the timeout expires, the request fails and returns an
+		 * error. It can also be set to <code>-1</code> to indicate that the request
+		 * should never timeout.
+		 * <p>
+		 * API name: {@code master_timeout}
+		 */
+		public final Builder masterTimeout(@Nullable Time value) {
+			this.masterTimeout = value;
+			return this;
+		}
+
+		/**
+		 * The period to wait for a connection to the master node. If the master node is
+		 * not available before the timeout expires, the request fails and returns an
+		 * error. It can also be set to <code>-1</code> to indicate that the request
+		 * should never timeout.
+		 * <p>
+		 * API name: {@code master_timeout}
+		 */
+		public final Builder masterTimeout(Function<Time.Builder, ObjectBuilder<Time>> fn) {
+			return this.masterTimeout(fn.apply(new Time.Builder()).build());
 		}
 
 		@Override
@@ -177,7 +231,11 @@ public class UnfollowRequest extends RequestBase {
 
 			// Request parameters
 			request -> {
-				return Collections.emptyMap();
+				Map<String, String> params = new HashMap<>();
+				if (request.masterTimeout != null) {
+					params.put("master_timeout", request.masterTimeout._toJsonString());
+				}
+				return params;
 
 			}, SimpleEndpoint.emptyMap(), false, UnfollowResponse._DESERIALIZER);
 }

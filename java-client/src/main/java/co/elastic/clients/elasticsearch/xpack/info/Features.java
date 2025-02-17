@@ -64,30 +64,27 @@ public class Features implements JsonpSerializable {
 
 	private final Feature ccr;
 
-	@Nullable
-	private final Feature dataFrame;
-
-	@Nullable
-	private final Feature dataScience;
-
 	private final Feature dataStreams;
 
 	private final Feature dataTiers;
 
 	private final Feature enrich;
 
+	@Nullable
+	private final Feature enterpriseSearch;
+
 	private final Feature eql;
 
 	@Nullable
-	private final Feature flattened;
-
-	private final Feature frozenIndices;
+	private final Feature esql;
 
 	private final Feature graph;
 
 	private final Feature ilm;
 
 	private final Feature logstash;
+
+	private final Feature logsdb;
 
 	private final Feature ml;
 
@@ -111,12 +108,13 @@ public class Features implements JsonpSerializable {
 	private final Feature transform;
 
 	@Nullable
-	private final Feature vectors;
+	private final Feature universalProfiling;
 
 	private final Feature votingOnly;
 
 	private final Feature watcher;
 
+	@Nullable
 	private final Feature archive;
 
 	// ---------------------------------------------------------------------------------------------
@@ -126,17 +124,16 @@ public class Features implements JsonpSerializable {
 		this.aggregateMetric = ApiTypeHelper.requireNonNull(builder.aggregateMetric, this, "aggregateMetric");
 		this.analytics = ApiTypeHelper.requireNonNull(builder.analytics, this, "analytics");
 		this.ccr = ApiTypeHelper.requireNonNull(builder.ccr, this, "ccr");
-		this.dataFrame = builder.dataFrame;
-		this.dataScience = builder.dataScience;
 		this.dataStreams = ApiTypeHelper.requireNonNull(builder.dataStreams, this, "dataStreams");
 		this.dataTiers = ApiTypeHelper.requireNonNull(builder.dataTiers, this, "dataTiers");
 		this.enrich = ApiTypeHelper.requireNonNull(builder.enrich, this, "enrich");
+		this.enterpriseSearch = builder.enterpriseSearch;
 		this.eql = ApiTypeHelper.requireNonNull(builder.eql, this, "eql");
-		this.flattened = builder.flattened;
-		this.frozenIndices = ApiTypeHelper.requireNonNull(builder.frozenIndices, this, "frozenIndices");
+		this.esql = builder.esql;
 		this.graph = ApiTypeHelper.requireNonNull(builder.graph, this, "graph");
 		this.ilm = ApiTypeHelper.requireNonNull(builder.ilm, this, "ilm");
 		this.logstash = ApiTypeHelper.requireNonNull(builder.logstash, this, "logstash");
+		this.logsdb = ApiTypeHelper.requireNonNull(builder.logsdb, this, "logsdb");
 		this.ml = ApiTypeHelper.requireNonNull(builder.ml, this, "ml");
 		this.monitoring = ApiTypeHelper.requireNonNull(builder.monitoring, this, "monitoring");
 		this.rollup = ApiTypeHelper.requireNonNull(builder.rollup, this, "rollup");
@@ -148,10 +145,10 @@ public class Features implements JsonpSerializable {
 		this.spatial = ApiTypeHelper.requireNonNull(builder.spatial, this, "spatial");
 		this.sql = ApiTypeHelper.requireNonNull(builder.sql, this, "sql");
 		this.transform = ApiTypeHelper.requireNonNull(builder.transform, this, "transform");
-		this.vectors = builder.vectors;
+		this.universalProfiling = builder.universalProfiling;
 		this.votingOnly = ApiTypeHelper.requireNonNull(builder.votingOnly, this, "votingOnly");
 		this.watcher = ApiTypeHelper.requireNonNull(builder.watcher, this, "watcher");
-		this.archive = ApiTypeHelper.requireNonNull(builder.archive, this, "archive");
+		this.archive = builder.archive;
 
 	}
 
@@ -181,22 +178,6 @@ public class Features implements JsonpSerializable {
 	}
 
 	/**
-	 * API name: {@code data_frame}
-	 */
-	@Nullable
-	public final Feature dataFrame() {
-		return this.dataFrame;
-	}
-
-	/**
-	 * API name: {@code data_science}
-	 */
-	@Nullable
-	public final Feature dataScience() {
-		return this.dataScience;
-	}
-
-	/**
 	 * Required - API name: {@code data_streams}
 	 */
 	public final Feature dataStreams() {
@@ -218,6 +199,14 @@ public class Features implements JsonpSerializable {
 	}
 
 	/**
+	 * Required - API name: {@code enterprise_search}
+	 */
+	@Nullable
+	public final Feature enterpriseSearch() {
+		return this.enterpriseSearch;
+	}
+
+	/**
 	 * Required - API name: {@code eql}
 	 */
 	public final Feature eql() {
@@ -225,18 +214,11 @@ public class Features implements JsonpSerializable {
 	}
 
 	/**
-	 * API name: {@code flattened}
+	 * Required - API name: {@code esql}
 	 */
 	@Nullable
-	public final Feature flattened() {
-		return this.flattened;
-	}
-
-	/**
-	 * Required - API name: {@code frozen_indices}
-	 */
-	public final Feature frozenIndices() {
-		return this.frozenIndices;
+	public final Feature esql() {
+		return this.esql;
 	}
 
 	/**
@@ -258,6 +240,13 @@ public class Features implements JsonpSerializable {
 	 */
 	public final Feature logstash() {
 		return this.logstash;
+	}
+
+	/**
+	 * Required - API name: {@code logsdb}
+	 */
+	public final Feature logsdb() {
+		return this.logsdb;
 	}
 
 	/**
@@ -332,11 +321,11 @@ public class Features implements JsonpSerializable {
 	}
 
 	/**
-	 * API name: {@code vectors}
+	 * Required - API name: {@code universal_profiling}
 	 */
 	@Nullable
-	public final Feature vectors() {
-		return this.vectors;
+	public final Feature universalProfiling() {
+		return this.universalProfiling;
 	}
 
 	/**
@@ -356,6 +345,7 @@ public class Features implements JsonpSerializable {
 	/**
 	 * Required - API name: {@code archive}
 	 */
+	@Nullable
 	public final Feature archive() {
 		return this.archive;
 	}
@@ -380,16 +370,6 @@ public class Features implements JsonpSerializable {
 		generator.writeKey("ccr");
 		this.ccr.serialize(generator, mapper);
 
-		if (this.dataFrame != null) {
-			generator.writeKey("data_frame");
-			this.dataFrame.serialize(generator, mapper);
-
-		}
-		if (this.dataScience != null) {
-			generator.writeKey("data_science");
-			this.dataScience.serialize(generator, mapper);
-
-		}
 		generator.writeKey("data_streams");
 		this.dataStreams.serialize(generator, mapper);
 
@@ -399,17 +379,19 @@ public class Features implements JsonpSerializable {
 		generator.writeKey("enrich");
 		this.enrich.serialize(generator, mapper);
 
+		if (this.enterpriseSearch != null) {
+			generator.writeKey("enterprise_search");
+			this.enterpriseSearch.serialize(generator, mapper);
+
+		}
 		generator.writeKey("eql");
 		this.eql.serialize(generator, mapper);
 
-		if (this.flattened != null) {
-			generator.writeKey("flattened");
-			this.flattened.serialize(generator, mapper);
+		if (this.esql != null) {
+			generator.writeKey("esql");
+			this.esql.serialize(generator, mapper);
 
 		}
-		generator.writeKey("frozen_indices");
-		this.frozenIndices.serialize(generator, mapper);
-
 		generator.writeKey("graph");
 		this.graph.serialize(generator, mapper);
 
@@ -418,6 +400,9 @@ public class Features implements JsonpSerializable {
 
 		generator.writeKey("logstash");
 		this.logstash.serialize(generator, mapper);
+
+		generator.writeKey("logsdb");
+		this.logsdb.serialize(generator, mapper);
 
 		generator.writeKey("ml");
 		this.ml.serialize(generator, mapper);
@@ -451,9 +436,9 @@ public class Features implements JsonpSerializable {
 		generator.writeKey("transform");
 		this.transform.serialize(generator, mapper);
 
-		if (this.vectors != null) {
-			generator.writeKey("vectors");
-			this.vectors.serialize(generator, mapper);
+		if (this.universalProfiling != null) {
+			generator.writeKey("universal_profiling");
+			this.universalProfiling.serialize(generator, mapper);
 
 		}
 		generator.writeKey("voting_only");
@@ -462,8 +447,11 @@ public class Features implements JsonpSerializable {
 		generator.writeKey("watcher");
 		this.watcher.serialize(generator, mapper);
 
-		generator.writeKey("archive");
-		this.archive.serialize(generator, mapper);
+		if (this.archive != null) {
+			generator.writeKey("archive");
+			this.archive.serialize(generator, mapper);
+
+		}
 
 	}
 
@@ -485,30 +473,27 @@ public class Features implements JsonpSerializable {
 
 		private Feature ccr;
 
-		@Nullable
-		private Feature dataFrame;
-
-		@Nullable
-		private Feature dataScience;
-
 		private Feature dataStreams;
 
 		private Feature dataTiers;
 
 		private Feature enrich;
 
+		@Nullable
+		private Feature enterpriseSearch;
+
 		private Feature eql;
 
 		@Nullable
-		private Feature flattened;
-
-		private Feature frozenIndices;
+		private Feature esql;
 
 		private Feature graph;
 
 		private Feature ilm;
 
 		private Feature logstash;
+
+		private Feature logsdb;
 
 		private Feature ml;
 
@@ -532,12 +517,13 @@ public class Features implements JsonpSerializable {
 		private Feature transform;
 
 		@Nullable
-		private Feature vectors;
+		private Feature universalProfiling;
 
 		private Feature votingOnly;
 
 		private Feature watcher;
 
+		@Nullable
 		private Feature archive;
 
 		/**
@@ -586,36 +572,6 @@ public class Features implements JsonpSerializable {
 		}
 
 		/**
-		 * API name: {@code data_frame}
-		 */
-		public final Builder dataFrame(@Nullable Feature value) {
-			this.dataFrame = value;
-			return this;
-		}
-
-		/**
-		 * API name: {@code data_frame}
-		 */
-		public final Builder dataFrame(Function<Feature.Builder, ObjectBuilder<Feature>> fn) {
-			return this.dataFrame(fn.apply(new Feature.Builder()).build());
-		}
-
-		/**
-		 * API name: {@code data_science}
-		 */
-		public final Builder dataScience(@Nullable Feature value) {
-			this.dataScience = value;
-			return this;
-		}
-
-		/**
-		 * API name: {@code data_science}
-		 */
-		public final Builder dataScience(Function<Feature.Builder, ObjectBuilder<Feature>> fn) {
-			return this.dataScience(fn.apply(new Feature.Builder()).build());
-		}
-
-		/**
 		 * Required - API name: {@code data_streams}
 		 */
 		public final Builder dataStreams(Feature value) {
@@ -661,6 +617,21 @@ public class Features implements JsonpSerializable {
 		}
 
 		/**
+		 * Required - API name: {@code enterprise_search}
+		 */
+		public final Builder enterpriseSearch(@Nullable Feature value) {
+			this.enterpriseSearch = value;
+			return this;
+		}
+
+		/**
+		 * Required - API name: {@code enterprise_search}
+		 */
+		public final Builder enterpriseSearch(Function<Feature.Builder, ObjectBuilder<Feature>> fn) {
+			return this.enterpriseSearch(fn.apply(new Feature.Builder()).build());
+		}
+
+		/**
 		 * Required - API name: {@code eql}
 		 */
 		public final Builder eql(Feature value) {
@@ -676,33 +647,18 @@ public class Features implements JsonpSerializable {
 		}
 
 		/**
-		 * API name: {@code flattened}
+		 * Required - API name: {@code esql}
 		 */
-		public final Builder flattened(@Nullable Feature value) {
-			this.flattened = value;
+		public final Builder esql(@Nullable Feature value) {
+			this.esql = value;
 			return this;
 		}
 
 		/**
-		 * API name: {@code flattened}
+		 * Required - API name: {@code esql}
 		 */
-		public final Builder flattened(Function<Feature.Builder, ObjectBuilder<Feature>> fn) {
-			return this.flattened(fn.apply(new Feature.Builder()).build());
-		}
-
-		/**
-		 * Required - API name: {@code frozen_indices}
-		 */
-		public final Builder frozenIndices(Feature value) {
-			this.frozenIndices = value;
-			return this;
-		}
-
-		/**
-		 * Required - API name: {@code frozen_indices}
-		 */
-		public final Builder frozenIndices(Function<Feature.Builder, ObjectBuilder<Feature>> fn) {
-			return this.frozenIndices(fn.apply(new Feature.Builder()).build());
+		public final Builder esql(Function<Feature.Builder, ObjectBuilder<Feature>> fn) {
+			return this.esql(fn.apply(new Feature.Builder()).build());
 		}
 
 		/**
@@ -748,6 +704,21 @@ public class Features implements JsonpSerializable {
 		 */
 		public final Builder logstash(Function<Feature.Builder, ObjectBuilder<Feature>> fn) {
 			return this.logstash(fn.apply(new Feature.Builder()).build());
+		}
+
+		/**
+		 * Required - API name: {@code logsdb}
+		 */
+		public final Builder logsdb(Feature value) {
+			this.logsdb = value;
+			return this;
+		}
+
+		/**
+		 * Required - API name: {@code logsdb}
+		 */
+		public final Builder logsdb(Function<Feature.Builder, ObjectBuilder<Feature>> fn) {
+			return this.logsdb(fn.apply(new Feature.Builder()).build());
 		}
 
 		/**
@@ -901,18 +872,18 @@ public class Features implements JsonpSerializable {
 		}
 
 		/**
-		 * API name: {@code vectors}
+		 * Required - API name: {@code universal_profiling}
 		 */
-		public final Builder vectors(@Nullable Feature value) {
-			this.vectors = value;
+		public final Builder universalProfiling(@Nullable Feature value) {
+			this.universalProfiling = value;
 			return this;
 		}
 
 		/**
-		 * API name: {@code vectors}
+		 * Required - API name: {@code universal_profiling}
 		 */
-		public final Builder vectors(Function<Feature.Builder, ObjectBuilder<Feature>> fn) {
-			return this.vectors(fn.apply(new Feature.Builder()).build());
+		public final Builder universalProfiling(Function<Feature.Builder, ObjectBuilder<Feature>> fn) {
+			return this.universalProfiling(fn.apply(new Feature.Builder()).build());
 		}
 
 		/**
@@ -948,7 +919,7 @@ public class Features implements JsonpSerializable {
 		/**
 		 * Required - API name: {@code archive}
 		 */
-		public final Builder archive(Feature value) {
+		public final Builder archive(@Nullable Feature value) {
 			this.archive = value;
 			return this;
 		}
@@ -991,17 +962,16 @@ public class Features implements JsonpSerializable {
 		op.add(Builder::aggregateMetric, Feature._DESERIALIZER, "aggregate_metric");
 		op.add(Builder::analytics, Feature._DESERIALIZER, "analytics");
 		op.add(Builder::ccr, Feature._DESERIALIZER, "ccr");
-		op.add(Builder::dataFrame, Feature._DESERIALIZER, "data_frame");
-		op.add(Builder::dataScience, Feature._DESERIALIZER, "data_science");
 		op.add(Builder::dataStreams, Feature._DESERIALIZER, "data_streams");
 		op.add(Builder::dataTiers, Feature._DESERIALIZER, "data_tiers");
 		op.add(Builder::enrich, Feature._DESERIALIZER, "enrich");
+		op.add(Builder::enterpriseSearch, Feature._DESERIALIZER, "enterprise_search");
 		op.add(Builder::eql, Feature._DESERIALIZER, "eql");
-		op.add(Builder::flattened, Feature._DESERIALIZER, "flattened");
-		op.add(Builder::frozenIndices, Feature._DESERIALIZER, "frozen_indices");
+		op.add(Builder::esql, Feature._DESERIALIZER, "esql");
 		op.add(Builder::graph, Feature._DESERIALIZER, "graph");
 		op.add(Builder::ilm, Feature._DESERIALIZER, "ilm");
 		op.add(Builder::logstash, Feature._DESERIALIZER, "logstash");
+		op.add(Builder::logsdb, Feature._DESERIALIZER, "logsdb");
 		op.add(Builder::ml, Feature._DESERIALIZER, "ml");
 		op.add(Builder::monitoring, Feature._DESERIALIZER, "monitoring");
 		op.add(Builder::rollup, Feature._DESERIALIZER, "rollup");
@@ -1012,7 +982,7 @@ public class Features implements JsonpSerializable {
 		op.add(Builder::spatial, Feature._DESERIALIZER, "spatial");
 		op.add(Builder::sql, Feature._DESERIALIZER, "sql");
 		op.add(Builder::transform, Feature._DESERIALIZER, "transform");
-		op.add(Builder::vectors, Feature._DESERIALIZER, "vectors");
+		op.add(Builder::universalProfiling, Feature._DESERIALIZER, "universal_profiling");
 		op.add(Builder::votingOnly, Feature._DESERIALIZER, "voting_only");
 		op.add(Builder::watcher, Feature._DESERIALIZER, "watcher");
 		op.add(Builder::archive, Feature._DESERIALIZER, "archive");

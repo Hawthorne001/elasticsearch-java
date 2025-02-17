@@ -21,6 +21,7 @@ package co.elastic.clients.elasticsearch.features;
 
 import co.elastic.clients.elasticsearch._types.ErrorResponse;
 import co.elastic.clients.elasticsearch._types.RequestBase;
+import co.elastic.clients.elasticsearch._types.Time;
 import co.elastic.clients.json.JsonpDeserializable;
 import co.elastic.clients.json.JsonpDeserializer;
 import co.elastic.clients.json.ObjectBuilderDeserializer;
@@ -30,7 +31,11 @@ import co.elastic.clients.transport.endpoints.SimpleEndpoint;
 import co.elastic.clients.util.ObjectBuilder;
 import jakarta.json.stream.JsonGenerator;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
+import java.util.function.Function;
+import javax.annotation.Nullable;
 
 //----------------------------------------------------------------
 //       THIS CODE IS GENERATED. MANUAL EDITS WILL BE LOST.
@@ -50,21 +55,99 @@ import java.util.Objects;
 // typedef: features.get_features.Request
 
 /**
- * Gets a list of features which can be included in snapshots using the
- * feature_states field when creating a snapshot
+ * Get the features. Get a list of features that can be included in snapshots
+ * using the <code>feature_states</code> field when creating a snapshot. You can
+ * use this API to determine which feature states to include when taking a
+ * snapshot. By default, all feature states are included in a snapshot if that
+ * snapshot includes the global state, or none if it does not.
+ * <p>
+ * A feature state includes one or more system indices necessary for a given
+ * feature to function. In order to ensure data integrity, all system indices
+ * that comprise a feature state are snapshotted and restored together.
+ * <p>
+ * The features listed by this API are a combination of built-in features and
+ * features defined by plugins. In order for a feature state to be listed in
+ * this API and recognized as a valid feature state by the create snapshot API,
+ * the plugin that defines that feature must be installed on the master node.
  * 
  * @see <a href="../doc-files/api-spec.html#features.get_features.Request">API
  *      specification</a>
  */
 
 public class GetFeaturesRequest extends RequestBase {
-	public GetFeaturesRequest() {
+	@Nullable
+	private final Time masterTimeout;
+
+	// ---------------------------------------------------------------------------------------------
+
+	private GetFeaturesRequest(Builder builder) {
+
+		this.masterTimeout = builder.masterTimeout;
+
+	}
+
+	public static GetFeaturesRequest of(Function<Builder, ObjectBuilder<GetFeaturesRequest>> fn) {
+		return fn.apply(new Builder()).build();
 	}
 
 	/**
-	 * Singleton instance for {@link GetFeaturesRequest}.
+	 * Period to wait for a connection to the master node.
+	 * <p>
+	 * API name: {@code master_timeout}
 	 */
-	public static final GetFeaturesRequest _INSTANCE = new GetFeaturesRequest();
+	@Nullable
+	public final Time masterTimeout() {
+		return this.masterTimeout;
+	}
+
+	// ---------------------------------------------------------------------------------------------
+
+	/**
+	 * Builder for {@link GetFeaturesRequest}.
+	 */
+
+	public static class Builder extends RequestBase.AbstractBuilder<Builder>
+			implements
+				ObjectBuilder<GetFeaturesRequest> {
+		@Nullable
+		private Time masterTimeout;
+
+		/**
+		 * Period to wait for a connection to the master node.
+		 * <p>
+		 * API name: {@code master_timeout}
+		 */
+		public final Builder masterTimeout(@Nullable Time value) {
+			this.masterTimeout = value;
+			return this;
+		}
+
+		/**
+		 * Period to wait for a connection to the master node.
+		 * <p>
+		 * API name: {@code master_timeout}
+		 */
+		public final Builder masterTimeout(Function<Time.Builder, ObjectBuilder<Time>> fn) {
+			return this.masterTimeout(fn.apply(new Time.Builder()).build());
+		}
+
+		@Override
+		protected Builder self() {
+			return this;
+		}
+
+		/**
+		 * Builds a {@link GetFeaturesRequest}.
+		 *
+		 * @throws NullPointerException
+		 *             if some of the required fields are null.
+		 */
+		public GetFeaturesRequest build() {
+			_checkSingleUse();
+
+			return new GetFeaturesRequest(this);
+		}
+	}
 
 	// ---------------------------------------------------------------------------------------------
 
@@ -93,7 +176,11 @@ public class GetFeaturesRequest extends RequestBase {
 
 			// Request parameters
 			request -> {
-				return Collections.emptyMap();
+				Map<String, String> params = new HashMap<>();
+				if (request.masterTimeout != null) {
+					params.put("master_timeout", request.masterTimeout._toJsonString());
+				}
+				return params;
 
 			}, SimpleEndpoint.emptyMap(), false, GetFeaturesResponse._DESERIALIZER);
 }

@@ -66,9 +66,15 @@ public class DeprecationsResponse implements JsonpSerializable {
 
 	private final Map<String, List<Deprecation>> indexSettings;
 
+	private final Map<String, List<Deprecation>> dataStreams;
+
 	private final List<Deprecation> nodeSettings;
 
 	private final List<Deprecation> mlSettings;
+
+	private final Map<String, List<Deprecation>> templates;
+
+	private final Map<String, List<Deprecation>> ilmPolicies;
 
 	// ---------------------------------------------------------------------------------------------
 
@@ -76,8 +82,11 @@ public class DeprecationsResponse implements JsonpSerializable {
 
 		this.clusterSettings = ApiTypeHelper.unmodifiableRequired(builder.clusterSettings, this, "clusterSettings");
 		this.indexSettings = ApiTypeHelper.unmodifiableRequired(builder.indexSettings, this, "indexSettings");
+		this.dataStreams = ApiTypeHelper.unmodifiableRequired(builder.dataStreams, this, "dataStreams");
 		this.nodeSettings = ApiTypeHelper.unmodifiableRequired(builder.nodeSettings, this, "nodeSettings");
 		this.mlSettings = ApiTypeHelper.unmodifiableRequired(builder.mlSettings, this, "mlSettings");
+		this.templates = ApiTypeHelper.unmodifiableRequired(builder.templates, this, "templates");
+		this.ilmPolicies = ApiTypeHelper.unmodifiableRequired(builder.ilmPolicies, this, "ilmPolicies");
 
 	}
 
@@ -86,31 +95,69 @@ public class DeprecationsResponse implements JsonpSerializable {
 	}
 
 	/**
-	 * Required - API name: {@code cluster_settings}
+	 * Required - Cluster-level deprecation warnings.
+	 * <p>
+	 * API name: {@code cluster_settings}
 	 */
 	public final List<Deprecation> clusterSettings() {
 		return this.clusterSettings;
 	}
 
 	/**
-	 * Required - API name: {@code index_settings}
+	 * Required - Index warnings are sectioned off per index and can be filtered
+	 * using an index-pattern in the query. This section includes warnings for the
+	 * backing indices of data streams specified in the request path.
+	 * <p>
+	 * API name: {@code index_settings}
 	 */
 	public final Map<String, List<Deprecation>> indexSettings() {
 		return this.indexSettings;
 	}
 
 	/**
-	 * Required - API name: {@code node_settings}
+	 * Required - API name: {@code data_streams}
+	 */
+	public final Map<String, List<Deprecation>> dataStreams() {
+		return this.dataStreams;
+	}
+
+	/**
+	 * Required - Node-level deprecation warnings. Since only a subset of your nodes
+	 * might incorporate these settings, it is important to read the details section
+	 * for more information about which nodes are affected.
+	 * <p>
+	 * API name: {@code node_settings}
 	 */
 	public final List<Deprecation> nodeSettings() {
 		return this.nodeSettings;
 	}
 
 	/**
-	 * Required - API name: {@code ml_settings}
+	 * Required - Machine learning-related deprecation warnings.
+	 * <p>
+	 * API name: {@code ml_settings}
 	 */
 	public final List<Deprecation> mlSettings() {
 		return this.mlSettings;
+	}
+
+	/**
+	 * Required - Template warnings are sectioned off per template and include
+	 * deprecations for both component templates and index templates.
+	 * <p>
+	 * API name: {@code templates}
+	 */
+	public final Map<String, List<Deprecation>> templates() {
+		return this.templates;
+	}
+
+	/**
+	 * Required - ILM policy warnings are sectioned off per policy.
+	 * <p>
+	 * API name: {@code ilm_policies}
+	 */
+	public final Map<String, List<Deprecation>> ilmPolicies() {
+		return this.ilmPolicies;
 	}
 
 	/**
@@ -152,6 +199,24 @@ public class DeprecationsResponse implements JsonpSerializable {
 			generator.writeEnd();
 
 		}
+		if (ApiTypeHelper.isDefined(this.dataStreams)) {
+			generator.writeKey("data_streams");
+			generator.writeStartObject();
+			for (Map.Entry<String, List<Deprecation>> item0 : this.dataStreams.entrySet()) {
+				generator.writeKey(item0.getKey());
+				generator.writeStartArray();
+				if (item0.getValue() != null) {
+					for (Deprecation item1 : item0.getValue()) {
+						item1.serialize(generator, mapper);
+
+					}
+				}
+				generator.writeEnd();
+
+			}
+			generator.writeEnd();
+
+		}
 		if (ApiTypeHelper.isDefined(this.nodeSettings)) {
 			generator.writeKey("node_settings");
 			generator.writeStartArray();
@@ -167,6 +232,42 @@ public class DeprecationsResponse implements JsonpSerializable {
 			generator.writeStartArray();
 			for (Deprecation item0 : this.mlSettings) {
 				item0.serialize(generator, mapper);
+
+			}
+			generator.writeEnd();
+
+		}
+		if (ApiTypeHelper.isDefined(this.templates)) {
+			generator.writeKey("templates");
+			generator.writeStartObject();
+			for (Map.Entry<String, List<Deprecation>> item0 : this.templates.entrySet()) {
+				generator.writeKey(item0.getKey());
+				generator.writeStartArray();
+				if (item0.getValue() != null) {
+					for (Deprecation item1 : item0.getValue()) {
+						item1.serialize(generator, mapper);
+
+					}
+				}
+				generator.writeEnd();
+
+			}
+			generator.writeEnd();
+
+		}
+		if (ApiTypeHelper.isDefined(this.ilmPolicies)) {
+			generator.writeKey("ilm_policies");
+			generator.writeStartObject();
+			for (Map.Entry<String, List<Deprecation>> item0 : this.ilmPolicies.entrySet()) {
+				generator.writeKey(item0.getKey());
+				generator.writeStartArray();
+				if (item0.getValue() != null) {
+					for (Deprecation item1 : item0.getValue()) {
+						item1.serialize(generator, mapper);
+
+					}
+				}
+				generator.writeEnd();
 
 			}
 			generator.writeEnd();
@@ -193,12 +294,20 @@ public class DeprecationsResponse implements JsonpSerializable {
 
 		private Map<String, List<Deprecation>> indexSettings;
 
+		private Map<String, List<Deprecation>> dataStreams;
+
 		private List<Deprecation> nodeSettings;
 
 		private List<Deprecation> mlSettings;
 
+		private Map<String, List<Deprecation>> templates;
+
+		private Map<String, List<Deprecation>> ilmPolicies;
+
 		/**
-		 * Required - API name: {@code cluster_settings}
+		 * Required - Cluster-level deprecation warnings.
+		 * <p>
+		 * API name: {@code cluster_settings}
 		 * <p>
 		 * Adds all elements of <code>list</code> to <code>clusterSettings</code>.
 		 */
@@ -208,7 +317,9 @@ public class DeprecationsResponse implements JsonpSerializable {
 		}
 
 		/**
-		 * Required - API name: {@code cluster_settings}
+		 * Required - Cluster-level deprecation warnings.
+		 * <p>
+		 * API name: {@code cluster_settings}
 		 * <p>
 		 * Adds one or more values to <code>clusterSettings</code>.
 		 */
@@ -218,7 +329,9 @@ public class DeprecationsResponse implements JsonpSerializable {
 		}
 
 		/**
-		 * Required - API name: {@code cluster_settings}
+		 * Required - Cluster-level deprecation warnings.
+		 * <p>
+		 * API name: {@code cluster_settings}
 		 * <p>
 		 * Adds a value to <code>clusterSettings</code> using a builder lambda.
 		 */
@@ -227,7 +340,11 @@ public class DeprecationsResponse implements JsonpSerializable {
 		}
 
 		/**
-		 * Required - API name: {@code index_settings}
+		 * Required - Index warnings are sectioned off per index and can be filtered
+		 * using an index-pattern in the query. This section includes warnings for the
+		 * backing indices of data streams specified in the request path.
+		 * <p>
+		 * API name: {@code index_settings}
 		 * <p>
 		 * Adds all entries of <code>map</code> to <code>indexSettings</code>.
 		 */
@@ -237,7 +354,11 @@ public class DeprecationsResponse implements JsonpSerializable {
 		}
 
 		/**
-		 * Required - API name: {@code index_settings}
+		 * Required - Index warnings are sectioned off per index and can be filtered
+		 * using an index-pattern in the query. This section includes warnings for the
+		 * backing indices of data streams specified in the request path.
+		 * <p>
+		 * API name: {@code index_settings}
 		 * <p>
 		 * Adds an entry to <code>indexSettings</code>.
 		 */
@@ -247,7 +368,31 @@ public class DeprecationsResponse implements JsonpSerializable {
 		}
 
 		/**
-		 * Required - API name: {@code node_settings}
+		 * Required - API name: {@code data_streams}
+		 * <p>
+		 * Adds all entries of <code>map</code> to <code>dataStreams</code>.
+		 */
+		public final Builder dataStreams(Map<String, List<Deprecation>> map) {
+			this.dataStreams = _mapPutAll(this.dataStreams, map);
+			return this;
+		}
+
+		/**
+		 * Required - API name: {@code data_streams}
+		 * <p>
+		 * Adds an entry to <code>dataStreams</code>.
+		 */
+		public final Builder dataStreams(String key, List<Deprecation> value) {
+			this.dataStreams = _mapPut(this.dataStreams, key, value);
+			return this;
+		}
+
+		/**
+		 * Required - Node-level deprecation warnings. Since only a subset of your nodes
+		 * might incorporate these settings, it is important to read the details section
+		 * for more information about which nodes are affected.
+		 * <p>
+		 * API name: {@code node_settings}
 		 * <p>
 		 * Adds all elements of <code>list</code> to <code>nodeSettings</code>.
 		 */
@@ -257,7 +402,11 @@ public class DeprecationsResponse implements JsonpSerializable {
 		}
 
 		/**
-		 * Required - API name: {@code node_settings}
+		 * Required - Node-level deprecation warnings. Since only a subset of your nodes
+		 * might incorporate these settings, it is important to read the details section
+		 * for more information about which nodes are affected.
+		 * <p>
+		 * API name: {@code node_settings}
 		 * <p>
 		 * Adds one or more values to <code>nodeSettings</code>.
 		 */
@@ -267,7 +416,11 @@ public class DeprecationsResponse implements JsonpSerializable {
 		}
 
 		/**
-		 * Required - API name: {@code node_settings}
+		 * Required - Node-level deprecation warnings. Since only a subset of your nodes
+		 * might incorporate these settings, it is important to read the details section
+		 * for more information about which nodes are affected.
+		 * <p>
+		 * API name: {@code node_settings}
 		 * <p>
 		 * Adds a value to <code>nodeSettings</code> using a builder lambda.
 		 */
@@ -276,7 +429,9 @@ public class DeprecationsResponse implements JsonpSerializable {
 		}
 
 		/**
-		 * Required - API name: {@code ml_settings}
+		 * Required - Machine learning-related deprecation warnings.
+		 * <p>
+		 * API name: {@code ml_settings}
 		 * <p>
 		 * Adds all elements of <code>list</code> to <code>mlSettings</code>.
 		 */
@@ -286,7 +441,9 @@ public class DeprecationsResponse implements JsonpSerializable {
 		}
 
 		/**
-		 * Required - API name: {@code ml_settings}
+		 * Required - Machine learning-related deprecation warnings.
+		 * <p>
+		 * API name: {@code ml_settings}
 		 * <p>
 		 * Adds one or more values to <code>mlSettings</code>.
 		 */
@@ -296,12 +453,64 @@ public class DeprecationsResponse implements JsonpSerializable {
 		}
 
 		/**
-		 * Required - API name: {@code ml_settings}
+		 * Required - Machine learning-related deprecation warnings.
+		 * <p>
+		 * API name: {@code ml_settings}
 		 * <p>
 		 * Adds a value to <code>mlSettings</code> using a builder lambda.
 		 */
 		public final Builder mlSettings(Function<Deprecation.Builder, ObjectBuilder<Deprecation>> fn) {
 			return mlSettings(fn.apply(new Deprecation.Builder()).build());
+		}
+
+		/**
+		 * Required - Template warnings are sectioned off per template and include
+		 * deprecations for both component templates and index templates.
+		 * <p>
+		 * API name: {@code templates}
+		 * <p>
+		 * Adds all entries of <code>map</code> to <code>templates</code>.
+		 */
+		public final Builder templates(Map<String, List<Deprecation>> map) {
+			this.templates = _mapPutAll(this.templates, map);
+			return this;
+		}
+
+		/**
+		 * Required - Template warnings are sectioned off per template and include
+		 * deprecations for both component templates and index templates.
+		 * <p>
+		 * API name: {@code templates}
+		 * <p>
+		 * Adds an entry to <code>templates</code>.
+		 */
+		public final Builder templates(String key, List<Deprecation> value) {
+			this.templates = _mapPut(this.templates, key, value);
+			return this;
+		}
+
+		/**
+		 * Required - ILM policy warnings are sectioned off per policy.
+		 * <p>
+		 * API name: {@code ilm_policies}
+		 * <p>
+		 * Adds all entries of <code>map</code> to <code>ilmPolicies</code>.
+		 */
+		public final Builder ilmPolicies(Map<String, List<Deprecation>> map) {
+			this.ilmPolicies = _mapPutAll(this.ilmPolicies, map);
+			return this;
+		}
+
+		/**
+		 * Required - ILM policy warnings are sectioned off per policy.
+		 * <p>
+		 * API name: {@code ilm_policies}
+		 * <p>
+		 * Adds an entry to <code>ilmPolicies</code>.
+		 */
+		public final Builder ilmPolicies(String key, List<Deprecation> value) {
+			this.ilmPolicies = _mapPut(this.ilmPolicies, key, value);
+			return this;
 		}
 
 		@Override
@@ -337,8 +546,17 @@ public class DeprecationsResponse implements JsonpSerializable {
 		op.add(Builder::indexSettings,
 				JsonpDeserializer.stringMapDeserializer(JsonpDeserializer.arrayDeserializer(Deprecation._DESERIALIZER)),
 				"index_settings");
+		op.add(Builder::dataStreams,
+				JsonpDeserializer.stringMapDeserializer(JsonpDeserializer.arrayDeserializer(Deprecation._DESERIALIZER)),
+				"data_streams");
 		op.add(Builder::nodeSettings, JsonpDeserializer.arrayDeserializer(Deprecation._DESERIALIZER), "node_settings");
 		op.add(Builder::mlSettings, JsonpDeserializer.arrayDeserializer(Deprecation._DESERIALIZER), "ml_settings");
+		op.add(Builder::templates,
+				JsonpDeserializer.stringMapDeserializer(JsonpDeserializer.arrayDeserializer(Deprecation._DESERIALIZER)),
+				"templates");
+		op.add(Builder::ilmPolicies,
+				JsonpDeserializer.stringMapDeserializer(JsonpDeserializer.arrayDeserializer(Deprecation._DESERIALIZER)),
+				"ilm_policies");
 
 	}
 

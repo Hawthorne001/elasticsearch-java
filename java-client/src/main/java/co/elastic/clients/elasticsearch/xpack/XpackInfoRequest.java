@@ -21,6 +21,7 @@ package co.elastic.clients.elasticsearch.xpack;
 
 import co.elastic.clients.elasticsearch._types.ErrorResponse;
 import co.elastic.clients.elasticsearch._types.RequestBase;
+import co.elastic.clients.elasticsearch.xpack.info.XPackCategory;
 import co.elastic.clients.json.JsonpDeserializable;
 import co.elastic.clients.json.JsonpDeserializer;
 import co.elastic.clients.json.ObjectBuilderDeserializer;
@@ -31,7 +32,6 @@ import co.elastic.clients.util.ApiTypeHelper;
 import co.elastic.clients.util.ObjectBuilder;
 import jakarta.json.stream.JsonGenerator;
 import java.lang.Boolean;
-import java.lang.String;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -59,8 +59,14 @@ import javax.annotation.Nullable;
 // typedef: xpack.info.Request
 
 /**
- * Provides general information about the installed X-Pack features.
- * 
+ * Get information. The information provided by the API includes:
+ * <ul>
+ * <li>Build information including the build number and timestamp.</li>
+ * <li>License information about the currently installed license.</li>
+ * <li>Feature information for the features that are currently enabled and
+ * available under the current license.</li>
+ * </ul>
+ *
  * @see <a href="../doc-files/api-spec.html#xpack.info.Request">API
  *      specification</a>
  */
@@ -69,7 +75,7 @@ public class XpackInfoRequest extends RequestBase {
 	@Nullable
 	private final Boolean acceptEnterprise;
 
-	private final List<String> categories;
+	private final List<XPackCategory> categories;
 
 	@Nullable
 	private final Boolean human;
@@ -104,7 +110,7 @@ public class XpackInfoRequest extends RequestBase {
 	 * <p>
 	 * API name: {@code categories}
 	 */
-	public final List<String> categories() {
+	public final List<XPackCategory> categories() {
 		return this.categories;
 	}
 
@@ -132,7 +138,7 @@ public class XpackInfoRequest extends RequestBase {
 		private Boolean acceptEnterprise;
 
 		@Nullable
-		private List<String> categories;
+		private List<XPackCategory> categories;
 
 		@Nullable
 		private Boolean human;
@@ -155,7 +161,7 @@ public class XpackInfoRequest extends RequestBase {
 		 * <p>
 		 * Adds all elements of <code>list</code> to <code>categories</code>.
 		 */
-		public final Builder categories(List<String> list) {
+		public final Builder categories(List<XPackCategory> list) {
 			this.categories = _listAddAll(this.categories, list);
 			return this;
 		}
@@ -168,7 +174,7 @@ public class XpackInfoRequest extends RequestBase {
 		 * <p>
 		 * Adds one or more values to <code>categories</code>.
 		 */
-		public final Builder categories(String value, String... values) {
+		public final Builder categories(XPackCategory value, XPackCategory... values) {
 			this.categories = _listAdd(this.categories, value, values);
 			return this;
 		}
@@ -231,7 +237,8 @@ public class XpackInfoRequest extends RequestBase {
 			request -> {
 				Map<String, String> params = new HashMap<>();
 				if (ApiTypeHelper.isDefined(request.categories)) {
-					params.put("categories", request.categories.stream().map(v -> v).collect(Collectors.joining(",")));
+					params.put("categories",
+							request.categories.stream().map(v -> v.jsonValue()).collect(Collectors.joining(",")));
 				}
 				if (request.human != null) {
 					params.put("human", String.valueOf(request.human));

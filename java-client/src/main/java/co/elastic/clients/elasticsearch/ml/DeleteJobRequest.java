@@ -56,7 +56,7 @@ import javax.annotation.Nullable;
 // typedef: ml.delete_job.Request
 
 /**
- * Deletes an anomaly detection job.
+ * Delete an anomaly detection job.
  * <p>
  * All job configuration, model state and results are deleted. It is not
  * currently possible to delete multiple jobs using wildcards or a comma

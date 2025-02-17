@@ -56,7 +56,8 @@ import javax.annotation.Nullable;
 // typedef: _global.get_script.Request
 
 /**
- * Retrieves a stored script or search template.
+ * Get a script or search template. Retrieves a stored script or search
+ * template.
  * 
  * @see <a href="../doc-files/api-spec.html#_global.get_script.Request">API
  *      specification</a>
@@ -82,7 +83,7 @@ public class GetScriptRequest extends RequestBase {
 	}
 
 	/**
-	 * Required - Identifier for the stored script or search template.
+	 * Required - The identifier for the stored script or search template.
 	 * <p>
 	 * API name: {@code id}
 	 */
@@ -91,7 +92,10 @@ public class GetScriptRequest extends RequestBase {
 	}
 
 	/**
-	 * Specify timeout for connection to master
+	 * The period to wait for the master node. If the master node is not available
+	 * before the timeout expires, the request fails and returns an error. It can
+	 * also be set to <code>-1</code> to indicate that the request should never
+	 * timeout.
 	 * <p>
 	 * API name: {@code master_timeout}
 	 */
@@ -115,7 +119,7 @@ public class GetScriptRequest extends RequestBase {
 		private Time masterTimeout;
 
 		/**
-		 * Required - Identifier for the stored script or search template.
+		 * Required - The identifier for the stored script or search template.
 		 * <p>
 		 * API name: {@code id}
 		 */
@@ -125,7 +129,10 @@ public class GetScriptRequest extends RequestBase {
 		}
 
 		/**
-		 * Specify timeout for connection to master
+		 * The period to wait for the master node. If the master node is not available
+		 * before the timeout expires, the request fails and returns an error. It can
+		 * also be set to <code>-1</code> to indicate that the request should never
+		 * timeout.
 		 * <p>
 		 * API name: {@code master_timeout}
 		 */
@@ -135,7 +142,10 @@ public class GetScriptRequest extends RequestBase {
 		}
 
 		/**
-		 * Specify timeout for connection to master
+		 * The period to wait for the master node. If the master node is not available
+		 * before the timeout expires, the request fails and returns an error. It can
+		 * also be set to <code>-1</code> to indicate that the request should never
+		 * timeout.
 		 * <p>
 		 * API name: {@code master_timeout}
 		 */

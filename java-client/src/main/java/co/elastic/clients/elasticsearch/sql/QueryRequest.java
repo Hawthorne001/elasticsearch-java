@@ -24,6 +24,7 @@ import co.elastic.clients.elasticsearch._types.RequestBase;
 import co.elastic.clients.elasticsearch._types.Time;
 import co.elastic.clients.elasticsearch._types.mapping.RuntimeField;
 import co.elastic.clients.elasticsearch._types.query_dsl.Query;
+import co.elastic.clients.elasticsearch.sql.query.SqlFormat;
 import co.elastic.clients.json.JsonData;
 import co.elastic.clients.json.JsonpDeserializable;
 import co.elastic.clients.json.JsonpDeserializer;
@@ -64,13 +65,16 @@ import javax.annotation.Nullable;
 // typedef: sql.query.Request
 
 /**
- * Executes a SQL request
+ * Get SQL search results. Run an SQL request.
  * 
  * @see <a href="../doc-files/api-spec.html#sql.query.Request">API
  *      specification</a>
  */
 @JsonpDeserializable
 public class QueryRequest extends RequestBase implements JsonpSerializable {
+	@Nullable
+	private final Boolean allowPartialSearchResults;
+
 	@Nullable
 	private final String catalog;
 
@@ -90,7 +94,7 @@ public class QueryRequest extends RequestBase implements JsonpSerializable {
 	private final Query filter;
 
 	@Nullable
-	private final String format;
+	private final SqlFormat format;
 
 	@Nullable
 	private final Boolean indexUsingFrozen;
@@ -124,6 +128,7 @@ public class QueryRequest extends RequestBase implements JsonpSerializable {
 
 	private QueryRequest(Builder builder) {
 
+		this.allowPartialSearchResults = builder.allowPartialSearchResults;
 		this.catalog = builder.catalog;
 		this.columnar = builder.columnar;
 		this.cursor = builder.cursor;
@@ -149,8 +154,20 @@ public class QueryRequest extends RequestBase implements JsonpSerializable {
 	}
 
 	/**
-	 * Default catalog (cluster) for queries. If unspecified, the queries execute on
-	 * the data in the local cluster only.
+	 * If <code>true</code>, the response has partial results when there are shard
+	 * request timeouts or shard failures. If <code>false</code>, the API returns an
+	 * error with no partial results.
+	 * <p>
+	 * API name: {@code allow_partial_search_results}
+	 */
+	@Nullable
+	public final Boolean allowPartialSearchResults() {
+		return this.allowPartialSearchResults;
+	}
+
+	/**
+	 * The default catalog (cluster) for queries. If unspecified, the queries
+	 * execute on the data in the local cluster only.
 	 * <p>
 	 * API name: {@code catalog}
 	 */
@@ -160,8 +177,10 @@ public class QueryRequest extends RequestBase implements JsonpSerializable {
 	}
 
 	/**
-	 * If true, the results in a columnar fashion: one row represents all the values
-	 * of a certain column from the current page of results.
+	 * If <code>true</code>, the results are in a columnar fashion: one row
+	 * represents all the values of a certain column from the current page of
+	 * results. The API supports this parameter only for CBOR, JSON, SMILE, and YAML
+	 * responses.
 	 * <p>
 	 * API name: {@code columnar}
 	 */
@@ -171,9 +190,10 @@ public class QueryRequest extends RequestBase implements JsonpSerializable {
 	}
 
 	/**
-	 * Cursor used to retrieve a set of paginated results. If you specify a cursor,
-	 * the API only uses the <code>columnar</code> and <code>time_zone</code>
-	 * request body parameters. It ignores other request body parameters.
+	 * The cursor used to retrieve a set of paginated results. If you specify a
+	 * cursor, the API only uses the <code>columnar</code> and
+	 * <code>time_zone</code> request body parameters. It ignores other request body
+	 * parameters.
 	 * <p>
 	 * API name: {@code cursor}
 	 */
@@ -183,7 +203,7 @@ public class QueryRequest extends RequestBase implements JsonpSerializable {
 	}
 
 	/**
-	 * The maximum number of rows (or entries) to return in one response
+	 * The maximum number of rows (or entries) to return in one response.
 	 * <p>
 	 * API name: {@code fetch_size}
 	 */
@@ -193,9 +213,10 @@ public class QueryRequest extends RequestBase implements JsonpSerializable {
 	}
 
 	/**
-	 * Throw an exception when encountering multiple values for a field (default) or
-	 * be lenient and return the first value from the list (without any guarantees
-	 * of what that will be - typically the first in natural ascending order).
+	 * If <code>false</code>, the API returns an exception when encountering
+	 * multiple values for a field. If <code>true</code>, the API is lenient and
+	 * returns the first value from the array with no guarantee of consistent
+	 * results.
 	 * <p>
 	 * API name: {@code field_multi_value_leniency}
 	 */
@@ -205,7 +226,7 @@ public class QueryRequest extends RequestBase implements JsonpSerializable {
 	}
 
 	/**
-	 * Elasticsearch query DSL for additional filtering.
+	 * The Elasticsearch query DSL for additional filtering.
 	 * <p>
 	 * API name: {@code filter}
 	 */
@@ -215,17 +236,19 @@ public class QueryRequest extends RequestBase implements JsonpSerializable {
 	}
 
 	/**
-	 * Format for the response.
+	 * The format for the response. You can also specify a format using the
+	 * <code>Accept</code> HTTP header. If you specify both this parameter and the
+	 * <code>Accept</code> HTTP header, this parameter takes precedence.
 	 * <p>
 	 * API name: {@code format}
 	 */
 	@Nullable
-	public final String format() {
+	public final SqlFormat format() {
 		return this.format;
 	}
 
 	/**
-	 * If true, the search can run on frozen indices. Defaults to false.
+	 * If <code>true</code>, the search can run on frozen indices.
 	 * <p>
 	 * API name: {@code index_using_frozen}
 	 */
@@ -235,7 +258,7 @@ public class QueryRequest extends RequestBase implements JsonpSerializable {
 	}
 
 	/**
-	 * Retention period for an async or saved synchronous search.
+	 * The retention period for an async or saved synchronous search.
 	 * <p>
 	 * API name: {@code keep_alive}
 	 */
@@ -245,9 +268,10 @@ public class QueryRequest extends RequestBase implements JsonpSerializable {
 	}
 
 	/**
-	 * If true, Elasticsearch stores synchronous searches if you also specify the
-	 * wait_for_completion_timeout parameter. If false, Elasticsearch only stores
-	 * async searches that don’t finish before the wait_for_completion_timeout.
+	 * If <code>true</code>, Elasticsearch stores synchronous searches if you also
+	 * specify the <code>wait_for_completion_timeout</code> parameter. If
+	 * <code>false</code>, Elasticsearch only stores async searches that don't
+	 * finish before the <code>wait_for_completion_timeout</code>.
 	 * <p>
 	 * API name: {@code keep_on_completion}
 	 */
@@ -257,7 +281,10 @@ public class QueryRequest extends RequestBase implements JsonpSerializable {
 	}
 
 	/**
-	 * The timeout before a pagination request fails.
+	 * The minimum retention period for the scroll cursor. After this time period, a
+	 * pagination request might fail because the scroll cursor is no longer
+	 * available. Subsequent scroll requests prolong the lifetime of the scroll
+	 * cursor by the duration of <code>page_timeout</code> in the scroll request.
 	 * <p>
 	 * API name: {@code page_timeout}
 	 */
@@ -267,7 +294,7 @@ public class QueryRequest extends RequestBase implements JsonpSerializable {
 	}
 
 	/**
-	 * Values for parameters in the query.
+	 * The values for parameters in the query.
 	 * <p>
 	 * API name: {@code params}
 	 */
@@ -276,7 +303,7 @@ public class QueryRequest extends RequestBase implements JsonpSerializable {
 	}
 
 	/**
-	 * SQL query to run.
+	 * The SQL query to run.
 	 * <p>
 	 * API name: {@code query}
 	 */
@@ -296,7 +323,7 @@ public class QueryRequest extends RequestBase implements JsonpSerializable {
 	}
 
 	/**
-	 * Defines one or more runtime fields in the search request. These fields take
+	 * One or more runtime fields for the search request. These fields take
 	 * precedence over mapped fields with the same name.
 	 * <p>
 	 * API name: {@code runtime_mappings}
@@ -306,7 +333,7 @@ public class QueryRequest extends RequestBase implements JsonpSerializable {
 	}
 
 	/**
-	 * ISO-8601 time zone ID for the search.
+	 * The ISO-8601 time zone ID for the search.
 	 * <p>
 	 * API name: {@code time_zone}
 	 */
@@ -316,9 +343,12 @@ public class QueryRequest extends RequestBase implements JsonpSerializable {
 	}
 
 	/**
-	 * Period to wait for complete results. Defaults to no timeout, meaning the
-	 * request waits for complete search results. If the search doesn’t finish
+	 * The period to wait for complete results. It defaults to no timeout, meaning
+	 * the request waits for complete search results. If the search doesn't finish
 	 * within this period, the search becomes async.
+	 * <p>
+	 * To save a synchronous search, you must specify this parameter and the
+	 * <code>keep_on_completion</code> parameter.
 	 * <p>
 	 * API name: {@code wait_for_completion_timeout}
 	 */
@@ -338,6 +368,11 @@ public class QueryRequest extends RequestBase implements JsonpSerializable {
 
 	protected void serializeInternal(JsonGenerator generator, JsonpMapper mapper) {
 
+		if (this.allowPartialSearchResults != null) {
+			generator.writeKey("allow_partial_search_results");
+			generator.write(this.allowPartialSearchResults);
+
+		}
 		if (this.catalog != null) {
 			generator.writeKey("catalog");
 			generator.write(this.catalog);
@@ -441,6 +476,9 @@ public class QueryRequest extends RequestBase implements JsonpSerializable {
 
 	public static class Builder extends RequestBase.AbstractBuilder<Builder> implements ObjectBuilder<QueryRequest> {
 		@Nullable
+		private Boolean allowPartialSearchResults;
+
+		@Nullable
 		private String catalog;
 
 		@Nullable
@@ -459,7 +497,7 @@ public class QueryRequest extends RequestBase implements JsonpSerializable {
 		private Query filter;
 
 		@Nullable
-		private String format;
+		private SqlFormat format;
 
 		@Nullable
 		private Boolean indexUsingFrozen;
@@ -492,8 +530,20 @@ public class QueryRequest extends RequestBase implements JsonpSerializable {
 		private Time waitForCompletionTimeout;
 
 		/**
-		 * Default catalog (cluster) for queries. If unspecified, the queries execute on
-		 * the data in the local cluster only.
+		 * If <code>true</code>, the response has partial results when there are shard
+		 * request timeouts or shard failures. If <code>false</code>, the API returns an
+		 * error with no partial results.
+		 * <p>
+		 * API name: {@code allow_partial_search_results}
+		 */
+		public final Builder allowPartialSearchResults(@Nullable Boolean value) {
+			this.allowPartialSearchResults = value;
+			return this;
+		}
+
+		/**
+		 * The default catalog (cluster) for queries. If unspecified, the queries
+		 * execute on the data in the local cluster only.
 		 * <p>
 		 * API name: {@code catalog}
 		 */
@@ -503,8 +553,10 @@ public class QueryRequest extends RequestBase implements JsonpSerializable {
 		}
 
 		/**
-		 * If true, the results in a columnar fashion: one row represents all the values
-		 * of a certain column from the current page of results.
+		 * If <code>true</code>, the results are in a columnar fashion: one row
+		 * represents all the values of a certain column from the current page of
+		 * results. The API supports this parameter only for CBOR, JSON, SMILE, and YAML
+		 * responses.
 		 * <p>
 		 * API name: {@code columnar}
 		 */
@@ -514,9 +566,10 @@ public class QueryRequest extends RequestBase implements JsonpSerializable {
 		}
 
 		/**
-		 * Cursor used to retrieve a set of paginated results. If you specify a cursor,
-		 * the API only uses the <code>columnar</code> and <code>time_zone</code>
-		 * request body parameters. It ignores other request body parameters.
+		 * The cursor used to retrieve a set of paginated results. If you specify a
+		 * cursor, the API only uses the <code>columnar</code> and
+		 * <code>time_zone</code> request body parameters. It ignores other request body
+		 * parameters.
 		 * <p>
 		 * API name: {@code cursor}
 		 */
@@ -526,7 +579,7 @@ public class QueryRequest extends RequestBase implements JsonpSerializable {
 		}
 
 		/**
-		 * The maximum number of rows (or entries) to return in one response
+		 * The maximum number of rows (or entries) to return in one response.
 		 * <p>
 		 * API name: {@code fetch_size}
 		 */
@@ -536,9 +589,10 @@ public class QueryRequest extends RequestBase implements JsonpSerializable {
 		}
 
 		/**
-		 * Throw an exception when encountering multiple values for a field (default) or
-		 * be lenient and return the first value from the list (without any guarantees
-		 * of what that will be - typically the first in natural ascending order).
+		 * If <code>false</code>, the API returns an exception when encountering
+		 * multiple values for a field. If <code>true</code>, the API is lenient and
+		 * returns the first value from the array with no guarantee of consistent
+		 * results.
 		 * <p>
 		 * API name: {@code field_multi_value_leniency}
 		 */
@@ -548,7 +602,7 @@ public class QueryRequest extends RequestBase implements JsonpSerializable {
 		}
 
 		/**
-		 * Elasticsearch query DSL for additional filtering.
+		 * The Elasticsearch query DSL for additional filtering.
 		 * <p>
 		 * API name: {@code filter}
 		 */
@@ -558,7 +612,7 @@ public class QueryRequest extends RequestBase implements JsonpSerializable {
 		}
 
 		/**
-		 * Elasticsearch query DSL for additional filtering.
+		 * The Elasticsearch query DSL for additional filtering.
 		 * <p>
 		 * API name: {@code filter}
 		 */
@@ -567,17 +621,19 @@ public class QueryRequest extends RequestBase implements JsonpSerializable {
 		}
 
 		/**
-		 * Format for the response.
+		 * The format for the response. You can also specify a format using the
+		 * <code>Accept</code> HTTP header. If you specify both this parameter and the
+		 * <code>Accept</code> HTTP header, this parameter takes precedence.
 		 * <p>
 		 * API name: {@code format}
 		 */
-		public final Builder format(@Nullable String value) {
+		public final Builder format(@Nullable SqlFormat value) {
 			this.format = value;
 			return this;
 		}
 
 		/**
-		 * If true, the search can run on frozen indices. Defaults to false.
+		 * If <code>true</code>, the search can run on frozen indices.
 		 * <p>
 		 * API name: {@code index_using_frozen}
 		 */
@@ -587,7 +643,7 @@ public class QueryRequest extends RequestBase implements JsonpSerializable {
 		}
 
 		/**
-		 * Retention period for an async or saved synchronous search.
+		 * The retention period for an async or saved synchronous search.
 		 * <p>
 		 * API name: {@code keep_alive}
 		 */
@@ -597,7 +653,7 @@ public class QueryRequest extends RequestBase implements JsonpSerializable {
 		}
 
 		/**
-		 * Retention period for an async or saved synchronous search.
+		 * The retention period for an async or saved synchronous search.
 		 * <p>
 		 * API name: {@code keep_alive}
 		 */
@@ -606,9 +662,10 @@ public class QueryRequest extends RequestBase implements JsonpSerializable {
 		}
 
 		/**
-		 * If true, Elasticsearch stores synchronous searches if you also specify the
-		 * wait_for_completion_timeout parameter. If false, Elasticsearch only stores
-		 * async searches that don’t finish before the wait_for_completion_timeout.
+		 * If <code>true</code>, Elasticsearch stores synchronous searches if you also
+		 * specify the <code>wait_for_completion_timeout</code> parameter. If
+		 * <code>false</code>, Elasticsearch only stores async searches that don't
+		 * finish before the <code>wait_for_completion_timeout</code>.
 		 * <p>
 		 * API name: {@code keep_on_completion}
 		 */
@@ -618,7 +675,10 @@ public class QueryRequest extends RequestBase implements JsonpSerializable {
 		}
 
 		/**
-		 * The timeout before a pagination request fails.
+		 * The minimum retention period for the scroll cursor. After this time period, a
+		 * pagination request might fail because the scroll cursor is no longer
+		 * available. Subsequent scroll requests prolong the lifetime of the scroll
+		 * cursor by the duration of <code>page_timeout</code> in the scroll request.
 		 * <p>
 		 * API name: {@code page_timeout}
 		 */
@@ -628,7 +688,10 @@ public class QueryRequest extends RequestBase implements JsonpSerializable {
 		}
 
 		/**
-		 * The timeout before a pagination request fails.
+		 * The minimum retention period for the scroll cursor. After this time period, a
+		 * pagination request might fail because the scroll cursor is no longer
+		 * available. Subsequent scroll requests prolong the lifetime of the scroll
+		 * cursor by the duration of <code>page_timeout</code> in the scroll request.
 		 * <p>
 		 * API name: {@code page_timeout}
 		 */
@@ -637,7 +700,7 @@ public class QueryRequest extends RequestBase implements JsonpSerializable {
 		}
 
 		/**
-		 * Values for parameters in the query.
+		 * The values for parameters in the query.
 		 * <p>
 		 * API name: {@code params}
 		 * <p>
@@ -649,7 +712,7 @@ public class QueryRequest extends RequestBase implements JsonpSerializable {
 		}
 
 		/**
-		 * Values for parameters in the query.
+		 * The values for parameters in the query.
 		 * <p>
 		 * API name: {@code params}
 		 * <p>
@@ -661,7 +724,7 @@ public class QueryRequest extends RequestBase implements JsonpSerializable {
 		}
 
 		/**
-		 * SQL query to run.
+		 * The SQL query to run.
 		 * <p>
 		 * API name: {@code query}
 		 */
@@ -690,7 +753,7 @@ public class QueryRequest extends RequestBase implements JsonpSerializable {
 		}
 
 		/**
-		 * Defines one or more runtime fields in the search request. These fields take
+		 * One or more runtime fields for the search request. These fields take
 		 * precedence over mapped fields with the same name.
 		 * <p>
 		 * API name: {@code runtime_mappings}
@@ -703,7 +766,7 @@ public class QueryRequest extends RequestBase implements JsonpSerializable {
 		}
 
 		/**
-		 * Defines one or more runtime fields in the search request. These fields take
+		 * One or more runtime fields for the search request. These fields take
 		 * precedence over mapped fields with the same name.
 		 * <p>
 		 * API name: {@code runtime_mappings}
@@ -716,7 +779,7 @@ public class QueryRequest extends RequestBase implements JsonpSerializable {
 		}
 
 		/**
-		 * Defines one or more runtime fields in the search request. These fields take
+		 * One or more runtime fields for the search request. These fields take
 		 * precedence over mapped fields with the same name.
 		 * <p>
 		 * API name: {@code runtime_mappings}
@@ -729,7 +792,7 @@ public class QueryRequest extends RequestBase implements JsonpSerializable {
 		}
 
 		/**
-		 * ISO-8601 time zone ID for the search.
+		 * The ISO-8601 time zone ID for the search.
 		 * <p>
 		 * API name: {@code time_zone}
 		 */
@@ -739,9 +802,12 @@ public class QueryRequest extends RequestBase implements JsonpSerializable {
 		}
 
 		/**
-		 * Period to wait for complete results. Defaults to no timeout, meaning the
-		 * request waits for complete search results. If the search doesn’t finish
+		 * The period to wait for complete results. It defaults to no timeout, meaning
+		 * the request waits for complete search results. If the search doesn't finish
 		 * within this period, the search becomes async.
+		 * <p>
+		 * To save a synchronous search, you must specify this parameter and the
+		 * <code>keep_on_completion</code> parameter.
 		 * <p>
 		 * API name: {@code wait_for_completion_timeout}
 		 */
@@ -751,9 +817,12 @@ public class QueryRequest extends RequestBase implements JsonpSerializable {
 		}
 
 		/**
-		 * Period to wait for complete results. Defaults to no timeout, meaning the
-		 * request waits for complete search results. If the search doesn’t finish
+		 * The period to wait for complete results. It defaults to no timeout, meaning
+		 * the request waits for complete search results. If the search doesn't finish
 		 * within this period, the search becomes async.
+		 * <p>
+		 * To save a synchronous search, you must specify this parameter and the
+		 * <code>keep_on_completion</code> parameter.
 		 * <p>
 		 * API name: {@code wait_for_completion_timeout}
 		 */
@@ -789,6 +858,8 @@ public class QueryRequest extends RequestBase implements JsonpSerializable {
 
 	protected static void setupQueryRequestDeserializer(ObjectDeserializer<QueryRequest.Builder> op) {
 
+		op.add(Builder::allowPartialSearchResults, JsonpDeserializer.booleanDeserializer(),
+				"allow_partial_search_results");
 		op.add(Builder::catalog, JsonpDeserializer.stringDeserializer(), "catalog");
 		op.add(Builder::columnar, JsonpDeserializer.booleanDeserializer(), "columnar");
 		op.add(Builder::cursor, JsonpDeserializer.stringDeserializer(), "cursor");
@@ -838,7 +909,7 @@ public class QueryRequest extends RequestBase implements JsonpSerializable {
 			request -> {
 				Map<String, String> params = new HashMap<>();
 				if (request.format != null) {
-					params.put("format", request.format);
+					params.put("format", request.format.jsonValue());
 				}
 				return params;
 

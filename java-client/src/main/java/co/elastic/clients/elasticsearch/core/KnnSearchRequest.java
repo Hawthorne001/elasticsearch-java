@@ -63,11 +63,39 @@ import javax.annotation.Nullable;
 // typedef: _global.knn_search.Request
 
 /**
- * Performs a kNN search.
- * 
+ * Run a knn search.
+ * <p>
+ * NOTE: The kNN search API has been replaced by the <code>knn</code> option in
+ * the search API.
+ * <p>
+ * Perform a k-nearest neighbor (kNN) search on a dense_vector field and return
+ * the matching documents. Given a query vector, the API finds the k closest
+ * vectors and returns those documents as search hits.
+ * <p>
+ * Elasticsearch uses the HNSW algorithm to support efficient kNN search. Like
+ * most kNN algorithms, HNSW is an approximate method that sacrifices result
+ * accuracy for improved search speed. This means the results returned are not
+ * always the true k closest neighbors.
+ * <p>
+ * The kNN search API supports restricting the search using a filter. The search
+ * will return the top k documents that also match the filter query.
+ * <p>
+ * A kNN search response has the exact same structure as a search API response.
+ * However, certain sections have a meaning specific to kNN search:
+ * <ul>
+ * <li>The document <code>_score</code> is determined by the similarity between
+ * the query and document vector.</li>
+ * <li>The <code>hits.total</code> object contains the total number of nearest
+ * neighbor candidates considered, which is
+ * <code>num_candidates * num_shards</code>. The
+ * <code>hits.total.relation</code> will always be <code>eq</code>, indicating
+ * an exact value.</li>
+ * </ul>
+ *
  * @see <a href="../doc-files/api-spec.html#_global.knn_search.Request">API
  *      specification</a>
- * @deprecated 8.4.0
+ * @deprecated 8.4.0 The kNN search API has been replaced by the
+ *             <code>knn</code> option in the search API.
  */
 @Deprecated
 @JsonpDeserializable
@@ -111,7 +139,8 @@ public class KnnSearchRequest extends RequestBase implements JsonpSerializable {
 
 	/**
 	 * Indicates which source fields are returned for matching documents. These
-	 * fields are returned in the hits._source property of the search response.
+	 * fields are returned in the <code>hits._source</code> property of the search
+	 * response.
 	 * <p>
 	 * API name: {@code _source}
 	 */
@@ -122,7 +151,8 @@ public class KnnSearchRequest extends RequestBase implements JsonpSerializable {
 
 	/**
 	 * The request returns doc values for field names matching these patterns in the
-	 * hits.fields property of the response. Accepts wildcard (*) patterns.
+	 * <code>hits.fields</code> property of the response. It accepts wildcard
+	 * (<code>*</code>) patterns.
 	 * <p>
 	 * API name: {@code docvalue_fields}
 	 */
@@ -132,7 +162,8 @@ public class KnnSearchRequest extends RequestBase implements JsonpSerializable {
 
 	/**
 	 * The request returns values for field names matching these patterns in the
-	 * hits.fields property of the response. Accepts wildcard (*) patterns.
+	 * <code>hits.fields</code> property of the response. It accepts wildcard
+	 * (<code>*</code>) patterns.
 	 * <p>
 	 * API name: {@code fields}
 	 */
@@ -141,10 +172,10 @@ public class KnnSearchRequest extends RequestBase implements JsonpSerializable {
 	}
 
 	/**
-	 * Query to filter the documents that can match. The kNN search will return the
-	 * top <code>k</code> documents that also match this filter. The value can be a
-	 * single query or a list of queries. If <code>filter</code> isn't provided, all
-	 * documents are allowed to match.
+	 * A query to filter the documents that can match. The kNN search will return
+	 * the top <code>k</code> documents that also match this filter. The value can
+	 * be a single query or a list of queries. If <code>filter</code> isn't
+	 * provided, all documents are allowed to match.
 	 * <p>
 	 * API name: {@code filter}
 	 */
@@ -154,7 +185,7 @@ public class KnnSearchRequest extends RequestBase implements JsonpSerializable {
 
 	/**
 	 * Required - A comma-separated list of index names to search; use
-	 * <code>_all</code> or to perform the operation on all indices
+	 * <code>_all</code> or to perform the operation on all indices.
 	 * <p>
 	 * API name: {@code index}
 	 */
@@ -163,7 +194,7 @@ public class KnnSearchRequest extends RequestBase implements JsonpSerializable {
 	}
 
 	/**
-	 * Required - kNN query to execute
+	 * Required - The kNN query to run.
 	 * <p>
 	 * API name: {@code knn}
 	 */
@@ -172,7 +203,7 @@ public class KnnSearchRequest extends RequestBase implements JsonpSerializable {
 	}
 
 	/**
-	 * A comma-separated list of specific routing values
+	 * A comma-separated list of specific routing values.
 	 * <p>
 	 * API name: {@code routing}
 	 */
@@ -182,10 +213,11 @@ public class KnnSearchRequest extends RequestBase implements JsonpSerializable {
 	}
 
 	/**
-	 * List of stored fields to return as part of a hit. If no fields are specified,
-	 * no stored fields are included in the response. If this field is specified,
-	 * the _source parameter defaults to false. You can pass _source: true to return
-	 * both source fields and stored fields in the search response.
+	 * A list of stored fields to return as part of a hit. If no fields are
+	 * specified, no stored fields are included in the response. If this field is
+	 * specified, the <code>_source</code> parameter defaults to <code>false</code>.
+	 * You can pass <code>_source: true</code> to return both source fields and
+	 * stored fields in the search response.
 	 * <p>
 	 * API name: {@code stored_fields}
 	 */
@@ -244,12 +276,18 @@ public class KnnSearchRequest extends RequestBase implements JsonpSerializable {
 
 		if (ApiTypeHelper.isDefined(this.storedFields)) {
 			generator.writeKey("stored_fields");
-			generator.writeStartArray();
-			for (String item0 : this.storedFields) {
-				generator.write(item0);
+			if (this.storedFields.size() == 1) {
+				String singleItem = this.storedFields.get(0);
+				generator.write(singleItem);
 
+			} else {
+				generator.writeStartArray();
+				for (String item0 : this.storedFields) {
+					generator.write(item0);
+
+				}
+				generator.writeEnd();
 			}
-			generator.writeEnd();
 
 		}
 
@@ -288,7 +326,8 @@ public class KnnSearchRequest extends RequestBase implements JsonpSerializable {
 
 		/**
 		 * Indicates which source fields are returned for matching documents. These
-		 * fields are returned in the hits._source property of the search response.
+		 * fields are returned in the <code>hits._source</code> property of the search
+		 * response.
 		 * <p>
 		 * API name: {@code _source}
 		 */
@@ -299,7 +338,8 @@ public class KnnSearchRequest extends RequestBase implements JsonpSerializable {
 
 		/**
 		 * Indicates which source fields are returned for matching documents. These
-		 * fields are returned in the hits._source property of the search response.
+		 * fields are returned in the <code>hits._source</code> property of the search
+		 * response.
 		 * <p>
 		 * API name: {@code _source}
 		 */
@@ -309,7 +349,8 @@ public class KnnSearchRequest extends RequestBase implements JsonpSerializable {
 
 		/**
 		 * The request returns doc values for field names matching these patterns in the
-		 * hits.fields property of the response. Accepts wildcard (*) patterns.
+		 * <code>hits.fields</code> property of the response. It accepts wildcard
+		 * (<code>*</code>) patterns.
 		 * <p>
 		 * API name: {@code docvalue_fields}
 		 * <p>
@@ -322,7 +363,8 @@ public class KnnSearchRequest extends RequestBase implements JsonpSerializable {
 
 		/**
 		 * The request returns doc values for field names matching these patterns in the
-		 * hits.fields property of the response. Accepts wildcard (*) patterns.
+		 * <code>hits.fields</code> property of the response. It accepts wildcard
+		 * (<code>*</code>) patterns.
 		 * <p>
 		 * API name: {@code docvalue_fields}
 		 * <p>
@@ -335,7 +377,8 @@ public class KnnSearchRequest extends RequestBase implements JsonpSerializable {
 
 		/**
 		 * The request returns doc values for field names matching these patterns in the
-		 * hits.fields property of the response. Accepts wildcard (*) patterns.
+		 * <code>hits.fields</code> property of the response. It accepts wildcard
+		 * (<code>*</code>) patterns.
 		 * <p>
 		 * API name: {@code docvalue_fields}
 		 * <p>
@@ -347,7 +390,8 @@ public class KnnSearchRequest extends RequestBase implements JsonpSerializable {
 
 		/**
 		 * The request returns values for field names matching these patterns in the
-		 * hits.fields property of the response. Accepts wildcard (*) patterns.
+		 * <code>hits.fields</code> property of the response. It accepts wildcard
+		 * (<code>*</code>) patterns.
 		 * <p>
 		 * API name: {@code fields}
 		 * <p>
@@ -360,7 +404,8 @@ public class KnnSearchRequest extends RequestBase implements JsonpSerializable {
 
 		/**
 		 * The request returns values for field names matching these patterns in the
-		 * hits.fields property of the response. Accepts wildcard (*) patterns.
+		 * <code>hits.fields</code> property of the response. It accepts wildcard
+		 * (<code>*</code>) patterns.
 		 * <p>
 		 * API name: {@code fields}
 		 * <p>
@@ -372,10 +417,10 @@ public class KnnSearchRequest extends RequestBase implements JsonpSerializable {
 		}
 
 		/**
-		 * Query to filter the documents that can match. The kNN search will return the
-		 * top <code>k</code> documents that also match this filter. The value can be a
-		 * single query or a list of queries. If <code>filter</code> isn't provided, all
-		 * documents are allowed to match.
+		 * A query to filter the documents that can match. The kNN search will return
+		 * the top <code>k</code> documents that also match this filter. The value can
+		 * be a single query or a list of queries. If <code>filter</code> isn't
+		 * provided, all documents are allowed to match.
 		 * <p>
 		 * API name: {@code filter}
 		 * <p>
@@ -387,10 +432,10 @@ public class KnnSearchRequest extends RequestBase implements JsonpSerializable {
 		}
 
 		/**
-		 * Query to filter the documents that can match. The kNN search will return the
-		 * top <code>k</code> documents that also match this filter. The value can be a
-		 * single query or a list of queries. If <code>filter</code> isn't provided, all
-		 * documents are allowed to match.
+		 * A query to filter the documents that can match. The kNN search will return
+		 * the top <code>k</code> documents that also match this filter. The value can
+		 * be a single query or a list of queries. If <code>filter</code> isn't
+		 * provided, all documents are allowed to match.
 		 * <p>
 		 * API name: {@code filter}
 		 * <p>
@@ -402,10 +447,10 @@ public class KnnSearchRequest extends RequestBase implements JsonpSerializable {
 		}
 
 		/**
-		 * Query to filter the documents that can match. The kNN search will return the
-		 * top <code>k</code> documents that also match this filter. The value can be a
-		 * single query or a list of queries. If <code>filter</code> isn't provided, all
-		 * documents are allowed to match.
+		 * A query to filter the documents that can match. The kNN search will return
+		 * the top <code>k</code> documents that also match this filter. The value can
+		 * be a single query or a list of queries. If <code>filter</code> isn't
+		 * provided, all documents are allowed to match.
 		 * <p>
 		 * API name: {@code filter}
 		 * <p>
@@ -417,7 +462,7 @@ public class KnnSearchRequest extends RequestBase implements JsonpSerializable {
 
 		/**
 		 * Required - A comma-separated list of index names to search; use
-		 * <code>_all</code> or to perform the operation on all indices
+		 * <code>_all</code> or to perform the operation on all indices.
 		 * <p>
 		 * API name: {@code index}
 		 * <p>
@@ -430,7 +475,7 @@ public class KnnSearchRequest extends RequestBase implements JsonpSerializable {
 
 		/**
 		 * Required - A comma-separated list of index names to search; use
-		 * <code>_all</code> or to perform the operation on all indices
+		 * <code>_all</code> or to perform the operation on all indices.
 		 * <p>
 		 * API name: {@code index}
 		 * <p>
@@ -442,7 +487,7 @@ public class KnnSearchRequest extends RequestBase implements JsonpSerializable {
 		}
 
 		/**
-		 * Required - kNN query to execute
+		 * Required - The kNN query to run.
 		 * <p>
 		 * API name: {@code knn}
 		 */
@@ -452,7 +497,7 @@ public class KnnSearchRequest extends RequestBase implements JsonpSerializable {
 		}
 
 		/**
-		 * Required - kNN query to execute
+		 * Required - The kNN query to run.
 		 * <p>
 		 * API name: {@code knn}
 		 */
@@ -461,7 +506,7 @@ public class KnnSearchRequest extends RequestBase implements JsonpSerializable {
 		}
 
 		/**
-		 * A comma-separated list of specific routing values
+		 * A comma-separated list of specific routing values.
 		 * <p>
 		 * API name: {@code routing}
 		 */
@@ -471,10 +516,11 @@ public class KnnSearchRequest extends RequestBase implements JsonpSerializable {
 		}
 
 		/**
-		 * List of stored fields to return as part of a hit. If no fields are specified,
-		 * no stored fields are included in the response. If this field is specified,
-		 * the _source parameter defaults to false. You can pass _source: true to return
-		 * both source fields and stored fields in the search response.
+		 * A list of stored fields to return as part of a hit. If no fields are
+		 * specified, no stored fields are included in the response. If this field is
+		 * specified, the <code>_source</code> parameter defaults to <code>false</code>.
+		 * You can pass <code>_source: true</code> to return both source fields and
+		 * stored fields in the search response.
 		 * <p>
 		 * API name: {@code stored_fields}
 		 * <p>
@@ -486,10 +532,11 @@ public class KnnSearchRequest extends RequestBase implements JsonpSerializable {
 		}
 
 		/**
-		 * List of stored fields to return as part of a hit. If no fields are specified,
-		 * no stored fields are included in the response. If this field is specified,
-		 * the _source parameter defaults to false. You can pass _source: true to return
-		 * both source fields and stored fields in the search response.
+		 * A list of stored fields to return as part of a hit. If no fields are
+		 * specified, no stored fields are included in the response. If this field is
+		 * specified, the <code>_source</code> parameter defaults to <code>false</code>.
+		 * You can pass <code>_source: true</code> to return both source fields and
+		 * stored fields in the search response.
 		 * <p>
 		 * API name: {@code stored_fields}
 		 * <p>

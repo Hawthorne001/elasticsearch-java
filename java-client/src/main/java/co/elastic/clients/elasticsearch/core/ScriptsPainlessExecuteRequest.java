@@ -20,8 +20,9 @@
 package co.elastic.clients.elasticsearch.core;
 
 import co.elastic.clients.elasticsearch._types.ErrorResponse;
-import co.elastic.clients.elasticsearch._types.InlineScript;
 import co.elastic.clients.elasticsearch._types.RequestBase;
+import co.elastic.clients.elasticsearch._types.Script;
+import co.elastic.clients.elasticsearch.core.scripts_painless_execute.PainlessContext;
 import co.elastic.clients.elasticsearch.core.scripts_painless_execute.PainlessContextSetup;
 import co.elastic.clients.json.JsonpDeserializable;
 import co.elastic.clients.json.JsonpDeserializer;
@@ -33,7 +34,6 @@ import co.elastic.clients.transport.Endpoint;
 import co.elastic.clients.transport.endpoints.SimpleEndpoint;
 import co.elastic.clients.util.ObjectBuilder;
 import jakarta.json.stream.JsonGenerator;
-import java.lang.String;
 import java.util.Collections;
 import java.util.Objects;
 import java.util.function.Function;
@@ -57,7 +57,18 @@ import javax.annotation.Nullable;
 // typedef: _global.scripts_painless_execute.Request
 
 /**
- * Runs a script and returns a result.
+ * Run a script.
+ * <p>
+ * Runs a script and returns a result. Use this API to build and test scripts,
+ * such as when defining a script for a runtime field. This API requires very
+ * few dependencies and is especially useful if you don't have permissions to
+ * write documents on a cluster.
+ * <p>
+ * The API uses several <em>contexts</em>, which control how scripts are run,
+ * what variables are available at runtime, and what the return type is.
+ * <p>
+ * Each context requires a script, but additional parameters depend on the
+ * context you're using for that script.
  * 
  * @see <a href=
  *      "../doc-files/api-spec.html#_global.scripts_painless_execute.Request">API
@@ -66,13 +77,13 @@ import javax.annotation.Nullable;
 @JsonpDeserializable
 public class ScriptsPainlessExecuteRequest extends RequestBase implements JsonpSerializable {
 	@Nullable
-	private final String context;
+	private final PainlessContext context;
 
 	@Nullable
 	private final PainlessContextSetup contextSetup;
 
 	@Nullable
-	private final InlineScript script;
+	private final Script script;
 
 	// ---------------------------------------------------------------------------------------------
 
@@ -89,17 +100,20 @@ public class ScriptsPainlessExecuteRequest extends RequestBase implements JsonpS
 	}
 
 	/**
-	 * The context that the script should run in.
+	 * The context that the script should run in. NOTE: Result ordering in the field
+	 * contexts is not guaranteed.
 	 * <p>
 	 * API name: {@code context}
 	 */
 	@Nullable
-	public final String context() {
+	public final PainlessContext context() {
 		return this.context;
 	}
 
 	/**
-	 * Additional parameters for the <code>context</code>.
+	 * Additional parameters for the <code>context</code>. NOTE: This parameter is
+	 * required for all contexts except <code>painless_test</code>, which is the
+	 * default if no value is provided for <code>context</code>.
 	 * <p>
 	 * API name: {@code context_setup}
 	 */
@@ -109,12 +123,12 @@ public class ScriptsPainlessExecuteRequest extends RequestBase implements JsonpS
 	}
 
 	/**
-	 * The Painless script to execute.
+	 * The Painless script to run.
 	 * <p>
 	 * API name: {@code script}
 	 */
 	@Nullable
-	public final InlineScript script() {
+	public final Script script() {
 		return this.script;
 	}
 
@@ -131,8 +145,7 @@ public class ScriptsPainlessExecuteRequest extends RequestBase implements JsonpS
 
 		if (this.context != null) {
 			generator.writeKey("context");
-			generator.write(this.context);
-
+			this.context.serialize(generator, mapper);
 		}
 		if (this.contextSetup != null) {
 			generator.writeKey("context_setup");
@@ -157,26 +170,29 @@ public class ScriptsPainlessExecuteRequest extends RequestBase implements JsonpS
 			implements
 				ObjectBuilder<ScriptsPainlessExecuteRequest> {
 		@Nullable
-		private String context;
+		private PainlessContext context;
 
 		@Nullable
 		private PainlessContextSetup contextSetup;
 
 		@Nullable
-		private InlineScript script;
+		private Script script;
 
 		/**
-		 * The context that the script should run in.
+		 * The context that the script should run in. NOTE: Result ordering in the field
+		 * contexts is not guaranteed.
 		 * <p>
 		 * API name: {@code context}
 		 */
-		public final Builder context(@Nullable String value) {
+		public final Builder context(@Nullable PainlessContext value) {
 			this.context = value;
 			return this;
 		}
 
 		/**
-		 * Additional parameters for the <code>context</code>.
+		 * Additional parameters for the <code>context</code>. NOTE: This parameter is
+		 * required for all contexts except <code>painless_test</code>, which is the
+		 * default if no value is provided for <code>context</code>.
 		 * <p>
 		 * API name: {@code context_setup}
 		 */
@@ -186,7 +202,9 @@ public class ScriptsPainlessExecuteRequest extends RequestBase implements JsonpS
 		}
 
 		/**
-		 * Additional parameters for the <code>context</code>.
+		 * Additional parameters for the <code>context</code>. NOTE: This parameter is
+		 * required for all contexts except <code>painless_test</code>, which is the
+		 * default if no value is provided for <code>context</code>.
 		 * <p>
 		 * API name: {@code context_setup}
 		 */
@@ -196,22 +214,22 @@ public class ScriptsPainlessExecuteRequest extends RequestBase implements JsonpS
 		}
 
 		/**
-		 * The Painless script to execute.
+		 * The Painless script to run.
 		 * <p>
 		 * API name: {@code script}
 		 */
-		public final Builder script(@Nullable InlineScript value) {
+		public final Builder script(@Nullable Script value) {
 			this.script = value;
 			return this;
 		}
 
 		/**
-		 * The Painless script to execute.
+		 * The Painless script to run.
 		 * <p>
 		 * API name: {@code script}
 		 */
-		public final Builder script(Function<InlineScript.Builder, ObjectBuilder<InlineScript>> fn) {
-			return this.script(fn.apply(new InlineScript.Builder()).build());
+		public final Builder script(Function<Script.Builder, ObjectBuilder<Script>> fn) {
+			return this.script(fn.apply(new Script.Builder()).build());
 		}
 
 		@Override
@@ -243,9 +261,9 @@ public class ScriptsPainlessExecuteRequest extends RequestBase implements JsonpS
 	protected static void setupScriptsPainlessExecuteRequestDeserializer(
 			ObjectDeserializer<ScriptsPainlessExecuteRequest.Builder> op) {
 
-		op.add(Builder::context, JsonpDeserializer.stringDeserializer(), "context");
+		op.add(Builder::context, PainlessContext._DESERIALIZER, "context");
 		op.add(Builder::contextSetup, PainlessContextSetup._DESERIALIZER, "context_setup");
-		op.add(Builder::script, InlineScript._DESERIALIZER, "script");
+		op.add(Builder::script, Script._DESERIALIZER, "script");
 
 	}
 

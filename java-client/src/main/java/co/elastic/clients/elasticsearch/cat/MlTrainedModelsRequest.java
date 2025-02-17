@@ -21,6 +21,7 @@ package co.elastic.clients.elasticsearch.cat;
 
 import co.elastic.clients.elasticsearch._types.Bytes;
 import co.elastic.clients.elasticsearch._types.ErrorResponse;
+import co.elastic.clients.elasticsearch._types.TimeUnit;
 import co.elastic.clients.json.JsonpDeserializable;
 import co.elastic.clients.json.JsonpDeserializer;
 import co.elastic.clients.json.ObjectBuilderDeserializer;
@@ -59,9 +60,11 @@ import javax.annotation.Nullable;
 // typedef: cat.ml_trained_models.Request
 
 /**
- * Returns configuration and usage information about inference trained models.
+ * Get trained models.
  * <p>
- * IMPORTANT: cat APIs are only intended for human consumption using the Kibana
+ * Get configuration and usage information about inference trained models.
+ * <p>
+ * IMPORTANT: CAT APIs are only intended for human consumption using the Kibana
  * console or command line. They are not intended for use by applications. For
  * application consumption, use the get trained models statistics API.
  * 
@@ -89,6 +92,9 @@ public class MlTrainedModelsRequest extends CatRequestBase {
 	@Nullable
 	private final Integer size;
 
+	@Nullable
+	private final TimeUnit time;
+
 	// ---------------------------------------------------------------------------------------------
 
 	private MlTrainedModelsRequest(Builder builder) {
@@ -100,6 +106,7 @@ public class MlTrainedModelsRequest extends CatRequestBase {
 		this.modelId = builder.modelId;
 		this.s = ApiTypeHelper.unmodifiable(builder.s);
 		this.size = builder.size;
+		this.time = builder.time;
 
 	}
 
@@ -181,6 +188,16 @@ public class MlTrainedModelsRequest extends CatRequestBase {
 		return this.size;
 	}
 
+	/**
+	 * Unit used to display time values.
+	 * <p>
+	 * API name: {@code time}
+	 */
+	@Nullable
+	public final TimeUnit time() {
+		return this.time;
+	}
+
 	// ---------------------------------------------------------------------------------------------
 
 	/**
@@ -210,6 +227,9 @@ public class MlTrainedModelsRequest extends CatRequestBase {
 
 		@Nullable
 		private Integer size;
+
+		@Nullable
+		private TimeUnit time;
 
 		/**
 		 * Specifies what to do when the request: contains wildcard expressions and
@@ -315,6 +335,16 @@ public class MlTrainedModelsRequest extends CatRequestBase {
 			return this;
 		}
 
+		/**
+		 * Unit used to display time values.
+		 * <p>
+		 * API name: {@code time}
+		 */
+		public final Builder time(@Nullable TimeUnit value) {
+			this.time = value;
+			return this;
+		}
+
 		@Override
 		protected Builder self() {
 			return this;
@@ -412,6 +442,9 @@ public class MlTrainedModelsRequest extends CatRequestBase {
 				}
 				if (request.from != null) {
 					params.put("from", String.valueOf(request.from));
+				}
+				if (request.time != null) {
+					params.put("time", request.time.jsonValue());
 				}
 				if (request.allowNoMatch != null) {
 					params.put("allow_no_match", String.valueOf(request.allowNoMatch));

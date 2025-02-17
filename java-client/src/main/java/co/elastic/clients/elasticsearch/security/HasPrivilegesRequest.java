@@ -61,7 +61,11 @@ import javax.annotation.Nullable;
 // typedef: security.has_privileges.Request
 
 /**
- * Determines whether the specified user has a specified list of privileges.
+ * Check user privileges.
+ * <p>
+ * Determine whether the specified user has a specified list of privileges. All
+ * users can use this API, but only to determine their own privileges. To check
+ * the privileges of other users, you must use the run as feature.
  * 
  * @see <a href="../doc-files/api-spec.html#security.has_privileges.Request">API
  *      specification</a>

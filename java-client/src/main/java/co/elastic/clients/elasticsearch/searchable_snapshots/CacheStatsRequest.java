@@ -58,7 +58,8 @@ import javax.annotation.Nullable;
 // typedef: searchable_snapshots.cache_stats.Request
 
 /**
- * Retrieve node-level cache statistics about searchable snapshots.
+ * Get cache statistics. Get statistics about the shared cache for partially
+ * mounted indices.
  * 
  * @see <a href=
  *      "../doc-files/api-spec.html#searchable_snapshots.cache_stats.Request">API
@@ -93,9 +94,7 @@ public class CacheStatsRequest extends RequestBase {
 	}
 
 	/**
-	 * A comma-separated list of node IDs or names to limit the returned
-	 * information; use <code>_local</code> to return information from the node
-	 * you're connecting to, leave empty to get information from all nodes
+	 * The names of the nodes in the cluster to target.
 	 * <p>
 	 * API name: {@code node_id}
 	 */
@@ -134,9 +133,7 @@ public class CacheStatsRequest extends RequestBase {
 		}
 
 		/**
-		 * A comma-separated list of node IDs or names to limit the returned
-		 * information; use <code>_local</code> to return information from the node
-		 * you're connecting to, leave empty to get information from all nodes
+		 * The names of the nodes in the cluster to target.
 		 * <p>
 		 * API name: {@code node_id}
 		 * <p>
@@ -148,9 +145,7 @@ public class CacheStatsRequest extends RequestBase {
 		}
 
 		/**
-		 * A comma-separated list of node IDs or names to limit the returned
-		 * information; use <code>_local</code> to return information from the node
-		 * you're connecting to, leave empty to get information from all nodes
+		 * The names of the nodes in the cluster to target.
 		 * <p>
 		 * API name: {@code node_id}
 		 * <p>

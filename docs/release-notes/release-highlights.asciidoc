@@ -6,6 +6,69 @@ These are the important new features and changes in minor releases. Every releas
 For a list of detailed changes, including bug fixes, please see the https://github.com/elastic/elasticsearch-java/releases[GitHub project realease notes].
 
 [discrete]
+==== Version 8.16
+* `ElasticsearchClient` is now `Closeable`. Closing a client object also closes the underlying transport - https://github.com/elastic/elasticsearch-java/pull/851[#851]
+* Added option to make the response body available in case of deserialization error- https://github.com/elastic/elasticsearch-java/pull/886[#886].
+
+** While it has always been possible to set the log level to `trace` and have the client print both the json bodies of the requests and responses, it's often not the best solution because of the large amount of information printed.
+** To enable the feature:
+
+    RestClientOptions options = new RestClientOptions(RequestOptions.DEFAULT, true);
+    ElasticsearchTransport transport = new RestClientTransport(restClient, new JacksonJsonpMapper(), options);
+    ElasticsearchClient esClientWithOptions = new ElasticsearchClient(transport);
+
+** To retrieve the original body from the TransportException that gets thrown in case of deserialization errors:
+
+    try{
+        // some code that returns faulty json
+    }
+    catch (TransportException ex){
+        try (RepeatableBodyResponse repeatableResponse = (RepeatableBodyResponse) ex.response()) {
+            BinaryData body = repeatableResponse.body();
+        }
+    }
+
+
+[discrete]
+==== Version 8.15
+
+* New https://www.elastic.co/guide/en/elasticsearch/reference/current/connector-apis.html[Connector API] available
+* Fixed bug in BulkIngester - https://github.com/elastic/elasticsearch-java/pull/830[#830]
+* Various bug fixes, among which are https://github.com/elastic/elasticsearch-java/pull/844[#844], https://github.com/elastic/elasticsearch-java/pull/847[#847]
+* Changed builders for queries that use generic types, for example:
+
+** Old RangeQuery:
++
+[source,java]
+----
+RangeQuery ra = RangeQuery.of(r -> r  // no distinction between various types (date, term, number)
+    .field("day")
+    .gte(JsonData.of("2024-06-20"))   // must use custom json for fields because there's no defined type
+    .lte(JsonData.of("2024-07-05"))
+    .boost(1.0F)
+    .format("yyyy-MM-dd")
+    .relation(RangeRelation.Contains));
+----
++
+** New RangeQuery:
++
+[source,java]
+----
+RangeQuery ra = RangeQuery.of(r -> r
+    .date(d -> d             // choose query type before
+        .field("day")
+        .gte("2024-06-20")    // field now only accepts valid type for the specified query
+        .lte("2024-07-05")
+        .boost(1.0F)
+        .format("yyyy-MM-dd")
+        .relation(RangeRelation.Contains)));
+----
+
+[discrete]
+==== Version 8.14
+* No new feature.
+
+[discrete]
 ==== Version 8.13
 
 * Add ES|QL helpers - https://github.com/elastic/elasticsearch-java/pull/763[#763]

@@ -38,6 +38,7 @@ import co.elastic.clients.util.ObjectBuilder;
 import jakarta.json.stream.JsonGenerator;
 import java.lang.Boolean;
 import java.lang.String;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -64,7 +65,8 @@ import javax.annotation.Nullable;
 // typedef: esql.query.Request
 
 /**
- * Executes an ES|QL request
+ * Run an ES|QL query. Get search results for an ES|QL (Elasticsearch query
+ * language) query.
  * 
  * @see <a href="../doc-files/api-spec.html#esql.query.Request">API
  *      specification</a>
@@ -78,19 +80,25 @@ public class QueryRequest extends RequestBase implements JsonpSerializable {
 	private final String delimiter;
 
 	@Nullable
+	private final Boolean dropNullColumns;
+
+	@Nullable
 	private final Query filter;
 
 	@Nullable
-	private final String format;
+	private final EsqlFormat format;
 
 	@Nullable
 	private final String locale;
 
 	private final List<FieldValue> params;
 
+	@Nullable
+	private final Boolean profile;
+
 	private final String query;
 
-	private final EsqlVersion version;
+	private final Map<String, Map<String, TableValues>> tables;
 
 	// ---------------------------------------------------------------------------------------------
 
@@ -98,12 +106,14 @@ public class QueryRequest extends RequestBase implements JsonpSerializable {
 
 		this.columnar = builder.columnar;
 		this.delimiter = builder.delimiter;
+		this.dropNullColumns = builder.dropNullColumns;
 		this.filter = builder.filter;
 		this.format = builder.format;
 		this.locale = builder.locale;
 		this.params = ApiTypeHelper.unmodifiable(builder.params);
+		this.profile = builder.profile;
 		this.query = ApiTypeHelper.requireNonNull(builder.query, this, "query");
-		this.version = ApiTypeHelper.requireNonNull(builder.version, this, "version");
+		this.tables = ApiTypeHelper.unmodifiable(builder.tables);
 
 	}
 
@@ -136,6 +146,20 @@ public class QueryRequest extends RequestBase implements JsonpSerializable {
 	}
 
 	/**
+	 * Should columns that are entirely <code>null</code> be removed from the
+	 * <code>columns</code> and <code>values</code> portion of the results? Defaults
+	 * to <code>false</code>. If <code>true</code> then the response will include an
+	 * extra section under the name <code>all_columns</code> which has the name of
+	 * all columns.
+	 * <p>
+	 * API name: {@code drop_null_columns}
+	 */
+	@Nullable
+	public final Boolean dropNullColumns() {
+		return this.dropNullColumns;
+	}
+
+	/**
 	 * Specify a Query DSL query in the filter parameter to filter the set of
 	 * documents that an ES|QL query runs on.
 	 * <p>
@@ -152,7 +176,7 @@ public class QueryRequest extends RequestBase implements JsonpSerializable {
 	 * API name: {@code format}
 	 */
 	@Nullable
-	public final String format() {
+	public final EsqlFormat format() {
 		return this.format;
 	}
 
@@ -176,6 +200,19 @@ public class QueryRequest extends RequestBase implements JsonpSerializable {
 	}
 
 	/**
+	 * If provided and <code>true</code> the response will include an extra
+	 * <code>profile</code> object with information on how the query was executed.
+	 * This information is for human debugging and its format can change at any time
+	 * but it can give some insight into the performance of each part of the query.
+	 * <p>
+	 * API name: {@code profile}
+	 */
+	@Nullable
+	public final Boolean profile() {
+		return this.profile;
+	}
+
+	/**
 	 * Required - The ES|QL query API accepts an ES|QL query string in the query
 	 * parameter, runs it, and returns the results.
 	 * <p>
@@ -186,13 +223,13 @@ public class QueryRequest extends RequestBase implements JsonpSerializable {
 	}
 
 	/**
-	 * Required - The version of the ES|QL language in which the &quot;query&quot;
-	 * field was written.
+	 * Tables to use with the LOOKUP operation. The top level key is the table name
+	 * and the next level key is the column name.
 	 * <p>
-	 * API name: {@code version}
+	 * API name: {@code tables}
 	 */
-	public final EsqlVersion version() {
-		return this.version;
+	public final Map<String, Map<String, TableValues>> tables() {
+		return this.tables;
 	}
 
 	/**
@@ -231,11 +268,33 @@ public class QueryRequest extends RequestBase implements JsonpSerializable {
 			generator.writeEnd();
 
 		}
+		if (this.profile != null) {
+			generator.writeKey("profile");
+			generator.write(this.profile);
+
+		}
 		generator.writeKey("query");
 		generator.write(this.query);
 
-		generator.writeKey("version");
-		this.version.serialize(generator, mapper);
+		if (ApiTypeHelper.isDefined(this.tables)) {
+			generator.writeKey("tables");
+			generator.writeStartObject();
+			for (Map.Entry<String, Map<String, TableValues>> item0 : this.tables.entrySet()) {
+				generator.writeKey(item0.getKey());
+				generator.writeStartObject();
+				if (item0.getValue() != null) {
+					for (Map.Entry<String, TableValues> item1 : item0.getValue().entrySet()) {
+						generator.writeKey(item1.getKey());
+						item1.getValue().serialize(generator, mapper);
+
+					}
+				}
+				generator.writeEnd();
+
+			}
+			generator.writeEnd();
+
+		}
 
 	}
 
@@ -253,10 +312,13 @@ public class QueryRequest extends RequestBase implements JsonpSerializable {
 		private String delimiter;
 
 		@Nullable
+		private Boolean dropNullColumns;
+
+		@Nullable
 		private Query filter;
 
 		@Nullable
-		private String format;
+		private EsqlFormat format;
 
 		@Nullable
 		private String locale;
@@ -264,9 +326,13 @@ public class QueryRequest extends RequestBase implements JsonpSerializable {
 		@Nullable
 		private List<FieldValue> params;
 
+		@Nullable
+		private Boolean profile;
+
 		private String query;
 
-		private EsqlVersion version;
+		@Nullable
+		private Map<String, Map<String, TableValues>> tables;
 
 		/**
 		 * By default, ES|QL returns results as rows. For example, FROM returns each
@@ -289,6 +355,20 @@ public class QueryRequest extends RequestBase implements JsonpSerializable {
 		 */
 		public final Builder delimiter(@Nullable String value) {
 			this.delimiter = value;
+			return this;
+		}
+
+		/**
+		 * Should columns that are entirely <code>null</code> be removed from the
+		 * <code>columns</code> and <code>values</code> portion of the results? Defaults
+		 * to <code>false</code>. If <code>true</code> then the response will include an
+		 * extra section under the name <code>all_columns</code> which has the name of
+		 * all columns.
+		 * <p>
+		 * API name: {@code drop_null_columns}
+		 */
+		public final Builder dropNullColumns(@Nullable Boolean value) {
+			this.dropNullColumns = value;
 			return this;
 		}
 
@@ -318,7 +398,7 @@ public class QueryRequest extends RequestBase implements JsonpSerializable {
 		 * <p>
 		 * API name: {@code format}
 		 */
-		public final Builder format(@Nullable String value) {
+		public final Builder format(@Nullable EsqlFormat value) {
 			this.format = value;
 			return this;
 		}
@@ -366,10 +446,99 @@ public class QueryRequest extends RequestBase implements JsonpSerializable {
 		 * <p>
 		 * API name: {@code params}
 		 * <p>
+		 * Adds all passed values to <code>params</code>.
+		 */
+		public final Builder params(String value, String... values) {
+			this.params = _listAdd(this.params, FieldValue.of(value));
+			List<FieldValue> fieldValues = new ArrayList<>();
+			for (String v : values) {
+				fieldValues.add(FieldValue.of(v));
+			}
+			this.params = _listAddAll(this.params, fieldValues);
+			return this;
+		}
+
+		/**
+		 * To avoid any attempts of hacking or code injection, extract the values in a
+		 * separate list of parameters. Use question mark placeholders (?) in the query
+		 * string for each of the parameters.
+		 * <p>
+		 * API name: {@code params}
+		 * <p>
+		 * Adds all passed values to <code>params</code>.
+		 */
+		public final Builder params(long value, long... values) {
+			this.params = _listAdd(this.params, FieldValue.of(value));
+			List<FieldValue> fieldValues = new ArrayList<>();
+			for (long v : values) {
+				fieldValues.add(FieldValue.of(v));
+			}
+			this.params = _listAddAll(this.params, fieldValues);
+			return this;
+		}
+
+		/**
+		 * To avoid any attempts of hacking or code injection, extract the values in a
+		 * separate list of parameters. Use question mark placeholders (?) in the query
+		 * string for each of the parameters.
+		 * <p>
+		 * API name: {@code params}
+		 * <p>
+		 * Adds all passed values to <code>params</code>.
+		 */
+		public final Builder params(double value, double... values) {
+			this.params = _listAdd(this.params, FieldValue.of(value));
+			List<FieldValue> fieldValues = new ArrayList<>();
+			for (double v : values) {
+				fieldValues.add(FieldValue.of(v));
+			}
+			this.params = _listAddAll(this.params, fieldValues);
+			return this;
+		}
+
+		/**
+		 * To avoid any attempts of hacking or code injection, extract the values in a
+		 * separate list of parameters. Use question mark placeholders (?) in the query
+		 * string for each of the parameters.
+		 * <p>
+		 * API name: {@code params}
+		 * <p>
+		 * Adds all passed values to <code>params</code>.
+		 */
+		public final Builder params(boolean value, boolean... values) {
+			this.params = _listAdd(this.params, FieldValue.of(value));
+			List<FieldValue> fieldValues = new ArrayList<>();
+			for (boolean v : values) {
+				fieldValues.add(FieldValue.of(v));
+			}
+			this.params = _listAddAll(this.params, fieldValues);
+			return this;
+		}
+
+		/**
+		 * To avoid any attempts of hacking or code injection, extract the values in a
+		 * separate list of parameters. Use question mark placeholders (?) in the query
+		 * string for each of the parameters.
+		 * <p>
+		 * API name: {@code params}
+		 * <p>
 		 * Adds a value to <code>params</code> using a builder lambda.
 		 */
 		public final Builder params(Function<FieldValue.Builder, ObjectBuilder<FieldValue>> fn) {
 			return params(fn.apply(new FieldValue.Builder()).build());
+		}
+
+		/**
+		 * If provided and <code>true</code> the response will include an extra
+		 * <code>profile</code> object with information on how the query was executed.
+		 * This information is for human debugging and its format can change at any time
+		 * but it can give some insight into the performance of each part of the query.
+		 * <p>
+		 * API name: {@code profile}
+		 */
+		public final Builder profile(@Nullable Boolean value) {
+			this.profile = value;
+			return this;
 		}
 
 		/**
@@ -384,13 +553,28 @@ public class QueryRequest extends RequestBase implements JsonpSerializable {
 		}
 
 		/**
-		 * Required - The version of the ES|QL language in which the &quot;query&quot;
-		 * field was written.
+		 * Tables to use with the LOOKUP operation. The top level key is the table name
+		 * and the next level key is the column name.
 		 * <p>
-		 * API name: {@code version}
+		 * API name: {@code tables}
+		 * <p>
+		 * Adds all entries of <code>map</code> to <code>tables</code>.
 		 */
-		public final Builder version(EsqlVersion value) {
-			this.version = value;
+		public final Builder tables(Map<String, Map<String, TableValues>> map) {
+			this.tables = _mapPutAll(this.tables, map);
+			return this;
+		}
+
+		/**
+		 * Tables to use with the LOOKUP operation. The top level key is the table name
+		 * and the next level key is the column name.
+		 * <p>
+		 * API name: {@code tables}
+		 * <p>
+		 * Adds an entry to <code>tables</code>.
+		 */
+		public final Builder tables(String key, Map<String, TableValues> value) {
+			this.tables = _mapPut(this.tables, key, value);
 			return this;
 		}
 
@@ -410,10 +594,6 @@ public class QueryRequest extends RequestBase implements JsonpSerializable {
 
 			return new QueryRequest(this);
 		}
-		{
-			// Use the default ES|QL language version if not set explicitly
-			this.version = EsqlVersion.getDefault();
-		}
 	}
 
 	// ---------------------------------------------------------------------------------------------
@@ -430,8 +610,10 @@ public class QueryRequest extends RequestBase implements JsonpSerializable {
 		op.add(Builder::filter, Query._DESERIALIZER, "filter");
 		op.add(Builder::locale, JsonpDeserializer.stringDeserializer(), "locale");
 		op.add(Builder::params, JsonpDeserializer.arrayDeserializer(FieldValue._DESERIALIZER), "params");
+		op.add(Builder::profile, JsonpDeserializer.booleanDeserializer(), "profile");
 		op.add(Builder::query, JsonpDeserializer.stringDeserializer(), "query");
-		op.add(Builder::version, EsqlVersion._DESERIALIZER, "version");
+		op.add(Builder::tables, JsonpDeserializer
+				.stringMapDeserializer(JsonpDeserializer.stringMapDeserializer(TableValues._DESERIALIZER)), "tables");
 
 	}
 
@@ -467,7 +649,10 @@ public class QueryRequest extends RequestBase implements JsonpSerializable {
 					params.put("delimiter", request.delimiter);
 				}
 				if (request.format != null) {
-					params.put("format", request.format);
+					params.put("format", request.format.jsonValue());
+				}
+				if (request.dropNullColumns != null) {
+					params.put("drop_null_columns", String.valueOf(request.dropNullColumns));
 				}
 				return params;
 

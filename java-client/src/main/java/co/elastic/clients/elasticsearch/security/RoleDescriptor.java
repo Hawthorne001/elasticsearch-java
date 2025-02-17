@@ -66,6 +66,10 @@ public class RoleDescriptor implements JsonpSerializable {
 
 	private final List<IndicesPrivileges> indices;
 
+	private final List<RemoteIndicesPrivileges> remoteIndices;
+
+	private final List<RemoteClusterPrivileges> remoteCluster;
+
 	private final List<GlobalPrivilege> global;
 
 	private final List<ApplicationPrivileges> applications;
@@ -74,23 +78,33 @@ public class RoleDescriptor implements JsonpSerializable {
 
 	private final List<String> runAs;
 
+	@Nullable
+	private final String description;
+
+	@Nullable
+	private final Restriction restriction;
+
 	private final Map<String, JsonData> transientMetadata;
 
 	// ---------------------------------------------------------------------------------------------
 
-	private RoleDescriptor(Builder builder) {
+	protected RoleDescriptor(AbstractBuilder<?> builder) {
 
 		this.cluster = ApiTypeHelper.unmodifiable(builder.cluster);
 		this.indices = ApiTypeHelper.unmodifiable(builder.indices);
+		this.remoteIndices = ApiTypeHelper.unmodifiable(builder.remoteIndices);
+		this.remoteCluster = ApiTypeHelper.unmodifiable(builder.remoteCluster);
 		this.global = ApiTypeHelper.unmodifiable(builder.global);
 		this.applications = ApiTypeHelper.unmodifiable(builder.applications);
 		this.metadata = ApiTypeHelper.unmodifiable(builder.metadata);
 		this.runAs = ApiTypeHelper.unmodifiable(builder.runAs);
+		this.description = builder.description;
+		this.restriction = builder.restriction;
 		this.transientMetadata = ApiTypeHelper.unmodifiable(builder.transientMetadata);
 
 	}
 
-	public static RoleDescriptor of(Function<Builder, ObjectBuilder<RoleDescriptor>> fn) {
+	public static RoleDescriptor roleDescriptorOf(Function<Builder, ObjectBuilder<RoleDescriptor>> fn) {
 		return fn.apply(new Builder()).build();
 	}
 
@@ -111,6 +125,25 @@ public class RoleDescriptor implements JsonpSerializable {
 	 */
 	public final List<IndicesPrivileges> indices() {
 		return this.indices;
+	}
+
+	/**
+	 * A list of indices permissions for remote clusters.
+	 * <p>
+	 * API name: {@code remote_indices}
+	 */
+	public final List<RemoteIndicesPrivileges> remoteIndices() {
+		return this.remoteIndices;
+	}
+
+	/**
+	 * A list of cluster permissions for remote clusters. NOTE: This is limited a
+	 * subset of the cluster permissions.
+	 * <p>
+	 * API name: {@code remote_cluster}
+	 */
+	public final List<RemoteClusterPrivileges> remoteCluster() {
+		return this.remoteCluster;
 	}
 
 	/**
@@ -144,12 +177,35 @@ public class RoleDescriptor implements JsonpSerializable {
 	}
 
 	/**
-	 * A list of users that the API keys can impersonate.
+	 * A list of users that the API keys can impersonate. NOTE: In Elastic Cloud
+	 * Serverless, the run-as feature is disabled. For API compatibility, you can
+	 * still specify an empty <code>run_as</code> field, but a non-empty list will
+	 * be rejected.
 	 * <p>
 	 * API name: {@code run_as}
 	 */
 	public final List<String> runAs() {
 		return this.runAs;
+	}
+
+	/**
+	 * Optional description of the role descriptor
+	 * <p>
+	 * API name: {@code description}
+	 */
+	@Nullable
+	public final String description() {
+		return this.description;
+	}
+
+	/**
+	 * Restriction for when the role descriptor is allowed to be effective.
+	 * <p>
+	 * API name: {@code restriction}
+	 */
+	@Nullable
+	public final Restriction restriction() {
+		return this.restriction;
 	}
 
 	/**
@@ -184,6 +240,26 @@ public class RoleDescriptor implements JsonpSerializable {
 			generator.writeKey("indices");
 			generator.writeStartArray();
 			for (IndicesPrivileges item0 : this.indices) {
+				item0.serialize(generator, mapper);
+
+			}
+			generator.writeEnd();
+
+		}
+		if (ApiTypeHelper.isDefined(this.remoteIndices)) {
+			generator.writeKey("remote_indices");
+			generator.writeStartArray();
+			for (RemoteIndicesPrivileges item0 : this.remoteIndices) {
+				item0.serialize(generator, mapper);
+
+			}
+			generator.writeEnd();
+
+		}
+		if (ApiTypeHelper.isDefined(this.remoteCluster)) {
+			generator.writeKey("remote_cluster");
+			generator.writeStartArray();
+			for (RemoteClusterPrivileges item0 : this.remoteCluster) {
 				item0.serialize(generator, mapper);
 
 			}
@@ -231,6 +307,16 @@ public class RoleDescriptor implements JsonpSerializable {
 			generator.writeEnd();
 
 		}
+		if (this.description != null) {
+			generator.writeKey("description");
+			generator.write(this.description);
+
+		}
+		if (this.restriction != null) {
+			generator.writeKey("restriction");
+			this.restriction.serialize(generator, mapper);
+
+		}
 		if (ApiTypeHelper.isDefined(this.transientMetadata)) {
 			generator.writeKey("transient_metadata");
 			generator.writeStartObject();
@@ -256,236 +342,9 @@ public class RoleDescriptor implements JsonpSerializable {
 	 * Builder for {@link RoleDescriptor}.
 	 */
 
-	public static class Builder extends WithJsonObjectBuilderBase<Builder> implements ObjectBuilder<RoleDescriptor> {
-		@Nullable
-		private List<String> cluster;
-
-		@Nullable
-		private List<IndicesPrivileges> indices;
-
-		@Nullable
-		private List<GlobalPrivilege> global;
-
-		@Nullable
-		private List<ApplicationPrivileges> applications;
-
-		@Nullable
-		private Map<String, JsonData> metadata;
-
-		@Nullable
-		private List<String> runAs;
-
-		@Nullable
-		private Map<String, JsonData> transientMetadata;
-
-		/**
-		 * A list of cluster privileges. These privileges define the cluster level
-		 * actions that API keys are able to execute.
-		 * <p>
-		 * API name: {@code cluster}
-		 * <p>
-		 * Adds all elements of <code>list</code> to <code>cluster</code>.
-		 */
-		public final Builder cluster(List<String> list) {
-			this.cluster = _listAddAll(this.cluster, list);
-			return this;
-		}
-
-		/**
-		 * A list of cluster privileges. These privileges define the cluster level
-		 * actions that API keys are able to execute.
-		 * <p>
-		 * API name: {@code cluster}
-		 * <p>
-		 * Adds one or more values to <code>cluster</code>.
-		 */
-		public final Builder cluster(String value, String... values) {
-			this.cluster = _listAdd(this.cluster, value, values);
-			return this;
-		}
-
-		/**
-		 * A list of indices permissions entries.
-		 * <p>
-		 * API name: {@code indices}
-		 * <p>
-		 * Adds all elements of <code>list</code> to <code>indices</code>.
-		 */
-		public final Builder indices(List<IndicesPrivileges> list) {
-			this.indices = _listAddAll(this.indices, list);
-			return this;
-		}
-
-		/**
-		 * A list of indices permissions entries.
-		 * <p>
-		 * API name: {@code indices}
-		 * <p>
-		 * Adds one or more values to <code>indices</code>.
-		 */
-		public final Builder indices(IndicesPrivileges value, IndicesPrivileges... values) {
-			this.indices = _listAdd(this.indices, value, values);
-			return this;
-		}
-
-		/**
-		 * A list of indices permissions entries.
-		 * <p>
-		 * API name: {@code indices}
-		 * <p>
-		 * Adds a value to <code>indices</code> using a builder lambda.
-		 */
-		public final Builder indices(Function<IndicesPrivileges.Builder, ObjectBuilder<IndicesPrivileges>> fn) {
-			return indices(fn.apply(new IndicesPrivileges.Builder()).build());
-		}
-
-		/**
-		 * An object defining global privileges. A global privilege is a form of cluster
-		 * privilege that is request-aware. Support for global privileges is currently
-		 * limited to the management of application privileges.
-		 * <p>
-		 * API name: {@code global}
-		 * <p>
-		 * Adds all elements of <code>list</code> to <code>global</code>.
-		 */
-		public final Builder global(List<GlobalPrivilege> list) {
-			this.global = _listAddAll(this.global, list);
-			return this;
-		}
-
-		/**
-		 * An object defining global privileges. A global privilege is a form of cluster
-		 * privilege that is request-aware. Support for global privileges is currently
-		 * limited to the management of application privileges.
-		 * <p>
-		 * API name: {@code global}
-		 * <p>
-		 * Adds one or more values to <code>global</code>.
-		 */
-		public final Builder global(GlobalPrivilege value, GlobalPrivilege... values) {
-			this.global = _listAdd(this.global, value, values);
-			return this;
-		}
-
-		/**
-		 * An object defining global privileges. A global privilege is a form of cluster
-		 * privilege that is request-aware. Support for global privileges is currently
-		 * limited to the management of application privileges.
-		 * <p>
-		 * API name: {@code global}
-		 * <p>
-		 * Adds a value to <code>global</code> using a builder lambda.
-		 */
-		public final Builder global(Function<GlobalPrivilege.Builder, ObjectBuilder<GlobalPrivilege>> fn) {
-			return global(fn.apply(new GlobalPrivilege.Builder()).build());
-		}
-
-		/**
-		 * A list of application privilege entries
-		 * <p>
-		 * API name: {@code applications}
-		 * <p>
-		 * Adds all elements of <code>list</code> to <code>applications</code>.
-		 */
-		public final Builder applications(List<ApplicationPrivileges> list) {
-			this.applications = _listAddAll(this.applications, list);
-			return this;
-		}
-
-		/**
-		 * A list of application privilege entries
-		 * <p>
-		 * API name: {@code applications}
-		 * <p>
-		 * Adds one or more values to <code>applications</code>.
-		 */
-		public final Builder applications(ApplicationPrivileges value, ApplicationPrivileges... values) {
-			this.applications = _listAdd(this.applications, value, values);
-			return this;
-		}
-
-		/**
-		 * A list of application privilege entries
-		 * <p>
-		 * API name: {@code applications}
-		 * <p>
-		 * Adds a value to <code>applications</code> using a builder lambda.
-		 */
-		public final Builder applications(
-				Function<ApplicationPrivileges.Builder, ObjectBuilder<ApplicationPrivileges>> fn) {
-			return applications(fn.apply(new ApplicationPrivileges.Builder()).build());
-		}
-
-		/**
-		 * Optional meta-data. Within the metadata object, keys that begin with
-		 * <code>_</code> are reserved for system usage.
-		 * <p>
-		 * API name: {@code metadata}
-		 * <p>
-		 * Adds all entries of <code>map</code> to <code>metadata</code>.
-		 */
-		public final Builder metadata(Map<String, JsonData> map) {
-			this.metadata = _mapPutAll(this.metadata, map);
-			return this;
-		}
-
-		/**
-		 * Optional meta-data. Within the metadata object, keys that begin with
-		 * <code>_</code> are reserved for system usage.
-		 * <p>
-		 * API name: {@code metadata}
-		 * <p>
-		 * Adds an entry to <code>metadata</code>.
-		 */
-		public final Builder metadata(String key, JsonData value) {
-			this.metadata = _mapPut(this.metadata, key, value);
-			return this;
-		}
-
-		/**
-		 * A list of users that the API keys can impersonate.
-		 * <p>
-		 * API name: {@code run_as}
-		 * <p>
-		 * Adds all elements of <code>list</code> to <code>runAs</code>.
-		 */
-		public final Builder runAs(List<String> list) {
-			this.runAs = _listAddAll(this.runAs, list);
-			return this;
-		}
-
-		/**
-		 * A list of users that the API keys can impersonate.
-		 * <p>
-		 * API name: {@code run_as}
-		 * <p>
-		 * Adds one or more values to <code>runAs</code>.
-		 */
-		public final Builder runAs(String value, String... values) {
-			this.runAs = _listAdd(this.runAs, value, values);
-			return this;
-		}
-
-		/**
-		 * API name: {@code transient_metadata}
-		 * <p>
-		 * Adds all entries of <code>map</code> to <code>transientMetadata</code>.
-		 */
-		public final Builder transientMetadata(Map<String, JsonData> map) {
-			this.transientMetadata = _mapPutAll(this.transientMetadata, map);
-			return this;
-		}
-
-		/**
-		 * API name: {@code transient_metadata}
-		 * <p>
-		 * Adds an entry to <code>transientMetadata</code>.
-		 */
-		public final Builder transientMetadata(String key, JsonData value) {
-			this.transientMetadata = _mapPut(this.transientMetadata, key, value);
-			return this;
-		}
-
+	public static class Builder extends RoleDescriptor.AbstractBuilder<Builder>
+			implements
+				ObjectBuilder<RoleDescriptor> {
 		@Override
 		protected Builder self() {
 			return this;
@@ -504,6 +363,364 @@ public class RoleDescriptor implements JsonpSerializable {
 		}
 	}
 
+	public abstract static class AbstractBuilder<BuilderT extends AbstractBuilder<BuilderT>>
+			extends
+				WithJsonObjectBuilderBase<BuilderT> {
+		@Nullable
+		private List<String> cluster;
+
+		@Nullable
+		private List<IndicesPrivileges> indices;
+
+		@Nullable
+		private List<RemoteIndicesPrivileges> remoteIndices;
+
+		@Nullable
+		private List<RemoteClusterPrivileges> remoteCluster;
+
+		@Nullable
+		private List<GlobalPrivilege> global;
+
+		@Nullable
+		private List<ApplicationPrivileges> applications;
+
+		@Nullable
+		private Map<String, JsonData> metadata;
+
+		@Nullable
+		private List<String> runAs;
+
+		@Nullable
+		private String description;
+
+		@Nullable
+		private Restriction restriction;
+
+		@Nullable
+		private Map<String, JsonData> transientMetadata;
+
+		/**
+		 * A list of cluster privileges. These privileges define the cluster level
+		 * actions that API keys are able to execute.
+		 * <p>
+		 * API name: {@code cluster}
+		 * <p>
+		 * Adds all elements of <code>list</code> to <code>cluster</code>.
+		 */
+		public final BuilderT cluster(List<String> list) {
+			this.cluster = _listAddAll(this.cluster, list);
+			return self();
+		}
+
+		/**
+		 * A list of cluster privileges. These privileges define the cluster level
+		 * actions that API keys are able to execute.
+		 * <p>
+		 * API name: {@code cluster}
+		 * <p>
+		 * Adds one or more values to <code>cluster</code>.
+		 */
+		public final BuilderT cluster(String value, String... values) {
+			this.cluster = _listAdd(this.cluster, value, values);
+			return self();
+		}
+
+		/**
+		 * A list of indices permissions entries.
+		 * <p>
+		 * API name: {@code indices}
+		 * <p>
+		 * Adds all elements of <code>list</code> to <code>indices</code>.
+		 */
+		public final BuilderT indices(List<IndicesPrivileges> list) {
+			this.indices = _listAddAll(this.indices, list);
+			return self();
+		}
+
+		/**
+		 * A list of indices permissions entries.
+		 * <p>
+		 * API name: {@code indices}
+		 * <p>
+		 * Adds one or more values to <code>indices</code>.
+		 */
+		public final BuilderT indices(IndicesPrivileges value, IndicesPrivileges... values) {
+			this.indices = _listAdd(this.indices, value, values);
+			return self();
+		}
+
+		/**
+		 * A list of indices permissions entries.
+		 * <p>
+		 * API name: {@code indices}
+		 * <p>
+		 * Adds a value to <code>indices</code> using a builder lambda.
+		 */
+		public final BuilderT indices(Function<IndicesPrivileges.Builder, ObjectBuilder<IndicesPrivileges>> fn) {
+			return indices(fn.apply(new IndicesPrivileges.Builder()).build());
+		}
+
+		/**
+		 * A list of indices permissions for remote clusters.
+		 * <p>
+		 * API name: {@code remote_indices}
+		 * <p>
+		 * Adds all elements of <code>list</code> to <code>remoteIndices</code>.
+		 */
+		public final BuilderT remoteIndices(List<RemoteIndicesPrivileges> list) {
+			this.remoteIndices = _listAddAll(this.remoteIndices, list);
+			return self();
+		}
+
+		/**
+		 * A list of indices permissions for remote clusters.
+		 * <p>
+		 * API name: {@code remote_indices}
+		 * <p>
+		 * Adds one or more values to <code>remoteIndices</code>.
+		 */
+		public final BuilderT remoteIndices(RemoteIndicesPrivileges value, RemoteIndicesPrivileges... values) {
+			this.remoteIndices = _listAdd(this.remoteIndices, value, values);
+			return self();
+		}
+
+		/**
+		 * A list of indices permissions for remote clusters.
+		 * <p>
+		 * API name: {@code remote_indices}
+		 * <p>
+		 * Adds a value to <code>remoteIndices</code> using a builder lambda.
+		 */
+		public final BuilderT remoteIndices(
+				Function<RemoteIndicesPrivileges.Builder, ObjectBuilder<RemoteIndicesPrivileges>> fn) {
+			return remoteIndices(fn.apply(new RemoteIndicesPrivileges.Builder()).build());
+		}
+
+		/**
+		 * A list of cluster permissions for remote clusters. NOTE: This is limited a
+		 * subset of the cluster permissions.
+		 * <p>
+		 * API name: {@code remote_cluster}
+		 * <p>
+		 * Adds all elements of <code>list</code> to <code>remoteCluster</code>.
+		 */
+		public final BuilderT remoteCluster(List<RemoteClusterPrivileges> list) {
+			this.remoteCluster = _listAddAll(this.remoteCluster, list);
+			return self();
+		}
+
+		/**
+		 * A list of cluster permissions for remote clusters. NOTE: This is limited a
+		 * subset of the cluster permissions.
+		 * <p>
+		 * API name: {@code remote_cluster}
+		 * <p>
+		 * Adds one or more values to <code>remoteCluster</code>.
+		 */
+		public final BuilderT remoteCluster(RemoteClusterPrivileges value, RemoteClusterPrivileges... values) {
+			this.remoteCluster = _listAdd(this.remoteCluster, value, values);
+			return self();
+		}
+
+		/**
+		 * A list of cluster permissions for remote clusters. NOTE: This is limited a
+		 * subset of the cluster permissions.
+		 * <p>
+		 * API name: {@code remote_cluster}
+		 * <p>
+		 * Adds a value to <code>remoteCluster</code> using a builder lambda.
+		 */
+		public final BuilderT remoteCluster(
+				Function<RemoteClusterPrivileges.Builder, ObjectBuilder<RemoteClusterPrivileges>> fn) {
+			return remoteCluster(fn.apply(new RemoteClusterPrivileges.Builder()).build());
+		}
+
+		/**
+		 * An object defining global privileges. A global privilege is a form of cluster
+		 * privilege that is request-aware. Support for global privileges is currently
+		 * limited to the management of application privileges.
+		 * <p>
+		 * API name: {@code global}
+		 * <p>
+		 * Adds all elements of <code>list</code> to <code>global</code>.
+		 */
+		public final BuilderT global(List<GlobalPrivilege> list) {
+			this.global = _listAddAll(this.global, list);
+			return self();
+		}
+
+		/**
+		 * An object defining global privileges. A global privilege is a form of cluster
+		 * privilege that is request-aware. Support for global privileges is currently
+		 * limited to the management of application privileges.
+		 * <p>
+		 * API name: {@code global}
+		 * <p>
+		 * Adds one or more values to <code>global</code>.
+		 */
+		public final BuilderT global(GlobalPrivilege value, GlobalPrivilege... values) {
+			this.global = _listAdd(this.global, value, values);
+			return self();
+		}
+
+		/**
+		 * An object defining global privileges. A global privilege is a form of cluster
+		 * privilege that is request-aware. Support for global privileges is currently
+		 * limited to the management of application privileges.
+		 * <p>
+		 * API name: {@code global}
+		 * <p>
+		 * Adds a value to <code>global</code> using a builder lambda.
+		 */
+		public final BuilderT global(Function<GlobalPrivilege.Builder, ObjectBuilder<GlobalPrivilege>> fn) {
+			return global(fn.apply(new GlobalPrivilege.Builder()).build());
+		}
+
+		/**
+		 * A list of application privilege entries
+		 * <p>
+		 * API name: {@code applications}
+		 * <p>
+		 * Adds all elements of <code>list</code> to <code>applications</code>.
+		 */
+		public final BuilderT applications(List<ApplicationPrivileges> list) {
+			this.applications = _listAddAll(this.applications, list);
+			return self();
+		}
+
+		/**
+		 * A list of application privilege entries
+		 * <p>
+		 * API name: {@code applications}
+		 * <p>
+		 * Adds one or more values to <code>applications</code>.
+		 */
+		public final BuilderT applications(ApplicationPrivileges value, ApplicationPrivileges... values) {
+			this.applications = _listAdd(this.applications, value, values);
+			return self();
+		}
+
+		/**
+		 * A list of application privilege entries
+		 * <p>
+		 * API name: {@code applications}
+		 * <p>
+		 * Adds a value to <code>applications</code> using a builder lambda.
+		 */
+		public final BuilderT applications(
+				Function<ApplicationPrivileges.Builder, ObjectBuilder<ApplicationPrivileges>> fn) {
+			return applications(fn.apply(new ApplicationPrivileges.Builder()).build());
+		}
+
+		/**
+		 * Optional meta-data. Within the metadata object, keys that begin with
+		 * <code>_</code> are reserved for system usage.
+		 * <p>
+		 * API name: {@code metadata}
+		 * <p>
+		 * Adds all entries of <code>map</code> to <code>metadata</code>.
+		 */
+		public final BuilderT metadata(Map<String, JsonData> map) {
+			this.metadata = _mapPutAll(this.metadata, map);
+			return self();
+		}
+
+		/**
+		 * Optional meta-data. Within the metadata object, keys that begin with
+		 * <code>_</code> are reserved for system usage.
+		 * <p>
+		 * API name: {@code metadata}
+		 * <p>
+		 * Adds an entry to <code>metadata</code>.
+		 */
+		public final BuilderT metadata(String key, JsonData value) {
+			this.metadata = _mapPut(this.metadata, key, value);
+			return self();
+		}
+
+		/**
+		 * A list of users that the API keys can impersonate. NOTE: In Elastic Cloud
+		 * Serverless, the run-as feature is disabled. For API compatibility, you can
+		 * still specify an empty <code>run_as</code> field, but a non-empty list will
+		 * be rejected.
+		 * <p>
+		 * API name: {@code run_as}
+		 * <p>
+		 * Adds all elements of <code>list</code> to <code>runAs</code>.
+		 */
+		public final BuilderT runAs(List<String> list) {
+			this.runAs = _listAddAll(this.runAs, list);
+			return self();
+		}
+
+		/**
+		 * A list of users that the API keys can impersonate. NOTE: In Elastic Cloud
+		 * Serverless, the run-as feature is disabled. For API compatibility, you can
+		 * still specify an empty <code>run_as</code> field, but a non-empty list will
+		 * be rejected.
+		 * <p>
+		 * API name: {@code run_as}
+		 * <p>
+		 * Adds one or more values to <code>runAs</code>.
+		 */
+		public final BuilderT runAs(String value, String... values) {
+			this.runAs = _listAdd(this.runAs, value, values);
+			return self();
+		}
+
+		/**
+		 * Optional description of the role descriptor
+		 * <p>
+		 * API name: {@code description}
+		 */
+		public final BuilderT description(@Nullable String value) {
+			this.description = value;
+			return self();
+		}
+
+		/**
+		 * Restriction for when the role descriptor is allowed to be effective.
+		 * <p>
+		 * API name: {@code restriction}
+		 */
+		public final BuilderT restriction(@Nullable Restriction value) {
+			this.restriction = value;
+			return self();
+		}
+
+		/**
+		 * Restriction for when the role descriptor is allowed to be effective.
+		 * <p>
+		 * API name: {@code restriction}
+		 */
+		public final BuilderT restriction(Function<Restriction.Builder, ObjectBuilder<Restriction>> fn) {
+			return this.restriction(fn.apply(new Restriction.Builder()).build());
+		}
+
+		/**
+		 * API name: {@code transient_metadata}
+		 * <p>
+		 * Adds all entries of <code>map</code> to <code>transientMetadata</code>.
+		 */
+		public final BuilderT transientMetadata(Map<String, JsonData> map) {
+			this.transientMetadata = _mapPutAll(this.transientMetadata, map);
+			return self();
+		}
+
+		/**
+		 * API name: {@code transient_metadata}
+		 * <p>
+		 * Adds an entry to <code>transientMetadata</code>.
+		 */
+		public final BuilderT transientMetadata(String key, JsonData value) {
+			this.transientMetadata = _mapPut(this.transientMetadata, key, value);
+			return self();
+		}
+
+		protected abstract BuilderT self();
+
+	}
+
 	// ---------------------------------------------------------------------------------------------
 
 	/**
@@ -512,18 +729,26 @@ public class RoleDescriptor implements JsonpSerializable {
 	public static final JsonpDeserializer<RoleDescriptor> _DESERIALIZER = ObjectBuilderDeserializer.lazy(Builder::new,
 			RoleDescriptor::setupRoleDescriptorDeserializer);
 
-	protected static void setupRoleDescriptorDeserializer(ObjectDeserializer<RoleDescriptor.Builder> op) {
+	protected static <BuilderT extends AbstractBuilder<BuilderT>> void setupRoleDescriptorDeserializer(
+			ObjectDeserializer<BuilderT> op) {
 
-		op.add(Builder::cluster, JsonpDeserializer.arrayDeserializer(JsonpDeserializer.stringDeserializer()),
+		op.add(AbstractBuilder::cluster, JsonpDeserializer.arrayDeserializer(JsonpDeserializer.stringDeserializer()),
 				"cluster");
-		op.add(Builder::indices, JsonpDeserializer.arrayDeserializer(IndicesPrivileges._DESERIALIZER), "indices",
-				"index");
-		op.add(Builder::global, JsonpDeserializer.arrayDeserializer(GlobalPrivilege._DESERIALIZER), "global");
-		op.add(Builder::applications, JsonpDeserializer.arrayDeserializer(ApplicationPrivileges._DESERIALIZER),
+		op.add(AbstractBuilder::indices, JsonpDeserializer.arrayDeserializer(IndicesPrivileges._DESERIALIZER),
+				"indices", "index");
+		op.add(AbstractBuilder::remoteIndices,
+				JsonpDeserializer.arrayDeserializer(RemoteIndicesPrivileges._DESERIALIZER), "remote_indices");
+		op.add(AbstractBuilder::remoteCluster,
+				JsonpDeserializer.arrayDeserializer(RemoteClusterPrivileges._DESERIALIZER), "remote_cluster");
+		op.add(AbstractBuilder::global, JsonpDeserializer.arrayDeserializer(GlobalPrivilege._DESERIALIZER), "global");
+		op.add(AbstractBuilder::applications, JsonpDeserializer.arrayDeserializer(ApplicationPrivileges._DESERIALIZER),
 				"applications");
-		op.add(Builder::metadata, JsonpDeserializer.stringMapDeserializer(JsonData._DESERIALIZER), "metadata");
-		op.add(Builder::runAs, JsonpDeserializer.arrayDeserializer(JsonpDeserializer.stringDeserializer()), "run_as");
-		op.add(Builder::transientMetadata, JsonpDeserializer.stringMapDeserializer(JsonData._DESERIALIZER),
+		op.add(AbstractBuilder::metadata, JsonpDeserializer.stringMapDeserializer(JsonData._DESERIALIZER), "metadata");
+		op.add(AbstractBuilder::runAs, JsonpDeserializer.arrayDeserializer(JsonpDeserializer.stringDeserializer()),
+				"run_as");
+		op.add(AbstractBuilder::description, JsonpDeserializer.stringDeserializer(), "description");
+		op.add(AbstractBuilder::restriction, Restriction._DESERIALIZER, "restriction");
+		op.add(AbstractBuilder::transientMetadata, JsonpDeserializer.stringMapDeserializer(JsonData._DESERIALIZER),
 				"transient_metadata");
 
 	}

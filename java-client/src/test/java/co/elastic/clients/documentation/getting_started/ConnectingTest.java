@@ -67,6 +67,11 @@ public class ConnectingTest {
 
         // And create the API client
         ElasticsearchClient esClient = new ElasticsearchClient(transport);
+
+        // Use the client...
+
+        // Close the client, also closing the underlying transport object and network connections.
+        esClient.close();
         //end::create-client
 
         //tag::first-request
@@ -115,6 +120,11 @@ public class ConnectingTest {
 
         // And create the API client
         ElasticsearchClient esClient = new ElasticsearchClient(transport);
+
+        // Use the client...
+
+        // Close the client, also closing the underlying transport object and network connections.
+        esClient.close();
         //end::create-client-otel
     }
 
@@ -149,7 +159,12 @@ public class ConnectingTest {
 
         // Create the transport and the API client
         ElasticsearchTransport transport = new RestClientTransport(restClient, new JacksonJsonpMapper());
-        ElasticsearchClient client = new ElasticsearchClient(transport);
+        ElasticsearchClient esClient = new ElasticsearchClient(transport);
+
+        // Use the client...
+
+        // Close the client, also closing the underlying transport object and network connections.
+        esClient.close();
         //end::create-secure-client-cert
     }
 
@@ -184,7 +199,12 @@ public class ConnectingTest {
 
         // Create the transport and the API client
         ElasticsearchTransport transport = new RestClientTransport(restClient, new JacksonJsonpMapper());
-        ElasticsearchClient client = new ElasticsearchClient(transport);
+        ElasticsearchClient esClient = new ElasticsearchClient(transport);
+
+        // Use the client...
+
+        // Close the client, also closing the underlying transport object and network connections.
+        esClient.close();
         //end::create-secure-client-fingerprint
     }
 

@@ -58,7 +58,18 @@ import javax.annotation.Nullable;
 // typedef: security.clear_cached_service_tokens.Request
 
 /**
- * Evicts tokens from the service account token caches.
+ * Clear service account token caches.
+ * <p>
+ * Evict a subset of all entries from the service account token caches. Two
+ * separate caches exist for service account tokens: one cache for tokens backed
+ * by the <code>service_tokens</code> file, and another for tokens backed by the
+ * <code>.security</code> index. This API clears matching entries from both
+ * caches.
+ * <p>
+ * The cache for service account tokens backed by the <code>.security</code>
+ * index is cleared automatically on state changes of the security index. The
+ * cache for tokens backed by the <code>service_tokens</code> file is cleared
+ * automatically on file changes.
  * 
  * @see <a href=
  *      "../doc-files/api-spec.html#security.clear_cached_service_tokens.Request">API
@@ -88,7 +99,10 @@ public class ClearCachedServiceTokensRequest extends RequestBase {
 	}
 
 	/**
-	 * Required - A comma-separated list of service token names
+	 * Required - A comma-separated list of token names to evict from the service
+	 * account token caches. Use a wildcard (<code>*</code>) to evict all tokens
+	 * that belong to a service account. It does not support other wildcard
+	 * patterns.
 	 * <p>
 	 * API name: {@code name}
 	 */
@@ -97,7 +111,7 @@ public class ClearCachedServiceTokensRequest extends RequestBase {
 	}
 
 	/**
-	 * Required - An identifier for the namespace
+	 * Required - The namespace, which is a top-level grouping of service accounts.
 	 * <p>
 	 * API name: {@code namespace}
 	 */
@@ -106,7 +120,8 @@ public class ClearCachedServiceTokensRequest extends RequestBase {
 	}
 
 	/**
-	 * Required - An identifier for the service name
+	 * Required - The name of the service, which must be unique within its
+	 * namespace.
 	 * <p>
 	 * API name: {@code service}
 	 */
@@ -130,7 +145,10 @@ public class ClearCachedServiceTokensRequest extends RequestBase {
 		private String service;
 
 		/**
-		 * Required - A comma-separated list of service token names
+		 * Required - A comma-separated list of token names to evict from the service
+		 * account token caches. Use a wildcard (<code>*</code>) to evict all tokens
+		 * that belong to a service account. It does not support other wildcard
+		 * patterns.
 		 * <p>
 		 * API name: {@code name}
 		 * <p>
@@ -142,7 +160,10 @@ public class ClearCachedServiceTokensRequest extends RequestBase {
 		}
 
 		/**
-		 * Required - A comma-separated list of service token names
+		 * Required - A comma-separated list of token names to evict from the service
+		 * account token caches. Use a wildcard (<code>*</code>) to evict all tokens
+		 * that belong to a service account. It does not support other wildcard
+		 * patterns.
 		 * <p>
 		 * API name: {@code name}
 		 * <p>
@@ -154,7 +175,7 @@ public class ClearCachedServiceTokensRequest extends RequestBase {
 		}
 
 		/**
-		 * Required - An identifier for the namespace
+		 * Required - The namespace, which is a top-level grouping of service accounts.
 		 * <p>
 		 * API name: {@code namespace}
 		 */
@@ -164,7 +185,8 @@ public class ClearCachedServiceTokensRequest extends RequestBase {
 		}
 
 		/**
-		 * Required - An identifier for the service name
+		 * Required - The name of the service, which must be unique within its
+		 * namespace.
 		 * <p>
 		 * API name: {@code service}
 		 */
