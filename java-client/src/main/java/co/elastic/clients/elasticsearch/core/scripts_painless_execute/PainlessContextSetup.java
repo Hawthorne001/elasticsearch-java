@@ -66,6 +66,7 @@ public class PainlessContextSetup implements JsonpSerializable {
 
 	private final String index;
 
+	@Nullable
 	private final Query query;
 
 	// ---------------------------------------------------------------------------------------------
@@ -74,7 +75,7 @@ public class PainlessContextSetup implements JsonpSerializable {
 
 		this.document = ApiTypeHelper.requireNonNull(builder.document, this, "document");
 		this.index = ApiTypeHelper.requireNonNull(builder.index, this, "index");
-		this.query = ApiTypeHelper.requireNonNull(builder.query, this, "query");
+		this.query = builder.query;
 
 	}
 
@@ -83,7 +84,7 @@ public class PainlessContextSetup implements JsonpSerializable {
 	}
 
 	/**
-	 * Required - Document that’s temporarily indexed in-memory and accessible from
+	 * Required - Document that's temporarily indexed in-memory and accessible from
 	 * the script.
 	 * <p>
 	 * API name: {@code document}
@@ -93,9 +94,18 @@ public class PainlessContextSetup implements JsonpSerializable {
 	}
 
 	/**
-	 * Required - Index containing a mapping that’s compatible with the indexed
+	 * Required - Index containing a mapping that's compatible with the indexed
 	 * document. You may specify a remote index by prefixing the index with the
-	 * remote cluster alias.
+	 * remote cluster alias. For example, <code>remote1:my_index</code> indicates
+	 * that you want to run the painless script against the &quot;my_index&quot;
+	 * index on the &quot;remote1&quot; cluster. This request will be forwarded to
+	 * the &quot;remote1&quot; cluster if you have configured a connection to that
+	 * remote cluster.
+	 * <p>
+	 * NOTE: Wildcards are not accepted in the index expression for this endpoint.
+	 * The expression <code>*:myindex</code> will return the error &quot;No such
+	 * remote cluster&quot; and the expression <code>logs*</code> or
+	 * <code>remote1:logs*</code> will return the error &quot;index not found&quot;.
 	 * <p>
 	 * API name: {@code index}
 	 */
@@ -104,10 +114,11 @@ public class PainlessContextSetup implements JsonpSerializable {
 	}
 
 	/**
-	 * Required - Use this parameter to specify a query for computing a score.
+	 * Use this parameter to specify a query for computing a score.
 	 * <p>
 	 * API name: {@code query}
 	 */
+	@Nullable
 	public final Query query() {
 		return this.query;
 	}
@@ -129,8 +140,11 @@ public class PainlessContextSetup implements JsonpSerializable {
 		generator.writeKey("index");
 		generator.write(this.index);
 
-		generator.writeKey("query");
-		this.query.serialize(generator, mapper);
+		if (this.query != null) {
+			generator.writeKey("query");
+			this.query.serialize(generator, mapper);
+
+		}
 
 	}
 
@@ -152,10 +166,11 @@ public class PainlessContextSetup implements JsonpSerializable {
 
 		private String index;
 
+		@Nullable
 		private Query query;
 
 		/**
-		 * Required - Document that’s temporarily indexed in-memory and accessible from
+		 * Required - Document that's temporarily indexed in-memory and accessible from
 		 * the script.
 		 * <p>
 		 * API name: {@code document}
@@ -166,9 +181,18 @@ public class PainlessContextSetup implements JsonpSerializable {
 		}
 
 		/**
-		 * Required - Index containing a mapping that’s compatible with the indexed
+		 * Required - Index containing a mapping that's compatible with the indexed
 		 * document. You may specify a remote index by prefixing the index with the
-		 * remote cluster alias.
+		 * remote cluster alias. For example, <code>remote1:my_index</code> indicates
+		 * that you want to run the painless script against the &quot;my_index&quot;
+		 * index on the &quot;remote1&quot; cluster. This request will be forwarded to
+		 * the &quot;remote1&quot; cluster if you have configured a connection to that
+		 * remote cluster.
+		 * <p>
+		 * NOTE: Wildcards are not accepted in the index expression for this endpoint.
+		 * The expression <code>*:myindex</code> will return the error &quot;No such
+		 * remote cluster&quot; and the expression <code>logs*</code> or
+		 * <code>remote1:logs*</code> will return the error &quot;index not found&quot;.
 		 * <p>
 		 * API name: {@code index}
 		 */
@@ -178,17 +202,17 @@ public class PainlessContextSetup implements JsonpSerializable {
 		}
 
 		/**
-		 * Required - Use this parameter to specify a query for computing a score.
+		 * Use this parameter to specify a query for computing a score.
 		 * <p>
 		 * API name: {@code query}
 		 */
-		public final Builder query(Query value) {
+		public final Builder query(@Nullable Query value) {
 			this.query = value;
 			return this;
 		}
 
 		/**
-		 * Required - Use this parameter to specify a query for computing a score.
+		 * Use this parameter to specify a query for computing a score.
 		 * <p>
 		 * API name: {@code query}
 		 */

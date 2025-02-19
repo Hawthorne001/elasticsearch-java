@@ -55,8 +55,12 @@ import javax.annotation.Nullable;
 // typedef: security.get_service_accounts.Request
 
 /**
- * This API returns a list of service accounts that match the provided path
- * parameter(s).
+ * Get service accounts.
+ * <p>
+ * Get a list of service accounts that match the provided path parameters.
+ * <p>
+ * NOTE: Currently, only the <code>elastic/fleet-server</code> service account
+ * is available.
  * 
  * @see <a href=
  *      "../doc-files/api-spec.html#security.get_service_accounts.Request">API
@@ -84,8 +88,8 @@ public class GetServiceAccountsRequest extends RequestBase {
 	}
 
 	/**
-	 * Name of the namespace. Omit this parameter to retrieve information about all
-	 * service accounts. If you omit this parameter, you must also omit the
+	 * The name of the namespace. Omit this parameter to retrieve information about
+	 * all service accounts. If you omit this parameter, you must also omit the
 	 * <code>service</code> parameter.
 	 * <p>
 	 * API name: {@code namespace}
@@ -96,8 +100,8 @@ public class GetServiceAccountsRequest extends RequestBase {
 	}
 
 	/**
-	 * Name of the service name. Omit this parameter to retrieve information about
-	 * all service accounts that belong to the specified <code>namespace</code>.
+	 * The service name. Omit this parameter to retrieve information about all
+	 * service accounts that belong to the specified <code>namespace</code>.
 	 * <p>
 	 * API name: {@code service}
 	 */
@@ -122,8 +126,8 @@ public class GetServiceAccountsRequest extends RequestBase {
 		private String service;
 
 		/**
-		 * Name of the namespace. Omit this parameter to retrieve information about all
-		 * service accounts. If you omit this parameter, you must also omit the
+		 * The name of the namespace. Omit this parameter to retrieve information about
+		 * all service accounts. If you omit this parameter, you must also omit the
 		 * <code>service</code> parameter.
 		 * <p>
 		 * API name: {@code namespace}
@@ -134,8 +138,8 @@ public class GetServiceAccountsRequest extends RequestBase {
 		}
 
 		/**
-		 * Name of the service name. Omit this parameter to retrieve information about
-		 * all service accounts that belong to the specified <code>namespace</code>.
+		 * The service name. Omit this parameter to retrieve information about all
+		 * service accounts that belong to the specified <code>namespace</code>.
 		 * <p>
 		 * API name: {@code service}
 		 */

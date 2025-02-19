@@ -59,7 +59,14 @@ import javax.annotation.Nullable;
 // typedef: synonyms.put_synonym.Request
 
 /**
- * Creates or updates a synonym set.
+ * Create or update a synonym set. Synonyms sets are limited to a maximum of
+ * 10,000 synonym rules per set. If you need to manage more synonym rules, you
+ * can create multiple synonym sets.
+ * <p>
+ * When an existing synonyms set is updated, the search analyzers that use the
+ * synonyms set are reloaded automatically for all indices. This is equivalent
+ * to invoking the reload search analyzers API for all indices that use the
+ * synonyms set.
  * 
  * @see <a href="../doc-files/api-spec.html#synonyms.put_synonym.Request">API
  *      specification</a>
@@ -84,7 +91,7 @@ public class PutSynonymRequest extends RequestBase implements JsonpSerializable 
 	}
 
 	/**
-	 * Required - The id of the synonyms set to be created or updated
+	 * Required - The ID of the synonyms set to be created or updated.
 	 * <p>
 	 * API name: {@code id}
 	 */
@@ -93,7 +100,7 @@ public class PutSynonymRequest extends RequestBase implements JsonpSerializable 
 	}
 
 	/**
-	 * Required - The synonym set information to update
+	 * Required - The synonym rules definitions for the synonyms set.
 	 * <p>
 	 * API name: {@code synonyms_set}
 	 */
@@ -139,7 +146,7 @@ public class PutSynonymRequest extends RequestBase implements JsonpSerializable 
 		private List<SynonymRule> synonymsSet;
 
 		/**
-		 * Required - The id of the synonyms set to be created or updated
+		 * Required - The ID of the synonyms set to be created or updated.
 		 * <p>
 		 * API name: {@code id}
 		 */
@@ -149,7 +156,7 @@ public class PutSynonymRequest extends RequestBase implements JsonpSerializable 
 		}
 
 		/**
-		 * Required - The synonym set information to update
+		 * Required - The synonym rules definitions for the synonyms set.
 		 * <p>
 		 * API name: {@code synonyms_set}
 		 * <p>
@@ -161,7 +168,7 @@ public class PutSynonymRequest extends RequestBase implements JsonpSerializable 
 		}
 
 		/**
-		 * Required - The synonym set information to update
+		 * Required - The synonym rules definitions for the synonyms set.
 		 * <p>
 		 * API name: {@code synonyms_set}
 		 * <p>
@@ -173,7 +180,7 @@ public class PutSynonymRequest extends RequestBase implements JsonpSerializable 
 		}
 
 		/**
-		 * Required - The synonym set information to update
+		 * Required - The synonym rules definitions for the synonyms set.
 		 * <p>
 		 * API name: {@code synonyms_set}
 		 * <p>

@@ -56,7 +56,10 @@ import javax.annotation.Nullable;
 // typedef: security.enable_user.Request
 
 /**
- * Enables users in the native realm.
+ * Enable users.
+ * <p>
+ * Enable users in the native realm. By default, when you create users, they are
+ * enabled.
  * 
  * @see <a href="../doc-files/api-spec.html#security.enable_user.Request">API
  *      specification</a>
@@ -95,7 +98,7 @@ public class EnableUserRequest extends RequestBase {
 	}
 
 	/**
-	 * Required - The username of the user to enable
+	 * Required - An identifier for the user.
 	 * <p>
 	 * API name: {@code username}
 	 */
@@ -131,7 +134,7 @@ public class EnableUserRequest extends RequestBase {
 		}
 
 		/**
-		 * Required - The username of the user to enable
+		 * Required - An identifier for the user.
 		 * <p>
 		 * API name: {@code username}
 		 */

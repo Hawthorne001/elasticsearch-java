@@ -59,7 +59,9 @@ import javax.annotation.Nullable;
 // typedef: text_structure.test_grok_pattern.Request
 
 /**
- * Tests a Grok pattern on some text.
+ * Test a Grok pattern. Test a Grok pattern on one or more lines of text. The
+ * API indicates whether the lines match the pattern together with the offsets
+ * and lengths of the matched substrings.
  * 
  * @see <a href=
  *      "../doc-files/api-spec.html#text_structure.test_grok_pattern.Request">API
@@ -89,8 +91,10 @@ public class TestGrokPatternRequest extends RequestBase implements JsonpSerializ
 	}
 
 	/**
-	 * The mode of compatibility with ECS compliant Grok patterns (disabled or v1,
-	 * default: disabled).
+	 * The mode of compatibility with ECS compliant Grok patterns. Use this
+	 * parameter to specify whether to use ECS Grok patterns instead of legacy ones
+	 * when the structure finder creates a Grok pattern. Valid values are
+	 * <code>disabled</code> and <code>v1</code>.
 	 * <p>
 	 * API name: {@code ecs_compatibility}
 	 */
@@ -100,7 +104,7 @@ public class TestGrokPatternRequest extends RequestBase implements JsonpSerializ
 	}
 
 	/**
-	 * Required - Grok pattern to run on the text.
+	 * Required - The Grok pattern to run on the text.
 	 * <p>
 	 * API name: {@code grok_pattern}
 	 */
@@ -109,7 +113,7 @@ public class TestGrokPatternRequest extends RequestBase implements JsonpSerializ
 	}
 
 	/**
-	 * Required - Lines of text to run the Grok pattern on.
+	 * Required - The lines of text to run the Grok pattern on.
 	 * <p>
 	 * API name: {@code text}
 	 */
@@ -161,8 +165,10 @@ public class TestGrokPatternRequest extends RequestBase implements JsonpSerializ
 		private List<String> text;
 
 		/**
-		 * The mode of compatibility with ECS compliant Grok patterns (disabled or v1,
-		 * default: disabled).
+		 * The mode of compatibility with ECS compliant Grok patterns. Use this
+		 * parameter to specify whether to use ECS Grok patterns instead of legacy ones
+		 * when the structure finder creates a Grok pattern. Valid values are
+		 * <code>disabled</code> and <code>v1</code>.
 		 * <p>
 		 * API name: {@code ecs_compatibility}
 		 */
@@ -172,7 +178,7 @@ public class TestGrokPatternRequest extends RequestBase implements JsonpSerializ
 		}
 
 		/**
-		 * Required - Grok pattern to run on the text.
+		 * Required - The Grok pattern to run on the text.
 		 * <p>
 		 * API name: {@code grok_pattern}
 		 */
@@ -182,7 +188,7 @@ public class TestGrokPatternRequest extends RequestBase implements JsonpSerializ
 		}
 
 		/**
-		 * Required - Lines of text to run the Grok pattern on.
+		 * Required - The lines of text to run the Grok pattern on.
 		 * <p>
 		 * API name: {@code text}
 		 * <p>
@@ -194,7 +200,7 @@ public class TestGrokPatternRequest extends RequestBase implements JsonpSerializ
 		}
 
 		/**
-		 * Required - Lines of text to run the Grok pattern on.
+		 * Required - The lines of text to run the Grok pattern on.
 		 * <p>
 		 * API name: {@code text}
 		 * <p>

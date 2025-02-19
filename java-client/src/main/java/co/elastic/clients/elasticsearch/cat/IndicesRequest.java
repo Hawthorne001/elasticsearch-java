@@ -23,6 +23,7 @@ import co.elastic.clients.elasticsearch._types.Bytes;
 import co.elastic.clients.elasticsearch._types.ErrorResponse;
 import co.elastic.clients.elasticsearch._types.ExpandWildcard;
 import co.elastic.clients.elasticsearch._types.HealthStatus;
+import co.elastic.clients.elasticsearch._types.Time;
 import co.elastic.clients.elasticsearch._types.TimeUnit;
 import co.elastic.clients.json.JsonpDeserializable;
 import co.elastic.clients.json.JsonpDeserializer;
@@ -61,17 +62,29 @@ import javax.annotation.Nullable;
 // typedef: cat.indices.Request
 
 /**
- * Returns high-level information about indices in a cluster, including backing
- * indices for data streams. IMPORTANT: cat APIs are only intended for human
- * consumption using the command line or Kibana console. They are not intended
- * for use by applications. For application consumption, use the get index API.
- * Use the cat indices API to get the following information for each index in a
- * cluster: shard count; document count; deleted document count; primary store
- * size; total store size of all shards, including shard replicas. These metrics
- * are retrieved directly from Lucene, which Elasticsearch uses internally to
- * power indexing and search. As a result, all document counts include hidden
- * nested documents. To get an accurate count of Elasticsearch documents, use
- * the cat count or count APIs.
+ * Get index information.
+ * <p>
+ * Get high-level information about indices in a cluster, including backing
+ * indices for data streams.
+ * <p>
+ * Use this request to get the following information for each index in a
+ * cluster:
+ * <ul>
+ * <li>shard count</li>
+ * <li>document count</li>
+ * <li>deleted document count</li>
+ * <li>primary store size</li>
+ * <li>total store size of all shards, including shard replicas</li>
+ * </ul>
+ * <p>
+ * These metrics are retrieved directly from Lucene, which Elasticsearch uses
+ * internally to power indexing and search. As a result, all document counts
+ * include hidden nested documents. To get an accurate count of Elasticsearch
+ * documents, use the cat count or count APIs.
+ * <p>
+ * CAT APIs are only intended for human consumption using the command line or
+ * Kibana console. They are not intended for use by applications. For
+ * application consumption, use an index endpoint.
  * 
  * @see <a href="../doc-files/api-spec.html#cat.indices.Request">API
  *      specification</a>
@@ -92,6 +105,9 @@ public class IndicesRequest extends CatRequestBase {
 	private final List<String> index;
 
 	@Nullable
+	private final Time masterTimeout;
+
+	@Nullable
 	private final Boolean pri;
 
 	@Nullable
@@ -106,6 +122,7 @@ public class IndicesRequest extends CatRequestBase {
 		this.health = builder.health;
 		this.includeUnloadedSegments = builder.includeUnloadedSegments;
 		this.index = ApiTypeHelper.unmodifiable(builder.index);
+		this.masterTimeout = builder.masterTimeout;
 		this.pri = builder.pri;
 		this.time = builder.time;
 
@@ -168,6 +185,16 @@ public class IndicesRequest extends CatRequestBase {
 	}
 
 	/**
+	 * Period to wait for a connection to the master node.
+	 * <p>
+	 * API name: {@code master_timeout}
+	 */
+	@Nullable
+	public final Time masterTimeout() {
+		return this.masterTimeout;
+	}
+
+	/**
 	 * If true, the response only includes information from primary shards.
 	 * <p>
 	 * API name: {@code pri}
@@ -210,6 +237,9 @@ public class IndicesRequest extends CatRequestBase {
 
 		@Nullable
 		private List<String> index;
+
+		@Nullable
+		private Time masterTimeout;
 
 		@Nullable
 		private Boolean pri;
@@ -299,6 +329,25 @@ public class IndicesRequest extends CatRequestBase {
 		public final Builder index(String value, String... values) {
 			this.index = _listAdd(this.index, value, values);
 			return this;
+		}
+
+		/**
+		 * Period to wait for a connection to the master node.
+		 * <p>
+		 * API name: {@code master_timeout}
+		 */
+		public final Builder masterTimeout(@Nullable Time value) {
+			this.masterTimeout = value;
+			return this;
+		}
+
+		/**
+		 * Period to wait for a connection to the master node.
+		 * <p>
+		 * API name: {@code master_timeout}
+		 */
+		public final Builder masterTimeout(Function<Time.Builder, ObjectBuilder<Time>> fn) {
+			return this.masterTimeout(fn.apply(new Time.Builder()).build());
 		}
 
 		/**
@@ -402,6 +451,9 @@ public class IndicesRequest extends CatRequestBase {
 			request -> {
 				Map<String, String> params = new HashMap<>();
 				params.put("format", "json");
+				if (request.masterTimeout != null) {
+					params.put("master_timeout", request.masterTimeout._toJsonString());
+				}
 				if (ApiTypeHelper.isDefined(request.expandWildcards)) {
 					params.put("expand_wildcards",
 							request.expandWildcards.stream().map(v -> v.jsonValue()).collect(Collectors.joining(",")));

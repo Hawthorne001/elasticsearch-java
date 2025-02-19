@@ -56,7 +56,8 @@ import javax.annotation.Nullable;
 // typedef: _global.delete_script.Request
 
 /**
- * Deletes a stored script or search template.
+ * Delete a script or search template. Deletes a stored script or search
+ * template.
  * 
  * @see <a href="../doc-files/api-spec.html#_global.delete_script.Request">API
  *      specification</a>
@@ -86,7 +87,7 @@ public class DeleteScriptRequest extends RequestBase {
 	}
 
 	/**
-	 * Required - Identifier for the stored script or search template.
+	 * Required - The identifier for the stored script or search template.
 	 * <p>
 	 * API name: {@code id}
 	 */
@@ -95,8 +96,10 @@ public class DeleteScriptRequest extends RequestBase {
 	}
 
 	/**
-	 * Period to wait for a connection to the master node. If no response is
+	 * The period to wait for a connection to the master node. If no response is
 	 * received before the timeout expires, the request fails and returns an error.
+	 * It can also be set to <code>-1</code> to indicate that the request should
+	 * never timeout.
 	 * <p>
 	 * API name: {@code master_timeout}
 	 */
@@ -106,8 +109,9 @@ public class DeleteScriptRequest extends RequestBase {
 	}
 
 	/**
-	 * Period to wait for a response. If no response is received before the timeout
-	 * expires, the request fails and returns an error.
+	 * The period to wait for a response. If no response is received before the
+	 * timeout expires, the request fails and returns an error. It can also be set
+	 * to <code>-1</code> to indicate that the request should never timeout.
 	 * <p>
 	 * API name: {@code timeout}
 	 */
@@ -134,7 +138,7 @@ public class DeleteScriptRequest extends RequestBase {
 		private Time timeout;
 
 		/**
-		 * Required - Identifier for the stored script or search template.
+		 * Required - The identifier for the stored script or search template.
 		 * <p>
 		 * API name: {@code id}
 		 */
@@ -144,8 +148,10 @@ public class DeleteScriptRequest extends RequestBase {
 		}
 
 		/**
-		 * Period to wait for a connection to the master node. If no response is
+		 * The period to wait for a connection to the master node. If no response is
 		 * received before the timeout expires, the request fails and returns an error.
+		 * It can also be set to <code>-1</code> to indicate that the request should
+		 * never timeout.
 		 * <p>
 		 * API name: {@code master_timeout}
 		 */
@@ -155,8 +161,10 @@ public class DeleteScriptRequest extends RequestBase {
 		}
 
 		/**
-		 * Period to wait for a connection to the master node. If no response is
+		 * The period to wait for a connection to the master node. If no response is
 		 * received before the timeout expires, the request fails and returns an error.
+		 * It can also be set to <code>-1</code> to indicate that the request should
+		 * never timeout.
 		 * <p>
 		 * API name: {@code master_timeout}
 		 */
@@ -165,8 +173,9 @@ public class DeleteScriptRequest extends RequestBase {
 		}
 
 		/**
-		 * Period to wait for a response. If no response is received before the timeout
-		 * expires, the request fails and returns an error.
+		 * The period to wait for a response. If no response is received before the
+		 * timeout expires, the request fails and returns an error. It can also be set
+		 * to <code>-1</code> to indicate that the request should never timeout.
 		 * <p>
 		 * API name: {@code timeout}
 		 */
@@ -176,8 +185,9 @@ public class DeleteScriptRequest extends RequestBase {
 		}
 
 		/**
-		 * Period to wait for a response. If no response is received before the timeout
-		 * expires, the request fails and returns an error.
+		 * The period to wait for a response. If no response is received before the
+		 * timeout expires, the request fails and returns an error. It can also be set
+		 * to <code>-1</code> to indicate that the request should never timeout.
 		 * <p>
 		 * API name: {@code timeout}
 		 */

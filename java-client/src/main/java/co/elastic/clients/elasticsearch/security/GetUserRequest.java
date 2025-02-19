@@ -58,7 +58,9 @@ import javax.annotation.Nullable;
 // typedef: security.get_user.Request
 
 /**
- * Retrieves information about users in the native realm and built-in users.
+ * Get users.
+ * <p>
+ * Get information about users in the native realm and built-in users.
  * 
  * @see <a href="../doc-files/api-spec.html#security.get_user.Request">API
  *      specification</a>
@@ -95,7 +97,8 @@ public class GetUserRequest extends RequestBase {
 	}
 
 	/**
-	 * If true will return the User Profile ID for a user, if any.
+	 * Determines whether to retrieve the user profile UID, if it exists, for the
+	 * users.
 	 * <p>
 	 * API name: {@code with_profile_uid}
 	 */
@@ -146,7 +149,8 @@ public class GetUserRequest extends RequestBase {
 		}
 
 		/**
-		 * If true will return the User Profile ID for a user, if any.
+		 * Determines whether to retrieve the user profile UID, if it exists, for the
+		 * users.
 		 * <p>
 		 * API name: {@code with_profile_uid}
 		 */

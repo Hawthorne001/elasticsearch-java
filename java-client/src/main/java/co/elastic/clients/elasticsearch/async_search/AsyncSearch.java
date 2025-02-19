@@ -142,7 +142,7 @@ public class AsyncSearch<TDocument> implements JsonpSerializable {
 
 	/**
 	 * Partial aggregations results, coming from the shards that have already
-	 * completed the execution of the query.
+	 * completed running the query.
 	 * <p>
 	 * API name: {@code aggregations}
 	 */
@@ -395,7 +395,7 @@ public class AsyncSearch<TDocument> implements JsonpSerializable {
 
 		/**
 		 * Partial aggregations results, coming from the shards that have already
-		 * completed the execution of the query.
+		 * completed running the query.
 		 * <p>
 		 * API name: {@code aggregations}
 		 * <p>
@@ -408,7 +408,7 @@ public class AsyncSearch<TDocument> implements JsonpSerializable {
 
 		/**
 		 * Partial aggregations results, coming from the shards that have already
-		 * completed the execution of the query.
+		 * completed running the query.
 		 * <p>
 		 * API name: {@code aggregations}
 		 * <p>
@@ -421,7 +421,7 @@ public class AsyncSearch<TDocument> implements JsonpSerializable {
 
 		/**
 		 * Partial aggregations results, coming from the shards that have already
-		 * completed the execution of the query.
+		 * completed running the query.
 		 * <p>
 		 * API name: {@code aggregations}
 		 * <p>
@@ -646,8 +646,8 @@ public class AsyncSearch<TDocument> implements JsonpSerializable {
 	 * provided by the calling {@code JsonMapper}.
 	 */
 	public static final JsonpDeserializer<AsyncSearch<Object>> _DESERIALIZER = JsonpDeserializer
-			.lazy(() -> createAsyncSearchDeserializer(
-					new NamedDeserializer<>("co.elastic.clients:Deserializer:async_search._types.TDocument")));
+			.lazy(() -> createAsyncSearchDeserializer(new NamedDeserializer<>(
+					"co.elastic.clients:Deserializer:async_search._types.AsyncSearch.TDocument")));
 
 	protected static <TDocument> void setupAsyncSearchDeserializer(
 			ObjectDeserializer<AsyncSearch.Builder<TDocument>> op, JsonpDeserializer<TDocument> tDocumentDeserializer) {

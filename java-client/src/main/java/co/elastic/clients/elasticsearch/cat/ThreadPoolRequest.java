@@ -20,6 +20,7 @@
 package co.elastic.clients.elasticsearch.cat;
 
 import co.elastic.clients.elasticsearch._types.ErrorResponse;
+import co.elastic.clients.elasticsearch._types.Time;
 import co.elastic.clients.elasticsearch._types.TimeUnit;
 import co.elastic.clients.json.JsonpDeserializable;
 import co.elastic.clients.json.JsonpDeserializer;
@@ -30,6 +31,7 @@ import co.elastic.clients.transport.endpoints.SimpleEndpoint;
 import co.elastic.clients.util.ApiTypeHelper;
 import co.elastic.clients.util.ObjectBuilder;
 import jakarta.json.stream.JsonGenerator;
+import java.lang.Boolean;
 import java.lang.String;
 import java.util.HashMap;
 import java.util.List;
@@ -57,17 +59,25 @@ import javax.annotation.Nullable;
 // typedef: cat.thread_pool.Request
 
 /**
- * Returns thread pool statistics for each node in a cluster. Returned
- * information includes all built-in thread pools and custom thread pools.
- * IMPORTANT: cat APIs are only intended for human consumption using the command
- * line or Kibana console. They are not intended for use by applications. For
- * application consumption, use the nodes info API.
+ * Get thread pool statistics.
+ * <p>
+ * Get thread pool statistics for each node in a cluster. Returned information
+ * includes all built-in thread pools and custom thread pools. IMPORTANT: cat
+ * APIs are only intended for human consumption using the command line or Kibana
+ * console. They are not intended for use by applications. For application
+ * consumption, use the nodes info API.
  * 
  * @see <a href="../doc-files/api-spec.html#cat.thread_pool.Request">API
  *      specification</a>
  */
 
 public class ThreadPoolRequest extends CatRequestBase {
+	@Nullable
+	private final Boolean local;
+
+	@Nullable
+	private final Time masterTimeout;
+
 	private final List<String> threadPoolPatterns;
 
 	@Nullable
@@ -77,6 +87,8 @@ public class ThreadPoolRequest extends CatRequestBase {
 
 	private ThreadPoolRequest(Builder builder) {
 
+		this.local = builder.local;
+		this.masterTimeout = builder.masterTimeout;
 		this.threadPoolPatterns = ApiTypeHelper.unmodifiable(builder.threadPoolPatterns);
 		this.time = builder.time;
 
@@ -84,6 +96,30 @@ public class ThreadPoolRequest extends CatRequestBase {
 
 	public static ThreadPoolRequest of(Function<Builder, ObjectBuilder<ThreadPoolRequest>> fn) {
 		return fn.apply(new Builder()).build();
+	}
+
+	/**
+	 * If <code>true</code>, the request computes the list of selected nodes from
+	 * the local cluster state. If <code>false</code> the list of selected nodes are
+	 * computed from the cluster state of the master node. In both cases the
+	 * coordinating node will send requests for further information to each selected
+	 * node.
+	 * <p>
+	 * API name: {@code local}
+	 */
+	@Nullable
+	public final Boolean local() {
+		return this.local;
+	}
+
+	/**
+	 * Period to wait for a connection to the master node.
+	 * <p>
+	 * API name: {@code master_timeout}
+	 */
+	@Nullable
+	public final Time masterTimeout() {
+		return this.masterTimeout;
 	}
 
 	/**
@@ -116,10 +152,49 @@ public class ThreadPoolRequest extends CatRequestBase {
 			implements
 				ObjectBuilder<ThreadPoolRequest> {
 		@Nullable
+		private Boolean local;
+
+		@Nullable
+		private Time masterTimeout;
+
+		@Nullable
 		private List<String> threadPoolPatterns;
 
 		@Nullable
 		private TimeUnit time;
+
+		/**
+		 * If <code>true</code>, the request computes the list of selected nodes from
+		 * the local cluster state. If <code>false</code> the list of selected nodes are
+		 * computed from the cluster state of the master node. In both cases the
+		 * coordinating node will send requests for further information to each selected
+		 * node.
+		 * <p>
+		 * API name: {@code local}
+		 */
+		public final Builder local(@Nullable Boolean value) {
+			this.local = value;
+			return this;
+		}
+
+		/**
+		 * Period to wait for a connection to the master node.
+		 * <p>
+		 * API name: {@code master_timeout}
+		 */
+		public final Builder masterTimeout(@Nullable Time value) {
+			this.masterTimeout = value;
+			return this;
+		}
+
+		/**
+		 * Period to wait for a connection to the master node.
+		 * <p>
+		 * API name: {@code master_timeout}
+		 */
+		public final Builder masterTimeout(Function<Time.Builder, ObjectBuilder<Time>> fn) {
+			return this.masterTimeout(fn.apply(new Time.Builder()).build());
+		}
 
 		/**
 		 * A comma-separated list of thread pool names used to limit the request.
@@ -240,8 +315,14 @@ public class ThreadPoolRequest extends CatRequestBase {
 			request -> {
 				Map<String, String> params = new HashMap<>();
 				params.put("format", "json");
+				if (request.masterTimeout != null) {
+					params.put("master_timeout", request.masterTimeout._toJsonString());
+				}
 				if (request.time != null) {
 					params.put("time", request.time.jsonValue());
+				}
+				if (request.local != null) {
+					params.put("local", String.valueOf(request.local));
 				}
 				return params;
 

@@ -20,6 +20,8 @@
 package co.elastic.clients.elasticsearch.cat;
 
 import co.elastic.clients.elasticsearch._types.ErrorResponse;
+import co.elastic.clients.elasticsearch._types.Time;
+import co.elastic.clients.elasticsearch._types.TimeUnit;
 import co.elastic.clients.json.JsonpDeserializable;
 import co.elastic.clients.json.JsonpDeserializer;
 import co.elastic.clients.json.ObjectBuilderDeserializer;
@@ -28,10 +30,13 @@ import co.elastic.clients.transport.Endpoint;
 import co.elastic.clients.transport.endpoints.SimpleEndpoint;
 import co.elastic.clients.util.ObjectBuilder;
 import jakarta.json.stream.JsonGenerator;
+import java.lang.Boolean;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.function.Function;
+import javax.annotation.Nullable;
 
 //----------------------------------------------------------------
 //       THIS CODE IS GENERATED. MANUAL EDITS WILL BE LOST.
@@ -51,23 +56,153 @@ import java.util.Objects;
 // typedef: cat.pending_tasks.Request
 
 /**
- * Returns cluster-level changes that have not yet been executed. IMPORTANT: cat
- * APIs are only intended for human consumption using the command line or Kibana
- * console. They are not intended for use by applications. For application
- * consumption, use the pending cluster tasks API.
+ * Get pending task information.
+ * <p>
+ * Get information about cluster-level changes that have not yet taken effect.
+ * IMPORTANT: cat APIs are only intended for human consumption using the command
+ * line or Kibana console. They are not intended for use by applications. For
+ * application consumption, use the pending cluster tasks API.
  * 
  * @see <a href="../doc-files/api-spec.html#cat.pending_tasks.Request">API
  *      specification</a>
  */
 
 public class PendingTasksRequest extends CatRequestBase {
-	public PendingTasksRequest() {
+	@Nullable
+	private final Boolean local;
+
+	@Nullable
+	private final Time masterTimeout;
+
+	@Nullable
+	private final TimeUnit time;
+
+	// ---------------------------------------------------------------------------------------------
+
+	private PendingTasksRequest(Builder builder) {
+
+		this.local = builder.local;
+		this.masterTimeout = builder.masterTimeout;
+		this.time = builder.time;
+
+	}
+
+	public static PendingTasksRequest of(Function<Builder, ObjectBuilder<PendingTasksRequest>> fn) {
+		return fn.apply(new Builder()).build();
 	}
 
 	/**
-	 * Singleton instance for {@link PendingTasksRequest}.
+	 * If <code>true</code>, the request computes the list of selected nodes from
+	 * the local cluster state. If <code>false</code> the list of selected nodes are
+	 * computed from the cluster state of the master node. In both cases the
+	 * coordinating node will send requests for further information to each selected
+	 * node.
+	 * <p>
+	 * API name: {@code local}
 	 */
-	public static final PendingTasksRequest _INSTANCE = new PendingTasksRequest();
+	@Nullable
+	public final Boolean local() {
+		return this.local;
+	}
+
+	/**
+	 * Period to wait for a connection to the master node.
+	 * <p>
+	 * API name: {@code master_timeout}
+	 */
+	@Nullable
+	public final Time masterTimeout() {
+		return this.masterTimeout;
+	}
+
+	/**
+	 * Unit used to display time values.
+	 * <p>
+	 * API name: {@code time}
+	 */
+	@Nullable
+	public final TimeUnit time() {
+		return this.time;
+	}
+
+	// ---------------------------------------------------------------------------------------------
+
+	/**
+	 * Builder for {@link PendingTasksRequest}.
+	 */
+
+	public static class Builder extends CatRequestBase.AbstractBuilder<Builder>
+			implements
+				ObjectBuilder<PendingTasksRequest> {
+		@Nullable
+		private Boolean local;
+
+		@Nullable
+		private Time masterTimeout;
+
+		@Nullable
+		private TimeUnit time;
+
+		/**
+		 * If <code>true</code>, the request computes the list of selected nodes from
+		 * the local cluster state. If <code>false</code> the list of selected nodes are
+		 * computed from the cluster state of the master node. In both cases the
+		 * coordinating node will send requests for further information to each selected
+		 * node.
+		 * <p>
+		 * API name: {@code local}
+		 */
+		public final Builder local(@Nullable Boolean value) {
+			this.local = value;
+			return this;
+		}
+
+		/**
+		 * Period to wait for a connection to the master node.
+		 * <p>
+		 * API name: {@code master_timeout}
+		 */
+		public final Builder masterTimeout(@Nullable Time value) {
+			this.masterTimeout = value;
+			return this;
+		}
+
+		/**
+		 * Period to wait for a connection to the master node.
+		 * <p>
+		 * API name: {@code master_timeout}
+		 */
+		public final Builder masterTimeout(Function<Time.Builder, ObjectBuilder<Time>> fn) {
+			return this.masterTimeout(fn.apply(new Time.Builder()).build());
+		}
+
+		/**
+		 * Unit used to display time values.
+		 * <p>
+		 * API name: {@code time}
+		 */
+		public final Builder time(@Nullable TimeUnit value) {
+			this.time = value;
+			return this;
+		}
+
+		@Override
+		protected Builder self() {
+			return this;
+		}
+
+		/**
+		 * Builds a {@link PendingTasksRequest}.
+		 *
+		 * @throws NullPointerException
+		 *             if some of the required fields are null.
+		 */
+		public PendingTasksRequest build() {
+			_checkSingleUse();
+
+			return new PendingTasksRequest(this);
+		}
+	}
 
 	// ---------------------------------------------------------------------------------------------
 
@@ -98,6 +233,15 @@ public class PendingTasksRequest extends CatRequestBase {
 			request -> {
 				Map<String, String> params = new HashMap<>();
 				params.put("format", "json");
+				if (request.masterTimeout != null) {
+					params.put("master_timeout", request.masterTimeout._toJsonString());
+				}
+				if (request.time != null) {
+					params.put("time", request.time.jsonValue());
+				}
+				if (request.local != null) {
+					params.put("local", String.valueOf(request.local));
+				}
 				return params;
 
 			}, SimpleEndpoint.emptyMap(), false, PendingTasksResponse._DESERIALIZER);

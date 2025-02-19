@@ -67,10 +67,10 @@ public class ElasticsearchSqlAsyncClient extends ApiClient<ElasticsearchTranspor
 	// ----- Endpoint: sql.clear_cursor
 
 	/**
-	 * Clears the SQL cursor
+	 * Clear an SQL search cursor.
 	 * 
 	 * @see <a href=
-	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/current/clear-sql-cursor-api.html">Documentation
+	 *      "https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-sql-clear-cursor">Documentation
 	 *      on elastic.co</a>
 	 */
 
@@ -82,13 +82,13 @@ public class ElasticsearchSqlAsyncClient extends ApiClient<ElasticsearchTranspor
 	}
 
 	/**
-	 * Clears the SQL cursor
+	 * Clear an SQL search cursor.
 	 * 
 	 * @param fn
 	 *            a function that initializes a builder to create the
 	 *            {@link ClearCursorRequest}
 	 * @see <a href=
-	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/current/clear-sql-cursor-api.html">Documentation
+	 *      "https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-sql-clear-cursor">Documentation
 	 *      on elastic.co</a>
 	 */
 
@@ -100,11 +100,18 @@ public class ElasticsearchSqlAsyncClient extends ApiClient<ElasticsearchTranspor
 	// ----- Endpoint: sql.delete_async
 
 	/**
-	 * Deletes an async SQL search or a stored synchronous SQL search. If the search
-	 * is still running, the API cancels it.
-	 * 
+	 * Delete an async SQL search. Delete an async SQL search or a stored
+	 * synchronous SQL search. If the search is still running, the API cancels it.
+	 * <p>
+	 * If the Elasticsearch security features are enabled, only the following users
+	 * can use this API to delete a search:
+	 * <ul>
+	 * <li>Users with the <code>cancel_task</code> cluster privilege.</li>
+	 * <li>The user who first submitted the search.</li>
+	 * </ul>
+	 *
 	 * @see <a href=
-	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/master/delete-async-sql-search-api.html">Documentation
+	 *      "https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-sql-delete-async">Documentation
 	 *      on elastic.co</a>
 	 */
 
@@ -116,14 +123,21 @@ public class ElasticsearchSqlAsyncClient extends ApiClient<ElasticsearchTranspor
 	}
 
 	/**
-	 * Deletes an async SQL search or a stored synchronous SQL search. If the search
-	 * is still running, the API cancels it.
-	 * 
+	 * Delete an async SQL search. Delete an async SQL search or a stored
+	 * synchronous SQL search. If the search is still running, the API cancels it.
+	 * <p>
+	 * If the Elasticsearch security features are enabled, only the following users
+	 * can use this API to delete a search:
+	 * <ul>
+	 * <li>Users with the <code>cancel_task</code> cluster privilege.</li>
+	 * <li>The user who first submitted the search.</li>
+	 * </ul>
+	 *
 	 * @param fn
 	 *            a function that initializes a builder to create the
 	 *            {@link DeleteAsyncRequest}
 	 * @see <a href=
-	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/master/delete-async-sql-search-api.html">Documentation
+	 *      "https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-sql-delete-async">Documentation
 	 *      on elastic.co</a>
 	 */
 
@@ -135,11 +149,14 @@ public class ElasticsearchSqlAsyncClient extends ApiClient<ElasticsearchTranspor
 	// ----- Endpoint: sql.get_async
 
 	/**
-	 * Returns the current status and available results for an async SQL search or
-	 * stored synchronous SQL search
+	 * Get async SQL search results. Get the current status and available results
+	 * for an async SQL search or stored synchronous SQL search.
+	 * <p>
+	 * If the Elasticsearch security features are enabled, only the user who first
+	 * submitted the SQL search can retrieve the search using this API.
 	 * 
 	 * @see <a href=
-	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/master/get-async-sql-search-api.html">Documentation
+	 *      "https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-sql-get-async">Documentation
 	 *      on elastic.co</a>
 	 */
 
@@ -151,14 +168,17 @@ public class ElasticsearchSqlAsyncClient extends ApiClient<ElasticsearchTranspor
 	}
 
 	/**
-	 * Returns the current status and available results for an async SQL search or
-	 * stored synchronous SQL search
+	 * Get async SQL search results. Get the current status and available results
+	 * for an async SQL search or stored synchronous SQL search.
+	 * <p>
+	 * If the Elasticsearch security features are enabled, only the user who first
+	 * submitted the SQL search can retrieve the search using this API.
 	 * 
 	 * @param fn
 	 *            a function that initializes a builder to create the
 	 *            {@link GetAsyncRequest}
 	 * @see <a href=
-	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/master/get-async-sql-search-api.html">Documentation
+	 *      "https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-sql-get-async">Documentation
 	 *      on elastic.co</a>
 	 */
 
@@ -170,11 +190,11 @@ public class ElasticsearchSqlAsyncClient extends ApiClient<ElasticsearchTranspor
 	// ----- Endpoint: sql.get_async_status
 
 	/**
-	 * Returns the current status of an async SQL search or a stored synchronous SQL
-	 * search
+	 * Get the async SQL search status. Get the current status of an async SQL
+	 * search or a stored synchronous SQL search.
 	 * 
 	 * @see <a href=
-	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/master/get-async-sql-search-status-api.html">Documentation
+	 *      "https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-sql-get-async-status">Documentation
 	 *      on elastic.co</a>
 	 */
 
@@ -186,14 +206,14 @@ public class ElasticsearchSqlAsyncClient extends ApiClient<ElasticsearchTranspor
 	}
 
 	/**
-	 * Returns the current status of an async SQL search or a stored synchronous SQL
-	 * search
+	 * Get the async SQL search status. Get the current status of an async SQL
+	 * search or a stored synchronous SQL search.
 	 * 
 	 * @param fn
 	 *            a function that initializes a builder to create the
 	 *            {@link GetAsyncStatusRequest}
 	 * @see <a href=
-	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/master/get-async-sql-search-status-api.html">Documentation
+	 *      "https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-sql-get-async-status">Documentation
 	 *      on elastic.co</a>
 	 */
 
@@ -205,10 +225,10 @@ public class ElasticsearchSqlAsyncClient extends ApiClient<ElasticsearchTranspor
 	// ----- Endpoint: sql.query
 
 	/**
-	 * Executes a SQL request
+	 * Get SQL search results. Run an SQL request.
 	 * 
 	 * @see <a href=
-	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/current/sql-search-api.html">Documentation
+	 *      "https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-sql-query">Documentation
 	 *      on elastic.co</a>
 	 */
 
@@ -220,13 +240,13 @@ public class ElasticsearchSqlAsyncClient extends ApiClient<ElasticsearchTranspor
 	}
 
 	/**
-	 * Executes a SQL request
+	 * Get SQL search results. Run an SQL request.
 	 * 
 	 * @param fn
 	 *            a function that initializes a builder to create the
 	 *            {@link QueryRequest}
 	 * @see <a href=
-	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/current/sql-search-api.html">Documentation
+	 *      "https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-sql-query">Documentation
 	 *      on elastic.co</a>
 	 */
 
@@ -236,10 +256,10 @@ public class ElasticsearchSqlAsyncClient extends ApiClient<ElasticsearchTranspor
 	}
 
 	/**
-	 * Executes a SQL request
+	 * Get SQL search results. Run an SQL request.
 	 * 
 	 * @see <a href=
-	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/current/sql-search-api.html">Documentation
+	 *      "https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-sql-query">Documentation
 	 *      on elastic.co</a>
 	 */
 
@@ -251,10 +271,12 @@ public class ElasticsearchSqlAsyncClient extends ApiClient<ElasticsearchTranspor
 	// ----- Endpoint: sql.translate
 
 	/**
-	 * Translates SQL into Elasticsearch queries
+	 * Translate SQL into Elasticsearch queries. Translate an SQL search into a
+	 * search API request containing Query DSL. It accepts the same request body
+	 * parameters as the SQL search API, excluding <code>cursor</code>.
 	 * 
 	 * @see <a href=
-	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/current/sql-translate-api.html">Documentation
+	 *      "https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-sql-translate">Documentation
 	 *      on elastic.co</a>
 	 */
 
@@ -266,13 +288,15 @@ public class ElasticsearchSqlAsyncClient extends ApiClient<ElasticsearchTranspor
 	}
 
 	/**
-	 * Translates SQL into Elasticsearch queries
+	 * Translate SQL into Elasticsearch queries. Translate an SQL search into a
+	 * search API request containing Query DSL. It accepts the same request body
+	 * parameters as the SQL search API, excluding <code>cursor</code>.
 	 * 
 	 * @param fn
 	 *            a function that initializes a builder to create the
 	 *            {@link TranslateRequest}
 	 * @see <a href=
-	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/current/sql-translate-api.html">Documentation
+	 *      "https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-sql-translate">Documentation
 	 *      on elastic.co</a>
 	 */
 

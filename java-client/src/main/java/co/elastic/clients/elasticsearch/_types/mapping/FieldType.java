@@ -73,6 +73,10 @@ public enum FieldType implements JsonEnum {
 
 	Object("object"),
 
+	Passthrough("passthrough"),
+
+	Version("version"),
+
 	Murmur3("murmur3"),
 
 	TokenCount("token_count"),
@@ -123,13 +127,19 @@ public enum FieldType implements JsonEnum {
 
 	ConstantKeyword("constant_keyword"),
 
+	CountedKeyword("counted_keyword"),
+
 	AggregateMetricDouble("aggregate_metric_double"),
 
 	DenseVector("dense_vector"),
 
+	SemanticText("semantic_text"),
+
 	SparseVector("sparse_vector"),
 
 	MatchOnlyText("match_only_text"),
+
+	IcuCollationKeyword("icu_collation_keyword"),
 
 	;
 

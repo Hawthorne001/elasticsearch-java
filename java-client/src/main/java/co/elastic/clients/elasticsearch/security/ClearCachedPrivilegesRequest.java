@@ -56,7 +56,11 @@ import javax.annotation.Nullable;
 // typedef: security.clear_cached_privileges.Request
 
 /**
- * Evicts application privileges from the native application privileges cache.
+ * Clear the privileges cache.
+ * <p>
+ * Evict privileges from the native application privilege cache. The cache is
+ * also automatically cleared for applications that have their privileges
+ * updated.
  * 
  * @see <a href=
  *      "../doc-files/api-spec.html#security.clear_cached_privileges.Request">API
@@ -79,7 +83,9 @@ public class ClearCachedPrivilegesRequest extends RequestBase {
 	}
 
 	/**
-	 * Required - A comma-separated list of application names
+	 * Required - A comma-separated list of applications. To clear all applications,
+	 * use an asterism (<code>*</code>). It does not support other wildcard
+	 * patterns.
 	 * <p>
 	 * API name: {@code application}
 	 */
@@ -99,7 +105,9 @@ public class ClearCachedPrivilegesRequest extends RequestBase {
 		private String application;
 
 		/**
-		 * Required - A comma-separated list of application names
+		 * Required - A comma-separated list of applications. To clear all applications,
+		 * use an asterism (<code>*</code>). It does not support other wildcard
+		 * patterns.
 		 * <p>
 		 * API name: {@code application}
 		 */

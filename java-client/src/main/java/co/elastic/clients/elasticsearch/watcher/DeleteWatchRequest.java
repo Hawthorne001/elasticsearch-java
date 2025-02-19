@@ -56,7 +56,18 @@ import javax.annotation.Nullable;
 // typedef: watcher.delete_watch.Request
 
 /**
- * Removes a watch from Watcher.
+ * Delete a watch. When the watch is removed, the document representing the
+ * watch in the <code>.watches</code> index is gone and it will never be run
+ * again.
+ * <p>
+ * Deleting a watch does not delete any watch execution records related to this
+ * watch from the watch history.
+ * <p>
+ * IMPORTANT: Deleting a watch must be done by using only this API. Do not
+ * delete the watch directly from the <code>.watches</code> index using the
+ * Elasticsearch delete document API When Elasticsearch security features are
+ * enabled, make sure no write privileges are granted to anyone for the
+ * <code>.watches</code> index.
  * 
  * @see <a href="../doc-files/api-spec.html#watcher.delete_watch.Request">API
  *      specification</a>
@@ -78,7 +89,7 @@ public class DeleteWatchRequest extends RequestBase {
 	}
 
 	/**
-	 * Required - Watch ID
+	 * Required - The watch identifier.
 	 * <p>
 	 * API name: {@code id}
 	 */
@@ -98,7 +109,7 @@ public class DeleteWatchRequest extends RequestBase {
 		private String id;
 
 		/**
-		 * Required - Watch ID
+		 * Required - The watch identifier.
 		 * <p>
 		 * API name: {@code id}
 		 */

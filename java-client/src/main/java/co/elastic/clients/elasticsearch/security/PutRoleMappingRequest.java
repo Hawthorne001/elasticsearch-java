@@ -61,7 +61,44 @@ import javax.annotation.Nullable;
 // typedef: security.put_role_mapping.Request
 
 /**
- * Creates and updates role mappings.
+ * Create or update role mappings.
+ * <p>
+ * Role mappings define which roles are assigned to each user. Each mapping has
+ * rules that identify users and a list of roles that are granted to those
+ * users. The role mapping APIs are generally the preferred way to manage role
+ * mappings rather than using role mapping files. The create or update role
+ * mappings API cannot update role mappings that are defined in role mapping
+ * files.
+ * <p>
+ * NOTE: This API does not create roles. Rather, it maps users to existing
+ * roles. Roles can be created by using the create or update roles API or roles
+ * files.
+ * <p>
+ * <strong>Role templates</strong>
+ * <p>
+ * The most common use for role mappings is to create a mapping from a known
+ * value on the user to a fixed role name. For example, all users in the
+ * <code>cn=admin,dc=example,dc=com</code> LDAP group should be given the
+ * superuser role in Elasticsearch. The <code>roles</code> field is used for
+ * this purpose.
+ * <p>
+ * For more complex needs, it is possible to use Mustache templates to
+ * dynamically determine the names of the roles that should be granted to the
+ * user. The <code>role_templates</code> field is used for this purpose.
+ * <p>
+ * NOTE: To use role templates successfully, the relevant scripting feature must
+ * be enabled. Otherwise, all attempts to create a role mapping with role
+ * templates fail.
+ * <p>
+ * All of the user fields that are available in the role mapping rules are also
+ * available in the role templates. Thus it is possible to assign a user to a
+ * role that reflects their username, their groups, or the name of the realm to
+ * which they authenticated.
+ * <p>
+ * By default a template is evaluated to produce a single string that is the
+ * name of the role which should be assigned to the user. If the format of the
+ * template is set to &quot;json&quot; then the template is expected to produce
+ * a JSON string or an array of JSON strings for the role names.
  * 
  * @see <a href=
  *      "../doc-files/api-spec.html#security.put_role_mapping.Request">API
@@ -108,6 +145,9 @@ public class PutRoleMappingRequest extends RequestBase implements JsonpSerializa
 	}
 
 	/**
+	 * Mappings that have <code>enabled</code> set to <code>false</code> are ignored
+	 * when role mapping is performed.
+	 * <p>
 	 * API name: {@code enabled}
 	 */
 	@Nullable
@@ -116,6 +156,10 @@ public class PutRoleMappingRequest extends RequestBase implements JsonpSerializa
 	}
 
 	/**
+	 * Additional metadata that helps define which roles are assigned to each user.
+	 * Within the metadata object, keys beginning with <code>_</code> are reserved
+	 * for system usage.
+	 * <p>
 	 * API name: {@code metadata}
 	 */
 	public final Map<String, JsonData> metadata() {
@@ -123,7 +167,9 @@ public class PutRoleMappingRequest extends RequestBase implements JsonpSerializa
 	}
 
 	/**
-	 * Required - Role-mapping name
+	 * Required - The distinct name that identifies the role mapping. The name is
+	 * used solely as an identifier to facilitate interaction via the API; it does
+	 * not affect the behavior of the mapping in any way.
 	 * <p>
 	 * API name: {@code name}
 	 */
@@ -145,6 +191,11 @@ public class PutRoleMappingRequest extends RequestBase implements JsonpSerializa
 	}
 
 	/**
+	 * A list of Mustache templates that will be evaluated to determine the roles
+	 * names that should granted to the users that match the role mapping rules.
+	 * Exactly one of <code>roles</code> or <code>role_templates</code> must be
+	 * specified.
+	 * <p>
 	 * API name: {@code role_templates}
 	 */
 	public final List<RoleTemplate> roleTemplates() {
@@ -152,6 +203,10 @@ public class PutRoleMappingRequest extends RequestBase implements JsonpSerializa
 	}
 
 	/**
+	 * A list of role names that are granted to the users that match the role
+	 * mapping rules. Exactly one of <code>roles</code> or
+	 * <code>role_templates</code> must be specified.
+	 * <p>
 	 * API name: {@code roles}
 	 */
 	public final List<String> roles() {
@@ -159,6 +214,9 @@ public class PutRoleMappingRequest extends RequestBase implements JsonpSerializa
 	}
 
 	/**
+	 * The rules that determine which users should be matched by the mapping. A rule
+	 * is a logical condition that is expressed by using a JSON DSL.
+	 * <p>
 	 * API name: {@code rules}
 	 */
 	@Nullable
@@ -271,6 +329,9 @@ public class PutRoleMappingRequest extends RequestBase implements JsonpSerializa
 		private List<String> runAs;
 
 		/**
+		 * Mappings that have <code>enabled</code> set to <code>false</code> are ignored
+		 * when role mapping is performed.
+		 * <p>
 		 * API name: {@code enabled}
 		 */
 		public final Builder enabled(@Nullable Boolean value) {
@@ -279,6 +340,10 @@ public class PutRoleMappingRequest extends RequestBase implements JsonpSerializa
 		}
 
 		/**
+		 * Additional metadata that helps define which roles are assigned to each user.
+		 * Within the metadata object, keys beginning with <code>_</code> are reserved
+		 * for system usage.
+		 * <p>
 		 * API name: {@code metadata}
 		 * <p>
 		 * Adds all entries of <code>map</code> to <code>metadata</code>.
@@ -289,6 +354,10 @@ public class PutRoleMappingRequest extends RequestBase implements JsonpSerializa
 		}
 
 		/**
+		 * Additional metadata that helps define which roles are assigned to each user.
+		 * Within the metadata object, keys beginning with <code>_</code> are reserved
+		 * for system usage.
+		 * <p>
 		 * API name: {@code metadata}
 		 * <p>
 		 * Adds an entry to <code>metadata</code>.
@@ -299,7 +368,9 @@ public class PutRoleMappingRequest extends RequestBase implements JsonpSerializa
 		}
 
 		/**
-		 * Required - Role-mapping name
+		 * Required - The distinct name that identifies the role mapping. The name is
+		 * used solely as an identifier to facilitate interaction via the API; it does
+		 * not affect the behavior of the mapping in any way.
 		 * <p>
 		 * API name: {@code name}
 		 */
@@ -322,6 +393,11 @@ public class PutRoleMappingRequest extends RequestBase implements JsonpSerializa
 		}
 
 		/**
+		 * A list of Mustache templates that will be evaluated to determine the roles
+		 * names that should granted to the users that match the role mapping rules.
+		 * Exactly one of <code>roles</code> or <code>role_templates</code> must be
+		 * specified.
+		 * <p>
 		 * API name: {@code role_templates}
 		 * <p>
 		 * Adds all elements of <code>list</code> to <code>roleTemplates</code>.
@@ -332,6 +408,11 @@ public class PutRoleMappingRequest extends RequestBase implements JsonpSerializa
 		}
 
 		/**
+		 * A list of Mustache templates that will be evaluated to determine the roles
+		 * names that should granted to the users that match the role mapping rules.
+		 * Exactly one of <code>roles</code> or <code>role_templates</code> must be
+		 * specified.
+		 * <p>
 		 * API name: {@code role_templates}
 		 * <p>
 		 * Adds one or more values to <code>roleTemplates</code>.
@@ -342,6 +423,11 @@ public class PutRoleMappingRequest extends RequestBase implements JsonpSerializa
 		}
 
 		/**
+		 * A list of Mustache templates that will be evaluated to determine the roles
+		 * names that should granted to the users that match the role mapping rules.
+		 * Exactly one of <code>roles</code> or <code>role_templates</code> must be
+		 * specified.
+		 * <p>
 		 * API name: {@code role_templates}
 		 * <p>
 		 * Adds a value to <code>roleTemplates</code> using a builder lambda.
@@ -351,6 +437,10 @@ public class PutRoleMappingRequest extends RequestBase implements JsonpSerializa
 		}
 
 		/**
+		 * A list of role names that are granted to the users that match the role
+		 * mapping rules. Exactly one of <code>roles</code> or
+		 * <code>role_templates</code> must be specified.
+		 * <p>
 		 * API name: {@code roles}
 		 * <p>
 		 * Adds all elements of <code>list</code> to <code>roles</code>.
@@ -361,6 +451,10 @@ public class PutRoleMappingRequest extends RequestBase implements JsonpSerializa
 		}
 
 		/**
+		 * A list of role names that are granted to the users that match the role
+		 * mapping rules. Exactly one of <code>roles</code> or
+		 * <code>role_templates</code> must be specified.
+		 * <p>
 		 * API name: {@code roles}
 		 * <p>
 		 * Adds one or more values to <code>roles</code>.
@@ -371,6 +465,9 @@ public class PutRoleMappingRequest extends RequestBase implements JsonpSerializa
 		}
 
 		/**
+		 * The rules that determine which users should be matched by the mapping. A rule
+		 * is a logical condition that is expressed by using a JSON DSL.
+		 * <p>
 		 * API name: {@code rules}
 		 */
 		public final Builder rules(@Nullable RoleMappingRule value) {
@@ -379,6 +476,9 @@ public class PutRoleMappingRequest extends RequestBase implements JsonpSerializa
 		}
 
 		/**
+		 * The rules that determine which users should be matched by the mapping. A rule
+		 * is a logical condition that is expressed by using a JSON DSL.
+		 * <p>
 		 * API name: {@code rules}
 		 */
 		public final Builder rules(Function<RoleMappingRule.Builder, ObjectBuilder<RoleMappingRule>> fn) {

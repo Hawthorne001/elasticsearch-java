@@ -56,7 +56,29 @@ import javax.annotation.Nullable;
 // typedef: security.get_token.Request
 
 /**
- * Creates a bearer token for access without requiring basic authentication.
+ * Get a token.
+ * <p>
+ * Create a bearer token for access without requiring basic authentication. The
+ * tokens are created by the Elasticsearch Token Service, which is automatically
+ * enabled when you configure TLS on the HTTP interface. Alternatively, you can
+ * explicitly enable the <code>xpack.security.authc.token.enabled</code>
+ * setting. When you are running in production mode, a bootstrap check prevents
+ * you from enabling the token service unless you also enable TLS on the HTTP
+ * interface.
+ * <p>
+ * The get token API takes the same parameters as a typical OAuth 2.0 token API
+ * except for the use of a JSON request body.
+ * <p>
+ * A successful get token API call returns a JSON structure that contains the
+ * access token, the amount of time (seconds) that the token expires in, the
+ * type, and the scope if available.
+ * <p>
+ * The tokens returned by the get token API have a finite period of time for
+ * which they are valid and after that time period, they can no longer be used.
+ * That time period is defined by the
+ * <code>xpack.security.authc.token.timeout</code> setting. If you want to
+ * invalidate a token immediately, you can do so by using the invalidate token
+ * API.
  * 
  * @see <a href="../doc-files/api-spec.html#security.get_token.Request">API
  *      specification</a>
@@ -99,6 +121,10 @@ public class GetTokenRequest extends RequestBase implements JsonpSerializable {
 	}
 
 	/**
+	 * The type of grant. Supported grant types are: <code>password</code>,
+	 * <code>_kerberos</code>, <code>client_credentials</code>, and
+	 * <code>refresh_token</code>.
+	 * <p>
 	 * API name: {@code grant_type}
 	 */
 	@Nullable
@@ -107,6 +133,10 @@ public class GetTokenRequest extends RequestBase implements JsonpSerializable {
 	}
 
 	/**
+	 * The base64 encoded kerberos ticket. If you specify the <code>_kerberos</code>
+	 * grant type, this parameter is required. This parameter is not valid with any
+	 * other supported grant type.
+	 * <p>
 	 * API name: {@code kerberos_ticket}
 	 */
 	@Nullable
@@ -115,6 +145,10 @@ public class GetTokenRequest extends RequestBase implements JsonpSerializable {
 	}
 
 	/**
+	 * The user's password. If you specify the <code>password</code> grant type,
+	 * this parameter is required. This parameter is not valid with any other
+	 * supported grant type.
+	 * <p>
 	 * API name: {@code password}
 	 */
 	@Nullable
@@ -123,6 +157,11 @@ public class GetTokenRequest extends RequestBase implements JsonpSerializable {
 	}
 
 	/**
+	 * The string that was returned when you created the token, which enables you to
+	 * extend its life. If you specify the <code>refresh_token</code> grant type,
+	 * this parameter is required. This parameter is not valid with any other
+	 * supported grant type.
+	 * <p>
 	 * API name: {@code refresh_token}
 	 */
 	@Nullable
@@ -131,6 +170,9 @@ public class GetTokenRequest extends RequestBase implements JsonpSerializable {
 	}
 
 	/**
+	 * The scope of the token. Currently tokens are only issued for a scope of FULL
+	 * regardless of the value sent with the request.
+	 * <p>
 	 * API name: {@code scope}
 	 */
 	@Nullable
@@ -139,6 +181,10 @@ public class GetTokenRequest extends RequestBase implements JsonpSerializable {
 	}
 
 	/**
+	 * The username that identifies the user. If you specify the
+	 * <code>password</code> grant type, this parameter is required. This parameter
+	 * is not valid with any other supported grant type.
+	 * <p>
 	 * API name: {@code username}
 	 */
 	@Nullable
@@ -215,6 +261,10 @@ public class GetTokenRequest extends RequestBase implements JsonpSerializable {
 		private String username;
 
 		/**
+		 * The type of grant. Supported grant types are: <code>password</code>,
+		 * <code>_kerberos</code>, <code>client_credentials</code>, and
+		 * <code>refresh_token</code>.
+		 * <p>
 		 * API name: {@code grant_type}
 		 */
 		public final Builder grantType(@Nullable AccessTokenGrantType value) {
@@ -223,6 +273,10 @@ public class GetTokenRequest extends RequestBase implements JsonpSerializable {
 		}
 
 		/**
+		 * The base64 encoded kerberos ticket. If you specify the <code>_kerberos</code>
+		 * grant type, this parameter is required. This parameter is not valid with any
+		 * other supported grant type.
+		 * <p>
 		 * API name: {@code kerberos_ticket}
 		 */
 		public final Builder kerberosTicket(@Nullable String value) {
@@ -231,6 +285,10 @@ public class GetTokenRequest extends RequestBase implements JsonpSerializable {
 		}
 
 		/**
+		 * The user's password. If you specify the <code>password</code> grant type,
+		 * this parameter is required. This parameter is not valid with any other
+		 * supported grant type.
+		 * <p>
 		 * API name: {@code password}
 		 */
 		public final Builder password(@Nullable String value) {
@@ -239,6 +297,11 @@ public class GetTokenRequest extends RequestBase implements JsonpSerializable {
 		}
 
 		/**
+		 * The string that was returned when you created the token, which enables you to
+		 * extend its life. If you specify the <code>refresh_token</code> grant type,
+		 * this parameter is required. This parameter is not valid with any other
+		 * supported grant type.
+		 * <p>
 		 * API name: {@code refresh_token}
 		 */
 		public final Builder refreshToken(@Nullable String value) {
@@ -247,6 +310,9 @@ public class GetTokenRequest extends RequestBase implements JsonpSerializable {
 		}
 
 		/**
+		 * The scope of the token. Currently tokens are only issued for a scope of FULL
+		 * regardless of the value sent with the request.
+		 * <p>
 		 * API name: {@code scope}
 		 */
 		public final Builder scope(@Nullable String value) {
@@ -255,6 +321,10 @@ public class GetTokenRequest extends RequestBase implements JsonpSerializable {
 		}
 
 		/**
+		 * The username that identifies the user. If you specify the
+		 * <code>password</code> grant type, this parameter is required. This parameter
+		 * is not valid with any other supported grant type.
+		 * <p>
 		 * API name: {@code username}
 		 */
 		public final Builder username(@Nullable String value) {

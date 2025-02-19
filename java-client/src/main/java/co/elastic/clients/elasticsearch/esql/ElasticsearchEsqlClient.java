@@ -68,13 +68,56 @@ public class ElasticsearchEsqlClient extends ApiClient<ElasticsearchTransport, E
 		return new ElasticsearchEsqlClient(this.transport, transportOptions);
 	}
 
+	// ----- Endpoint: esql.async_query_stop
+
+	/**
+	 * Stop async ES|QL query.
+	 * <p>
+	 * This API interrupts the query execution and returns the results so far. If
+	 * the Elasticsearch security features are enabled, only the user who first
+	 * submitted the ES|QL query can stop it.
+	 * 
+	 * @see <a href=
+	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/current/esql-async-query-stop-api.html">Documentation
+	 *      on elastic.co</a>
+	 */
+
+	public BinaryResponse asyncQueryStop(AsyncQueryStopRequest request) throws IOException, ElasticsearchException {
+		@SuppressWarnings("unchecked")
+		Endpoint<AsyncQueryStopRequest, BinaryResponse, ErrorResponse> endpoint = (Endpoint<AsyncQueryStopRequest, BinaryResponse, ErrorResponse>) AsyncQueryStopRequest._ENDPOINT;
+
+		return this.transport.performRequest(request, endpoint, this.transportOptions);
+	}
+
+	/**
+	 * Stop async ES|QL query.
+	 * <p>
+	 * This API interrupts the query execution and returns the results so far. If
+	 * the Elasticsearch security features are enabled, only the user who first
+	 * submitted the ES|QL query can stop it.
+	 * 
+	 * @param fn
+	 *            a function that initializes a builder to create the
+	 *            {@link AsyncQueryStopRequest}
+	 * @see <a href=
+	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/current/esql-async-query-stop-api.html">Documentation
+	 *      on elastic.co</a>
+	 */
+
+	public final BinaryResponse asyncQueryStop(
+			Function<AsyncQueryStopRequest.Builder, ObjectBuilder<AsyncQueryStopRequest>> fn)
+			throws IOException, ElasticsearchException {
+		return asyncQueryStop(fn.apply(new AsyncQueryStopRequest.Builder()).build());
+	}
+
 	// ----- Endpoint: esql.query
 
 	/**
-	 * Executes an ESQL request
+	 * Run an ES|QL query. Get search results for an ES|QL (Elasticsearch query
+	 * language) query.
 	 * 
 	 * @see <a href=
-	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/8.15/esql-rest.html">Documentation
+	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/current/esql-rest.html">Documentation
 	 *      on elastic.co</a>
 	 */
 
@@ -86,13 +129,14 @@ public class ElasticsearchEsqlClient extends ApiClient<ElasticsearchTransport, E
 	}
 
 	/**
-	 * Executes an ESQL request
+	 * Run an ES|QL query. Get search results for an ES|QL (Elasticsearch query
+	 * language) query.
 	 * 
 	 * @param fn
 	 *            a function that initializes a builder to create the
 	 *            {@link QueryRequest}
 	 * @see <a href=
-	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/8.15/esql-rest.html">Documentation
+	 *      "https://www.elastic.co/guide/en/elasticsearch/reference/current/esql-rest.html">Documentation
 	 *      on elastic.co</a>
 	 */
 
@@ -113,24 +157,7 @@ public class ElasticsearchEsqlClient extends ApiClient<ElasticsearchTransport, E
 	 */
 	public final <T> T query(EsqlAdapter<T> adapter, String query, Object... parameters)
 			throws IOException, ElasticsearchException {
-		return EsqlHelper.query(this, null, adapter, query, parameters);
-	}
-
-	/**
-	 * Executes an ES|QL request and adapts its result to a target type.
-	 *
-	 * @param version
-	 *            the ES|QL language version
-	 * @param adapter
-	 *            the ES|QL response adapter
-	 * @param query
-	 *            the ES|QL query
-	 * @param parameters
-	 *            values for query parameters, if any
-	 */
-	public final <T> T query(EsqlVersion version, EsqlAdapter<T> adapter, String query, Object... parameters)
-			throws IOException, ElasticsearchException {
-		return EsqlHelper.query(this, version, adapter, query, parameters);
+		return EsqlHelper.query(this, adapter, query, parameters);
 	}
 
 	/**

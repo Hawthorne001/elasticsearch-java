@@ -58,7 +58,9 @@ import javax.annotation.Nullable;
 // typedef: security.clear_cached_roles.Request
 
 /**
- * Evicts roles from the native role cache.
+ * Clear the roles cache.
+ * <p>
+ * Evict roles from the native role cache.
  * 
  * @see <a href=
  *      "../doc-files/api-spec.html#security.clear_cached_roles.Request">API
@@ -81,7 +83,9 @@ public class ClearCachedRolesRequest extends RequestBase {
 	}
 
 	/**
-	 * Required - Role name
+	 * Required - A comma-separated list of roles to evict from the role cache. To
+	 * evict all roles, use an asterisk (<code>*</code>). It does not support other
+	 * wildcard patterns.
 	 * <p>
 	 * API name: {@code name}
 	 */
@@ -101,7 +105,9 @@ public class ClearCachedRolesRequest extends RequestBase {
 		private List<String> name;
 
 		/**
-		 * Required - Role name
+		 * Required - A comma-separated list of roles to evict from the role cache. To
+		 * evict all roles, use an asterisk (<code>*</code>). It does not support other
+		 * wildcard patterns.
 		 * <p>
 		 * API name: {@code name}
 		 * <p>
@@ -113,7 +119,9 @@ public class ClearCachedRolesRequest extends RequestBase {
 		}
 
 		/**
-		 * Required - Role name
+		 * Required - A comma-separated list of roles to evict from the role cache. To
+		 * evict all roles, use an asterisk (<code>*</code>). It does not support other
+		 * wildcard patterns.
 		 * <p>
 		 * API name: {@code name}
 		 * <p>

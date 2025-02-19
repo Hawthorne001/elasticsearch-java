@@ -36,6 +36,7 @@ import jakarta.json.stream.JsonGenerator;
 import java.lang.Boolean;
 import java.lang.Long;
 import java.lang.String;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.function.Function;
@@ -70,6 +71,8 @@ public class GetResult<TDocument> implements JsonpSerializable {
 
 	private final Map<String, JsonData> fields;
 
+	private final List<String> ignored;
+
 	private final boolean found;
 
 	private final String id;
@@ -98,6 +101,7 @@ public class GetResult<TDocument> implements JsonpSerializable {
 
 		this.index = ApiTypeHelper.requireNonNull(builder.index, this, "index");
 		this.fields = ApiTypeHelper.unmodifiable(builder.fields);
+		this.ignored = ApiTypeHelper.unmodifiable(builder.ignored);
 		this.found = ApiTypeHelper.requireNonNull(builder.found, this, "found");
 		this.id = ApiTypeHelper.requireNonNull(builder.id, this, "id");
 		this.primaryTerm = builder.primaryTerm;
@@ -115,13 +119,19 @@ public class GetResult<TDocument> implements JsonpSerializable {
 	}
 
 	/**
-	 * Required - API name: {@code _index}
+	 * Required - The name of the index the document belongs to.
+	 * <p>
+	 * API name: {@code _index}
 	 */
 	public final String index() {
 		return this.index;
 	}
 
 	/**
+	 * If the <code>stored_fields</code> parameter is set to <code>true</code> and
+	 * <code>found</code> is <code>true</code>, it contains the document fields
+	 * stored in the index.
+	 * <p>
 	 * API name: {@code fields}
 	 */
 	public final Map<String, JsonData> fields() {
@@ -129,20 +139,33 @@ public class GetResult<TDocument> implements JsonpSerializable {
 	}
 
 	/**
-	 * Required - API name: {@code found}
+	 * API name: {@code _ignored}
+	 */
+	public final List<String> ignored() {
+		return this.ignored;
+	}
+
+	/**
+	 * Required - Indicates whether the document exists.
+	 * <p>
+	 * API name: {@code found}
 	 */
 	public final boolean found() {
 		return this.found;
 	}
 
 	/**
-	 * Required - API name: {@code _id}
+	 * Required - The unique identifier for the document.
+	 * <p>
+	 * API name: {@code _id}
 	 */
 	public final String id() {
 		return this.id;
 	}
 
 	/**
+	 * The primary term assigned to the document for the indexing operation.
+	 * <p>
 	 * API name: {@code _primary_term}
 	 */
 	@Nullable
@@ -151,6 +174,8 @@ public class GetResult<TDocument> implements JsonpSerializable {
 	}
 
 	/**
+	 * The explicit routing, if set.
+	 * <p>
 	 * API name: {@code _routing}
 	 */
 	@Nullable
@@ -159,6 +184,10 @@ public class GetResult<TDocument> implements JsonpSerializable {
 	}
 
 	/**
+	 * The sequence number assigned to the document for the indexing operation.
+	 * Sequence numbers are used to ensure an older version of a document doesn't
+	 * overwrite a newer version.
+	 * <p>
 	 * API name: {@code _seq_no}
 	 */
 	@Nullable
@@ -167,6 +196,11 @@ public class GetResult<TDocument> implements JsonpSerializable {
 	}
 
 	/**
+	 * If <code>found</code> is <code>true</code>, it contains the document data
+	 * formatted in JSON. If the <code>_source</code> parameter is set to
+	 * <code>false</code> or the <code>stored_fields</code> parameter is set to
+	 * <code>true</code>, it is excluded.
+	 * <p>
 	 * API name: {@code _source}
 	 */
 	@Nullable
@@ -175,6 +209,8 @@ public class GetResult<TDocument> implements JsonpSerializable {
 	}
 
 	/**
+	 * The document version, which is ncremented each time the document is updated.
+	 * <p>
 	 * API name: {@code _version}
 	 */
 	@Nullable
@@ -202,6 +238,16 @@ public class GetResult<TDocument> implements JsonpSerializable {
 			for (Map.Entry<String, JsonData> item0 : this.fields.entrySet()) {
 				generator.writeKey(item0.getKey());
 				item0.getValue().serialize(generator, mapper);
+
+			}
+			generator.writeEnd();
+
+		}
+		if (ApiTypeHelper.isDefined(this.ignored)) {
+			generator.writeKey("_ignored");
+			generator.writeStartArray();
+			for (String item0 : this.ignored) {
+				generator.write(item0);
 
 			}
 			generator.writeEnd();
@@ -281,6 +327,9 @@ public class GetResult<TDocument> implements JsonpSerializable {
 		@Nullable
 		private Map<String, JsonData> fields;
 
+		@Nullable
+		private List<String> ignored;
+
 		private Boolean found;
 
 		private String id;
@@ -304,7 +353,9 @@ public class GetResult<TDocument> implements JsonpSerializable {
 		private JsonpSerializer<TDocument> tDocumentSerializer;
 
 		/**
-		 * Required - API name: {@code _index}
+		 * Required - The name of the index the document belongs to.
+		 * <p>
+		 * API name: {@code _index}
 		 */
 		public final BuilderT index(String value) {
 			this.index = value;
@@ -312,6 +363,10 @@ public class GetResult<TDocument> implements JsonpSerializable {
 		}
 
 		/**
+		 * If the <code>stored_fields</code> parameter is set to <code>true</code> and
+		 * <code>found</code> is <code>true</code>, it contains the document fields
+		 * stored in the index.
+		 * <p>
 		 * API name: {@code fields}
 		 * <p>
 		 * Adds all entries of <code>map</code> to <code>fields</code>.
@@ -322,6 +377,10 @@ public class GetResult<TDocument> implements JsonpSerializable {
 		}
 
 		/**
+		 * If the <code>stored_fields</code> parameter is set to <code>true</code> and
+		 * <code>found</code> is <code>true</code>, it contains the document fields
+		 * stored in the index.
+		 * <p>
 		 * API name: {@code fields}
 		 * <p>
 		 * Adds an entry to <code>fields</code>.
@@ -332,7 +391,29 @@ public class GetResult<TDocument> implements JsonpSerializable {
 		}
 
 		/**
-		 * Required - API name: {@code found}
+		 * API name: {@code _ignored}
+		 * <p>
+		 * Adds all elements of <code>list</code> to <code>ignored</code>.
+		 */
+		public final BuilderT ignored(List<String> list) {
+			this.ignored = _listAddAll(this.ignored, list);
+			return self();
+		}
+
+		/**
+		 * API name: {@code _ignored}
+		 * <p>
+		 * Adds one or more values to <code>ignored</code>.
+		 */
+		public final BuilderT ignored(String value, String... values) {
+			this.ignored = _listAdd(this.ignored, value, values);
+			return self();
+		}
+
+		/**
+		 * Required - Indicates whether the document exists.
+		 * <p>
+		 * API name: {@code found}
 		 */
 		public final BuilderT found(boolean value) {
 			this.found = value;
@@ -340,7 +421,9 @@ public class GetResult<TDocument> implements JsonpSerializable {
 		}
 
 		/**
-		 * Required - API name: {@code _id}
+		 * Required - The unique identifier for the document.
+		 * <p>
+		 * API name: {@code _id}
 		 */
 		public final BuilderT id(String value) {
 			this.id = value;
@@ -348,6 +431,8 @@ public class GetResult<TDocument> implements JsonpSerializable {
 		}
 
 		/**
+		 * The primary term assigned to the document for the indexing operation.
+		 * <p>
 		 * API name: {@code _primary_term}
 		 */
 		public final BuilderT primaryTerm(@Nullable Long value) {
@@ -356,6 +441,8 @@ public class GetResult<TDocument> implements JsonpSerializable {
 		}
 
 		/**
+		 * The explicit routing, if set.
+		 * <p>
 		 * API name: {@code _routing}
 		 */
 		public final BuilderT routing(@Nullable String value) {
@@ -364,6 +451,10 @@ public class GetResult<TDocument> implements JsonpSerializable {
 		}
 
 		/**
+		 * The sequence number assigned to the document for the indexing operation.
+		 * Sequence numbers are used to ensure an older version of a document doesn't
+		 * overwrite a newer version.
+		 * <p>
 		 * API name: {@code _seq_no}
 		 */
 		public final BuilderT seqNo(@Nullable Long value) {
@@ -372,6 +463,11 @@ public class GetResult<TDocument> implements JsonpSerializable {
 		}
 
 		/**
+		 * If <code>found</code> is <code>true</code>, it contains the document data
+		 * formatted in JSON. If the <code>_source</code> parameter is set to
+		 * <code>false</code> or the <code>stored_fields</code> parameter is set to
+		 * <code>true</code>, it is excluded.
+		 * <p>
 		 * API name: {@code _source}
 		 */
 		public final BuilderT source(@Nullable TDocument value) {
@@ -380,6 +476,8 @@ public class GetResult<TDocument> implements JsonpSerializable {
 		}
 
 		/**
+		 * The document version, which is ncremented each time the document is updated.
+		 * <p>
 		 * API name: {@code _version}
 		 */
 		public final BuilderT version(@Nullable Long value) {
@@ -417,13 +515,15 @@ public class GetResult<TDocument> implements JsonpSerializable {
 	 */
 	public static final JsonpDeserializer<GetResult<Object>> _DESERIALIZER = JsonpDeserializer
 			.lazy(() -> createGetResultDeserializer(
-					new NamedDeserializer<>("co.elastic.clients:Deserializer:_global.get.TDocument")));
+					new NamedDeserializer<>("co.elastic.clients:Deserializer:_global.get.GetResult.TDocument")));
 
 	protected static <TDocument, BuilderT extends AbstractBuilder<TDocument, BuilderT>> void setupGetResultDeserializer(
 			ObjectDeserializer<BuilderT> op, JsonpDeserializer<TDocument> tDocumentDeserializer) {
 
 		op.add(AbstractBuilder::index, JsonpDeserializer.stringDeserializer(), "_index");
 		op.add(AbstractBuilder::fields, JsonpDeserializer.stringMapDeserializer(JsonData._DESERIALIZER), "fields");
+		op.add(AbstractBuilder::ignored, JsonpDeserializer.arrayDeserializer(JsonpDeserializer.stringDeserializer()),
+				"_ignored");
 		op.add(AbstractBuilder::found, JsonpDeserializer.booleanDeserializer(), "found");
 		op.add(AbstractBuilder::id, JsonpDeserializer.stringDeserializer(), "_id");
 		op.add(AbstractBuilder::primaryTerm, JsonpDeserializer.longDeserializer(), "_primary_term");

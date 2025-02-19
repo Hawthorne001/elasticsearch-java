@@ -33,7 +33,7 @@ import co.elastic.clients.util.ObjectBuilder;
 import co.elastic.clients.util.WithJsonObjectBuilderBase;
 import jakarta.json.stream.JsonGenerator;
 import java.lang.Float;
-import java.lang.Long;
+import java.lang.Integer;
 import java.lang.String;
 import java.util.List;
 import java.util.Objects;
@@ -72,10 +72,10 @@ public class KnnSearch implements JsonpSerializable {
 	private final QueryVectorBuilder queryVectorBuilder;
 
 	@Nullable
-	private final Long k;
+	private final Integer k;
 
 	@Nullable
-	private final Long numCandidates;
+	private final Integer numCandidates;
 
 	@Nullable
 	private final Float boost;
@@ -87,6 +87,9 @@ public class KnnSearch implements JsonpSerializable {
 
 	@Nullable
 	private final InnerHits innerHits;
+
+	@Nullable
+	private final RescoreVector rescoreVector;
 
 	// ---------------------------------------------------------------------------------------------
 
@@ -101,6 +104,7 @@ public class KnnSearch implements JsonpSerializable {
 		this.filter = ApiTypeHelper.unmodifiable(builder.filter);
 		this.similarity = builder.similarity;
 		this.innerHits = builder.innerHits;
+		this.rescoreVector = builder.rescoreVector;
 
 	}
 
@@ -143,7 +147,7 @@ public class KnnSearch implements JsonpSerializable {
 	 * API name: {@code k}
 	 */
 	@Nullable
-	public final Long k() {
+	public final Integer k() {
 		return this.k;
 	}
 
@@ -153,7 +157,7 @@ public class KnnSearch implements JsonpSerializable {
 	 * API name: {@code num_candidates}
 	 */
 	@Nullable
-	public final Long numCandidates() {
+	public final Integer numCandidates() {
 		return this.numCandidates;
 	}
 
@@ -194,6 +198,16 @@ public class KnnSearch implements JsonpSerializable {
 	@Nullable
 	public final InnerHits innerHits() {
 		return this.innerHits;
+	}
+
+	/**
+	 * Apply oversampling and rescoring to quantized vectors *
+	 * <p>
+	 * API name: {@code rescore_vector}
+	 */
+	@Nullable
+	public final RescoreVector rescoreVector() {
+		return this.rescoreVector;
 	}
 
 	/**
@@ -260,6 +274,11 @@ public class KnnSearch implements JsonpSerializable {
 			this.innerHits.serialize(generator, mapper);
 
 		}
+		if (this.rescoreVector != null) {
+			generator.writeKey("rescore_vector");
+			this.rescoreVector.serialize(generator, mapper);
+
+		}
 
 	}
 
@@ -284,10 +303,10 @@ public class KnnSearch implements JsonpSerializable {
 		private QueryVectorBuilder queryVectorBuilder;
 
 		@Nullable
-		private Long k;
+		private Integer k;
 
 		@Nullable
-		private Long numCandidates;
+		private Integer numCandidates;
 
 		@Nullable
 		private Float boost;
@@ -300,6 +319,9 @@ public class KnnSearch implements JsonpSerializable {
 
 		@Nullable
 		private InnerHits innerHits;
+
+		@Nullable
+		private RescoreVector rescoreVector;
 
 		/**
 		 * Required - The name of the vector field to search against
@@ -362,7 +384,7 @@ public class KnnSearch implements JsonpSerializable {
 		 * <p>
 		 * API name: {@code k}
 		 */
-		public final Builder k(@Nullable Long value) {
+		public final Builder k(@Nullable Integer value) {
 			this.k = value;
 			return this;
 		}
@@ -372,7 +394,7 @@ public class KnnSearch implements JsonpSerializable {
 		 * <p>
 		 * API name: {@code num_candidates}
 		 */
-		public final Builder numCandidates(@Nullable Long value) {
+		public final Builder numCandidates(@Nullable Integer value) {
 			this.numCandidates = value;
 			return this;
 		}
@@ -451,6 +473,25 @@ public class KnnSearch implements JsonpSerializable {
 			return this.innerHits(fn.apply(new InnerHits.Builder()).build());
 		}
 
+		/**
+		 * Apply oversampling and rescoring to quantized vectors *
+		 * <p>
+		 * API name: {@code rescore_vector}
+		 */
+		public final Builder rescoreVector(@Nullable RescoreVector value) {
+			this.rescoreVector = value;
+			return this;
+		}
+
+		/**
+		 * Apply oversampling and rescoring to quantized vectors *
+		 * <p>
+		 * API name: {@code rescore_vector}
+		 */
+		public final Builder rescoreVector(Function<RescoreVector.Builder, ObjectBuilder<RescoreVector>> fn) {
+			return this.rescoreVector(fn.apply(new RescoreVector.Builder()).build());
+		}
+
 		@Override
 		protected Builder self() {
 			return this;
@@ -483,12 +524,13 @@ public class KnnSearch implements JsonpSerializable {
 		op.add(Builder::queryVector, JsonpDeserializer.arrayDeserializer(JsonpDeserializer.floatDeserializer()),
 				"query_vector");
 		op.add(Builder::queryVectorBuilder, QueryVectorBuilder._DESERIALIZER, "query_vector_builder");
-		op.add(Builder::k, JsonpDeserializer.longDeserializer(), "k");
-		op.add(Builder::numCandidates, JsonpDeserializer.longDeserializer(), "num_candidates");
+		op.add(Builder::k, JsonpDeserializer.integerDeserializer(), "k");
+		op.add(Builder::numCandidates, JsonpDeserializer.integerDeserializer(), "num_candidates");
 		op.add(Builder::boost, JsonpDeserializer.floatDeserializer(), "boost");
 		op.add(Builder::filter, JsonpDeserializer.arrayDeserializer(Query._DESERIALIZER), "filter");
 		op.add(Builder::similarity, JsonpDeserializer.floatDeserializer(), "similarity");
 		op.add(Builder::innerHits, InnerHits._DESERIALIZER, "inner_hits");
+		op.add(Builder::rescoreVector, RescoreVector._DESERIALIZER, "rescore_vector");
 
 	}
 

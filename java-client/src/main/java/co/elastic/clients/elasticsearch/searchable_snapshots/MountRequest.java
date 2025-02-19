@@ -61,7 +61,9 @@ import javax.annotation.Nullable;
 // typedef: searchable_snapshots.mount.Request
 
 /**
- * Mount a snapshot as a searchable index.
+ * Mount a snapshot. Mount a snapshot as a searchable snapshot index. Do not use
+ * this API for snapshots managed by index lifecycle management (ILM). Manually
+ * mounting ILM-managed snapshots can interfere with ILM processes.
  * 
  * @see <a href=
  *      "../doc-files/api-spec.html#searchable_snapshots.mount.Request">API
@@ -112,6 +114,9 @@ public class MountRequest extends RequestBase implements JsonpSerializable {
 	}
 
 	/**
+	 * The names of settings that should be removed from the index when it is
+	 * mounted.
+	 * <p>
 	 * API name: {@code ignore_index_settings}
 	 */
 	public final List<String> ignoreIndexSettings() {
@@ -119,13 +124,19 @@ public class MountRequest extends RequestBase implements JsonpSerializable {
 	}
 
 	/**
-	 * Required - API name: {@code index}
+	 * Required - The name of the index contained in the snapshot whose data is to
+	 * be mounted. If no <code>renamed_index</code> is specified, this name will
+	 * also be used to create the new index.
+	 * <p>
+	 * API name: {@code index}
 	 */
 	public final String index() {
 		return this.index;
 	}
 
 	/**
+	 * The settings that should be added to the index when it is mounted.
+	 * <p>
 	 * API name: {@code index_settings}
 	 */
 	public final Map<String, JsonData> indexSettings() {
@@ -133,7 +144,9 @@ public class MountRequest extends RequestBase implements JsonpSerializable {
 	}
 
 	/**
-	 * Explicit operation timeout for connection to master node
+	 * The period to wait for the master node. If the master node is not available
+	 * before the timeout expires, the request fails and returns an error. To
+	 * indicate that the request should never timeout, set it to <code>-1</code>.
 	 * <p>
 	 * API name: {@code master_timeout}
 	 */
@@ -143,6 +156,8 @@ public class MountRequest extends RequestBase implements JsonpSerializable {
 	}
 
 	/**
+	 * The name of the index that will be created.
+	 * <p>
 	 * API name: {@code renamed_index}
 	 */
 	@Nullable
@@ -152,7 +167,7 @@ public class MountRequest extends RequestBase implements JsonpSerializable {
 
 	/**
 	 * Required - The name of the repository containing the snapshot of the index to
-	 * mount
+	 * mount.
 	 * <p>
 	 * API name: {@code repository}
 	 */
@@ -161,7 +176,7 @@ public class MountRequest extends RequestBase implements JsonpSerializable {
 	}
 
 	/**
-	 * Required - The name of the snapshot of the index to mount
+	 * Required - The name of the snapshot of the index to mount.
 	 * <p>
 	 * API name: {@code snapshot}
 	 */
@@ -170,8 +185,7 @@ public class MountRequest extends RequestBase implements JsonpSerializable {
 	}
 
 	/**
-	 * Selects the kind of local storage used to accelerate searches. Experimental,
-	 * and defaults to <code>full_copy</code>
+	 * The mount option for the searchable snapshot index.
 	 * <p>
 	 * API name: {@code storage}
 	 */
@@ -181,7 +195,7 @@ public class MountRequest extends RequestBase implements JsonpSerializable {
 	}
 
 	/**
-	 * Should this request wait until the operation has completed before returning
+	 * If true, the request blocks until the operation is complete.
 	 * <p>
 	 * API name: {@code wait_for_completion}
 	 */
@@ -265,6 +279,9 @@ public class MountRequest extends RequestBase implements JsonpSerializable {
 		private Boolean waitForCompletion;
 
 		/**
+		 * The names of settings that should be removed from the index when it is
+		 * mounted.
+		 * <p>
 		 * API name: {@code ignore_index_settings}
 		 * <p>
 		 * Adds all elements of <code>list</code> to <code>ignoreIndexSettings</code>.
@@ -275,6 +292,9 @@ public class MountRequest extends RequestBase implements JsonpSerializable {
 		}
 
 		/**
+		 * The names of settings that should be removed from the index when it is
+		 * mounted.
+		 * <p>
 		 * API name: {@code ignore_index_settings}
 		 * <p>
 		 * Adds one or more values to <code>ignoreIndexSettings</code>.
@@ -285,7 +305,11 @@ public class MountRequest extends RequestBase implements JsonpSerializable {
 		}
 
 		/**
-		 * Required - API name: {@code index}
+		 * Required - The name of the index contained in the snapshot whose data is to
+		 * be mounted. If no <code>renamed_index</code> is specified, this name will
+		 * also be used to create the new index.
+		 * <p>
+		 * API name: {@code index}
 		 */
 		public final Builder index(String value) {
 			this.index = value;
@@ -293,6 +317,8 @@ public class MountRequest extends RequestBase implements JsonpSerializable {
 		}
 
 		/**
+		 * The settings that should be added to the index when it is mounted.
+		 * <p>
 		 * API name: {@code index_settings}
 		 * <p>
 		 * Adds all entries of <code>map</code> to <code>indexSettings</code>.
@@ -303,6 +329,8 @@ public class MountRequest extends RequestBase implements JsonpSerializable {
 		}
 
 		/**
+		 * The settings that should be added to the index when it is mounted.
+		 * <p>
 		 * API name: {@code index_settings}
 		 * <p>
 		 * Adds an entry to <code>indexSettings</code>.
@@ -313,7 +341,9 @@ public class MountRequest extends RequestBase implements JsonpSerializable {
 		}
 
 		/**
-		 * Explicit operation timeout for connection to master node
+		 * The period to wait for the master node. If the master node is not available
+		 * before the timeout expires, the request fails and returns an error. To
+		 * indicate that the request should never timeout, set it to <code>-1</code>.
 		 * <p>
 		 * API name: {@code master_timeout}
 		 */
@@ -323,7 +353,9 @@ public class MountRequest extends RequestBase implements JsonpSerializable {
 		}
 
 		/**
-		 * Explicit operation timeout for connection to master node
+		 * The period to wait for the master node. If the master node is not available
+		 * before the timeout expires, the request fails and returns an error. To
+		 * indicate that the request should never timeout, set it to <code>-1</code>.
 		 * <p>
 		 * API name: {@code master_timeout}
 		 */
@@ -332,6 +364,8 @@ public class MountRequest extends RequestBase implements JsonpSerializable {
 		}
 
 		/**
+		 * The name of the index that will be created.
+		 * <p>
 		 * API name: {@code renamed_index}
 		 */
 		public final Builder renamedIndex(@Nullable String value) {
@@ -341,7 +375,7 @@ public class MountRequest extends RequestBase implements JsonpSerializable {
 
 		/**
 		 * Required - The name of the repository containing the snapshot of the index to
-		 * mount
+		 * mount.
 		 * <p>
 		 * API name: {@code repository}
 		 */
@@ -351,7 +385,7 @@ public class MountRequest extends RequestBase implements JsonpSerializable {
 		}
 
 		/**
-		 * Required - The name of the snapshot of the index to mount
+		 * Required - The name of the snapshot of the index to mount.
 		 * <p>
 		 * API name: {@code snapshot}
 		 */
@@ -361,8 +395,7 @@ public class MountRequest extends RequestBase implements JsonpSerializable {
 		}
 
 		/**
-		 * Selects the kind of local storage used to accelerate searches. Experimental,
-		 * and defaults to <code>full_copy</code>
+		 * The mount option for the searchable snapshot index.
 		 * <p>
 		 * API name: {@code storage}
 		 */
@@ -372,7 +405,7 @@ public class MountRequest extends RequestBase implements JsonpSerializable {
 		}
 
 		/**
-		 * Should this request wait until the operation has completed before returning
+		 * If true, the request blocks until the operation is complete.
 		 * <p>
 		 * API name: {@code wait_for_completion}
 		 */

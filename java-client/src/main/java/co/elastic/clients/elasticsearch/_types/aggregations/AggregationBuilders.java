@@ -1131,6 +1131,25 @@ public class AggregationBuilders {
 	}
 
 	/**
+	 * Creates a builder for the {@link RandomSamplerAggregation random_sampler}
+	 * {@code Aggregation} variant.
+	 */
+	public static RandomSamplerAggregation.Builder randomSampler() {
+		return new RandomSamplerAggregation.Builder();
+	}
+
+	/**
+	 * Creates a Aggregation of the {@link RandomSamplerAggregation random_sampler}
+	 * {@code Aggregation} variant.
+	 */
+	public static Aggregation randomSampler(
+			Function<RandomSamplerAggregation.Builder, ObjectBuilder<RandomSamplerAggregation>> fn) {
+		Aggregation.Builder builder = new Aggregation.Builder();
+		builder.randomSampler(fn.apply(new RandomSamplerAggregation.Builder()).build());
+		return builder.build();
+	}
+
+	/**
 	 * Creates a builder for the {@link SamplerAggregation sampler}
 	 * {@code Aggregation} variant.
 	 */
@@ -1332,6 +1351,25 @@ public class AggregationBuilders {
 	public static Aggregation terms(Function<TermsAggregation.Builder, ObjectBuilder<TermsAggregation>> fn) {
 		Aggregation.Builder builder = new Aggregation.Builder();
 		builder.terms(fn.apply(new TermsAggregation.Builder()).build());
+		return builder.build();
+	}
+
+	/**
+	 * Creates a builder for the {@link TimeSeriesAggregation time_series}
+	 * {@code Aggregation} variant.
+	 */
+	public static TimeSeriesAggregation.Builder timeSeries() {
+		return new TimeSeriesAggregation.Builder();
+	}
+
+	/**
+	 * Creates a Aggregation of the {@link TimeSeriesAggregation time_series}
+	 * {@code Aggregation} variant.
+	 */
+	public static Aggregation timeSeries(
+			Function<TimeSeriesAggregation.Builder, ObjectBuilder<TimeSeriesAggregation>> fn) {
+		Aggregation.Builder builder = new Aggregation.Builder();
+		builder.timeSeries(fn.apply(new TimeSeriesAggregation.Builder()).build());
 		return builder.build();
 	}
 

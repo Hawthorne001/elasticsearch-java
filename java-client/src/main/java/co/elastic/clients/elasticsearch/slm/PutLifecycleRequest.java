@@ -58,7 +58,9 @@ import javax.annotation.Nullable;
 // typedef: slm.put_lifecycle.Request
 
 /**
- * Creates or updates a snapshot lifecycle policy.
+ * Create or update a policy. Create or update a snapshot lifecycle policy. If
+ * the policy already exists, this request increments the policy version. Only
+ * the latest version of a policy is stored.
  * 
  * @see <a href="../doc-files/api-spec.html#slm.put_lifecycle.Request">API
  *      specification</a>
@@ -118,8 +120,9 @@ public class PutLifecycleRequest extends RequestBase implements JsonpSerializabl
 	}
 
 	/**
-	 * Period to wait for a connection to the master node. If no response is
+	 * The period to wait for a connection to the master node. If no response is
 	 * received before the timeout expires, the request fails and returns an error.
+	 * To indicate that the request should never timeout, set it to <code>-1</code>.
 	 * <p>
 	 * API name: {@code master_timeout}
 	 */
@@ -141,7 +144,8 @@ public class PutLifecycleRequest extends RequestBase implements JsonpSerializabl
 	}
 
 	/**
-	 * Required - ID for the snapshot lifecycle policy you want to create or update.
+	 * Required - The identifier for the snapshot lifecycle policy you want to
+	 * create or update.
 	 * <p>
 	 * API name: {@code policy_id}
 	 */
@@ -183,8 +187,9 @@ public class PutLifecycleRequest extends RequestBase implements JsonpSerializabl
 	}
 
 	/**
-	 * Period to wait for a response. If no response is received before the timeout
-	 * expires, the request fails and returns an error.
+	 * The period to wait for a response. If no response is received before the
+	 * timeout expires, the request fails and returns an error. To indicate that the
+	 * request should never timeout, set it to <code>-1</code>.
 	 * <p>
 	 * API name: {@code timeout}
 	 */
@@ -284,8 +289,9 @@ public class PutLifecycleRequest extends RequestBase implements JsonpSerializabl
 		}
 
 		/**
-		 * Period to wait for a connection to the master node. If no response is
+		 * The period to wait for a connection to the master node. If no response is
 		 * received before the timeout expires, the request fails and returns an error.
+		 * To indicate that the request should never timeout, set it to <code>-1</code>.
 		 * <p>
 		 * API name: {@code master_timeout}
 		 */
@@ -295,8 +301,9 @@ public class PutLifecycleRequest extends RequestBase implements JsonpSerializabl
 		}
 
 		/**
-		 * Period to wait for a connection to the master node. If no response is
+		 * The period to wait for a connection to the master node. If no response is
 		 * received before the timeout expires, the request fails and returns an error.
+		 * To indicate that the request should never timeout, set it to <code>-1</code>.
 		 * <p>
 		 * API name: {@code master_timeout}
 		 */
@@ -317,7 +324,8 @@ public class PutLifecycleRequest extends RequestBase implements JsonpSerializabl
 		}
 
 		/**
-		 * Required - ID for the snapshot lifecycle policy you want to create or update.
+		 * Required - The identifier for the snapshot lifecycle policy you want to
+		 * create or update.
 		 * <p>
 		 * API name: {@code policy_id}
 		 */
@@ -369,8 +377,9 @@ public class PutLifecycleRequest extends RequestBase implements JsonpSerializabl
 		}
 
 		/**
-		 * Period to wait for a response. If no response is received before the timeout
-		 * expires, the request fails and returns an error.
+		 * The period to wait for a response. If no response is received before the
+		 * timeout expires, the request fails and returns an error. To indicate that the
+		 * request should never timeout, set it to <code>-1</code>.
 		 * <p>
 		 * API name: {@code timeout}
 		 */
@@ -380,8 +389,9 @@ public class PutLifecycleRequest extends RequestBase implements JsonpSerializabl
 		}
 
 		/**
-		 * Period to wait for a response. If no response is received before the timeout
-		 * expires, the request fails and returns an error.
+		 * The period to wait for a response. If no response is received before the
+		 * timeout expires, the request fails and returns an error. To indicate that the
+		 * request should never timeout, set it to <code>-1</code>.
 		 * <p>
 		 * API name: {@code timeout}
 		 */

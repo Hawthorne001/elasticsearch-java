@@ -66,8 +66,18 @@ import javax.annotation.Nullable;
 // typedef: security.query_api_keys.Request
 
 /**
- * Retrieves information for API keys in a paginated manner. You can optionally
+ * Find API keys with a query.
+ * <p>
+ * Get a paginated list of API keys and their information. You can optionally
  * filter the results with a query.
+ * <p>
+ * To use this API, you must have at least the <code>manage_own_api_key</code>
+ * or the <code>read_security</code> cluster privileges. If you have only the
+ * <code>manage_own_api_key</code> privilege, this API returns only the API keys
+ * that you own. If you have the <code>read_security</code>,
+ * <code>manage_api_key</code>, or greater privileges (including
+ * <code>manage_security</code>), this API returns all API keys regardless of
+ * ownership.
  * 
  * @see <a href="../doc-files/api-spec.html#security.query_api_keys.Request">API
  *      specification</a>
@@ -131,9 +141,10 @@ public class QueryApiKeysRequest extends RequestBase implements JsonpSerializabl
 	}
 
 	/**
-	 * Starting document offset. By default, you cannot page through more than
-	 * 10,000 hits using the from and size parameters. To page through more hits,
-	 * use the <code>search_after</code> parameter.
+	 * The starting document offset. It must not be negative. By default, you cannot
+	 * page through more than 10,000 hits using the <code>from</code> and
+	 * <code>size</code> parameters. To page through more hits, use the
+	 * <code>search_after</code> parameter.
 	 * <p>
 	 * API name: {@code from}
 	 */
@@ -155,6 +166,12 @@ public class QueryApiKeysRequest extends RequestBase implements JsonpSerializabl
 	 * <code>invalidated</code>, <code>invalidation</code>, <code>username</code>,
 	 * <code>realm</code>, and <code>metadata</code>.
 	 * <p>
+	 * NOTE: The queryable string values associated with API keys are internally
+	 * mapped as keywords. Consequently, if no <code>analyzer</code> parameter is
+	 * specified for a <code>match</code> query, then the provided match query
+	 * string is interpreted as a single keyword value. Such a match query is hence
+	 * equivalent to a <code>term</code> query.
+	 * <p>
 	 * API name: {@code query}
 	 */
 	@Nullable
@@ -163,7 +180,7 @@ public class QueryApiKeysRequest extends RequestBase implements JsonpSerializabl
 	}
 
 	/**
-	 * Search after definition
+	 * The search after definition.
 	 * <p>
 	 * API name: {@code search_after}
 	 */
@@ -172,9 +189,12 @@ public class QueryApiKeysRequest extends RequestBase implements JsonpSerializabl
 	}
 
 	/**
-	 * The number of hits to return. By default, you cannot page through more than
-	 * 10,000 hits using the <code>from</code> and <code>size</code> parameters. To
-	 * page through more hits, use the <code>search_after</code> parameter.
+	 * The number of hits to return. It must not be negative. The <code>size</code>
+	 * parameter can be set to <code>0</code>, in which case no API key matches are
+	 * returned, only the aggregation results. By default, you cannot page through
+	 * more than 10,000 hits using the <code>from</code> and <code>size</code>
+	 * parameters. To page through more hits, use the <code>search_after</code>
+	 * parameter.
 	 * <p>
 	 * API name: {@code size}
 	 */
@@ -184,9 +204,9 @@ public class QueryApiKeysRequest extends RequestBase implements JsonpSerializabl
 	}
 
 	/**
-	 * Other than <code>id</code>, all public fields of an API key are eligible for
-	 * sorting. In addition, sort can also be applied to the <code>_doc</code> field
-	 * to sort by index order.
+	 * The sort definition. Other than <code>id</code>, all public fields of an API
+	 * key are eligible for sorting. In addition, sort can also be applied to the
+	 * <code>_doc</code> field to sort by index order.
 	 * <p>
 	 * API name: {@code sort}
 	 */
@@ -197,7 +217,10 @@ public class QueryApiKeysRequest extends RequestBase implements JsonpSerializabl
 	/**
 	 * Return the snapshot of the owner user's role descriptors associated with the
 	 * API key. An API key's actual permission is the intersection of its assigned
-	 * role descriptors and the owner user's role descriptors.
+	 * role descriptors and the owner user's role descriptors (effectively limited
+	 * by it). An API key cannot retrieve any API key’s limited-by role descriptors
+	 * (including itself) unless it has <code>manage_api_key</code> or higher
+	 * privileges.
 	 * <p>
 	 * API name: {@code with_limited_by}
 	 */
@@ -207,8 +230,9 @@ public class QueryApiKeysRequest extends RequestBase implements JsonpSerializabl
 	}
 
 	/**
-	 * Determines whether to also retrieve the profile uid, for the API key owner
-	 * principal, if it exists.
+	 * Determines whether to also retrieve the profile UID for the API key owner
+	 * principal. If it exists, the profile UID is returned under the
+	 * <code>profile_uid</code> response field for each API key.
 	 * <p>
 	 * API name: {@code with_profile_uid}
 	 */
@@ -368,9 +392,10 @@ public class QueryApiKeysRequest extends RequestBase implements JsonpSerializabl
 		}
 
 		/**
-		 * Starting document offset. By default, you cannot page through more than
-		 * 10,000 hits using the from and size parameters. To page through more hits,
-		 * use the <code>search_after</code> parameter.
+		 * The starting document offset. It must not be negative. By default, you cannot
+		 * page through more than 10,000 hits using the <code>from</code> and
+		 * <code>size</code> parameters. To page through more hits, use the
+		 * <code>search_after</code> parameter.
 		 * <p>
 		 * API name: {@code from}
 		 */
@@ -392,6 +417,12 @@ public class QueryApiKeysRequest extends RequestBase implements JsonpSerializabl
 		 * <code>invalidated</code>, <code>invalidation</code>, <code>username</code>,
 		 * <code>realm</code>, and <code>metadata</code>.
 		 * <p>
+		 * NOTE: The queryable string values associated with API keys are internally
+		 * mapped as keywords. Consequently, if no <code>analyzer</code> parameter is
+		 * specified for a <code>match</code> query, then the provided match query
+		 * string is interpreted as a single keyword value. Such a match query is hence
+		 * equivalent to a <code>term</code> query.
+		 * <p>
 		 * API name: {@code query}
 		 */
 		public final Builder query(@Nullable ApiKeyQuery value) {
@@ -412,6 +443,12 @@ public class QueryApiKeysRequest extends RequestBase implements JsonpSerializabl
 		 * <code>invalidated</code>, <code>invalidation</code>, <code>username</code>,
 		 * <code>realm</code>, and <code>metadata</code>.
 		 * <p>
+		 * NOTE: The queryable string values associated with API keys are internally
+		 * mapped as keywords. Consequently, if no <code>analyzer</code> parameter is
+		 * specified for a <code>match</code> query, then the provided match query
+		 * string is interpreted as a single keyword value. Such a match query is hence
+		 * equivalent to a <code>term</code> query.
+		 * <p>
 		 * API name: {@code query}
 		 */
 		public final Builder query(Function<ApiKeyQuery.Builder, ObjectBuilder<ApiKeyQuery>> fn) {
@@ -419,7 +456,7 @@ public class QueryApiKeysRequest extends RequestBase implements JsonpSerializabl
 		}
 
 		/**
-		 * Search after definition
+		 * The search after definition.
 		 * <p>
 		 * API name: {@code search_after}
 		 * <p>
@@ -431,7 +468,7 @@ public class QueryApiKeysRequest extends RequestBase implements JsonpSerializabl
 		}
 
 		/**
-		 * Search after definition
+		 * The search after definition.
 		 * <p>
 		 * API name: {@code search_after}
 		 * <p>
@@ -443,7 +480,7 @@ public class QueryApiKeysRequest extends RequestBase implements JsonpSerializabl
 		}
 
 		/**
-		 * Search after definition
+		 * The search after definition.
 		 * <p>
 		 * API name: {@code search_after}
 		 * <p>
@@ -460,7 +497,7 @@ public class QueryApiKeysRequest extends RequestBase implements JsonpSerializabl
 		}
 
 		/**
-		 * Search after definition
+		 * The search after definition.
 		 * <p>
 		 * API name: {@code search_after}
 		 * <p>
@@ -477,7 +514,7 @@ public class QueryApiKeysRequest extends RequestBase implements JsonpSerializabl
 		}
 
 		/**
-		 * Search after definition
+		 * The search after definition.
 		 * <p>
 		 * API name: {@code search_after}
 		 * <p>
@@ -494,7 +531,7 @@ public class QueryApiKeysRequest extends RequestBase implements JsonpSerializabl
 		}
 
 		/**
-		 * Search after definition
+		 * The search after definition.
 		 * <p>
 		 * API name: {@code search_after}
 		 * <p>
@@ -511,7 +548,7 @@ public class QueryApiKeysRequest extends RequestBase implements JsonpSerializabl
 		}
 
 		/**
-		 * Search after definition
+		 * The search after definition.
 		 * <p>
 		 * API name: {@code search_after}
 		 * <p>
@@ -522,9 +559,12 @@ public class QueryApiKeysRequest extends RequestBase implements JsonpSerializabl
 		}
 
 		/**
-		 * The number of hits to return. By default, you cannot page through more than
-		 * 10,000 hits using the <code>from</code> and <code>size</code> parameters. To
-		 * page through more hits, use the <code>search_after</code> parameter.
+		 * The number of hits to return. It must not be negative. The <code>size</code>
+		 * parameter can be set to <code>0</code>, in which case no API key matches are
+		 * returned, only the aggregation results. By default, you cannot page through
+		 * more than 10,000 hits using the <code>from</code> and <code>size</code>
+		 * parameters. To page through more hits, use the <code>search_after</code>
+		 * parameter.
 		 * <p>
 		 * API name: {@code size}
 		 */
@@ -534,9 +574,9 @@ public class QueryApiKeysRequest extends RequestBase implements JsonpSerializabl
 		}
 
 		/**
-		 * Other than <code>id</code>, all public fields of an API key are eligible for
-		 * sorting. In addition, sort can also be applied to the <code>_doc</code> field
-		 * to sort by index order.
+		 * The sort definition. Other than <code>id</code>, all public fields of an API
+		 * key are eligible for sorting. In addition, sort can also be applied to the
+		 * <code>_doc</code> field to sort by index order.
 		 * <p>
 		 * API name: {@code sort}
 		 * <p>
@@ -548,9 +588,9 @@ public class QueryApiKeysRequest extends RequestBase implements JsonpSerializabl
 		}
 
 		/**
-		 * Other than <code>id</code>, all public fields of an API key are eligible for
-		 * sorting. In addition, sort can also be applied to the <code>_doc</code> field
-		 * to sort by index order.
+		 * The sort definition. Other than <code>id</code>, all public fields of an API
+		 * key are eligible for sorting. In addition, sort can also be applied to the
+		 * <code>_doc</code> field to sort by index order.
 		 * <p>
 		 * API name: {@code sort}
 		 * <p>
@@ -562,9 +602,9 @@ public class QueryApiKeysRequest extends RequestBase implements JsonpSerializabl
 		}
 
 		/**
-		 * Other than <code>id</code>, all public fields of an API key are eligible for
-		 * sorting. In addition, sort can also be applied to the <code>_doc</code> field
-		 * to sort by index order.
+		 * The sort definition. Other than <code>id</code>, all public fields of an API
+		 * key are eligible for sorting. In addition, sort can also be applied to the
+		 * <code>_doc</code> field to sort by index order.
 		 * <p>
 		 * API name: {@code sort}
 		 * <p>
@@ -577,7 +617,10 @@ public class QueryApiKeysRequest extends RequestBase implements JsonpSerializabl
 		/**
 		 * Return the snapshot of the owner user's role descriptors associated with the
 		 * API key. An API key's actual permission is the intersection of its assigned
-		 * role descriptors and the owner user's role descriptors.
+		 * role descriptors and the owner user's role descriptors (effectively limited
+		 * by it). An API key cannot retrieve any API key’s limited-by role descriptors
+		 * (including itself) unless it has <code>manage_api_key</code> or higher
+		 * privileges.
 		 * <p>
 		 * API name: {@code with_limited_by}
 		 */
@@ -587,8 +630,9 @@ public class QueryApiKeysRequest extends RequestBase implements JsonpSerializabl
 		}
 
 		/**
-		 * Determines whether to also retrieve the profile uid, for the API key owner
-		 * principal, if it exists.
+		 * Determines whether to also retrieve the profile UID for the API key owner
+		 * principal. If it exists, the profile UID is returned under the
+		 * <code>profile_uid</code> response field for each API key.
 		 * <p>
 		 * API name: {@code with_profile_uid}
 		 */

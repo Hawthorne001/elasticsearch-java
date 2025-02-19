@@ -21,6 +21,7 @@ package co.elastic.clients.elasticsearch.watcher;
 
 import co.elastic.clients.elasticsearch._types.ErrorResponse;
 import co.elastic.clients.elasticsearch._types.RequestBase;
+import co.elastic.clients.elasticsearch._types.Time;
 import co.elastic.clients.elasticsearch._types.Transform;
 import co.elastic.clients.json.JsonData;
 import co.elastic.clients.json.JsonpDeserializable;
@@ -61,7 +62,23 @@ import javax.annotation.Nullable;
 // typedef: watcher.put_watch.Request
 
 /**
- * Creates a new watch, or updates an existing one.
+ * Create or update a watch. When a watch is registered, a new document that
+ * represents the watch is added to the <code>.watches</code> index and its
+ * trigger is immediately registered with the relevant trigger engine. Typically
+ * for the <code>schedule</code> trigger, the scheduler is the trigger engine.
+ * <p>
+ * IMPORTANT: You must use Kibana or this API to create a watch. Do not add a
+ * watch directly to the <code>.watches</code> index by using the Elasticsearch
+ * index API. If Elasticsearch security features are enabled, do not give users
+ * write privileges on the <code>.watches</code> index.
+ * <p>
+ * When you add a watch you can also define its initial active state by setting
+ * the <em>active</em> parameter.
+ * <p>
+ * When Elasticsearch security features are enabled, your watch can index or
+ * search only on indices for which the user that stored the watch has
+ * privileges. If the user is able to read index <code>a</code>, but not index
+ * <code>b</code>, the same will apply when the watch runs.
  * 
  * @see <a href="../doc-files/api-spec.html#watcher.put_watch.Request">API
  *      specification</a>
@@ -90,7 +107,10 @@ public class PutWatchRequest extends RequestBase implements JsonpSerializable {
 	private final Map<String, JsonData> metadata;
 
 	@Nullable
-	private final String throttlePeriod;
+	private final Time throttlePeriod;
+
+	@Nullable
+	private final Long throttlePeriodInMillis;
 
 	@Nullable
 	private final Transform transform;
@@ -114,6 +134,7 @@ public class PutWatchRequest extends RequestBase implements JsonpSerializable {
 		this.input = builder.input;
 		this.metadata = ApiTypeHelper.unmodifiable(builder.metadata);
 		this.throttlePeriod = builder.throttlePeriod;
+		this.throttlePeriodInMillis = builder.throttlePeriodInMillis;
 		this.transform = builder.transform;
 		this.trigger = builder.trigger;
 		this.version = builder.version;
@@ -125,6 +146,8 @@ public class PutWatchRequest extends RequestBase implements JsonpSerializable {
 	}
 
 	/**
+	 * The list of actions that will be run if the condition matches.
+	 * <p>
 	 * API name: {@code actions}
 	 */
 	public final Map<String, Action> actions() {
@@ -132,7 +155,8 @@ public class PutWatchRequest extends RequestBase implements JsonpSerializable {
 	}
 
 	/**
-	 * Specify whether the watch is in/active by default
+	 * The initial state of the watch. The default value is <code>true</code>, which
+	 * means the watch is active by default.
 	 * <p>
 	 * API name: {@code active}
 	 */
@@ -142,6 +166,8 @@ public class PutWatchRequest extends RequestBase implements JsonpSerializable {
 	}
 
 	/**
+	 * The condition that defines if the actions should be run.
+	 * <p>
 	 * API name: {@code condition}
 	 */
 	@Nullable
@@ -150,7 +176,7 @@ public class PutWatchRequest extends RequestBase implements JsonpSerializable {
 	}
 
 	/**
-	 * Required - Watch ID
+	 * Required - The identifier for the watch.
 	 * <p>
 	 * API name: {@code id}
 	 */
@@ -181,6 +207,8 @@ public class PutWatchRequest extends RequestBase implements JsonpSerializable {
 	}
 
 	/**
+	 * The input that defines the input that loads the data for the watch.
+	 * <p>
 	 * API name: {@code input}
 	 */
 	@Nullable
@@ -189,6 +217,8 @@ public class PutWatchRequest extends RequestBase implements JsonpSerializable {
 	}
 
 	/**
+	 * Metadata JSON that will be copied into the history entries.
+	 * <p>
 	 * API name: {@code metadata}
 	 */
 	public final Map<String, JsonData> metadata() {
@@ -196,14 +226,35 @@ public class PutWatchRequest extends RequestBase implements JsonpSerializable {
 	}
 
 	/**
+	 * The minimum time between actions being run. The default is 5 seconds. This
+	 * default can be changed in the config file with the setting
+	 * <code>xpack.watcher.throttle.period.default_period</code>. If both this value
+	 * and the <code>throttle_period_in_millis</code> parameter are specified,
+	 * Watcher uses the last parameter included in the request.
+	 * <p>
 	 * API name: {@code throttle_period}
 	 */
 	@Nullable
-	public final String throttlePeriod() {
+	public final Time throttlePeriod() {
 		return this.throttlePeriod;
 	}
 
 	/**
+	 * Minimum time in milliseconds between actions being run. Defaults to 5000. If
+	 * both this value and the throttle_period parameter are specified, Watcher uses
+	 * the last parameter included in the request.
+	 * <p>
+	 * API name: {@code throttle_period_in_millis}
+	 */
+	@Nullable
+	public final Long throttlePeriodInMillis() {
+		return this.throttlePeriodInMillis;
+	}
+
+	/**
+	 * The transform that processes the watch payload to prepare it for the watch
+	 * actions.
+	 * <p>
 	 * API name: {@code transform}
 	 */
 	@Nullable
@@ -212,6 +263,8 @@ public class PutWatchRequest extends RequestBase implements JsonpSerializable {
 	}
 
 	/**
+	 * The trigger that defines when the watch should run.
+	 * <p>
 	 * API name: {@code trigger}
 	 */
 	@Nullable
@@ -274,7 +327,12 @@ public class PutWatchRequest extends RequestBase implements JsonpSerializable {
 		}
 		if (this.throttlePeriod != null) {
 			generator.writeKey("throttle_period");
-			generator.write(this.throttlePeriod);
+			this.throttlePeriod.serialize(generator, mapper);
+
+		}
+		if (this.throttlePeriodInMillis != null) {
+			generator.writeKey("throttle_period_in_millis");
+			generator.write(this.throttlePeriodInMillis);
 
 		}
 		if (this.transform != null) {
@@ -321,7 +379,10 @@ public class PutWatchRequest extends RequestBase implements JsonpSerializable {
 		private Map<String, JsonData> metadata;
 
 		@Nullable
-		private String throttlePeriod;
+		private Time throttlePeriod;
+
+		@Nullable
+		private Long throttlePeriodInMillis;
 
 		@Nullable
 		private Transform transform;
@@ -333,6 +394,8 @@ public class PutWatchRequest extends RequestBase implements JsonpSerializable {
 		private Long version;
 
 		/**
+		 * The list of actions that will be run if the condition matches.
+		 * <p>
 		 * API name: {@code actions}
 		 * <p>
 		 * Adds all entries of <code>map</code> to <code>actions</code>.
@@ -343,6 +406,8 @@ public class PutWatchRequest extends RequestBase implements JsonpSerializable {
 		}
 
 		/**
+		 * The list of actions that will be run if the condition matches.
+		 * <p>
 		 * API name: {@code actions}
 		 * <p>
 		 * Adds an entry to <code>actions</code>.
@@ -353,6 +418,8 @@ public class PutWatchRequest extends RequestBase implements JsonpSerializable {
 		}
 
 		/**
+		 * The list of actions that will be run if the condition matches.
+		 * <p>
 		 * API name: {@code actions}
 		 * <p>
 		 * Adds an entry to <code>actions</code> using a builder lambda.
@@ -362,7 +429,8 @@ public class PutWatchRequest extends RequestBase implements JsonpSerializable {
 		}
 
 		/**
-		 * Specify whether the watch is in/active by default
+		 * The initial state of the watch. The default value is <code>true</code>, which
+		 * means the watch is active by default.
 		 * <p>
 		 * API name: {@code active}
 		 */
@@ -372,6 +440,8 @@ public class PutWatchRequest extends RequestBase implements JsonpSerializable {
 		}
 
 		/**
+		 * The condition that defines if the actions should be run.
+		 * <p>
 		 * API name: {@code condition}
 		 */
 		public final Builder condition(@Nullable Condition value) {
@@ -380,6 +450,8 @@ public class PutWatchRequest extends RequestBase implements JsonpSerializable {
 		}
 
 		/**
+		 * The condition that defines if the actions should be run.
+		 * <p>
 		 * API name: {@code condition}
 		 */
 		public final Builder condition(Function<Condition.Builder, ObjectBuilder<Condition>> fn) {
@@ -387,7 +459,7 @@ public class PutWatchRequest extends RequestBase implements JsonpSerializable {
 		}
 
 		/**
-		 * Required - Watch ID
+		 * Required - The identifier for the watch.
 		 * <p>
 		 * API name: {@code id}
 		 */
@@ -419,6 +491,8 @@ public class PutWatchRequest extends RequestBase implements JsonpSerializable {
 		}
 
 		/**
+		 * The input that defines the input that loads the data for the watch.
+		 * <p>
 		 * API name: {@code input}
 		 */
 		public final Builder input(@Nullable Input value) {
@@ -427,6 +501,8 @@ public class PutWatchRequest extends RequestBase implements JsonpSerializable {
 		}
 
 		/**
+		 * The input that defines the input that loads the data for the watch.
+		 * <p>
 		 * API name: {@code input}
 		 */
 		public final Builder input(Function<Input.Builder, ObjectBuilder<Input>> fn) {
@@ -434,6 +510,8 @@ public class PutWatchRequest extends RequestBase implements JsonpSerializable {
 		}
 
 		/**
+		 * Metadata JSON that will be copied into the history entries.
+		 * <p>
 		 * API name: {@code metadata}
 		 * <p>
 		 * Adds all entries of <code>map</code> to <code>metadata</code>.
@@ -444,6 +522,8 @@ public class PutWatchRequest extends RequestBase implements JsonpSerializable {
 		}
 
 		/**
+		 * Metadata JSON that will be copied into the history entries.
+		 * <p>
 		 * API name: {@code metadata}
 		 * <p>
 		 * Adds an entry to <code>metadata</code>.
@@ -454,14 +534,48 @@ public class PutWatchRequest extends RequestBase implements JsonpSerializable {
 		}
 
 		/**
+		 * The minimum time between actions being run. The default is 5 seconds. This
+		 * default can be changed in the config file with the setting
+		 * <code>xpack.watcher.throttle.period.default_period</code>. If both this value
+		 * and the <code>throttle_period_in_millis</code> parameter are specified,
+		 * Watcher uses the last parameter included in the request.
+		 * <p>
 		 * API name: {@code throttle_period}
 		 */
-		public final Builder throttlePeriod(@Nullable String value) {
+		public final Builder throttlePeriod(@Nullable Time value) {
 			this.throttlePeriod = value;
 			return this;
 		}
 
 		/**
+		 * The minimum time between actions being run. The default is 5 seconds. This
+		 * default can be changed in the config file with the setting
+		 * <code>xpack.watcher.throttle.period.default_period</code>. If both this value
+		 * and the <code>throttle_period_in_millis</code> parameter are specified,
+		 * Watcher uses the last parameter included in the request.
+		 * <p>
+		 * API name: {@code throttle_period}
+		 */
+		public final Builder throttlePeriod(Function<Time.Builder, ObjectBuilder<Time>> fn) {
+			return this.throttlePeriod(fn.apply(new Time.Builder()).build());
+		}
+
+		/**
+		 * Minimum time in milliseconds between actions being run. Defaults to 5000. If
+		 * both this value and the throttle_period parameter are specified, Watcher uses
+		 * the last parameter included in the request.
+		 * <p>
+		 * API name: {@code throttle_period_in_millis}
+		 */
+		public final Builder throttlePeriodInMillis(@Nullable Long value) {
+			this.throttlePeriodInMillis = value;
+			return this;
+		}
+
+		/**
+		 * The transform that processes the watch payload to prepare it for the watch
+		 * actions.
+		 * <p>
 		 * API name: {@code transform}
 		 */
 		public final Builder transform(@Nullable Transform value) {
@@ -470,6 +584,9 @@ public class PutWatchRequest extends RequestBase implements JsonpSerializable {
 		}
 
 		/**
+		 * The transform that processes the watch payload to prepare it for the watch
+		 * actions.
+		 * <p>
 		 * API name: {@code transform}
 		 */
 		public final Builder transform(Function<Transform.Builder, ObjectBuilder<Transform>> fn) {
@@ -477,6 +594,8 @@ public class PutWatchRequest extends RequestBase implements JsonpSerializable {
 		}
 
 		/**
+		 * The trigger that defines when the watch should run.
+		 * <p>
 		 * API name: {@code trigger}
 		 */
 		public final Builder trigger(@Nullable Trigger value) {
@@ -485,6 +604,8 @@ public class PutWatchRequest extends RequestBase implements JsonpSerializable {
 		}
 
 		/**
+		 * The trigger that defines when the watch should run.
+		 * <p>
 		 * API name: {@code trigger}
 		 */
 		public final Builder trigger(Function<Trigger.Builder, ObjectBuilder<Trigger>> fn) {
@@ -533,7 +654,8 @@ public class PutWatchRequest extends RequestBase implements JsonpSerializable {
 		op.add(Builder::condition, Condition._DESERIALIZER, "condition");
 		op.add(Builder::input, Input._DESERIALIZER, "input");
 		op.add(Builder::metadata, JsonpDeserializer.stringMapDeserializer(JsonData._DESERIALIZER), "metadata");
-		op.add(Builder::throttlePeriod, JsonpDeserializer.stringDeserializer(), "throttle_period");
+		op.add(Builder::throttlePeriod, Time._DESERIALIZER, "throttle_period");
+		op.add(Builder::throttlePeriodInMillis, JsonpDeserializer.longDeserializer(), "throttle_period_in_millis");
 		op.add(Builder::transform, Transform._DESERIALIZER, "transform");
 		op.add(Builder::trigger, Trigger._DESERIALIZER, "trigger");
 

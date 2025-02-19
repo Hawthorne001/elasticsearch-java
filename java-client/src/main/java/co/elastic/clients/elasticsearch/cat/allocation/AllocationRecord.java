@@ -29,6 +29,7 @@ import co.elastic.clients.json.ObjectDeserializer;
 import co.elastic.clients.util.ObjectBuilder;
 import co.elastic.clients.util.WithJsonObjectBuilderBase;
 import jakarta.json.stream.JsonGenerator;
+import java.lang.Double;
 import java.lang.String;
 import java.util.Objects;
 import java.util.function.Function;
@@ -63,6 +64,15 @@ public class AllocationRecord implements JsonpSerializable {
 	private final String shards;
 
 	@Nullable
+	private final String shardsUndesired;
+
+	@Nullable
+	private final Double writeLoadForecast;
+
+	@Nullable
+	private final String diskIndicesForecast;
+
+	@Nullable
 	private final String diskIndices;
 
 	@Nullable
@@ -86,11 +96,17 @@ public class AllocationRecord implements JsonpSerializable {
 	@Nullable
 	private final String node;
 
+	@Nullable
+	private final String nodeRole;
+
 	// ---------------------------------------------------------------------------------------------
 
 	private AllocationRecord(Builder builder) {
 
 		this.shards = builder.shards;
+		this.shardsUndesired = builder.shardsUndesired;
+		this.writeLoadForecast = builder.writeLoadForecast;
+		this.diskIndicesForecast = builder.diskIndicesForecast;
 		this.diskIndices = builder.diskIndices;
 		this.diskUsed = builder.diskUsed;
 		this.diskAvail = builder.diskAvail;
@@ -99,6 +115,7 @@ public class AllocationRecord implements JsonpSerializable {
 		this.host = builder.host;
 		this.ip = builder.ip;
 		this.node = builder.node;
+		this.nodeRole = builder.nodeRole;
 
 	}
 
@@ -114,6 +131,39 @@ public class AllocationRecord implements JsonpSerializable {
 	@Nullable
 	public final String shards() {
 		return this.shards;
+	}
+
+	/**
+	 * Amount of shards that are scheduled to be moved elsewhere in the cluster or
+	 * -1 other than desired balance allocator is used
+	 * <p>
+	 * API name: {@code shards.undesired}
+	 */
+	@Nullable
+	public final String shardsUndesired() {
+		return this.shardsUndesired;
+	}
+
+	/**
+	 * Sum of index write load forecasts
+	 * <p>
+	 * API name: {@code write_load.forecast}
+	 * <p>
+	 * Defaults to {@code 0} if parsed from a JSON {@code null} value.
+	 */
+	@Nullable
+	public final Double writeLoadForecast() {
+		return this.writeLoadForecast;
+	}
+
+	/**
+	 * Sum of shard size forecasts
+	 * <p>
+	 * API name: {@code disk.indices.forecast}
+	 */
+	@Nullable
+	public final String diskIndicesForecast() {
+		return this.diskIndicesForecast;
 	}
 
 	/**
@@ -208,6 +258,16 @@ public class AllocationRecord implements JsonpSerializable {
 	}
 
 	/**
+	 * Node roles
+	 * <p>
+	 * API name: {@code node.role}
+	 */
+	@Nullable
+	public final String nodeRole() {
+		return this.nodeRole;
+	}
+
+	/**
 	 * Serialize this object to JSON.
 	 */
 	public void serialize(JsonGenerator generator, JsonpMapper mapper) {
@@ -221,6 +281,20 @@ public class AllocationRecord implements JsonpSerializable {
 		if (this.shards != null) {
 			generator.writeKey("shards");
 			generator.write(this.shards);
+
+		}
+		if (this.shardsUndesired != null) {
+			generator.writeKey("shards.undesired");
+			generator.write(this.shardsUndesired);
+
+		}
+		if (this.writeLoadForecast != null) {
+			generator.writeKey("write_load.forecast");
+			JsonpUtils.serializeDoubleOrNull(generator, this.writeLoadForecast, 0);
+		}
+		if (this.diskIndicesForecast != null) {
+			generator.writeKey("disk.indices.forecast");
+			generator.write(this.diskIndicesForecast);
 
 		}
 		if (this.diskIndices != null) {
@@ -263,6 +337,11 @@ public class AllocationRecord implements JsonpSerializable {
 			generator.write(this.node);
 
 		}
+		if (this.nodeRole != null) {
+			generator.writeKey("node.role");
+			generator.write(this.nodeRole);
+
+		}
 
 	}
 
@@ -280,6 +359,15 @@ public class AllocationRecord implements JsonpSerializable {
 	public static class Builder extends WithJsonObjectBuilderBase<Builder> implements ObjectBuilder<AllocationRecord> {
 		@Nullable
 		private String shards;
+
+		@Nullable
+		private String shardsUndesired;
+
+		@Nullable
+		private Double writeLoadForecast;
+
+		@Nullable
+		private String diskIndicesForecast;
 
 		@Nullable
 		private String diskIndices;
@@ -305,6 +393,9 @@ public class AllocationRecord implements JsonpSerializable {
 		@Nullable
 		private String node;
 
+		@Nullable
+		private String nodeRole;
+
 		/**
 		 * Number of primary and replica shards assigned to the node.
 		 * <p>
@@ -312,6 +403,39 @@ public class AllocationRecord implements JsonpSerializable {
 		 */
 		public final Builder shards(@Nullable String value) {
 			this.shards = value;
+			return this;
+		}
+
+		/**
+		 * Amount of shards that are scheduled to be moved elsewhere in the cluster or
+		 * -1 other than desired balance allocator is used
+		 * <p>
+		 * API name: {@code shards.undesired}
+		 */
+		public final Builder shardsUndesired(@Nullable String value) {
+			this.shardsUndesired = value;
+			return this;
+		}
+
+		/**
+		 * Sum of index write load forecasts
+		 * <p>
+		 * API name: {@code write_load.forecast}
+		 * <p>
+		 * Defaults to {@code 0} if parsed from a JSON {@code null} value.
+		 */
+		public final Builder writeLoadForecast(@Nullable Double value) {
+			this.writeLoadForecast = value;
+			return this;
+		}
+
+		/**
+		 * Sum of shard size forecasts
+		 * <p>
+		 * API name: {@code disk.indices.forecast}
+		 */
+		public final Builder diskIndicesForecast(@Nullable String value) {
+			this.diskIndicesForecast = value;
 			return this;
 		}
 
@@ -406,6 +530,16 @@ public class AllocationRecord implements JsonpSerializable {
 			return this;
 		}
 
+		/**
+		 * Node roles
+		 * <p>
+		 * API name: {@code node.role}
+		 */
+		public final Builder nodeRole(@Nullable String value) {
+			this.nodeRole = value;
+			return this;
+		}
+
 		@Override
 		protected Builder self() {
 			return this;
@@ -435,6 +569,11 @@ public class AllocationRecord implements JsonpSerializable {
 	protected static void setupAllocationRecordDeserializer(ObjectDeserializer<AllocationRecord.Builder> op) {
 
 		op.add(Builder::shards, JsonpDeserializer.stringDeserializer(), "shards", "s");
+		op.add(Builder::shardsUndesired, JsonpDeserializer.stringDeserializer(), "shards.undesired");
+		op.add(Builder::writeLoadForecast, JsonpDeserializer.doubleOrNullDeserializer(0), "write_load.forecast", "wlf",
+				"writeLoadForecast");
+		op.add(Builder::diskIndicesForecast, JsonpDeserializer.stringDeserializer(), "disk.indices.forecast", "dif",
+				"diskIndicesForecast");
 		op.add(Builder::diskIndices, JsonpDeserializer.stringDeserializer(), "disk.indices", "di", "diskIndices");
 		op.add(Builder::diskUsed, JsonpDeserializer.stringDeserializer(), "disk.used", "du", "diskUsed");
 		op.add(Builder::diskAvail, JsonpDeserializer.stringDeserializer(), "disk.avail", "da", "diskAvail");
@@ -443,6 +582,7 @@ public class AllocationRecord implements JsonpSerializable {
 		op.add(Builder::host, JsonpDeserializer.stringDeserializer(), "host", "h");
 		op.add(Builder::ip, JsonpDeserializer.stringDeserializer(), "ip");
 		op.add(Builder::node, JsonpDeserializer.stringDeserializer(), "node", "n");
+		op.add(Builder::nodeRole, JsonpDeserializer.stringDeserializer(), "node.role", "r", "role", "nodeRole");
 
 	}
 

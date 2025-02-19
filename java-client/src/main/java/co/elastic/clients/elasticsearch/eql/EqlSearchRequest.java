@@ -39,6 +39,7 @@ import co.elastic.clients.util.ApiTypeHelper;
 import co.elastic.clients.util.ObjectBuilder;
 import jakarta.json.stream.JsonGenerator;
 import java.lang.Boolean;
+import java.lang.Integer;
 import java.lang.Number;
 import java.lang.String;
 import java.util.HashMap;
@@ -67,7 +68,9 @@ import javax.annotation.Nullable;
 // typedef: eql.search.Request
 
 /**
- * Returns results matching a query expressed in Event Query Language (EQL)
+ * Get EQL search results. Returns search results for an Event Query Language
+ * (EQL) query. EQL assumes each document in a data stream or index corresponds
+ * to an event.
  * 
  * @see <a href="../doc-files/api-spec.html#eql.search.Request">API
  *      specification</a>
@@ -76,6 +79,12 @@ import javax.annotation.Nullable;
 public class EqlSearchRequest extends RequestBase implements JsonpSerializable {
 	@Nullable
 	private final Boolean allowNoIndices;
+
+	@Nullable
+	private final Boolean allowPartialSearchResults;
+
+	@Nullable
+	private final Boolean allowPartialSequenceResults;
 
 	@Nullable
 	private final Boolean caseSensitive;
@@ -103,6 +112,9 @@ public class EqlSearchRequest extends RequestBase implements JsonpSerializable {
 	@Nullable
 	private final Boolean keepOnCompletion;
 
+	@Nullable
+	private final Integer maxSamplesPerKey;
+
 	private final String query;
 
 	@Nullable
@@ -127,6 +139,8 @@ public class EqlSearchRequest extends RequestBase implements JsonpSerializable {
 	private EqlSearchRequest(Builder builder) {
 
 		this.allowNoIndices = builder.allowNoIndices;
+		this.allowPartialSearchResults = builder.allowPartialSearchResults;
+		this.allowPartialSequenceResults = builder.allowPartialSequenceResults;
 		this.caseSensitive = builder.caseSensitive;
 		this.eventCategoryField = builder.eventCategoryField;
 		this.expandWildcards = ApiTypeHelper.unmodifiable(builder.expandWildcards);
@@ -137,6 +151,7 @@ public class EqlSearchRequest extends RequestBase implements JsonpSerializable {
 		this.index = ApiTypeHelper.unmodifiableRequired(builder.index, this, "index");
 		this.keepAlive = builder.keepAlive;
 		this.keepOnCompletion = builder.keepOnCompletion;
+		this.maxSamplesPerKey = builder.maxSamplesPerKey;
 		this.query = ApiTypeHelper.requireNonNull(builder.query, this, "query");
 		this.resultPosition = builder.resultPosition;
 		this.runtimeMappings = ApiTypeHelper.unmodifiable(builder.runtimeMappings);
@@ -157,6 +172,32 @@ public class EqlSearchRequest extends RequestBase implements JsonpSerializable {
 	@Nullable
 	public final Boolean allowNoIndices() {
 		return this.allowNoIndices;
+	}
+
+	/**
+	 * Allow query execution also in case of shard failures. If true, the query will
+	 * keep running and will return results based on the available shards. For
+	 * sequences, the behavior can be further refined using
+	 * allow_partial_sequence_results
+	 * <p>
+	 * API name: {@code allow_partial_search_results}
+	 */
+	@Nullable
+	public final Boolean allowPartialSearchResults() {
+		return this.allowPartialSearchResults;
+	}
+
+	/**
+	 * This flag applies only to sequences and has effect only if
+	 * allow_partial_search_results=true. If true, the sequence query will return
+	 * results based on the available shards, ignoring the others. If false, the
+	 * sequence query will return successfully, but will always have empty results.
+	 * <p>
+	 * API name: {@code allow_partial_sequence_results}
+	 */
+	@Nullable
+	public final Boolean allowPartialSequenceResults() {
+		return this.allowPartialSequenceResults;
 	}
 
 	/**
@@ -250,6 +291,21 @@ public class EqlSearchRequest extends RequestBase implements JsonpSerializable {
 	}
 
 	/**
+	 * By default, the response of a sample query contains up to <code>10</code>
+	 * samples, with one sample per unique set of join keys. Use the
+	 * <code>size</code> parameter to get a smaller or larger set of samples. To
+	 * retrieve more than one sample per set of join keys, use the
+	 * <code>max_samples_per_key</code> parameter. Pipes are not supported for
+	 * sample queries.
+	 * <p>
+	 * API name: {@code max_samples_per_key}
+	 */
+	@Nullable
+	public final Integer maxSamplesPerKey() {
+		return this.maxSamplesPerKey;
+	}
+
+	/**
 	 * Required - EQL query you wish to run.
 	 * <p>
 	 * API name: {@code query}
@@ -323,6 +379,16 @@ public class EqlSearchRequest extends RequestBase implements JsonpSerializable {
 
 	protected void serializeInternal(JsonGenerator generator, JsonpMapper mapper) {
 
+		if (this.allowPartialSearchResults != null) {
+			generator.writeKey("allow_partial_search_results");
+			generator.write(this.allowPartialSearchResults);
+
+		}
+		if (this.allowPartialSequenceResults != null) {
+			generator.writeKey("allow_partial_sequence_results");
+			generator.write(this.allowPartialSequenceResults);
+
+		}
 		if (this.caseSensitive != null) {
 			generator.writeKey("case_sensitive");
 			generator.write(this.caseSensitive);
@@ -366,6 +432,11 @@ public class EqlSearchRequest extends RequestBase implements JsonpSerializable {
 		if (this.keepOnCompletion != null) {
 			generator.writeKey("keep_on_completion");
 			generator.write(this.keepOnCompletion);
+
+		}
+		if (this.maxSamplesPerKey != null) {
+			generator.writeKey("max_samples_per_key");
+			generator.write(this.maxSamplesPerKey);
 
 		}
 		generator.writeKey("query");
@@ -422,6 +493,12 @@ public class EqlSearchRequest extends RequestBase implements JsonpSerializable {
 		private Boolean allowNoIndices;
 
 		@Nullable
+		private Boolean allowPartialSearchResults;
+
+		@Nullable
+		private Boolean allowPartialSequenceResults;
+
+		@Nullable
 		private Boolean caseSensitive;
 
 		@Nullable
@@ -450,6 +527,9 @@ public class EqlSearchRequest extends RequestBase implements JsonpSerializable {
 		@Nullable
 		private Boolean keepOnCompletion;
 
+		@Nullable
+		private Integer maxSamplesPerKey;
+
 		private String query;
 
 		@Nullable
@@ -475,6 +555,32 @@ public class EqlSearchRequest extends RequestBase implements JsonpSerializable {
 		 */
 		public final Builder allowNoIndices(@Nullable Boolean value) {
 			this.allowNoIndices = value;
+			return this;
+		}
+
+		/**
+		 * Allow query execution also in case of shard failures. If true, the query will
+		 * keep running and will return results based on the available shards. For
+		 * sequences, the behavior can be further refined using
+		 * allow_partial_sequence_results
+		 * <p>
+		 * API name: {@code allow_partial_search_results}
+		 */
+		public final Builder allowPartialSearchResults(@Nullable Boolean value) {
+			this.allowPartialSearchResults = value;
+			return this;
+		}
+
+		/**
+		 * This flag applies only to sequences and has effect only if
+		 * allow_partial_search_results=true. If true, the sequence query will return
+		 * results based on the available shards, ignoring the others. If false, the
+		 * sequence query will return successfully, but will always have empty results.
+		 * <p>
+		 * API name: {@code allow_partial_sequence_results}
+		 */
+		public final Builder allowPartialSequenceResults(@Nullable Boolean value) {
+			this.allowPartialSequenceResults = value;
 			return this;
 		}
 
@@ -660,6 +766,21 @@ public class EqlSearchRequest extends RequestBase implements JsonpSerializable {
 		}
 
 		/**
+		 * By default, the response of a sample query contains up to <code>10</code>
+		 * samples, with one sample per unique set of join keys. Use the
+		 * <code>size</code> parameter to get a smaller or larger set of samples. To
+		 * retrieve more than one sample per set of join keys, use the
+		 * <code>max_samples_per_key</code> parameter. Pipes are not supported for
+		 * sample queries.
+		 * <p>
+		 * API name: {@code max_samples_per_key}
+		 */
+		public final Builder maxSamplesPerKey(@Nullable Integer value) {
+			this.maxSamplesPerKey = value;
+			return this;
+		}
+
+		/**
 		 * Required - EQL query you wish to run.
 		 * <p>
 		 * API name: {@code query}
@@ -781,6 +902,10 @@ public class EqlSearchRequest extends RequestBase implements JsonpSerializable {
 
 	protected static void setupEqlSearchRequestDeserializer(ObjectDeserializer<EqlSearchRequest.Builder> op) {
 
+		op.add(Builder::allowPartialSearchResults, JsonpDeserializer.booleanDeserializer(),
+				"allow_partial_search_results");
+		op.add(Builder::allowPartialSequenceResults, JsonpDeserializer.booleanDeserializer(),
+				"allow_partial_sequence_results");
 		op.add(Builder::caseSensitive, JsonpDeserializer.booleanDeserializer(), "case_sensitive");
 		op.add(Builder::eventCategoryField, JsonpDeserializer.stringDeserializer(), "event_category_field");
 		op.add(Builder::fetchSize, JsonpDeserializer.numberDeserializer(), "fetch_size");
@@ -788,6 +913,7 @@ public class EqlSearchRequest extends RequestBase implements JsonpSerializable {
 		op.add(Builder::filter, JsonpDeserializer.arrayDeserializer(Query._DESERIALIZER), "filter");
 		op.add(Builder::keepAlive, Time._DESERIALIZER, "keep_alive");
 		op.add(Builder::keepOnCompletion, JsonpDeserializer.booleanDeserializer(), "keep_on_completion");
+		op.add(Builder::maxSamplesPerKey, JsonpDeserializer.integerDeserializer(), "max_samples_per_key");
 		op.add(Builder::query, JsonpDeserializer.stringDeserializer(), "query");
 		op.add(Builder::resultPosition, ResultPosition._DESERIALIZER, "result_position");
 		op.add(Builder::runtimeMappings, JsonpDeserializer.stringMapDeserializer(RuntimeField._DESERIALIZER),

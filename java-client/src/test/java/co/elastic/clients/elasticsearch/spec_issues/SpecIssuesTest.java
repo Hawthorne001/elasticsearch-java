@@ -98,9 +98,7 @@ public class SpecIssuesTest extends ModelTestCase {
         RuntimeField runtimeField = RuntimeField.of(rf -> rf
             .type(RuntimeFieldType.Double)
             .script(Script.of(s -> s
-                .inline(i -> i.
-                    source("emit(doc['price'].value * 1.19)")
-                )
+                .source("emit(doc['price'].value * 1.19)")
             ))
         );
 
@@ -117,12 +115,12 @@ public class SpecIssuesTest extends ModelTestCase {
             .index("i0297")
             .settings(s -> s
                 // This is "mapping" and not "mappings"
-                .mapping(m -> m.totalFields(totalFields -> totalFields.limit(1001)))
+                .mapping(m -> m.totalFields(totalFields -> totalFields.limit("1001")))
                 .otherSettings("foo", JsonData.of("bar"))
             )
         );
 
-        assertEquals("{\"settings\":{\"foo\":\"bar\",\"mapping\":{\"total_fields\":{\"limit\":1001}}}}", toJson(request));
+        assertEquals("{\"settings\":{\"foo\":\"bar\",\"mapping\":{\"total_fields\":{\"limit\":\"1001\"}}}}", toJson(request));
     }
 
     @Test
@@ -163,8 +161,9 @@ public class SpecIssuesTest extends ModelTestCase {
         new Suggester.Builder().suggesters("song-suggest", s -> s.completion(c->c.field("suggest"))).build();
     }
 
+    @Disabled("Stable version 9 not yet available")
     @Test
-    @Disabled("Plugins cannot be installed on snapshot versions of ES")
+    // update: icu_collation_keyword has been released and added to the spec
     public void i0249_variantKind() throws Exception {
         try (ElasticsearchTestServer server = new ElasticsearchTestServer("analysis-icu").start()) {
 
@@ -199,8 +198,8 @@ public class SpecIssuesTest extends ModelTestCase {
 
             Property property = fm.get("i0249").mappings().get("name").mapping().get("name").text().fields().get("sort");
 
-            assertTrue(property._isCustom());
-            assertEquals("icu_collation_keyword", property._customKind());
+            assertFalse(property._isCustom());
+            assertEquals(Property.Kind.IcuCollationKeyword, property._kind());
         }
     }
 
@@ -297,6 +296,13 @@ public class SpecIssuesTest extends ModelTestCase {
                 .trackTotalHits(thb -> thb.enabled(false)), JsonData.class);
     }
 
+    @Test
+    public void gettingVersionFromNodes() throws Exception {
+        ElasticsearchTestServer.global().client()
+            .nodes().info().nodes().entrySet().forEach(node ->
+                assertNotNull(node.getValue().version()));
+    }
+    
     private <T> T loadRsrc(String res, JsonpDeserializer<T> deser) {
         InputStream is = this.getClass().getResourceAsStream(res);
         assertNotNull(is, "Resource not found: " + res);

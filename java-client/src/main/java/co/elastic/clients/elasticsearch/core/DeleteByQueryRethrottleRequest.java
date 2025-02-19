@@ -56,8 +56,12 @@ import javax.annotation.Nullable;
 // typedef: _global.delete_by_query_rethrottle.Request
 
 /**
- * Changes the number of requests per second for a particular Delete By Query
- * operation.
+ * Throttle a delete by query operation.
+ * <p>
+ * Change the number of requests per second for a particular delete by query
+ * operation. Rethrottling that speeds up the query takes effect immediately but
+ * rethrotting that slows down the query takes effect after completing the
+ * current batch to prevent scroll timeouts.
  * 
  * @see <a href=
  *      "../doc-files/api-spec.html#_global.delete_by_query_rethrottle.Request">API
@@ -85,7 +89,8 @@ public class DeleteByQueryRethrottleRequest extends RequestBase {
 	}
 
 	/**
-	 * The throttle for this request in sub-requests per second.
+	 * The throttle for this request in sub-requests per second. To disable
+	 * throttling, set it to <code>-1</code>.
 	 * <p>
 	 * API name: {@code requests_per_second}
 	 */
@@ -118,7 +123,8 @@ public class DeleteByQueryRethrottleRequest extends RequestBase {
 		private String taskId;
 
 		/**
-		 * The throttle for this request in sub-requests per second.
+		 * The throttle for this request in sub-requests per second. To disable
+		 * throttling, set it to <code>-1</code>.
 		 * <p>
 		 * API name: {@code requests_per_second}
 		 */
